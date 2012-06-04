@@ -20,10 +20,8 @@ from base.templatePage import templatePage
 from utility import webqtlUtil
 from dbFunction import webqtlDatabaseFunction
 
-import PubmedSearch
-
 import logging
-logging.basicConfig(filename="/tmp/gn_log_leiyan", level=logging.INFO)
+logging.basicConfig(filename="/tmp/gn_log", level=logging.INFO)
 _log = logging.getLogger("search")
 
 class SearchResultPage(templatePage):
@@ -129,8 +127,7 @@ class SearchResultPage(templatePage):
 				self.error(heading=heading,detail=detail,error="Error")
 				return
 		if self.dbType == "Publish":
-			self.searchField = ['Phenotype.Post_publication_description', 'Phenotype.Pre_publication_description', 'Phenotype.Pre_publication_abbreviation', 'Phenotype.Post_publication_abbreviation', 'Phenotype.Lab_code', 'Publication.PubMed_ID', 'Publication.Abstract', 'Publication.Title', 'Publication.Authors', 'PublishXRef.Id']
-
+			self.searchField = ['Publication.PubMed_ID','Phenotype.Post_publication_description','Publication.Abstract','Publication.Title','Publication.Authors','PublishXRef.Id']
 		elif self.dbType == "ProbeSet":
 			self.searchField = ['Name','Description','Probe_Target_Description','Symbol','Alias','GenbankId', 'UniGeneId','RefSeq_TranscriptId']
 		elif self.dbType == "Geno":
@@ -156,22 +153,14 @@ class SearchResultPage(templatePage):
 			geneIdListQuery = string.replace(geneIdListQuery, ",", " ")
 			geneIdListQuery = " geneId=%s" % string.join(string.split(geneIdListQuery), "-")
 
-		self.ANDkeyword = fd.formdata.getfirst('ANDkeyword', "")
-		_log.info("self.ANDkeyword[1]: " + self.ANDkeyword)
-		pubmedSearchObject = PubmedSearch.PubmedSearch(self.ANDkeyword, self.database[0].id)
-		self.ANDkeyword = pubmedSearchObject.getNewS()
-		_log.info("self.ANDkeyword[2]: " + self.ANDkeyword)
+		self.and_or = fd.formdata.getfirst("and_or", " ")
+		self.keyword = fd.formdata.getfirst("keyword","")
 
-		self.ORkeyword = fd.formdata.getfirst('ORkeyword', "")
-		_log.info("self.ORkeyword[1]: " + self.ORkeyword)
-		pubmedSearchObject = PubmedSearch.PubmedSearch(self.ORkeyword, self.database[0].id)
-		self.ORkeyword = pubmedSearchObject.getNewS()
-		_log.info("self.ORkeyword[2]: "+self.ORkeyword)
+		if self.and_or == "OR":
+			self.keyword += geneIdListQuery
 
-		self.ORkeyword += geneIdListQuery
+		self.keyword = self.keyword.replace("\\", "").strip()
 
-		self.ANDkeyword = self.ANDkeyword.replace("\\", "").strip()
-		self.ORkeyword = self.ORkeyword.replace("\\", "").strip()
 		#user defined sort option
 		self.orderByUserInput = fd.formdata.getfirst('orderByUserInput', "").strip()
 		#default sort option if user have not defined
@@ -192,18 +181,16 @@ class SearchResultPage(templatePage):
 		self._5mPattern = re.compile('\s*(\S+)\s*[=in]{1,2}\s*\(\s*([-\d\.]+)[, \t]+([-\d\.]+)[, \t]+[Cc][Hh][Rr]([^, \t]+)[, \t]+([-\d\.]+)[, \t]+([-\d\.]+)\s*\)')
 
 		#Error, No keyword input
-		if not (self.ORkeyword or self.ANDkeyword):
+		if not self.keyword:
 			heading = "Search Result"
 			detail = ["Please make sure to enter either your search terms (genes, traits, markers), or advanced search commands."]
-			self.error(heading=heading,detail=detail,error="No search terms were entered")
-			return
+			self.error(header=heading, detail=detail, error="No search terms were entered")
 
 		#query clauses
-		self.ANDQuery = []
-		self.ORQuery = []
-		#descriptions, one for OR search, one for AND search
-		self.ANDDescriptionText = []
-		self.ORDescriptionText = []
+		self.Query = []
+		
+		#search description
+		self.DescriptionText = []
 
 		if not self.normalSearch():
 			return
@@ -221,13 +208,14 @@ class SearchResultPage(templatePage):
 			dbUrlLink = " was"
 
 		SearchText = HT.Blockquote('GeneNetwork searched the ', dbUrl, ' for all records ')
-		if self.ORkeyword2:
-			NNN = len(self.ORkeyword2)
+
+		if self.and_or == "OR":
+			NNN = len(self.keyword2)
 			if NNN > 1:
 				SearchText.append(' that match the terms ')
 			else:
 				SearchText.append(' that match the term ')
-			for j, term in enumerate(self.ORkeyword2):
+			for j, term in enumerate(self.keyword2):
 				SearchText.append(HT.U(term))
 				if NNN > 1 and j < NNN-2:
 					SearchText.append(", ")
@@ -235,27 +223,24 @@ class SearchResultPage(templatePage):
 					SearchText.append(", or ")
 				else:
 					pass
-		if self.ORDescriptionText:
-			if self.ORkeyword2:
-				SearchText.append("; ")
-			else:
-				SearchText.append(" ")
-			for j, item in enumerate(self.ORDescriptionText):
-				SearchText.append(item)
-				if j < len(self.ORDescriptionText) -1:
-					SearchText.append(";")
+		
+			if self.DescriptionText:
+				if self.keyword2:
+					SearchText.append("; ")
+				else:
+					SearchText.append(" ")
+				for j, item in enumerate(self.DescriptionText):
+					SearchText.append(item)
+					if j < len(self.DescriptionText) -1:
+						SearchText.append(";")
 
-		if (self.ORkeyword2 or self.ORDescriptionText) and (self.ANDkeyword2 or self.ANDDescriptionText):
-			SearchText.append("; ")
-		if self.ANDkeyword2:
-			if (self.ORkeyword2 or self.ORDescriptionText):
-				SearchText.append(' records')
-			NNN = len(self.ANDkeyword2)
+		if self.and_or == "AND":
+			NNN = len(self.keyword2)
 			if NNN > 1:
 				SearchText.append(' that match the terms ')
 			else:
 				SearchText.append(' that match the term ')
-			for j, term in enumerate(self.ANDkeyword2):
+			for j, term in enumerate(self.keyword2):
 				SearchText.append(HT.U(term))
 				if NNN > 1 and j < NNN-2:
 					SearchText.append(", ")
@@ -263,15 +248,16 @@ class SearchResultPage(templatePage):
 					SearchText.append(", and ")
 				else:
 					pass
-		if self.ANDDescriptionText:
-			if self.ANDkeyword2:
-				SearchText.append(" and ")
-			else:
-				SearchText.append(" ")
-			for j, item in enumerate(self.ANDDescriptionText):
-				SearchText.append(item)
-				if j < len(self.ANDDescriptionText) -1:
+
+			if self.DescriptionText:
+				if self.keyword2:
 					SearchText.append(" and ")
+				else:
+					SearchText.append(" ")
+				for j, item in enumerate(self.DescriptionText):
+					SearchText.append(item)
+					if j < len(self.DescriptionText) -1:
+						SearchText.append(" and ")
 
 		SearchText.append(". ")
 		if self.nresults == 0:
@@ -287,12 +273,9 @@ class SearchResultPage(templatePage):
 			SearchText.append(' A total of ',HT.Span(self.nresults, Class='fwb cr'), ' records were found.')
 			heading = "Search Result"
 			# Modified by Hongqiang Li
-			# detail = ["The terms you entered match %d records. Please modify your search to generate %d or fewer matches, or review  " % (self.nresults, self.maxReturn), HT.Href(text='Search Help', target='_blank',  url='http://web2qtl.utmem.edu/searchHelp.html', Class='fs14'), " to learn more about syntax and the use of wildcard characters."]
 			detail = ["The terms you entered match %d records. Please modify your search to generate %d or fewer matches, or review  " % (self.nresults, self.maxReturn), HT.Href(text='Search Help', target='_blank',  url='%s/searchHelp.html' % webqtlConfig.PORTADDR, Class='fs14'), " to learn more about syntax and the use of wildcard characters."]
-			#
 			self.error(heading=heading,intro = SearchText.contents,detail=detail,error="Over %d" % self.maxReturn)
 			return
-
 
 		TD_LR.append(HT.Paragraph('Search Results', Class="title"), SearchText)
 		self.genSearchResultTable(TD_LR)
@@ -373,7 +356,7 @@ class SearchResultPage(templatePage):
             			cPickle.dump(tblobj, objfile)
             			objfile.close()
 
-				div = HT.Div(webqtlUtil.genTableObj(tblobj, filename, sortby), Id="sortable")
+				div = HT.Div(webqtlUtil.genTableObj(tblobj=tblobj, file=filename, sortby=sortby), Id="sortable")
 				
 				pageTable.append(HT.TR(HT.TD(div)))
 
@@ -391,7 +374,7 @@ class SearchResultPage(templatePage):
             			cPickle.dump(tblobj, objfile)
             			objfile.close()
 
-				div = HT.Div(webqtlUtil.genTableObj(tblobj, filename, sortby), Id="sortable")
+				div = HT.Div(webqtlUtil.genTableObj(tblobj=tblobj, file=filename, sortby=sortby), Id="sortable")
 				
 				pageTable.append(HT.TR(HT.TD(div)))
 
@@ -409,7 +392,7 @@ class SearchResultPage(templatePage):
             			cPickle.dump(tblobj, objfile)
             			objfile.close()
 
-				div = HT.Div(webqtlUtil.genTableObj(tblobj, filename, sortby), Id="sortable")
+				div = HT.Div(webqtlUtil.genTableObj(tblobj=tblobj, file=filename, sortby=sortby), Id="sortable")
 				
 				pageTable.append(HT.TR(HT.TD(div)))
 
@@ -496,7 +479,7 @@ class SearchResultPage(templatePage):
 		self.results = []
 		for item in searchCountQuery:
 		    start_time = datetime.datetime.now()
-		    _log.info("111 Executing query: %s"%(item))
+		    _log.info("Executing query: %s"%(item))
 		    self.cursor.execute(item)
 		    allResults.append(self.cursor.fetchall())
 		    end_time = datetime.datetime.now()
@@ -508,7 +491,6 @@ class SearchResultPage(templatePage):
 		#searchCountQuery retrieve all the results, for counting use only
 		if searchCountQuery != searchQuery:
 			for item in searchQuery:
-				_log.info("222 Executing query: %s"%(item))
 				self.cursor.execute(item)
 				self.results.append(self.cursor.fetchall())
 		else:
@@ -521,12 +503,16 @@ class SearchResultPage(templatePage):
 
 	def assembleQuery(self):
 		self.query = []
-		if self.ANDQuery or self.ORQuery:
-			clause = self.ORQuery[:]
+		if self.Query:
+
+			if self.and_or == "OR":
+				clause = self.Query[:]
+			else:
+				clause = [] 
 
 			for j, database in enumerate(self.database):
-				if self.ANDQuery:
-					clause.append(" (%s) " % string.join(self.ANDQuery, " AND "))
+				if self.and_or == "AND":
+					clause.append(" (%s) " % string.join(self.Query, " AND "))
 
 				newclause = []
 
@@ -538,7 +524,7 @@ class SearchResultPage(templatePage):
 							incGenoTbl = ""
 						else:
 							incGenoTbl = " Geno, "
-						newclause.append("SELECT %d, PublishXRef.Id, PublishFreeze.createtime as thistable, Publication.PubMed_ID as Publication_PubMed_ID, Phenotype.Post_publication_description as Phenotype_Name FROM %s PublishFreeze, Publication, PublishXRef, Phenotype WHERE PublishXRef.InbredSetId = %d and %s and PublishXRef.PhenotypeId = Phenotype.Id and PublishXRef.PublicationId = Publication.Id and PublishFreeze.Id = %d" % (j, incGenoTbl, self.databaseCrossIds[j], item, database.id))
+						newclause.append("SELECT %d, PublishXRef.Id, PublishFreeze.createtime as thistable, Phenotype.Post_publication_description as Phenotype_Name, Publication.PubMed_ID as Publication_PubMed_ID FROM %s Phenotype, PublishFreeze, Publication, PublishXRef WHERE PublishXRef.InbredSetId = %d and %s and PublishXRef.PhenotypeId = Phenotype.Id and PublishXRef.PublicationId = Publication.Id and PublishFreeze.Id = %d" % (j, incGenoTbl, self.databaseCrossIds[j], item, database.id))
 					elif self.dbType == "ProbeSet":
 						if item.find("GOgene") < 0:
 							incGoTbl = ""
@@ -580,37 +566,23 @@ class SearchResultPage(templatePage):
 
 
 	def normalSearch(self):
-		self.ANDkeyword2 = re.sub(self._1mPattern, '', self.ANDkeyword)
-		self.ANDkeyword2 = re.sub(self._2mPattern, '', self.ANDkeyword2)
-		self.ANDkeyword2 = re.sub(self._3mPattern, '', self.ANDkeyword2)
-		self.ANDkeyword2 = re.sub(self._5mPattern, '', self.ANDkeyword2)
+		
+		self.keyword2 = re.sub(self._1mPattern, '', self.keyword)
+		self.keyword2 = re.sub(self._2mPattern, '', self.keyword2)
+		self.keyword2 = re.sub(self._3mPattern, '', self.keyword2)
+		self.keyword2 = re.sub(self._5mPattern, '', self.keyword2)
 		##remove remain parethesis, could be input with  syntax error
-		self.ANDkeyword2 = re.sub(re.compile('\s*\([\s\S]*\)'), '', self.ANDkeyword2)
-		self.ANDkeyword2 = self.encregexp(self.ANDkeyword2)
+		self.keyword2 = re.sub(re.compile('\s*\([\s\S]*\)'), '', self.keyword2)
+		self.keyword2 = self.encregexp(self.keyword2)
 
-		self.ORkeyword2 = re.sub(self._1mPattern, '', self.ORkeyword)
-		self.ORkeyword2 = re.sub(self._2mPattern, '', self.ORkeyword2)
-		self.ORkeyword2 = re.sub(self._3mPattern, '', self.ORkeyword2)
-		self.ORkeyword2 = re.sub(self._5mPattern, '', self.ORkeyword2)
-		##remove remain parethesis, could be input with  syntax error
-		self.ORkeyword2 = re.sub(re.compile('\s*\([\s\S]*\)'), '', self.ORkeyword2)
-		self.ORkeyword2 = self.encregexp(self.ORkeyword2)
-
-		if self.ORkeyword2 or self.ANDkeyword2:
-			ANDFulltext = []
-			ORFulltext = []
-			for k, item in enumerate(self.ORkeyword2 + self.ANDkeyword2):
+		if self.keyword2:
+			Fulltext = []
+			for k, item in enumerate(self.keyword2):
 				self.nkeywords += 1
-				if k >=len(self.ORkeyword2):
-					query = self.ANDQuery
-					DescriptionText = self.ANDDescriptionText
-					clausejoin = ' OR '
-					fulltext = ANDFulltext
-				else:
-					query = self.ORQuery
-					DescriptionText = self.ORDescriptionText
-					clausejoin = ' OR '
-					fulltext = ORFulltext
+				query = self.Query
+				DescriptionText = self.DescriptionText
+				clausejoin = ' OR '
+				fulltext = Fulltext
 
 				if self.dbType == "ProbeSet" and item.find('.') < 0 and item.find('\'') < 0:
 					fulltext.append(item)
@@ -625,16 +597,15 @@ class SearchResultPage(templatePage):
 							clause2.append("%s REGEXP \"%s\"" % ("%s.%s" % (self.dbType,field),item))
 					clauseItem = "(%s)" % string.join(clause2, clausejoin)
 					query.append(" (%s) " % clauseItem)
-			if ANDFulltext:
-				clauseItem = " MATCH (ProbeSet.Name,ProbeSet.description,ProbeSet.symbol,alias,GenbankId, UniGeneId, Probe_Target_Description) AGAINST ('+%s' IN BOOLEAN MODE) " % string.join(ANDFulltext, " +")
-				self.ANDQuery.append(" (%s) " % clauseItem)
-			if ORFulltext:
-				clauseItem = " MATCH (ProbeSet.Name,ProbeSet.description,ProbeSet.symbol,alias,GenbankId, UniGeneId, Probe_Target_Description) AGAINST ('%s' IN BOOLEAN MODE) " % string.join(ORFulltext, " ")
-				self.ORQuery.append(" (%s) " % clauseItem)
+			if (self.and_or == "AND") and Fulltext:
+				clauseItem = " MATCH (ProbeSet.Name,ProbeSet.description,ProbeSet.symbol,alias,GenbankId, UniGeneId, Probe_Target_Description) AGAINST ('+%s' IN BOOLEAN MODE) " % string.join(Fulltext, " +")
+				self.Query.append(" (%s) " % clauseItem)
+			if (self.and_or == "OR") and Fulltext:
+				clauseItem = " MATCH (ProbeSet.Name,ProbeSet.description,ProbeSet.symbol,alias,GenbankId, UniGeneId, Probe_Target_Description) AGAINST ('%s' IN BOOLEAN MODE) " % string.join(Fulltext, " ")
+				self.Query.append(" (%s) " % clauseItem)
 		else:
 			pass
 		return 1
-
 
 
 	def encregexp(self,str):
@@ -654,28 +625,24 @@ class SearchResultPage(templatePage):
 		return wildcardkeyword
 
 
-
 	def patternSearch(self):
 		# Lei Yan
 		##Process Inputs
-		m1_AND = self._1mPattern.findall(self.ANDkeyword)
-		m2_AND = self._2mPattern.findall(self.ANDkeyword)
-		m3_AND = self._3mPattern.findall(self.ANDkeyword)
-		m5_AND = self._5mPattern.findall(self.ANDkeyword)
-		m1_OR = self._1mPattern.findall(self.ORkeyword)
-		m2_OR = self._2mPattern.findall(self.ORkeyword)
-		m3_OR = self._3mPattern.findall(self.ORkeyword)
-		m5_OR = self._5mPattern.findall(self.ORkeyword)
+		
+		m1 = self._1mPattern.findall(self.keyword)
+		m2 = self._2mPattern.findall(self.keyword)
+		m3 = self._3mPattern.findall(self.keyword)
+		m5 = self._5mPattern.findall(self.keyword)
 
 		#pattern search
-		if m1_AND or m1_OR or m2_AND or m2_OR or m3_AND or m3_OR or m5_AND or m5_OR:
+		if m1 or m2 or m3 or m5:
 
 			self.orderByDefalut = 'PROBESETID'
 
-			_1Cmds = map(string.upper, map(lambda x:x[0], m1_AND + m1_OR))
-			_2Cmds = map(string.upper, map(lambda x:x[0], m2_AND + m2_OR))
-			_3Cmds = map(string.upper, map(lambda x:x[0], m3_AND + m3_OR))
-			_5Cmds = map(string.upper, map(lambda x:x[0], m5_AND + m5_OR))
+			_1Cmds = map(string.upper, map(lambda x:x[0], m1))
+			_2Cmds = map(string.upper, map(lambda x:x[0], m2))
+			_3Cmds = map(string.upper, map(lambda x:x[0], m3))
+			_5Cmds = map(string.upper, map(lambda x:x[0], m5))
 
 			self.nkeywords += len(_1Cmds) + len(_2Cmds) + len(_3Cmds)
 
@@ -701,13 +668,10 @@ class SearchResultPage(templatePage):
 				self.error(heading=heading,detail=detail,error="Error")
 				return 0
 			else:
-				for k, item in enumerate(m1_OR+m1_AND):
-					if k >=len(m1_OR):
-						query = self.ANDQuery
-						DescriptionText = self.ANDDescriptionText
-					else:
-						query = self.ORQuery
-						DescriptionText = self.ORDescriptionText
+				for k, item in enumerate(m1):
+					
+					query = self.Query
+					DescriptionText = self.DescriptionText
 
 					if item[1] == '-':
 						strandName = 'minus'
@@ -745,13 +709,10 @@ class SearchResultPage(templatePage):
 							pass
 					query.append(" (%s) " % clauseItem)
 
-				for k, item in enumerate(m2_OR+m2_AND):
-					if k >=len(m2_OR):
-						query = self.ANDQuery
-						DescriptionText = self.ANDDescriptionText
-					else:
-						query = self.ORQuery
-						DescriptionText = self.ORDescriptionText
+				for k, item in enumerate(m2):
+
+					query = self.Query
+					DescriptionText = self.DescriptionText
 
 					itemCmd = item[0]
 					lowerLimit = float(item[1])
@@ -784,13 +745,11 @@ class SearchResultPage(templatePage):
 						self.orderByDefalut = itemCmd
 						DescriptionText.append(HT.Span(' with ', HT.U(itemCmd), ' between %g and %g' % (min(lowerLimit, upperLimit),  max(lowerLimit, upperLimit))))
 
-				for k, item in enumerate(m3_OR+m3_AND):
-					if k >=len(m3_OR):
-						query = self.ANDQuery
-						DescriptionText = self.ANDDescriptionText
-					else:
-						query = self.ORQuery
-						DescriptionText = self.ORDescriptionText
+				for k, item in enumerate(m3):
+
+					query = self.Query
+					DescriptionText = self.DescriptionText
+
 					itemCmd = item[0]
 					chrsch = item[1]
 					lowerLimit = float(item[2])
@@ -810,13 +769,11 @@ class SearchResultPage(templatePage):
 					DescriptionText.append(HT.Span(' with ', HT.U('target genes'), ' on chromosome %s between %g and %g Mb' % \
 						(chrsch, min(lowerLimit, upperLimit), max(lowerLimit, upperLimit))))
 
-				for k, item in enumerate(m5_OR+m5_AND):
-					if k >=len(m5_OR):
-						query = self.ANDQuery
-						DescriptionText = self.ANDDescriptionText
-					else:
-						query = self.ORQuery
-						DescriptionText = self.ORDescriptionText
+				for k, item in enumerate(m5):
+
+					query = self.Query
+					DescriptionText = self.DescriptionText
+
 					itemCmd = item[0]
 					lowerLimit = float(item[1])
 					upperLimit = float(item[2])
@@ -854,7 +811,7 @@ class SearchResultPage(templatePage):
   								</td>
   							</tr>
   							<tr>
-  								<td width="100%" bgcolor="#eeeeee" align="Center" style="padding:4px">
+  								<td width="100%" bgcolor="#fafafa" align="Center" style="padding:4px">
 									<!-- PLACE YOUR CONTENT HERE //-->
 									Resorting this table <br>
 									<!-- END OF CONTENT AREA //-->
@@ -998,12 +955,8 @@ class SearchResultPage(templatePage):
            	 	LRS_location_value = 1000000
             		LRS_flag = 1
 
-
-			if thisTrait.lrs:
-                        	LRS_score_repr = '%3.1f' % thisTrait.lrs
-                        	LRS_score_value = thisTrait.lrs
-                		tr.append(TDCell(HT.TD(LRS_score_repr, Class=className), LRS_score_repr, LRS_score_value))
-
+			#Max LRS and its Locus location
+			if thisTrait.lrs and thisTrait.locus:
 				self.cursor.execute("""
 					select Geno.Chr, Geno.Mb from Geno, Species
 					where Species.Name = '%s' and
@@ -1026,17 +979,28 @@ class SearchResultPage(templatePage):
 							else:
 								LRS_location_value = ord(str(LRS_chr).upper()[0])*1000 + float(LRS_Mb)
 
+                        			LRS_score_repr = '%3.1f' % thisTrait.lrs
+                        			LRS_score_value = thisTrait.lrs
                         			LRS_location_repr = 'Chr%s: %.6f' % (LRS_Chr, float(LRS_Mb) )
                         			LRS_flag = 0
 
-                		tr.append(TDCell(HT.TD(LRS_location_repr, Class=className, nowrap="on"), LRS_location_repr, LRS_location_value))
+                        			##tr.append(TDCell(HT.TD(HT.Href(text=LRS_score_repr,url="javascript:showIntervalMapping('%s', '%s : %s')" % (formName, thisTrait.db.shortname, thisTrait.name), Class="fs12 fwn"), Class=className, align='right', nowrap="on"),LRS_score_repr, LRS_score_value))
+                        			tr.append(TDCell(HT.TD(LRS_score_repr, Class=className, align='right', nowrap="on"), LRS_score_repr, LRS_score_value))
+                        			tr.append(TDCell(HT.TD(LRS_location_repr, Class=className, nowrap="on"), LRS_location_repr, LRS_location_value))
 
+          			if LRS_flag:
+                			tr.append(TDCell(HT.TD(LRS_score_repr, Class=className), LRS_score_repr, LRS_score_value))
+                			tr.append(TDCell(HT.TD(LRS_location_repr, Class=className), LRS_location_repr, LRS_location_value))
+		
 			else:
 				tr.append(TDCell(HT.TD("N/A", Class=className), "N/A", "N/A"))
-            			tr.append(TDCell(HT.TD("N/A", Class=className), "N/A", "N/A"))
+				tr.append(TDCell(HT.TD("N/A", Class=className), "N/A", "N/A"))
+
+
+		
 
 			tblobj_body.append(tr)
-
+            
 			for ncol, item in enumerate([thisTrait.name, PhenotypeString, thisTrait.authors, thisTrait.year, thisTrait.pubmed_id, LRS_score_repr, LRS_location_repr]):
 				worksheet.write([newrow, ncol], item)
 

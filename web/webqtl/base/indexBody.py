@@ -1,174 +1,148 @@
 index_body_string = """
-<TD vAlign=top width="40%" align="left" height=10 bgColor=#eeeeee>
+<TD vAlign=top width="40%" align="left" height=10 bgColor=#FFFAFA>
 							<p style="font-size:18px;font-family:verdana;color:black"><B> Select and Search</B>
 							<Form METHOD="POST" ACTION="/webqtl/main.py" ENCTYPE="multipart/form-data" NAME="SEARCHFORM">
-
 								<TABLE width="100%">
-					
-					<!--  SPECIES  SELECTION -->				
-									<TR>
-										<TD align=right height="35" style="font-size:14px;font-family:verdana;color:black" width="16%">
-											<B>Species:</B>
-										</TD>
-
-										<TD width="3%">
-										</TD>
-
-										<TD NOWRAP width="85%" align="left">
-											<DIV Id="menu0">
-												<Select NAME="species" size=1 id="species" onchange="fillOptions('species');">
-												</Select>
-											</DIV>
-										</TD>
-									</TR>
-				
-					<!--  GROUP  SELECTION -->	
-			
-									<TR>
-
-										<TD align="right" height="35" style="font-size:14px;font-family:verdana;color:black">
-											<B>Group:</B>
-										</TD>
-
-										<TD width="3%">
-										</TD>
-
-										<TD NOWRAP width="85%" align="left">
-											<DIV Id="menu1">
-
-												<Select NAME="cross" size=1 id="cross" onchange="fillOptions('cross');">
-												</Select>
-											<input type="button" class="button" value=" Info " onCLick="javascript:crossinfo();">
-											</DIV>
-										</TD>
-									</TR>
-
-
+								
 					<!--  TYPE  SELECTION -->		
 		
 									<TR>
-
-										<TD align=right height=35 style="font-size:14px;font-family:verdana;color:black">
-											<B>Type:</B>
+										<TD align=left style="font-size:14px;font-family:arial;color:black">
+											<B>Find </B>
 										</TD>
-
-										<TD width="3%">
-										</TD>
-										<TD NOWRAP width="85%" align="left">
-											<DIV Id="menu2">
-												<Select NAME="tissue" size=1 id="tissue" onchange="fillOptions('tissue');">
-
+									</TR>										
+									<TR>
+										<TD NOWRAP width="50%" align="left">
+											<DIV Id="type_select">
+												<Select NAME="type" size=1 style="width:200px;" id="type_menu" Class="type_menu">
+													<Option value="Hippocampus">Genes/Molecular traits</Option>
+													<Option value="Phenotypes">Phenotypes</Option>
+													<Option value="Genotypes">Markers/SNPs</Option>
 												</Select>
 											</DIV>
 										</TD>
-									</TR>
-		
-
-					<!--  DATABASE  SELECTION -->		
-									<TR>
-										<TD align=right height=35 style="font-size:14px;font-family:verdana;color:black">
-											<B>Data Set:</B>
+									</TR>								
+								
+					<!-- SEARCH -->		
+								 	<TR>
+										<TD align=left NOWRAP="on" style="font-size:14px;font-family:arial;color:black" width="10%">
+											<B>related to </B>
 										</TD>
-
-										<TD width="3%">
-										</TD>
-
-										<TD NOWRAP width="85%" align="left">
-											<DIV Id="menu3">
-												<Select NAME="database" size=1 id="database"> 
-												</Select>
-												<input type="button" class="button" value=" Info " onCLick="javascript:databaseinfo();">
-											</DIV>
-
-										</TD>
-									</TR>
-
-					<!--  USER HELP   -->				
-									<TR>
-										<TD align=right height=20 width="10%">
-										</TD>
-										<TD width="3%">
-										</TD>
-
-										<TD align="left" width="85%">
-											<P class="fs12">&nbsp;&nbsp;&nbsp;&nbsp;Databases marked with <B>**</B> suffix are not public yet. 
-											<BR>&nbsp;&nbsp;&nbsp;&nbsp;Access requires <A HREF="/account.html" target="_blank" class="fs14"><small>user login</small></A>.</P>
-										</TD>
-									</TR>
-
-
-<!--  GET ANY  SEARCH -->			
-									<TR>
-										<TD align=right height=35 NOWRAP="on" style="font-size:14px;font-family:verdana;color:black" width="10%">
-											<B>Get Any:</B>
-										</TD>
-
-										<TD width="3%">
-										</TD>
-
-										<TD NOWRAP width="85%" align="left">
-
-											<input id="tfor" name="ORkeyword" style="width:420px; background-color:white; font-family:verdana; font-size:14px" type="text" maxlength="500">
-										</TD>
-									</TR>
-
-
-
-<!--  GET ANY HELP   -->
-									<TR>
-										<TD align=right height=20 width="10%">
-										</TD>
-										<TD width="3%">
-
-										</TD>
-										<TD width="85%" align="left">
-											<P class="fs12">&nbsp;&nbsp;&nbsp;&nbsp;Enter terms, genes, ID numbers in the <B>Get Any</B> field.  
-											<BR>&nbsp;&nbsp;&nbsp;&nbsp;Use <B>*</B> or <B>?</B> wildcards (Cyp*a?, synap*).
-											<BR>&nbsp;&nbsp;&nbsp;&nbsp;Use <B>Combined</B> for terms such as <I>tyrosine kinase</I>.</P>
-
-										</TD>
-									</TR>
-
-
-
-<!--  COMBINED SEARCH  -->
-
-									<TR>
-										<TD align=right height=35 NOWRAP="on" STYLE="font-size:14px;font-family:verdana;color:black" width="10%">
-											<B>Combined:</B>
-										</TD>
-
-										<TD width="3%">
-										</TD>
-
-										<TD NOWRAP width="85%" align="left">
-											<input id="tfand" NAME="ANDkeyword"  STYLE="width:420px; background-color:white; font-family:verdana; font-size:14px" type="text" maxlength="500">
-											<input name="matchwhole" type="hidden" value="ON"> 
-										</TD>
-									</TR>
-
-
-
-<!--  SEARCH, MAKE DEFAULT, ADVANCED SEARCH -->
-
-									<TR ALIGN="center">
-										<TD width="3%">
-										</TD>
-										<TD width="3%">
+									</TR>								 		
+									<TR valign="bottom">
+										<TD NOWRAP width="60%" align="left">
+											<input name="keyword" style="width:375px; background-color:white; font-family:arial; font-size:14px" type="text" maxlength="500">
+											<select name="and_or" style="width:60px;">
+												<option value="OR" selected="yes">ANY</option>
+												<option value="AND">ALL</option>
+											</select>
+										</TD>		
+																		
+										<TD ALIGN="left">
+										    <INPUT id="btsearch" TYPE="Submit" CLASS="button" STYLE="font-size:12px" VALUE="  Search  ">
 										</TD>										
-										<TD ALIGN="left" HEIGHT="40" COLSPAN=3>
-											<INPUT id="btsearch" TYPE="Submit" CLASS="button" STYLE="font-size:12px" VALUE="  Search  ">&nbsp;&nbsp;&nbsp;&nbsp;
-										       <INPUT TYPE="button" CLASS="button" STYLE="font-size:12px" VALUE="  Make Default  " onClick = "setDefault(this.form);">&nbsp;&nbsp;&nbsp;&nbsp;	
-											<INPUT TYPE="button" CLASS="button" STYLE="font-size:12px" VALUE="  Advanced Search  " onClick="javascript:window.open('/index3.html', '_self');">
+									</TR>	
+									
+									<TR>
+										<TD align="center" valign="top" colspan=3>
+											<A HREF="#" Class="toggle_advanced"> Advanced Options </A>
+										</TD>								
+									</TR>				
 
-										</TD>
-									</TR>
+					<!--  SPECIES  SELECTION -->	
+										<TR Class="advanced_option">
+											<TD align=left style="font-size:14px;font-family:arial;color:black" width="10%">
+												<B>Species</B>
+											</TD>		
+										</TR>											
+										<TR Class="advanced_option">
+											<TD NOWRAP width="50%" align="left">
+												<DIV Id="menu0">
+													<Select NAME="species" size=1 id="species" onchange="fillOptions('species');">
+													</Select>
+												</DIV>
+											</TD>
+										</TR>
+					
+						<!--  GROUP  SELECTION -->	
+										<TR Class="advanced_option">
+											<TD align=left style="font-size:14px;font-family:arial;color:black" width="10%">
+												<B>Group</B>
+											</TD>		
+										</TR>				
+										<TR Class="advanced_option">
+											<TD NOWRAP width="50%" align="left">
+												<DIV Id="menu1">
+													<Select NAME="cross" size=1 id="cross" onchange="fillOptions('cross');">
+													</Select>
+												<input type="button" class="buttonsmaller" value="Info" onCLick="javascript:crossinfo();">
+												</DIV>
+											</TD>
+										</TR>
+
+						<!--  TISSUE  SELECTION -->		
+										<TR Class="advanced_option">
+											<TD align=left style="font-size:14px;font-family:arial;color:black" width="10%">
+												<B>Tissue/Type</B>
+											</TD>		
+										</TR>			
+										<TR Class="advanced_option">
+											<TD NOWRAP width="50%" align="left">
+												<DIV Id="menu2">
+													<Select NAME="tissue" size=1 id="tissue" onchange="fillOptions('tissue');">
+													</Select>
+												</DIV>
+											</TD>
+										</TR>											
+										
+			
+						<!--  DATABASE  SELECTION -->	
+										<TR Class="advanced_option">
+											<TD align=left style="font-size:14px;font-family:arial;color:black" width="10%">
+												<B>Database</B>
+											</TD>		
+										</TR>							
+										<TR Class="advanced_option">								
+											<TD NOWRAP width="50%" align="left">
+												<DIV Id="menu3">
+													<Select NAME="database" size=1 id="database"> 
+													</Select>
+													<input type="button" class="buttonsmaller" value="Info" onCLick="javascript:databaseinfo();">
+												</DIV>
+											</TD>
+											
+										</TR>
+	
+						<!--  USER HELP   -->				
+										<TR Class="advanced_option">
+											<TD align="left" width="50%">
+												<P class="fs12">&nbsp;&nbsp;&nbsp;&nbsp;Databases marked with <B>**</B> suffix are not public yet. 
+												<BR>&nbsp;&nbsp;&nbsp;&nbsp;Access requires <A HREF="http://www.genenetwork.org/account.html" target="_blank" class="fs14"><small>user login</small></A>.</P>
+											</TD>
+										</TR
+	
+	<!--  SEARCH, ADVANCED SEARCH, MAKE DEFAULT  -->
+	
+										<TR ALIGN="center" Class="advanced_option">
+											<TD ALIGN="left" HEIGHT="40" COLSPAN=3>
+											   <TABLE WIDTH="50%">
+											       <TD ALIGN="left" width="20%">
+											           <INPUT TYPE="button" CLASS="button" STYLE="font-size:12px" VALUE="  Make Default  " onClick = "setDefault(this.form);">	
+											       </TD>
+											       <TD ALIGN="left">
+												       &nbsp;&nbsp;&nbsp;<INPUT TYPE="button" CLASS="button" STYLE="font-size:12px" VALUE="Advanced Search" onClick="javascript:window.open('index3.html', '_self');">
+											       </TD>
+											   </TABLE>
+											</TD>
+										</TR>
+
 								</TABLE>
 								<INPUT TYPE="hidden" NAME="FormID" VALUE="searchResult">
 								<INPUT TYPE="hidden" NAME="RISet" VALUE="BXD">
 								<SCRIPT SRC="/javascript/selectDatasetMenu.js"></SCRIPT>
 							</FORM>
 							</CENTER>
+
 
 
 
@@ -214,24 +188,45 @@ Quick HELP Examples and </B>
 <!-- START OF TOP RIGHT PANEL  -->
 
 <TD vAlign=top width="40%" bgColor=#FFFFFF>
-							<p style="font-size:15px;font-family:verdana;color:black"><B>Websites Affiliated with GeneNetwork</B></p>
-		<p style="font-size:12px;font-family:verdana;color:black">
-			<ul>
-				<li><a href="http://ucscbrowser.genenetwork.org/" target="_blank">Genome Browser</a> at UTHSC</li>
-				<li><a href="http://galaxy.genenetwork.org/" target="_blank">Galaxy</a> at UTHSC</li>
-				<li>GeneNetwork at <a href="http://ec2.genenetwork.org/" target="_blank">Amazon Cloud (EC2)</a></li>
-				<li>GeneNetwork Source Codes at <a href="http://sourceforge.net/projects/genenetwork/" target="_blank">SourceForge</a></li>
-				<li>GeneNetwork Source Codes at <a href="https://github.com/genenetwork/genenetwork" target="_blank">GitHub</a></li>
-			</ul>
-		</p>
+							<p style="font-size:15px;font-family:verdana;color:black"><B>Top New Features</B> &nbsp;&nbsp; </p>
+
+							<BLOCKQUOTE>
+                                                                <p style="font-size:12px;font-family:verdana;color:black"> GeneNetwork on the <A HREF="http://ec2.genenetwork.org" target="_blank" class="fs14"><small>Cloud (EC2)</small></A></P>
+                                                        </BLOCKQUOTE>
+
+	<BLOCKQUOTE>
+		<p style="font-size:12px;font-family:verdana;color:black"> GeneNetwork on <A HREF="https://sourceforge.net/projects/genenetwork/" target="_blank" class="fs14"><small>SourceForge</small></A></P>
+	</BLOCKQUOTE>
+
+							<BLOCKQUOTE>
+								<p style="font-size:12px;font-family:verdana;color:black"> Download GeneNetwork <A HREF="http://www.genenetwork.org/GN_July_05_2011.tar" target="_blank" class="fs14"><small>source code</small></A> and database (<A HREF="http://www.genenetwork.org/db_webqtl_simplified_1.sql.gz" target="_blank" class="fs14"><small>slim version</small></A>). See installation <A HREF="http://wiki.genenetwork.org/index.php/Mirror_Installation_Requirements" target="_blank" class="fs14"><small>requirements</small></A> and <A HREF="ftp://tyche.uthsc.edu/GN_install.sh" target="_blank" class="fs14"><small>instructions</small></A>.</P>
+							</BLOCKQUOTE>
+
+							<BLOCKQUOTE>
+								<p style="font-size:12px;font-family:verdana;color:black"> The upgraded <A HREF="http://www.genenetwork.org/webqtl/main.py?FormID=snpBrowser" target="_blank" class="fs14"><small>Variant Browser</small></A> now incorporates 70 million mouse SNPs for 94 strains.</P>
+							</BLOCKQUOTE>
+
+							<BLOCKQUOTE>
+								<p style="font-size:12px;font-family:verdana;color:black"> <A HREF="http://ucscbrowser.genenetwork.org/" target="_blank" class="fs14"><small>Whole-Genome Sequencing</small></A> data for the DBA/2J mouse strains and brain <A HREF="http://ucscbrowser.genenetwork.org/" target="_blank" class="fs14"><small>RNA-seq</small></A> for BXD strains</P>
+							</BLOCKQUOTE>		
+
+							<BLOCKQUOTE>
+								<p style="font-size:12px;font-family:verdana;color:black"> <A HREF="http://galaxy.genenetwork.org/" target="_blank" class="fs14"><small>CITG Galaxy Service</small></A>: 200-core cluster at UTHSC for next-gen sequence analysis</P>
+							</BLOCKQUOTE>
+
+
 							<P>____________________________
 
+
+
+						
 							<p style="font-size:15px;font-family:verdana;color:black"><B>Getting Started</B> &nbsp;&nbsp; </p>
 							<OL style="font-size:12px;font-family:verdana;color:black">
 								<LI>Select <B>Species</B> (or select All) 
 								<LI>Select <B>Group</B> (a specific sample)
 								<LI>Select <B>Type</B> of data:  
 								<UL>
+
 									<LI>Phenotype (traits)
 									<LI>Genotype (markers)
 									<LI>Expression (mRNAs)
@@ -240,6 +235,7 @@ Quick HELP Examples and </B>
 								<LI>Enter search terms in the <B>Get Any</B> or <B>Combined</B> field: words, genes, ID numbers, probes, advanced search commands 
 								<LI>Click on the <B>Search</B> button
 								<LI>Optional: Use the <B>Make Default</B> button to save your preferences
+							
 							</OL>
 
 							<P>____________________________
@@ -254,7 +250,7 @@ Quick HELP Examples and </B>
 
 													
 														
-<p style="font-size:12px;font-family:verdana;color:black">Try the <A HREF="http://alexandria.uthsc.edu/" target="_blank" class="fs14"><small>Workstation</small></A> site to explore data and features that are being implemented.</P>
+<p style="font-size:12px;font-family:verdana;color:black">Try the <A HREF="http://proust.uthsc.edu" target="_blank" class="fs14"><small>Test</small></A> site to explore data and features that are being implemented.</P>
 
 
 <p style="font-size:12px;font-family:verdana;color:black">Review the <A HREF="/conditionsofUse.html" target="_blank" class="fs14"><small>Conditions</small></A> and <A HREF="/statusandContact.html" target="_blank" class="fs14"><small>Contacts</small></A> pages for information on the status of data sets and advice on their use and citation.</P> 
@@ -269,12 +265,17 @@ Quick HELP Examples and </B>
 							<UL>
 								<LI><A HREF="http://www.genenetwork.org/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Main GN site at UTHSC</A> (main site)
 								<LI><A HREF="http://www.genenetwork.waimr.uwa.edu.au/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Australia at the UWA</A>
+								<LI><A HREF="http://www.sysgen.org.au/bottom.html" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Genome-Centered Systems Genetics at UWA</A> (Morahan and colleagues)			
 								<LI><A HREF="http://gn.genetics.ucla.edu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">California at UCLA</A>
+
 								<LI><A HREF="http://genenetwork.helmholtz-hzi.de/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Germany at the HZI</A>
 								<LI><A HREF="https://genenetwork.hubrecht.eu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Netherlands at the Hubrecht</A> (Development)
-								<LI><A HREF="http://genenetwork.memphis.edu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Memphis at the U of M</A>
+								<LI><A HREF="http://xzhou3.memphis.edu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Memphis at the U of M</A>
+								<LI><A HREF="http://gnat.versailles.inra.fr/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">France at INRA, Versailles</A> (Development)
 								<LI><A HREF="http://webqtl.bic.nus.edu.sg/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Singapore at the NUS</A>
  								<LI><A HREF="http://genenetwork.epfl.ch/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Switzerland at the EPFL</A>
+
+								<LI><A HREF="http://biopubinfo.zju.edu.cn/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">China at ZJU</A> (no update)</li>
 							</UL>
 
 
