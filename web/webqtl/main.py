@@ -386,6 +386,11 @@ def handler(req):
                                 reload(PlotCorrelationPage)
                                 req.content_type = 'text/html'
                                 page = PlotCorrelationPage.PlotCorrelationPage(fd)
+                        elif fd.formID == 'showCorrelationComparisonPlot':
+                                from correlation import PlotCorrelationComparisonPage
+                                reload(PlotCorrelationComparisonPage)
+                                req.content_type = 'text/html'
+                                page = PlotCorrelationComparisonPage.PlotCorrelationComparisonPage(fd)
                         elif fd.formID == 'partialCorrInput':
                                 from correlation import PartialCorrInputPage
                                 reload(PartialCorrInputPage)
