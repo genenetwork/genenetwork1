@@ -90,7 +90,8 @@ for PublishFreezeId in PublishFreezeIds:
 		PhenotypeId, Locus, DataId, Phenotype_description = aPublishXRef
 		cursor.execute('select LRS from PublishXRef where PhenotypeId=%s and InbredSetId=%s' % (PhenotypeId, InbredSetId))
 		if not cursor.fetchone()[0] is None:
-			continue
+			#continue
+			pass
 		prgy = genotype_1.prgy
 
 		cursor.execute("select Strain.Name, PublishData.value from Strain, PublishData where Strain.Id = PublishData.StrainId and PublishData.Id = %d" % DataId)
