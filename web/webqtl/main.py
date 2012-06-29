@@ -24,21 +24,13 @@
 #
 # Last updated by GeneNetwork Core Team 2010/10/20
 
-
 from mod_python import apache, util, Session, Cookie
 import time
 import string
 
 from base.webqtlFormData import webqtlFormData
 
-import logging
-logging.basicConfig(filename="/tmp/gn_log", level=logging.INFO)
-_log = logging.getLogger("main")
-
-
-
 def handler(req):
-	_log.info("Handling a request")
 	req.content_type = 'text/html'
 
 	formdata = util.FieldStorage(req)
@@ -49,10 +41,8 @@ def handler(req):
 	page = None
 
 	#XZ: this statement must be put into handler function
-	_log.info("Loading session")
 	mod_python_session = Session.Session(req, timeout=864000, lock=0)
 	mod_python_session.load()			
-	_log.info("Done loading session")
 
 	if sid:
 		from cmdLine import procPage
@@ -63,7 +53,6 @@ def handler(req):
 		fd = webqtlFormData(req=req, mod_python_session=mod_python_session, FieldStorage_formdata=formdata)
 
 		if formID:
-		        _log.info("Dispatching on %s, %s"%(formID, fd.formID))
 			#XZ: Special case. Pay attention to parameters! We can NOT pass 'fd'!
                         if fd.formID == 'uploadFile':
 				from base import cookieData
@@ -397,6 +386,11 @@ def handler(req):
                                 reload(PlotCorrelationPage)
                                 req.content_type = 'text/html'
                                 page = PlotCorrelationPage.PlotCorrelationPage(fd)
+                        elif fd.formID == 'showCorrelationComparisonPlot':
+                                from correlation import PlotCorrelationComparisonPage
+                                reload(PlotCorrelationComparisonPage)
+                                req.content_type = 'text/html'
+                                page = PlotCorrelationComparisonPage.PlotCorrelationComparisonPage(fd)
                         elif fd.formID == 'partialCorrInput':
                                 from correlation import PartialCorrInputPage
                                 reload(PartialCorrInputPage)
@@ -654,7 +648,6 @@ def handler(req):
                 ######## Create first page when called with no formID ########
 
 		else:
-			_log.info("Going to the search page")
 			from search import IndexPage
                         reload(IndexPage)
                         page = IndexPage.IndexPage(fd)
