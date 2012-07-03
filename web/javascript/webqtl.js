@@ -107,6 +107,25 @@ function showCorrelationPlot2(db, ProbeSetID, CellID, db2, ProbeSetID2, CellID2,
 	document.showDatabase.submit();
 }
 
+function showCorrelationComparisonPlot(db, ProbeSetID, CellID, db2, ProbeSetID2, CellID2, rank){
+	windowName = 'formTarget' + (new Date().getTime());
+	newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	document.showDatabase.target = windowName;
+	document.showDatabase.FormID.value = "showCorrelationComparisonPlot";
+	document.showDatabase.database.value = db;
+	document.showDatabase.ProbeSetID.value = ProbeSetID;
+	document.showDatabase.CellID.value = CellID;
+	document.showDatabase.database2.value = db2;
+	document.showDatabase.ProbeSetID2.value = ProbeSetID2;
+	document.showDatabase.CellID2.value = CellID2;
+	document.showDatabase.rankOrder.value = rank;
+	//This is to make sure the type of correlation is Sample Correlation
+	if(typeof(document.showDatabase.X_geneSymbol) !== 'undefined'){
+		document.showDatabase.X_geneSymbol.value = null;
+		document.showDatabase.Y_geneSymbol.value = null;
+	}
+	document.showDatabase.submit();
+}
 
 function showProbeInfo(Database,ProbeSetID,CellID){
 	windowName = 'formTarget' + (new Date().getTime());

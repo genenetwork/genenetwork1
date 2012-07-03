@@ -244,8 +244,7 @@ def calcSpearmanMatrix(traits1, traits2, sc, strainThreshold=6,
                             traits1, traits2, sc, strainThreshold,
                             verbose)
     
-def calcMatrixHelper(builder, traits1, traits2, sc, strainThreshold,
-                     verbose):
+def calcMatrixHelper(builder, traits1, traits2, sc, strainThreshold, verbose):
 
     # intelligently figure out strain count
     step0 = time.time()
