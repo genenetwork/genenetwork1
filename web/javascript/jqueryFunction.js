@@ -37,6 +37,17 @@ $('select.type_menu').live('change', function () {
     $('#tissue').trigger('change');
 });
 
+/*
+used by sharing info page (dataSharing/sharingInfoPage, dataSharing/sharingInfo, dataSharing/sharingInfoBody)
+*/
+/*
+$(document).ready(function () {
+    $('td:contains("None")').each(function(){
+        $(this).parents(':eq(0)').prev().css("display", "none");
+        $(this).parents(':eq(0)').css("display", "none");
+    });
+});
+*/
 
 /*
 used by CorrelationPage.py, AddToSelectionPage.py, and SearchResultPage.py
@@ -347,7 +358,6 @@ $(document).ready(function () {
         $('#sectionbody5').toggle();
         return false;
     });
-
 
 
     //////////////////////////////////////////////////////////////
