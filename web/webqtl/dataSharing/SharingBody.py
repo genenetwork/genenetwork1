@@ -212,6 +212,35 @@ sharinginfo_body_string = """<td>
 </td>
 """
 
+sharinginfo_body_string_pheno_geno = """<td>
+<a href="/webqtl/main.py?FormID=sharingListDataset">List of DataSets</a><br>
+<H1 class="title" id="parent-fieldname-title">%s
+<a href="/webqtl/main.py?FormID=sharinginfoedit&GN_AccessionId=%s"><img src="/images/modify.gif" alt="modify this page" border="0" valign="middle"></a>
+<span style="color:red;">%s</span>
+</H1>
+<table border="0" width="100%%">
+<tr>
+<td valign="top" width="50%%">
+<TABLE cellSpacing=0 cellPadding=5 width=100%% border=0>
+                      <TR><TD><b>Title:</b> %s</TD></TR> 
+                      <TR><TD><b>Organism:</b> <a href=http://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=%s>%s</a></TD></tr>
+                      <tr><TD><b>Group:</b> %s</TD></TR>
+</TABLE>
+</td>
+<td valign="top" width="50%%">
+</td>
+</tr>
+</table>
+<HR>
+<p>
+<table width="100%%" border="0" cellpadding="5" cellspacing="0">
+<tr><td><span style="font-size:115%%;font-weight:bold;">Description:</span></td></tr>
+	<tr><td> %s<br><br></td></tr>
+</table>
+</p>
+</td>
+"""
+
 sharinginfoedit_body_string = """<td>
 <H1 class="title">%s</H1>
 <script language="javascript">
@@ -288,3 +317,29 @@ function CheckGNAccesionId(){
 </form>
 </table>
 </td>"""
+
+sharinginfoedit_body_string_pheno_geno = """<td>
+<H1 class="title">%s</H1>
+<table border="0" CELLSPACING="0" CELLPADDING="8">
+<form name="sharinginfoupdate" method="post" action="/webqtl/main.py?FormID=sharinginfoupdate" onsubmit="return CheckGNAccesionId();">
+<input type="hidden" name="Id" value="%s">
+   
+  <tr><TH COLSPAN=2><h2 class="title">Description</h2></TH></tr>
+  <tr><td align="right"><b>Description: </b></td><td><TEXTAREA NAME="Description" cols="77" rows="15">%s</textarea></td></tr>
+  
+  <tr><TH COLSPAN=2><h2 class="title">Administrator ONLY</h2></TH></tr>
+   <tr><td align="right"><b>DB Title in GN:</b></td><td><input type='text' name='InfoPageTitle' size='90' value='%s'></td></tr>
+   <tr><td align="right"><b>Title:</b></td><td><input type='text' name='Title' size='90' value='%s'></td></tr>
+   <tr><td align="right"><b>Organism_Id (Taxonomy ID):</b></td><td><input type='text' name='Organism_Id' size='90' value='%s'></td></tr>
+   <tr><td align="right"><b>Organism:</b></td><td><input type='text' name='Organism' size='90' value='%s'></td></tr>
+   <tr><td align="right"><b>Species:</b></td><td><input type='text' name='Species' size='90' value='%s'></td></tr>
+   <tr><td align="right"><b>Inbred Set:</b></td><td><input type='text' name='InbredSet' size='90' value='%s'></td></tr>
+   <tr><td align="right"><b>Info Page Name:</b></td><td><input type='text' name='InfoPageName' size='90' value='%s'></td></tr>
+   <tr><td align="right"><b>Authorized Users:</b></td><td><input type='text' name='AuthorizedUsers' size='90' value='%s'></td></tr>  
+   
+  <tr><td> <colspan='2' align="center"><input type="Submit" class="button" style="font-size:12px" value="  Submit  "></td></tr>
+
+</form>
+</table>
+</td>"""
+

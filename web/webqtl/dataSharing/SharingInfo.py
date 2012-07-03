@@ -29,6 +29,7 @@ import httplib
 from dbFunction import webqtlDatabaseFunction
 import SharingBody
 
+debug_file = open("/home/zas1024/gn/web/sharingInfo_debug.txt","w")
 
 #########################################
 #      Sharing Info
@@ -43,15 +44,22 @@ class SharingInfo:
 				cursor = webqtlDatabaseFunction.getCursor()
 				if (not cursor):
 						return
-				sql = "select Id, GEO_Series, Status, Title, Organism, Experiment_Type, Summary, Overall_Design, Contributor, Citation, Submission_Date, Contact_Name, Emails, Phone, URL, Organization_Name, Department, Laboratory, Street, City, State, ZIP, Country, Platforms, Samples, Species, Normalization, InbredSet, InfoPageName, DB_Name, Organism_Id, InfoPageTitle, GN_AccesionId, Tissue, AuthorizedUsers, About_Cases, About_Tissue, About_Download, About_Array_Platform, About_Data_Values_Processing, Data_Source_Acknowledge, Progreso from InfoFiles where "
-				if(self.GN_AccessionId):
-						sql += "GN_AccesionId = %s"
-						cursor.execute(sql, self.GN_AccessionId)
-				elif (self.InfoPageName):
-						sql += "InfoPageName = %s"
-						cursor.execute(sql, self.InfoPageName)
+						
+				if (self.InfoPageName):
+					#First get set of groups (BXD, LXS, etc) - ZS
+					group_query = "select Name from InbredSet;"	
+					cursor.execute(group_query)
+					groupNames = cursor.fetchall()
+					for group in groupNames:	
+						if (self.InfoPageName == group + "Publish") or (self.InfoPageName == group + "Geno"):		
+							sql = "select AuthorizedUsers, description from InfoFiles_pg where InfoPageName = %s"		
+							cursor.execute(sql, self.InfoPageName)
+				elif (self.GN_AccessionId):
+					sql = "select Id, GEO_Series, Status, Title, Organism, Experiment_Type, Summary, Overall_Design, Contributor, Citation, Submission_Date, Contact_Name, Emails, Phone, URL, Organization_Name, Department, Laboratory, Street, City, State, ZIP, Country, Platforms, Samples, Species, Normalization, InbredSet, InfoPageName, DB_Name, Organism_Id, InfoPageTitle, GN_AccesionId, Tissue, AuthorizedUsers, About_Cases, About_Tissue, About_Download, About_Array_Platform, About_Data_Values_Processing, Data_Source_Acknowledge, Progreso from InfoFiles where "					
+					sql += "GN_AccesionId = %s"
+					cursor.execute(sql, self.GN_AccessionId)
 				else:
-						raise 'No correct parameter found'
+					raise 'No correct parameter found'
 				info = cursor.fetchone()
 				# fetch datasets file list
 				try:
@@ -67,6 +75,9 @@ class SharingInfo:
 				
 		def getBody(self, infoupdate=""):
 				info, filelist = self.getInfo()
+				newInfo = []
+				#for i in range(len(info)):
+				#	debug_file.write(str(info[i])+"\n")
 				if filelist:
 					htmlfilelist = '<ul style="line-height:160%;">\n'
 					for i in range(len(filelist)):
