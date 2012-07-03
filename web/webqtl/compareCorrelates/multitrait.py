@@ -51,7 +51,6 @@ import htmlModule
 
 cgitb.enable()
 
-
 # where this program's data files are
 RootDir = webqtlConfig.IMGDIR # XZ, 09/10/2008: add module name 'webqtlConfig.'
 RootDirURL = "/image/" # XZ, 09/10/2008: This parameter is not used in this module
@@ -950,7 +949,7 @@ you have selected in the Filter step.
                 for i in range(len(traitPair[1])):
                     corrValue = traitPair[1][i]
                     corrPlotLink = ('''
-                    <a href="javascript:showCorrelationPlot2(db='%s',ProbeSetID='%s',CellID='',db2='%s',ProbeSetID2='%s',CellID2='',rank='%s')">%.2f</a>
+                    <a href="javascript:showCorrelationComparisonPlot(db='%s',ProbeSetID='%s',CellID='',db2='%s',ProbeSetID2='%s',CellID2='',rank='%s')">%.2f</a>
                     ''' % (p["targetDatabaseName"], trait.name,  targetTraits[i].db.name, targetTraits[i].name, "0", corrValue))
                     corr.append(corrPlotLink)
     
