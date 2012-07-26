@@ -32,7 +32,7 @@ ctext += '	<TD colspan=4  style="font-size:12px;font-family:verdana;color:black"
 ctext += '		GeneNetwork support from:'
 ctext += '		<UL>'
 ctext += '		<LI><a class="smallsize" target="_blank" href="http://citg.uthsc.edu">The UT Center for Integrative and Translational Genomics</A>'
-ctext += '		<LI><a class="smallsize" target="_blank" href="http://www.iniastress.org">NIAAA</A> Integrative Neuroscience Initiative on Alcoholism (U01AA13499, U24AA13513, U01AA014425)'
+ctext += '		<LI><a class="smallsize" target="_blank" href="http://www.iniastress.org">NIAAA</A> Integrative Neuroscience Initiative on Alcoholism (U01 AA016662, U01 AA013499, U24 AA013513, U01 AA014425)'
 ctext += '		<LI><a class="smallsize" target="_blank" href="http://www.drugabuse.gov/about/organization/Genetics/geneexpression/index.html">NIDA</A>, <a class="smallsize" target="_blank" href="http://www.nimh.nih.gov/">NIMH</A>, and <a class="smallsize" target="_blank" href="http://www.niaaa.nih.gov/">NIAAA</A> (P20-DA 21131)'
 ctext += '		<LI>NCI <a class="smallsize" target="_blank" href="http://emice.nci.nih.gov/">MMHCC</A> (U01CA105417), <a class="smallsize" target="_blank" href="http://www.ncrr.nih.gov/">NCRR</A> <a class="smallsize" target="_blank" href="http://www.nbirn.net/TestBeds/Mouse/index.htm">BIRN</A>,  (U24 RR021760)'
 ctext += '		</UL>'
