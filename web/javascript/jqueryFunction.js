@@ -536,11 +536,8 @@ $(window).load(function () {
         bootValue = $('input[name=bootCheck1]:checked').val();
         $('input[name=bootCheck]').val(bootValue);
 
-        if ($('input[name=parentsf14regression1]:checked').length > 0) {
-            $('input[name=parentsf14regression]').val('on');
-        } else {
-            $('input[name=parentsf14regression]').val('off');
-        }
+		parentsValue = $('input[name=parentsf14regression1]:checked').val();
+        $('input[name=parentsf14regression]').val(parentsValue);
 
         varValue = $('input[name=applyVarianceSE1]:checked').val();
         $('input[name=applyVarianceSE]').val(varValue);
@@ -591,11 +588,8 @@ $(window).load(function () {
         bootValue = $('input[name=bootCheck2]:checked').val();
         $('input[name=bootCheck]').val(bootValue);
 
-        if ($('input[name=parentsf14regression3]:checked').length > 0) {
-            $('input[name=parentsf14regression]').val('on');
-        } else {
-            $('input[name=parentsf14regression]').val('off');
-        }
+		parentsValue = $('input[name=parentsf14regression3]:checked').val();
+        $('input[name=parentsf14regression]').val(parentsValue);
 
         dataEditingFunc(this.form, 'intervalMap');
 
@@ -603,11 +597,9 @@ $(window).load(function () {
 
     $('#sectionbody4').find('input[name=marker]').click(function () {
         //Changed the way parentsValue is acquired; before it was $(____).is(':checked');
-        if ($('input[name=parentsf14regression2]:checked').length > 0) {
-            $('input[name=parentsf14regression]').val('on');
-        } else {
-            $('input[name=parentsf14regression]').val('off');
-        }
+
+		parentsValue = $('input[name=parentsf14regression2]:checked').val();
+        $('input[name=parentsf14regression]').val(parentsValue);
 
         varValue = $('input[name=applyVarianceSE2]:checked').val();
         $('input[name=applyVarianceSE]').val(varValue);
