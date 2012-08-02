@@ -17,7 +17,7 @@ KMININFORMATIVE = 5
 MULTIPLEMAPPINGLIMIT = 11
 
 #maximum number of traits for correlation
-MAXCORR = 100
+MAXCORR = 500
 
 #Daily download limit from one IP
 DAILYMAXIMUM = 1000
