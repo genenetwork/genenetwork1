@@ -59,7 +59,7 @@ input.button
  background-color : royalblue;
  color : white;
  margin: auto; 
- padding: 1px; 
+ padding: 4px; 
  border-style: outset; 
  border-width: 2px; 
  border-color: #dcdcdc #696969 #696969 #dcdcdc; 
@@ -75,7 +75,7 @@ input.toggle
  background-color : royalblue;
  color : white;
  margin: auto; 
- padding: 1px; 
+ padding: 4px; 
  border-style: outset;
  border-width: 2px; 
  border-color: #dcdcdc #696969 #696969 #dcdcdc; 

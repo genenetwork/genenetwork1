@@ -83,7 +83,7 @@ class CorrelationPage(templatePage):
 
         if not self.openMysql():
             return
-		
+
         if not fd.genotype:
             fd.readGenotype()
 
@@ -268,7 +268,7 @@ class CorrelationPage(templatePage):
 
                 #XZ, 01/08/2009: read the first line
                 line = datasetFile.readline()
-                dataset_strains = webqtlUtil.readLineCSV(line)[1:]
+                dataset_strains = webqtlUtil.readLineCSV(line)[1:]          
 
                 #XZ, 01/08/2009: This step is critical. It is necessary for this new method.
                 #XZ: The original function fetchAllDatabaseData uses all strains stored in variable _strains to
@@ -447,7 +447,7 @@ class CorrelationPage(templatePage):
             if self.method in ["2","5"]:
                 rankOrder = 1;     
             thisTrait.rankOrder =rankOrder
-	
+
             #XZ, 26/09/2008: Method is 4 or 5. Have fetched tissue corr, but no literature correlation yet.
             if len(item) == 5:
                 thisTrait.tissueCorr = item[3]
@@ -489,6 +489,8 @@ class CorrelationPage(templatePage):
         if mdpchoice:
             hddn['MDPChoice']=mdpchoice
 
+        if self.db.type == "ProbeSet":
+            hddn['hiddenColumns'] = "Gene ID,Homologene ID"
 
         #XZ, 09/18/2008: pass the trait data to next page by hidden parameters.
         webqtlUtil.exportData(hddn, fd.allTraitData)
@@ -558,7 +560,7 @@ class CorrelationPage(templatePage):
         addselect = HT.Href(url="#redirect", onClick="addRmvSelection('%s', document.getElementsByName('%s')[0], 'addToSelection');" % (RISet, mainfmName))
         addselect_img = HT.Image("/images/add_collection1_final.jpg", name="addselect", alt="Add To Collection", title="Add To Collection", style="border:none;")
         addselect.append(addselect_img)
-	selectall = HT.Href(url="#redirect", onClick="checkAll(document.getElementsByName('%s')[0]);" % mainfmName)
+        selectall = HT.Href(url="#redirect", onClick="checkAll(document.getElementsByName('%s')[0]);" % mainfmName)
         selectall_img = HT.Image("/images/select_all2_final.jpg", name="selectall", alt="Select All", title="Select All", style="border:none;")
         selectall.append(selectall_img)
         selectinvert = HT.Href(url="#redirect", onClick = "checkInvert(document.getElementsByName('%s')[0]);" % mainfmName)
@@ -574,37 +576,105 @@ class CorrelationPage(templatePage):
         selectandor.append(('AND','and'))
         selectandor.append(('OR','or'))
         selectandor.selected.append('AND')
-        
-	pageTable = HT.TableLite(cellSpacing=0,cellPadding=0,width="100%", border=0, align="Left")
+        #outside analysis part
+        gcat = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('%s')[0], 'GCAT');" % mainfmName)
+        gcat_img = HT.Image("/images/GCAT_logo_final.jpg", name="GCAT", alt="GCAT", title="GCAT", style="border:none")
+        gcat.append(gcat_img)
+        geneweaver = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('%s')[0], 'ODE');" % mainfmName)
+        geneweaver_img = HT.Image("/images/ODE_logo_final.jpg", name="ode", alt="Gene Weaver", title="ODE", style="border:none")
+        geneweaver.append(geneweaver_img)
 
-	containerTable = HT.TableLite(cellSpacing=0,cellPadding=0,width="90%",border=0, align="Left")
+        #ZS: All of the below (until the variable pageTable is defined) is related to WebGestalt/Gene Set third party tool
 
-	optionsTable = HT.TableLite(cellSpacing=2, cellPadding=0,width="320", height="80", border=0, align="Left")
-        optionsTable.append(HT.TR(HT.TD(selectall), HT.TD(reset), HT.TD(selectinvert), HT.TD(addselect), align="left"))
-        optionsTable.append(HT.TR(HT.TD("&nbsp;"*1,"Select"), HT.TD("Deselect"), HT.TD("&nbsp;"*1,"Invert"), HT.TD("&nbsp;"*3,"Add")))
+        '''
+        #XZ, 07/07/2010: I comment out this block of code.
+        WebGestaltScript = HT.Script(language="Javascript")
+        WebGestaltScript.append("""
+                setTimeout('openWebGestalt()', 2000);
+                function openWebGestalt(){
+                        var thisForm = document['WebGestalt'];
+                        makeWebGestaltTree(thisForm, '%s', %d, 'edag_only.php');
+                }
+            """ % (mainfmName, len(traitList)))	
+        '''
+
+        self.cursor.execute('SELECT GeneChip.GO_tree_value FROM GeneChip, ProbeFreeze, ProbeSetFreeze WHERE GeneChip.Id = ProbeFreeze.ChipId and ProbeSetFreeze.ProbeFreezeId = ProbeFreeze.Id and ProbeSetFreeze.Name = "%s"' % self.db.name)
+        result = self.cursor.fetchone()
+
+        if result:
+            GO_tree_value = result[0]
+
+            if GO_tree_value != None:
+            
+                WebGestalt = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('%s')[0], 'GOTree');" % mainfmName)
+                WebGestalt_img = HT.Image("/images/webgestalt_icon_final.jpg", name="webgestalt", alt="Gene Set Analysis Toolkit", title="Gene Set Analysis Toolkit", style="border:none")        
+                WebGestalt.append(WebGestalt_img)      
+                  
+                hddnWebGestalt = {
+                                  'id_list':'',
+                                  'correlation':'',
+                                  'id_value':'', 
+                                  'llid_list':'',
+                                  'id_type':GO_tree_value,
+                                  'idtype':'',
+                                  'species':'',
+                                  'list':'',
+                                  'client':''}
+
+                hddnWebGestalt['ref_type'] = hddnWebGestalt['id_type']
+                hddnWebGestalt['cat_type'] = 'GO'
+                hddnWebGestalt['significancelevel'] = 'Top10'
+
+                if species == 'rat':
+                    hddnWebGestalt['org'] = 'Rattus norvegicus'
+                elif species == 'human':
+                    hddnWebGestalt['org'] = 'Homo sapiens'
+                elif species == 'mouse':
+                    hddnWebGestalt['org'] = 'Mus musculus'
+                else:
+                    hddnWebGestalt['org'] = ''
+            
+                for key in hddnWebGestalt.keys():
+                        form.append(HT.Input(name=key, value=hddnWebGestalt[key], type='hidden'))
+
+        pageTable = HT.TableLite(cellSpacing=0,cellPadding=0,width="100%", border=0, align="Left")
+
+        containerTable = HT.TableLite(cellSpacing=0,cellPadding=0,width="90%",border=0, align="Left")
+
+        optionsTable = HT.TableLite(cellSpacing=2, cellPadding=0, height="80", border=0, align="Left")
+
+        #ZS: I don't want to use try/except here, but "if GO_tree_value != None" doesn't work
+        #    and googling seems to indicate that many people think this is the correct way
+        try:
+            optionsTable.append(HT.TR(HT.TD(selectall, width="77"), HT.TD(reset, width="77"), HT.TD(selectinvert, width="77"), HT.TD(addselect, width="77"), HT.TD("&nbsp;"*3, geneweaver, width="94"), HT.TD(gcat, width="77"), HT.TD(WebGestalt, width="77"), align="left"))
+            optionsTable.append(HT.TR(HT.TD("&nbsp;"*1,"Select"), HT.TD("Deselect"), HT.TD("&nbsp;"*1,"Invert"), HT.TD("&nbsp;"*3,"Add"), HT.TD("Gene Weaver"), HT.TD("&nbsp;"*2, "GCAT"), HT.TD("Gene Set")))
+        except:
+            optionsTable.append(HT.TR(HT.TD(selectall, width="77"), HT.TD(reset, width="77"), HT.TD(selectinvert, width="77"), HT.TD(addselect, width="77"), HT.TD("&nbsp;"*3, geneweaver, width="94"), HT.TD(gcat, width="77"), align="left"))
+            optionsTable.append(HT.TR(HT.TD("&nbsp;"*1,"Select"), HT.TD("Deselect"), HT.TD("&nbsp;"*1,"Invert"), HT.TD("&nbsp;"*3,"Add"), HT.TD("Gene Weaver"), HT.TD("&nbsp;"*2, "GCAT")))
         containerTable.append(HT.TR(HT.TD(optionsTable)))
 
         functionTable = HT.TableLite(cellSpacing=2,cellPadding=0,width="480",height="80", border=0, align="Left")
         functionRow = HT.TR(HT.TD(networkGraph, width="16.7%"), HT.TD(cormatrix, width="16.7%"), HT.TD(partialCorr, width="16.7%"), HT.TD(mcorr, width="16.7%"), HT.TD(mintmap, width="16.7%"), HT.TD(heatmap), align="left")
         labelRow = HT.TR(HT.TD("&nbsp;"*1,HT.Text("Graph")), HT.TD("&nbsp;"*1,HT.Text("Matrix")), HT.TD("&nbsp;"*1,HT.Text("Partial")), HT.TD(HT.Text("Compare")), HT.TD(HT.Text("QTL Map")), HT.TD(HT.Text(text="Heat Map")))
         functionTable.append(functionRow, labelRow)
-	containerTable.append(HT.TR(HT.TD(functionTable), HT.BR()))
+        containerTable.append(HT.TR(HT.TD(functionTable), HT.BR()))
+        containerTable.append(HT.TR(HT.TD("&nbsp;")))
 
-        #more_options = HT.Image("/images/more_options1_final.jpg", name='more_options', alt="Expand Options", title="Expand Options", style="border:none;", Class="toggleShowHide")
+        otherOptionsTable = HT.TableLite(cellspacing=0, cellPadding=0, border=0, align="Left")
 
-        #containerTable.append(HT.TR(HT.TD(more_options, HT.BR(), HT.BR())))
+        moreOptions = HT.Input(type='button', name='options', value='More Options', onClick="", Class="toggle")
+        fewerOptions = HT.Input(type='button', name='options', value='Fewer Options', onClick="", Class="toggle")
 
-        moreOptions = HT.Input(type='button',name='options',value='More Options', onClick="",Class="toggle")
-        fewerOptions = HT.Input(type='button',name='options',value='Fewer Options', onClick="",Class="toggle")
+        if (fd.formdata.getvalue('showHideOptions') == 'less'):
+            otherOptionsTable.append(HT.TR(HT.TD(HT.Div(fewerOptions, Class="toggleShowHide")), HT.TD("&nbsp;"*5, xlsUrl)))
+        else:
+            otherOptionsTable.append(HT.TR(HT.TD(HT.Div(moreOptions, Class="toggleShowHide")), HT.TD("&nbsp;"*5, xlsUrl)))
 
-        if (fd.formdata.getvalue('showHideOptions') == 'less'):		
-			containerTable.append(HT.TR(HT.TD("&nbsp;"), height="10"), HT.TR(HT.TD(HT.Div(fewerOptions, Class="toggleShowHide"))))
-			containerTable.append(HT.TR(HT.TD("&nbsp;")))
-        else:	
-			containerTable.append(HT.TR(HT.TD("&nbsp;"), height="10"), HT.TR(HT.TD(HT.Div(moreOptions, Class="toggleShowHide"))))	
-			containerTable.append(HT.TR(HT.TD("&nbsp;")))
+        containerTable.append(HT.TR(HT.TD(otherOptionsTable)))
+        containerTable.append(HT.TR(HT.TD("&nbsp;")))
 
-        containerTable.append(HT.TR(HT.TD(HT.Span(selecttraits,' with r > ',selectgt, ' ',selectandor, ' r < ',selectlt,Class="bd1 cbddf fs11")), style="display:none;", Class="extra_options"))
+        containerTable.append(HT.TR(HT.TD(HT.Span(selecttraits,' with r > ', selectgt, ' ', selectandor, ' r < ', selectlt, Class="bd1 cbddf fs11"), HT.BR()), style="display:none;", Class="extra_options"))
+        containerTable.append(HT.TR(HT.TD("&nbsp;")))
 
         chrMenu = HT.Input(type='hidden',name='chromosomes',value='all')
 
@@ -615,9 +685,7 @@ class CorrelationPage(templatePage):
 
         if self.db.type=="Geno":
 
-	    containerTable.append(HT.TR(HT.TD(xlsUrl, height=40)))
-
-	    pageTable.append(HT.TR(HT.TD(containerTable)))
+            pageTable.append(HT.TR(HT.TD(containerTable)))
 
             tblobj['header'], worksheet = self.getTableHeaderForGeno( method=self.method, worksheet=worksheet, newrow=newrow, headingStyle=headingStyle)
             newrow += 1
@@ -636,11 +704,11 @@ class CorrelationPage(templatePage):
 
             div = HT.Div(webqtlUtil.genTableObj(tblobj=tblobj, file=filename, sortby=sortby, tableID = "sortable", addIndex = "1"), corrScript, Id="sortable")
 
-	    pageTable.append(HT.TR(HT.TD(div)))
+            pageTable.append(HT.TR(HT.TD(div)))
 
- 	    form.append(HT.Input(name='ShowStrains',type='hidden', value =1),
-            	 	HT.Input(name='ShowLine',type='hidden', value =1),
-            		HT.P(), HT.P(), pageTable)
+            form.append(HT.Input(name='ShowStrains',type='hidden', value =1),
+                        HT.Input(name='ShowLine',type='hidden', value =1),
+                        HT.P(), HT.P(), pageTable)
             TD_LR.append(corrHeading, info, form, HT.P())
 
             self.dict['body'] =  str(TD_LR)
@@ -649,10 +717,8 @@ class CorrelationPage(templatePage):
 
         elif self.db.type=="Publish":
 
-	    containerTable.append(HT.TR(HT.TD(xlsUrl, height=40)))
+            pageTable.append(HT.TR(HT.TD(containerTable)))
 
-	    pageTable.append(HT.TR(HT.TD(containerTable)))
-	
             tblobj['header'], worksheet = self.getTableHeaderForPublish(method=self.method, worksheet=worksheet, newrow=newrow, headingStyle=headingStyle)
             newrow += 1
 
@@ -668,10 +734,10 @@ class CorrelationPage(templatePage):
             objfile = open('%s.obj' % (webqtlConfig.TMPDIR+filename), 'wb')
             cPickle.dump(tblobj, objfile)
             objfile.close()
-			# NL, 07/27/2010. genTableObj function has been moved from templatePage.py to webqtlUtil.py;
+            # NL, 07/27/2010. genTableObj function has been moved from templatePage.py to webqtlUtil.py;
             div = HT.Div(webqtlUtil.genTableObj(tblobj=tblobj, file=filename, sortby=sortby, tableID = "sortable", addIndex = "1"), corrScript, Id="sortable")
 
-	    pageTable.append(HT.TR(HT.TD(div)))
+            pageTable.append(HT.TR(HT.TD(div)))
 
             form.append(
             HT.Input(name='ShowStrains',type='hidden', value =1),
@@ -749,85 +815,9 @@ class CorrelationPage(templatePage):
 
             containerTable.append(HT.TR(HT.TD(HT.Span(var1,var2,var3,customizerButton, "with", dbCustomizer, Class="bd1 cbddf fs11"), HT.BR(), HT.BR()), style="display:none;", Class="extra_options"))
 
-            #outside analysis part
-            GCATButton = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('%s')[0], 'GCAT');" % mainfmName)
-            GCATButton_img = HT.Image("/images/GCAT_logo_final.jpg", name="GCAT", alt="GCAT", title="GCAT", style="border:none")
-            GCATButton.append(GCATButton_img)
+            pageTable.append(HT.TR(HT.TD(containerTable)))
 
-            ODE = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('%s')[0], 'ODE');" % mainfmName)
-            ODE_img = HT.Image("/images/ODE_logo_final.jpg", name="ode", alt="ODE", title="ODE", style="border:none")
-            ODE.append(ODE_img)
-
-            '''
-            #XZ, 07/07/2010: I comment out this block of code.
-            WebGestaltScript = HT.Script(language="Javascript")
-            WebGestaltScript.append("""
-setTimeout('openWebGestalt()', 2000);
-function openWebGestalt(){
-	var thisForm = document['WebGestalt'];
-	makeWebGestaltTree(thisForm, '%s', %d, 'edag_only.php');
-}	
-            """ % (mainfmName, len(traitList)))	
-            '''
-
-            self.cursor.execute('SELECT GeneChip.GO_tree_value FROM GeneChip, ProbeFreeze, ProbeSetFreeze WHERE GeneChip.Id = ProbeFreeze.ChipId and ProbeSetFreeze.ProbeFreezeId = ProbeFreeze.Id and ProbeSetFreeze.Name = "%s"' % self.db.name)
-            result = self.cursor.fetchone()
-
-            if result:
-                GO_tree_value = result[0]
-
-            if GO_tree_value:
-            
-                WebGestalt = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('%s')[0], 'GOTree');" % mainfmName)
-                WebGestalt_img = HT.Image("/images/webgestalt_icon_final.jpg", name="webgestalt", alt="Gene Set Analysis Toolkit", title="Gene Set Analysis Toolkit", style="border:none")        
-                WebGestalt.append(WebGestalt_img)      
-                  
-                hddnWebGestalt = {
-                                  'id_list':'',
-                                  'correlation':'',
-                                  'id_value':'', 
-                                  'llid_list':'',
-                                  'id_type':GO_tree_value,
-                                  'idtype':'',
-                                  'species':'',
-                                  'list':'',
-                                  'client':''}
-
-                hddnWebGestalt['ref_type'] = hddnWebGestalt['id_type']
-                hddnWebGestalt['cat_type'] = 'GO'
-                hddnWebGestalt['significancelevel'] = 'Top10'
-
-                if species == 'rat':
-                    hddnWebGestalt['org'] = 'Rattus norvegicus'
-                elif species == 'human':
-                    hddnWebGestalt['org'] = 'Homo sapiens'
-                elif species == 'mouse':
-                    hddnWebGestalt['org'] = 'Mus musculus'
-                else:
-                    hddnWebGestalt['org'] = ''
-            
-                for key in hddnWebGestalt.keys():
-                    form.append(HT.Input(name=key, value=hddnWebGestalt[key], type='hidden'))
-
-
-	    LinkOutTable = HT.TableLite(cellSpacing=2,cellPadding=0,width="320",height="80", border=0, align="Left")
-
-	    if not GO_tree_value:
-	        LinkOutRow = HT.TR(HT.TD(GCATButton, width="50%"), HT.TD(ODE, width="50%"), align="left")
-	        LinkOutLabels = HT.TR(HT.TD("&nbsp;", HT.Text("GCAT"), width="50%"), HT.TD("&nbsp;",HT.Text("ODE"), width="50%"), align="left")
-	    else:
-	        LinkOutRow = HT.TR(HT.TD(WebGestalt, width="25%"), HT.TD(GCATButton, width="25%"), HT.TD(ODE, width="25%"), align="left")
-	        LinkOutLabels = HT.TR(HT.TD(HT.Text("Gene Set")), HT.TD("&nbsp;"*2, HT.Text("GCAT")), HT.TD("&nbsp;"*3, HT.Text("ODE")), style="display:none;", Class="extra_options")
-
-	    LinkOutTable.append(LinkOutRow,LinkOutLabels)
-
-            containerTable.append(HT.TR(HT.TD(LinkOutTable), Class="extra_options", style="display:none;"))
-
-	    containerTable.append(HT.TR(HT.TD(xlsUrl, HT.BR(), HT.BR())))
-
-	    pageTable.append(HT.TR(HT.TD(containerTable)))
-
-	    pageTable.append(HT.TR(HT.TD(div)))
+            pageTable.append(HT.TR(HT.TD(div)))
 
             if species == 'human':
                 heatmap = ""
@@ -835,13 +825,13 @@ function openWebGestalt(){
             form.append(HT.Input(name='ShowStrains',type='hidden', value =1),
                             HT.Input(name='ShowLine',type='hidden', value =1),
                             info, HT.BR(), pageTable, HT.BR())
-			
+
             TD_LR.append(corrHeading, form, HT.P())
 
 
             self.dict['body'] = str(TD_LR)
             self.dict['title'] = 'Correlation'
-			# updated by NL. Delete function generateJavaScript, move js files to dhtml.js, webqtl.js and jqueryFunction.js
+            # updated by NL. Delete function generateJavaScript, move js files to dhtml.js, webqtl.js and jqueryFunction.js
             self.dict['js1'] = ''
             self.dict['js2'] = 'onLoad="pageOffset()"'
             self.dict['layer'] = self.generateWarningLayer()
@@ -987,9 +977,8 @@ Resorting this table <br>
         except: return False
    
 
-	
-    def fetchAllDatabaseData(self, species, GeneId, GeneSymbol, strains, db, method, returnNumber, tissueProbeSetFreezeId):
 
+    def fetchAllDatabaseData(self, species, GeneId, GeneSymbol, strains, db, method, returnNumber, tissueProbeSetFreezeId):
         StrainIds = []
         for item in strains:
             self.cursor.execute('''SELECT Strain.Id FROM Strain, Species WHERE Strain.Name="%s" and Strain.SpeciesId=Species.Id and Species.name = "%s" ''' % (item, species))
@@ -1015,7 +1004,7 @@ Resorting this table <br>
             temp = []
             StrainIdstep = StrainIds[step*25:min(len(StrainIds), (step+1)*25)]
             for item in StrainIdstep: temp.append('T%s.value' % item)
-				
+
             if db.type == "Publish":
                 query = "SELECT PublishXRef.Id, "
                 dataStartPos = 1
@@ -1038,7 +1027,7 @@ Resorting this table <br>
                 if method == "4" or method == "5":
                     query = "SELECT %s.Name, %s.Correlation, %s.PValue," %  (db.type,tempTable, tempTable) 
                     dataStartPos = 3 
-				
+
                 query += string.join(temp,', ')
                 query += ' FROM (%s, %sXRef, %sFreeze)' % (db.type, db.type, db.type)
                 if method == "3":
