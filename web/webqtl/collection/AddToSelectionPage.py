@@ -157,9 +157,9 @@ class AddToSelectionPage(templatePage):
 		importMenu.append(('append','append'))
 		importMenu.append(('replace','replace'))            
 	
-		ODE = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('showDatabase')[0], 'ODE');")
-		ODE_img = HT.Image("/images/ODE_logo_final.jpg", name="ode", alt="ODE", title="ODE", style="border:none")
-		ODE.append(ODE_img)
+		GeneWeaver = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('showDatabase')[0], 'GeneWeaver');")
+		GeneWeaver_img = HT.Image("/images/ODE_logo_final.jpg", name="GeneWeaver", alt="GeneWeaver", title="GeneWeaver", style="border:none")
+		GeneWeaver.append(GeneWeaver_img)
 	        
 		GCATButton = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('showDatabase')[0], 'GCAT');")
 		GCATButton_img = HT.Image("/images/GCAT_logo_final.jpg", name="GCAT", alt="GCAT", title="GCAT", style="border:none")
@@ -220,9 +220,9 @@ class AddToSelectionPage(templatePage):
         	containerTable = HT.TableLite(cellSpacing=2,cellPadding=0,width="90%",border=0,align="Left")
         	postContainerTable = HT.TableLite(cellSpacing=2,cellPadding=0,width="90%",border=0,align="Left")
 
-        	optionsTable = HT.TableLite(cellSpacing=2, cellPadding=0,width="400", border=0, align="Left")
-        	optionsTable.append(HT.TR(HT.TD(selectall), HT.TD(reset), HT.TD(selectinvert), HT.TD(removeselect), HT.TD(exportSelect)))
-        	optionsTable.append(HT.TR(HT.TD("&nbsp;"*1,"Select"), HT.TD("Deselect"), HT.TD("&nbsp;"*1,"Invert"), HT.TD("&nbsp;"*1,"Remove"), HT.TD("&nbsp;"*1,"Export")))
+        	optionsTable = HT.TableLite(cellSpacing=2, cellPadding=0,width="640", border=0, align="Left")
+        	optionsTable.append(HT.TR(HT.TD(selectall), HT.TD(reset), HT.TD(selectinvert), HT.TD(removeselect), HT.TD(exportSelect), HT.TD(GeneSet), HT.TD(GCATButton), HT.TD("&nbsp;"*3, GeneWeaver)))
+        	optionsTable.append(HT.TR(HT.TD("&nbsp;"*1,"Select"), HT.TD("Deselect"), HT.TD("&nbsp;"*1,"Invert"), HT.TD("&nbsp;"*1,"Remove"), HT.TD("&nbsp;"*1,"Export"), HT.TD(HT.Text("Gene Set")), HT.TD("&nbsp;"*2, HT.Text("GCAT")), HT.TD(HT.Text("Gene Weaver"))))
         	postContainerTable.append(HT.TR(HT.TD(optionsTable)))
         	containerTable.append(HT.TR(HT.TD(optionsTable)))
 
@@ -250,8 +250,8 @@ class AddToSelectionPage(templatePage):
 
 
         	LinkOutTable = HT.TableLite(cellSpacing=2,cellPadding=0,width="320",border=0, align="Left")
-        	LinkOutRow = HT.TR(HT.TD(GeneSet, width="33%"), HT.TD(GCATButton, width="33%"), HT.TD(ODE, width="33%"), style="display:none;", Class="extra_options")
-        	LinkOutLabels = HT.TR(HT.TD(HT.Text("Gene Set")), HT.TD("&nbsp;"*2, HT.Text("GCAT")), HT.TD("&nbsp;"*3, HT.Text("ODE")), style="display:none;", Class="extra_options")
+        	LinkOutRow = HT.TR(HT.TD(GeneSet, width="33%"), HT.TD(GCATButton, width="33%"), HT.TD("&nbsp;"*3, GeneWeaver, width="33%"), style="display:none;", Class="extra_options")
+        	LinkOutLabels = HT.TR(HT.TD(HT.Text("Gene Set")), HT.TD("&nbsp;"*2, HT.Text("GCAT")), HT.TD(HT.Text("Gene Weaver")), style="display:none;", Class="extra_options")
         	LinkOutTable.append(LinkOutRow,LinkOutLabels)
         	postContainerTable.append(HT.TR(HT.TD("&nbsp;"), height=10), HT.TR(HT.TD(LinkOutTable)))
         	containerTable.append(HT.TR(HT.TD("&nbsp;"), height=10), HT.TR(HT.TD(LinkOutTable)))      
