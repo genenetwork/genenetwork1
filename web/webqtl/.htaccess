@@ -1,5 +1,5 @@
 AddHandler python-program .py
 PythonHandler main
-PythonInterpreter GeneNetwork
+PythonInterpreter LeiYan
 PythonOption session FileSession
 PythonDebug On
