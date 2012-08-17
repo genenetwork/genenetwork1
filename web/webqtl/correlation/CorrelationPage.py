@@ -581,7 +581,7 @@ class CorrelationPage(templatePage):
         gcat_img = HT.Image("/images/GCAT_logo_final.jpg", name="GCAT", alt="GCAT", title="GCAT", style="border:none")
         gcat.append(gcat_img)
         geneweaver = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('%s')[0], 'ODE');" % mainfmName)
-        geneweaver_img = HT.Image("/images/ODE_logo_final.jpg", name="ode", alt="Gene Weaver", title="ODE", style="border:none")
+        geneweaver_img = HT.Image("/images/ODE_logo_final.jpg", name="GeneWeaver", alt="Gene Weaver", title="Gene Weaver", style="border:none")
         geneweaver.append(geneweaver_img)
 
         #ZS: All of the below (until the variable pageTable is defined) is related to WebGestalt/Gene Set third party tool
