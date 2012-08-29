@@ -1084,10 +1084,17 @@ class DataEditingPage(templatePage):
 			for item in self.cursor.fetchall():
 				TId, TName = item
 				databaseMenuSub = HT.Optgroup(label = '%s ------' % TName)
-				self.cursor.execute('SELECT ProbeSetFreeze.FullName,ProbeSetFreeze.Name FROM ProbeSetFreeze, ProbeFreeze, \
+				if RISetgp == 'BXD':
+					sql = 'SELECT ProbeSetFreeze.FullName,ProbeSetFreeze.Name FROM ProbeSetFreeze, ProbeFreeze, \
 				InbredSet WHERE ProbeSetFreeze.ProbeFreezeId = ProbeFreeze.Id and ProbeFreeze.TissueId = %d and \
-				ProbeSetFreeze.public > %d and ProbeFreeze.InbredSetId = InbredSet.Id and InbredSet.Name = "%s" \
-				order by ProbeSetFreeze.CreateTime desc, ProbeSetFreeze.AvgId '  % (TId,webqtlConfig.PUBLICTHRESH, RISetgp))
+				ProbeSetFreeze.public > %d and ProbeFreeze.InbredSetId = InbredSet.Id and InbredSet.Name like "%s%%" \
+				order by ProbeSetFreeze.CreateTime desc, ProbeSetFreeze.AvgId'
+				else:
+					sql = 'SELECT ProbeSetFreeze.FullName,ProbeSetFreeze.Name FROM ProbeSetFreeze, ProbeFreeze, \
+				InbredSet WHERE ProbeSetFreeze.ProbeFreezeId = ProbeFreeze.Id and ProbeFreeze.TissueId = %d and \
+				ProbeSetFreeze.public > %d and ProbeFreeze.InbredSetId = InbredSet.Id and InbredSet.Name like "%s" \
+				order by ProbeSetFreeze.CreateTime desc, ProbeSetFreeze.AvgId'
+				self.cursor.execute(sql  % (TId,webqtlConfig.PUBLICTHRESH, RISetgp))
 				for item2 in self.cursor.fetchall():
 					databaseMenuSub.append(item2)
 					nmenu += 1
