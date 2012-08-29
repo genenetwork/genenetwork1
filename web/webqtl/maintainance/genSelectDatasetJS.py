@@ -96,7 +96,7 @@ if groupResultsTotalNum > 0:
 	for groupItem in groupResults:
 		groupVal = groupItem[0]
 		groupTxt = groupItem[1]
-		outputGroupStr += '{txt:\'%s\',val:\'%s\'},\n'%(groupTxt,groupVal)
+		outputGroupStr += '{txt:\"%s\",val:\"%s\"},\n'%(groupTxt,groupVal)
 # add 'All Groups' option for 'Group' select menu	
 outputGroupStr +='{txt:\'All Groups\',val:\'all groups\'}];\n\n'  
 # groupTotalResults is a list which inclues all groups' options

@@ -28,10 +28,6 @@ import re
 
 from dbFunction import webqtlDatabaseFunction
 
-import logging
-logging.basicConfig(filename="/tmp/gn_log_leiyan", level=logging.INFO)
-_log = logging.getLogger("PubmedSearch")
-
 #########################################
 # name=megan inst=washington
 #########################################
@@ -58,7 +54,6 @@ class PubmedSearch:
 					keywords = keywords.split()
 					for keyword in keywords:
 						sql += "(MATCH (pubmedsearch.authorfullname,authorshortname) AGAINST ('%s' IN BOOLEAN MODE)) AND " % keyword
-				_log.info("news_1: "+self.news)
 				#
 				pattern_inst = re.compile('\s*inst\s*[:=]((\s*\(.+?\)\s*)|(\s*\S+\s*))', re.I)
 				search_inst = pattern_inst.search(self.news)
@@ -72,21 +67,18 @@ class PubmedSearch:
 					keywords = keywords.split()
 					for keyword in keywords:
 						sql += "(MATCH (pubmedsearch.institute) AGAINST ('%s' IN BOOLEAN MODE)) AND " % keyword
-				_log.info("news_2: "+self.news)
 				#
 				if search_name or search_inst:
 					sql += "pubmedsearch.geneid=ProbeSet.GeneId AND "
 					sql += "ProbeSet.Id=ProbeSetXRef.ProbeSetId AND "
 					sql += "ProbeSetXRef.ProbeSetFreezeId=%d " % ProbeSetFreezeId
 					sql += "GROUP BY ProbeSet.Symbol;"
-					_log.info("sql: "+sql)
 					cursor.execute(sql)
 					symbols1 = cursor.fetchall()
 					symbols2 = ''
 					for symbol in symbols1:
 						symbols2 += (symbol[0]+' ')
 					self.news = symbols2 + self.news
-					_log.info("symbols2: "+symbols2)
 				else:
 					self.news = self.olds
 

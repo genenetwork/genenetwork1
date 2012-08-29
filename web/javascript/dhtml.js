@@ -132,7 +132,8 @@ function getquerystring(thisform) {
     var file = thisform.filename.value;
     var ids = thisform.strainIds.value;
     var vals = thisform.vals.value;
-    qstr = 'cmd=addCorr&db=' + escape(db) + '&dbname=' + escape(dbname) + '&form=' + escape(form) + '&trait=' + escape(trait) + '&file=' + escape(file)+ '&ids=' + escape(ids) + '&vals=' + escape(vals);  
+    var hiddenColumns = thisform.hiddenColumns.value;
+    qstr = 'cmd=addCorr&db=' + escape(db) + '&dbname=' + escape(dbname) + '&form=' + escape(form) + '&trait=' + escape(trait) + '&file=' + escape(file)+ '&ids=' + escape(ids) + '&vals=' + escape(vals) + '&hiddenColumns=' + escape(hiddenColumns);  
         // NOTE: no '?' before querystring
     return qstr;
 }
