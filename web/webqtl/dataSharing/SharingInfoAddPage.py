@@ -31,7 +31,7 @@ import SharingInfo
 
 
 #########################################
-#      Sharing Info Edit Page
+#      Sharing Info Add Page
 #########################################
 class SharingInfoAddPage(templatePage):
 

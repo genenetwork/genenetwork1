@@ -36,10 +36,8 @@ class SharingListDataSetPage(templatePage):
 
     def __init__(self, fd=None):
         templatePage.__init__(self, fd)
-
         if not self.openMysql():
             return
-
         if webqtlConfig.USERDICT[self.privilege] >= webqtlConfig.USERDICT['admin']:
             pass
         else:
@@ -48,36 +46,31 @@ class SharingListDataSetPage(templatePage):
             self.error(heading=heading,detail=detail,error="Error")
             return
 
-
         TD_LR = HT.TD(height=200,width="100%",bgColor='#eeeeee')
-
-        query = """select GN_AccesionId, InfoPageTitle, Progreso from InfoFiles order by GN_AccesionId"""
+        query = """select InfoPageName,GN_AccesionId,InfoPageTitle,Progreso from InfoFiles order by Id"""
         self.cursor.execute(query)
         result = self.cursor.fetchall()
-
         heading = HT.Paragraph('Dataset Table', Class="title")
-		
         newrecord = HT.Href(text="New Record", url="/webqtl/main.py?FormID=sharinginfoadd")
-
         info = "Click the accession id to view the dataset info. Click the dataset name to edit the dataset info."
-        
         datasetTable = HT.TableLite(border=0, cellpadding=0, cellspacing=0, Class="collap", width="100%")
-
         tableHeaderRow = HT.TR()
-        tableHeaderRow.append(HT.TD("Accession Id", Class='fs14 fwb ffl b1 cw cbrb', align="center"))
-        tableHeaderRow.append(HT.TD("Dataset name", Class='fs14 fwb ffl b1 cw cbrb', align="center"))
-        tableHeaderRow.append(HT.TD("Progress", Class='fs14 fwb ffl b1 cw cbrb', align="center"))
-        tableHeaderRow.append(HT.TD("Operation", Class='fs14 fwb ffl b1 cw cbrb', align="center"))
+        tableHeaderRow.append(HT.TD("InfoPageName",	Class='fs14 fwb ffl b1 cw cbrb', align="center"))
+        tableHeaderRow.append(HT.TD("Accession Id",	Class='fs14 fwb ffl b1 cw cbrb', align="center"))
+        tableHeaderRow.append(HT.TD("Dataset name",	Class='fs14 fwb ffl b1 cw cbrb', align="center"))
+        tableHeaderRow.append(HT.TD("Progress",		Class='fs14 fwb ffl b1 cw cbrb', align="center"))
+        tableHeaderRow.append(HT.TD("Operation",	Class='fs14 fwb ffl b1 cw cbrb', align="center"))
         datasetTable.append(tableHeaderRow)
 
         for one_row in result:
-            Accession_Id, InfoPage_title, Progress = one_row
+            InfoPageName,Accession_Id,InfoPage_title,Progress = one_row
             datasetRow = HT.TR()
-            datasetRow.append(HT.TD(HT.Href(text="GN%s" % Accession_Id, url="/webqtl/main.py?FormID=sharinginfo&GN_AccessionId=%s" % Accession_Id, Class='fs12 fwn'), Class="fs12 fwn b1 c222"))
-            datasetRow.append(HT.TD(HT.Href(text="%s" % InfoPage_title, url="/webqtl/main.py?FormID=sharinginfo&GN_AccessionId=%s" % Accession_Id, Class='fs12 fwn'), Class="fs12 fwn b1 c222"))
-            datasetRow.append(HT.TD("%s" % Progress, Class='fs12 fwn ffl b1 c222'))
-            operation_edit = HT.Href(text="Edit", url="/webqtl/main.py?FormID=sharinginfoedit&GN_AccessionId=%s" % Accession_Id)
-            operation_delete = HT.Href(text="Delete", onClick="deleteRecord(%s); return false;" % Accession_Id)
+            datasetRow.append(HT.TD(HT.Href(text="%s" % InfoPageName,	url="/webqtl/main.py?FormID=sharinginfo&InfoPageName=%s" % InfoPageName,	Class='fs12 fwn'), Class="fs12 fwn b1 c222"))
+            datasetRow.append(HT.TD(HT.Href(text="GN%s" % Accession_Id,	url="/webqtl/main.py?FormID=sharinginfo&GN_AccessionId=%s" % Accession_Id,	Class='fs12 fwn'), Class="fs12 fwn b1 c222"))
+            datasetRow.append(HT.TD("%s" % InfoPage_title,	Class="fs12 fwn b1 c222"))
+            datasetRow.append(HT.TD("%s" % Progress,		Class='fs12 fwn b1 c222'))
+            operation_edit = HT.Href(text="Edit", url="/webqtl/main.py?FormID=sharinginfoedit&InfoPageName=%s" % InfoPageName)
+            operation_delete = HT.Href(text="Delete", onClick="deleteRecord('%s'); return false;" % InfoPageName)
             operation = HT.TD(Class="fs12 fwn b1 c222", align="center")
             operation.append(operation_edit)
             operation.append("&nbsp;&nbsp;&nbsp;&nbsp;")
@@ -85,15 +78,14 @@ class SharingListDataSetPage(templatePage):
             datasetRow.append(operation)
             datasetTable.append(datasetRow)
 
-        TD_LR.append(heading, HT.P(), newrecord, HT.P(), info, HT.P(), datasetTable)
-		
+        TD_LR.append(heading, HT.P(), newrecord, HT.P(), datasetTable)
         js1 = """	<script language="javascript" type="text/javascript">
-					function deleteRecord(id){
-						question = confirm("Are you sure you want to delete the dataset info record (Accession Id="+id+")?")
+					function deleteRecord(InfoPageName){
+						question = confirm("Are you sure you want to delete the dataset info record (InfoPageName="+InfoPageName+")?")
 						if (question != "0"){
-							window.open("/webqtl/main.py?FormID=sharinginfodelete&GN_AccessionId="+id, "_self");
+							window.open("/webqtl/main.py?FormID=sharinginfodelete&InfoPageName="+InfoPageName, "_self");
 						}
 					}
-					</script>"""
+					</script>"""        
         self.dict['js1'] = js1
         self.dict['body'] =  str(TD_LR)

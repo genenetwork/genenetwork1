@@ -48,8 +48,8 @@ class SharingInfoDeletePage(templatePage):
 				cursor = webqtlDatabaseFunction.getCursor()
 				if (not cursor):
 						return
-				GN_AccessionId = fd.formdata.getvalue('GN_AccessionId')
-				sql = "delete from InfoFiles where GN_AccesionId=%s"
-				cursor.execute(sql, GN_AccessionId)
+				InfoPageName = fd.formdata.getvalue('InfoPageName')
+				sql = "delete from InfoFiles where InfoPageName=%s"
+				cursor.execute(sql, InfoPageName)
 				re = cursor.fetchone()
-				self.dict['body'] = "Delete dataset info record (GN_AccesionId=%s) successfully." % GN_AccessionId
+				self.dict['body'] = "Delete dataset info record (InfoPageName=%s) successfully." % InfoPageName

@@ -134,7 +134,7 @@ sharing_body_string = """
 sharinginfo_body_string = """<td>
 <a href="/webqtl/main.py?FormID=sharingListDataset">List of DataSets</a><br>
 <H1 class="title" id="parent-fieldname-title">%s
-<a href="/webqtl/main.py?FormID=sharinginfoedit&GN_AccessionId=%s"><img src="/images/modify.gif" alt="modify this page" border="0" valign="middle"></a>
+<a href="/webqtl/main.py?FormID=sharinginfoedit&InfoPageName=%s"><img src="/images/modify.gif" alt="modify this page" border="0" valign="middle"></a>
 <span style="color:red;">%s</span>
 </H1>
 <table border="0" width="100%%">
@@ -224,9 +224,18 @@ function CheckGNAccesionId(){
 		return true;
 	}
 }
+function CheckInfoPageName(){
+	if (document.sharinginfoupdate.InfoPageName.value.length  ==  0){
+		alert("Please input InfoPageName");
+		document.sharinginfoupdate.InfoPageName.focus();
+		return false;
+	} else {
+		return true;
+	}
+}
 </script>
 <table border="0" CELLSPACING="0" CELLPADDING="8">
-<form name="sharinginfoupdate" method="post" action="/webqtl/main.py?FormID=sharinginfoupdate" onsubmit="return CheckGNAccesionId();">
+<form name="sharinginfoupdate" method="post" action="/webqtl/main.py?FormID=sharinginfoupdate" onsubmit="return CheckInfoPageName();">
 <input type="hidden" name="Id" value="%s">
 
   <tr><TH COLSPAN=2><h2 class="title">Principal Investigator</h2></TH></tr>

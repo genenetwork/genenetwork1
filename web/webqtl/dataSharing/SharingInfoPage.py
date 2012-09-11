@@ -28,7 +28,7 @@ from base.templatePage import templatePage
 from base import webqtlConfig
 from dbFunction import webqtlDatabaseFunction
 import SharingBody
-import SharingInfo
+import SharingInfo2
 
 
 #########################################
@@ -38,15 +38,13 @@ class SharingInfoPage(templatePage):
 
 		def __init__(self, fd=None):
 				templatePage.__init__(self, fd)
-				GN_AccessionId = fd.formdata.getvalue('GN_AccessionId')
-				InfoPageName = fd.formdata.getvalue('InfoPageName')
-				cursor = webqtlDatabaseFunction.getCursor()
-				if InfoPageName and not GN_AccessionId:
-					sql = "select GN_AccesionId from InfoFiles where InfoPageName = %s"
-					cursor.execute(sql, InfoPageName)
-					GN_AccessionId = cursor.fetchone()
-					url = webqtlConfig.CGIDIR + "main.py?FormID=sharinginfo&GN_AccessionId=%s" % GN_AccessionId
+				GN_AccessionId1 = fd.formdata.getvalue('GN_AccessionId')
+				InfoPageName1 = fd.formdata.getvalue('InfoPageName')
+				sharingInfoObject = SharingInfo2.SharingInfo2(GN_AccessionId1, InfoPageName1)
+				GN_AccessionId2, InfoPageName2, info = sharingInfoObject.getInfo(create=True)
+				if not GN_AccessionId1 and GN_AccessionId2:
+					url = webqtlConfig.CGIDIR + "main.py?FormID=sharinginfo&GN_AccessionId=%s" % GN_AccessionId2
 					self.redirection = url
 				else:
-					sharingInfoObject = SharingInfo.SharingInfo(GN_AccessionId, InfoPageName)
+					sharingInfoObject.getDatasetsList()
 					self.dict['body'] = sharingInfoObject.getBody(infoupdate="")

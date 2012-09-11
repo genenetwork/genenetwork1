@@ -1733,7 +1733,18 @@ class DataEditingPage(templatePage):
 				traitVal = ''
 				dispVal = 'x'
 			
-			strainNameDisp = HT.Span(strainName, Class='fs14 fwn ffl')
+			# Lei Yan
+			# change the view of strainName only
+			strainName2 = None
+			try:
+				sql = "SELECT Strain.Name2 FROM Strain,InbredSet WHERE Strain.Name LIKE '%s' AND Strain.SpeciesId=InbredSet.SpeciesId AND InbredSet.Name LIKE '%s'"
+				self.cursor.execute(sql % (strainName, fd.RISet))
+				strainName2 = self.cursor.fetchone()[0]
+			except:
+				pass
+			if (not strainName2) or (strainName2=='') or (strainName2=='None'):
+				strainName2 = strainName
+			strainNameDisp = HT.Span(strainName2, Class='fs14 fwn ffl')
 
 			if varianceDataPage:
 				try:
