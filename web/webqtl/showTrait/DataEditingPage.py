@@ -1744,7 +1744,11 @@ class DataEditingPage(templatePage):
 				pass
 			if (not strainName2) or (strainName2=='') or (strainName2=='None'):
 				strainName2 = strainName
-			strainNameDisp = HT.Span(strainName2, Class='fs14 fwn ffl')
+			if strainName==strainName2:
+				sn = strainName
+			else:
+				sn = strainName2 + " (" + strainName + ")"
+			strainNameDisp = HT.Span(sn, Class='fs14 fwn ffl')
 
 			if varianceDataPage:
 				try:
@@ -1804,13 +1808,13 @@ class DataEditingPage(templatePage):
 
 			if varianceDataPage:
 				table_row.append(HT.TD(str(i+1), selectCheck, width=45, align='right', Class=className))
-				table_row.append(HT.TD(strainNameDisp, strainNameAdd, align='right', width=100, Class=className))
+				table_row.append(HT.TD(strainNameDisp, strainNameAdd, align='left', width=140, Class=className))
 				table_row.append(HT.TD(valueField, width=70, align='right', Id="value_"+str(i)+"_"+strains, Class=className))
 				table_row.append(HT.TD("&plusmn;", width=20, align='center', Class=className))
 				table_row.append(HT.TD(seField, width=80, align='right', Id="SE_"+str(i)+"_"+strains, Class=className))		
 			else:
 				table_row.append(HT.TD(str(i+1), selectCheck, width=45, align='right', Class=className))
-				table_row.append(HT.TD(strainNameDisp, strainNameAdd, align='right', width=100, Class=className))
+				table_row.append(HT.TD(strainNameDisp, strainNameAdd, align='left', width=140, Class=className))
 				table_row.append(HT.TD(valueField, width=70, align='right', Id="value_"+str(i)+"_"+strains, Class=className))
 
 			if thisTrait and thisTrait.db and thisTrait.db.type =='ProbeSet':
@@ -1868,14 +1872,14 @@ class DataEditingPage(templatePage):
 				fd.varianceDispName = 'Variance'
 				
 			table_header.append(HT.TH('Index', align='right', width=60, Class=col_class),
-				HT.TH('Sample', align='right', width=100, Class=col_class),
+				HT.TH('Sample', align='left', width=140, Class=col_class),
 				HT.TH('Value', align='right', width=70, Class=col_class),
 				HT.TH('&nbsp;', width=20, Class=col_class),
 				HT.TH(fd.varianceDispName, align='right', width=80, Class=col_class))
 
 		elif nCols == 4:
 			table_header.append(HT.TH('Index', align='right', width=60, Class=col_class),
-				HT.TH('Sample', align='right', width=100, Class=col_class),
+				HT.TH('Sample', align='left', width=140, Class=col_class),
 				HT.TH('Value', align='right', width=70, Class=col_class))
 
 		else:
