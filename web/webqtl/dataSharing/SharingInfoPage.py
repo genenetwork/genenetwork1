@@ -36,15 +36,43 @@ import SharingInfo2
 #########################################
 class SharingInfoPage(templatePage):
 
-		def __init__(self, fd=None):
-				templatePage.__init__(self, fd)
-				GN_AccessionId1 = fd.formdata.getvalue('GN_AccessionId')
-				InfoPageName1 = fd.formdata.getvalue('InfoPageName')
-				sharingInfoObject = SharingInfo2.SharingInfo2(GN_AccessionId1, InfoPageName1)
-				GN_AccessionId2, InfoPageName2, info = sharingInfoObject.getInfo(create=True)
-				if not GN_AccessionId1 and GN_AccessionId2:
-					url = webqtlConfig.CGIDIR + "main.py?FormID=sharinginfo&GN_AccessionId=%s" % GN_AccessionId2
-					self.redirection = url
-				else:
-					sharingInfoObject.getDatasetsList()
-					self.dict['body'] = sharingInfoObject.getBody(infoupdate="")
+    def __init__(self, fd=None):
+        templatePage.__init__(self, fd)
+        GN_AccessionId1 = fd.formdata.getvalue('GN_AccessionId')
+        InfoPageName1 = fd.formdata.getvalue('InfoPageName')
+        sharingInfoObject = SharingInfo2.SharingInfo2(GN_AccessionId1, InfoPageName1)
+        GN_AccessionId2, InfoPageName2, info = sharingInfoObject.getInfo(create=True)
+
+        # ZS: This javascript is used to hide empty fields in the infofile page. It is here only because
+        # there are no other options due to the poor way in which all of this code is structured.
+        # When we finally use templates, it will be far easier to do this and javascript won't be necessary.
+
+        hideNoneJS = """
+<script type="text/javascript">
+    $(window).load(function () {
+
+        empty_rows = $("table[name=infoTable]").find("tr").filter(function () {
+                        return $.trim($(this).find('td').text()).length == 0;
+                    });
+
+        empty_rows.each(function () {
+            $(this).hide();
+            $(this).prev().hide();
+        });
+
+        $("table[name=infoTable]").find("tr:contains('None')").each( function(){
+            $(this).hide();
+            $(this).prev().hide(); //hides the "title"/label for the field as well as its contents
+        });
+
+    });
+</script>"""
+
+        self.dict['js1'] = hideNoneJS
+
+        if not GN_AccessionId1 and GN_AccessionId2:
+            url = webqtlConfig.CGIDIR + "main.py?FormID=sharinginfo&GN_AccessionId=%s" % GN_AccessionId2
+            self.redirection = url
+        else:
+            sharingInfoObject.getDatasetsList()
+            self.dict['body'] = sharingInfoObject.getBody(infoupdate="")

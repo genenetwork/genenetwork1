@@ -140,7 +140,7 @@ sharinginfo_body_string = """<td>
 <table border="0" width="100%%">
 <tr>
 <td valign="top" width="50%%">
-<TABLE cellSpacing=0 cellPadding=5 width=100%% border=0>
+<TABLE name="infoTable" cellSpacing=0 cellPadding=5 width=100%% border=0>
                       <TR><td><b>GN Accession:</b> GN%s</TD></tr>
                       <TR><TD><b>GEO Series:</b> %s</TD></TR>
                       <TR><TD><b>Title:</b> %s</TD></TR> 
@@ -178,7 +178,7 @@ sharinginfo_body_string = """<td>
 </table>
 <HR>
 <p>
-<table width="100%%" border="0" cellpadding="5" cellspacing="0">
+<table name="infoTable" width="100%%" border="0" cellpadding="5" cellspacing="0">
 <tr><td><span style="font-size:115%%;font-weight:bold;">Summary:</span></td></tr>
 	<tr><td> %s<br><br></td></tr>
 <tr><td><span style="font-size:115%%;font-weight:bold;">About the cases used to generate this set of data:</span></td></tr>
