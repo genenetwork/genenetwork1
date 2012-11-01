@@ -45,6 +45,10 @@ from base import webqtlConfig
 from dbFunction import webqtlDatabaseFunction
 from base.GeneralObject import GeneralObject
 
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("gn\web\webqtl\intervalMapping\IntervalMappingPage.py")
+
 #########################################
 #      Inteval Mapping Plot Page
 #########################################
@@ -1716,6 +1720,8 @@ class IntervalMappingPage(templatePage):
                                           yZero - 150, font=LRSLODFont, color=pid.black, angle=90)
 
         for item in LRSAxisList:
+            if LRSMax == 0.0:
+                LRSMax = 0.000001
             yLRS = yZero - (item*lodm/LRSMax) * LRSHeightThresh
             canvas.drawLine(xLeftOffset, yLRS, xLeftOffset - 4, yLRS, color=self.LRS_COLOR, width=1*zoom)
             scaleStr = "%2.1f" % item
@@ -1782,6 +1788,8 @@ class IntervalMappingPage(templatePage):
 
                     LRSCoordXY.append((Xc, Yc))
                     if not self.multipleInterval and self.additiveChecked:
+                        if additiveMax == 0.0:
+                            additiveMax = 0.000001
                         Yc = yZero - qtlresult[m].additive*AdditiveHeightThresh/additiveMax
                         AdditiveCoordXY.append((Xc, Yc))
                     if not self.multipleInterval and INTERCROSS and self.additiveChecked:
