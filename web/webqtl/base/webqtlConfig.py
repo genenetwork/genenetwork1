@@ -23,7 +23,7 @@ MAXCORR = 500
 DAILYMAXIMUM = 1000
 
 #maximum LRS value
-MAXLRS = 460.0
+MAXLRS = 920.0
 
 #temporary data life span
 MAXLIFE = 86400 
