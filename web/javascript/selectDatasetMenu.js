@@ -111,7 +111,7 @@ var dArr = [
 {txt:'',val:''},
 {txt:'GSE15222 Human Brain Normal Myers (Apr09) RankInv',val:'GSE15222_F_N_RI_0409'},
 {txt:'GSE15222 Human Brain Alzheimer Myers (Apr09) RankInv',val:'GSE15222_F_A_RI_0409'},
-{txt:'UTHSC Mouse BXD Whole Brain RNA Sequence (Nov12)',val:'UTHSC_BXD_WB_RNASeq1112'},
+{txt:'UTHSC Mouse BXD Whole Brain RNA Sequence (Nov12) RPKM',val:'UTHSC_BXD_WB_RNASeq1112'},
 {txt:'UTHSC B6D2RI Aged Hippocampus Affy Mouse Gene 1.0 ST (Sep12) RMA **',val:'UTHSC_B6D2RI_H_0912'},
 {txt:'St Jude BXD Popliteal Lymph Node Affy HT MG-430 PM (Sep12) RMA **',val:'STJ_PLN_0912'},
 {txt:'PSU B6D2F2 Muscle Affy Mouse Genome 430 2.0 (Aug12) RMA **',val:'PSU-B6D2F2_0812'},
