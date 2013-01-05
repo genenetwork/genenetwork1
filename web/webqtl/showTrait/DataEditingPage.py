@@ -12,6 +12,7 @@ from dbFunction import webqtlDatabaseFunction
 from base.templatePage import templatePage
 from basicStatistics import BasicStatisticsFunctions
 
+from pprint import pformat as pf
 
 #########################################
 #      DataEditingPage
@@ -79,7 +80,7 @@ class DataEditingPage(templatePage):
 		# Some fields, like method, are defaulted to None; otherwise in IE the field can't be changed using jquery
 		hddn = {'FormID':fmID, 'RISet':fd.RISet, 'submitID':'', 'scale':'physic', 'additiveCheck':'ON', 'showSNP':'ON', 'showGenes':'ON', 'method':None,\
 		'parentsf14regression':'OFF', 'stats_method':'1', 'chromosomes':'-1', 'topten':'', 'viewLegend':'ON', 'intervalAnalystCheck':'ON', 'valsHidden':'OFF',\
- 		'database':'', 'criteria':None, 'MDPChoice':None, 'bootCheck':None, 'permCheck':None, 'applyVarianceSE':None, 'strainNames':'_', 'strainVals':'_',\
+ 		'database':'', 'criteria':None, 'MDPChoice':None, 'bootCheck':None, 'num_perm':2000, 'applyVarianceSE':None, 'strainNames':'_', 'strainVals':'_',\
 		'strainVars':'_', 'otherStrainNames':'_', 'otherStrainVals':'_', 'otherStrainVars':'_', 'extra_attributes':'_', 'other_extra_attributes':'_'}
 		
 		if fd.enablevariance:
@@ -1268,9 +1269,7 @@ class DataEditingPage(templatePage):
 			RISetgp = 'BXD'
 			
 		#check boxes - one for regular interval mapping, the other for composite
-		permCheck1= HT.Input(type='checkbox', Class='checkbox', name='permCheck1',checked="on")
-		bootCheck1= HT.Input(type='checkbox', Class='checkbox', name='bootCheck1',checked=0)	
-		permCheck2= HT.Input(type='checkbox', Class='checkbox', name='permCheck2',checked="on")
+		bootCheck1= HT.Input(type='checkbox', Class='checkbox', name='bootCheck1',checked=0)
 		bootCheck2= HT.Input(type='checkbox', Class='checkbox', name='bootCheck2',checked=0)	
 		optionbox1 = HT.Input(type='checkbox', Class='checkbox', name='parentsf14regression1',checked=0)
 		optionbox2 = HT.Input(type='checkbox', Class='checkbox', name='parentsf14regression2',checked=0)						
@@ -1283,6 +1282,7 @@ class DataEditingPage(templatePage):
 		MarkerRegressionButton=HT.Input(type='button',name='marker', value=' Compute ', Class="button")					
 	
 		chrText = HT.Span("Chromosome:", Class="ffl fwb fs12") 
+		permText = HT.Span("# Permutations:", Class="ff1 fwb fs12")
 	
 		# updated by NL 5-28-2010 
 		# Interval Mapping 
@@ -1291,20 +1291,22 @@ class DataEditingPage(templatePage):
 		for i in range(len(fd.genotype)):
 			if  len(fd.genotype[i]) > 1:
 				chrMenu.append(tuple([fd.genotype[i].name,i]))
+		numPerm = HT.Input(name="num_perm1", value="2000")
 		
 		#Menu for Composite Interval Mapping		
 		chrMenu2 = HT.Select(name='chromosomes2')
 		chrMenu2.append(tuple(["All",-1]))
 		for i in range(len(fd.genotype)):
 			if  len(fd.genotype[i]) > 1:
-				chrMenu2.append(tuple([fd.genotype[i].name,i]))		
+				chrMenu2.append(tuple([fd.genotype[i].name,i]))	
+		numPerm2 = HT.Input(name='num_perm2', value="2000")
 		
 		if fd.genotype.Mbmap:
 			scaleText = HT.Span("Mapping Scale:", Class="ffl fwb fs12") 
-			scaleMenu1 = HT.Select(name='scale1', onChange="checkUncheck(window.document.dataInput.scale1.value, window.document.dataInput.permCheck1, window.document.dataInput.bootCheck1)")
+			scaleMenu1 = HT.Select(name='scale1', onChange="checkUncheck(window.document.dataInput.scale1.value, window.document.dataInput.bootCheck1)")
 			scaleMenu1.append(("Megabase",'physic'))
 			scaleMenu1.append(("Centimorgan",'morgan'))			
-			scaleMenu2 = HT.Select(name='scale2', onChange="checkUncheck(window.document.dataInput.scale2.value, window.document.dataInput.permCheck2, window.document.dataInput.bootCheck2)")
+			scaleMenu2 = HT.Select(name='scale2', onChange="checkUncheck(window.document.dataInput.scale2.value, window.document.dataInput.bootCheck2)")
 			scaleMenu2.append(("Megabase",'physic'))
 			scaleMenu2.append(("Centimorgan",'morgan'))				
 		
@@ -1315,18 +1317,22 @@ class DataEditingPage(templatePage):
 			intMappingMenu = HT.TableLite( 
 				HT.TR(HT.TD(chrText), HT.TD(chrMenu, colspan="3")),
 				HT.TR(HT.TD(scaleText), HT.TD(scaleMenu1)),
-			    cellspacing=0, width="263px", cellpadding=2)		
+				HT.TR(HT.TD(permText), HT.TD(numPerm, colspan="3")),
+			    cellspacing=0, width="325px", cellpadding=2)		
 			compMappingMenu = HT.TableLite( 
 				HT.TR(HT.TD(chrText), HT.TD(chrMenu2, colspan="3")),
 				HT.TR(HT.TD(scaleText), HT.TD(scaleMenu2)),
 				HT.TR(HT.TD(controlText), HT.TD(controlMenu)),
+				HT.TR(HT.TD(permText), HT.TD(numPerm2, colspan="3")),
 			    cellspacing=0, width="325px", cellpadding=2)
 		else:
 			intMappingMenu = HT.TableLite( 
 				HT.TR(HT.TD(chrText), HT.TD(chrMenu, colspan="3")),
-			    cellspacing=0, width="263px", cellpadding=2)		
+				HT.TR(HT.TD(permText), HT.TD(numPerm, colspan="3")),
+			    cellspacing=0, width="325px", cellpadding=2)		
 			compMappingMenu = HT.TableLite( 
 				HT.TR(HT.TD(chrText), HT.TD(chrMenu2, colspan="3")),
+				HT.TR(HT.TD(permText), HT.TD(numPerm2, colspan="3")),
 				HT.TR(HT.TD(controlText), HT.TD(controlMenu)),
 			    cellspacing=0, width="325px", cellpadding=2)		
 		
@@ -1352,15 +1358,17 @@ class DataEditingPage(templatePage):
 			cellspacing=0, width="232px", cellpadding=2)		
 		
 		markerSuggestiveText = HT.Span(HT.Bold("Display LRS greater than:"), Class="ffl fwb fs12")
-		markerSuggestive = HT.Input(name='suggestive', size=5, maxlength=8)	
+		markerSuggestive = HT.Input(name='suggestive', size=5, maxlength=8)
+		markerNumPerm = HT.Input(name='num_perm3', value="2000", size=5, maxlength=8)
 		displayAllText = HT.Span(" Display all LRS ", Class="ffl fs12")
-		displayAll = HT.Input(name='displayAllLRS', type="checkbox", Class='checkbox')	
+		displayAll = HT.Input(name='displayAllLRS', type="checkbox", Class='checkbox')
 		useParentsText = HT.Span(" Use Parents ", Class="ffl fs12")	
 		useParents = optionbox2
 		applyVarianceText = HT.Span(" Use Weighted ", Class="ffl fs12")
 		
 		markerMenu = HT.TableLite(
 			HT.TR(HT.TD(markerSuggestiveText), HT.TD(markerSuggestive)),
+			HT.TR(HT.TD(permText), HT.TD(markerNumPerm)),
 			HT.TR(HT.TD(displayAll,displayAllText)),
 			HT.TR(HT.TD(useParents,useParentsText)),
 			HT.TR(HT.TD(applyVariance2,applyVarianceText)),
@@ -1381,8 +1389,7 @@ class DataEditingPage(templatePage):
 		intTD = HT.TD(valign="top",NOWRAP='ON', Class="fs12 fwn")
 		intTD.append(intMappingMenu,HT.BR())
 
-		intTD.append(permCheck1,'Permutation Test (n=2000)',HT.BR(),
-		             bootCheck1,'Bootstrap Test (n=2000)', HT.BR(), optionbox1, 'Use Parents', HT.BR(),
+		intTD.append(bootCheck1,'Bootstrap Test (n=2000)', HT.BR(), optionbox1, 'Use Parents', HT.BR(),
 		             applyVariance1,'Use Weighted', HT.BR(), HT.BR(),IntervalMappingButton, HT.BR(), HT.BR())
 		intervalTable.append(HT.TR(intTD), HT.TR(HT.TD(HT.Span(HT.Href(url='/glossary.html#intmap', target='_blank', text='Interval Mapping'),
 			' computes linkage maps for the entire genome or single',HT.BR(),' chromosomes.',
@@ -1422,8 +1429,7 @@ class DataEditingPage(templatePage):
 		compTD = HT.TD(valign="top",NOWRAP='ON', Class="fs12 fwn")
 		compTD.append(compMappingMenu,HT.BR())
 		
-		compTD.append(permCheck2, 'Permutation Test (n=2000)',HT.BR(),
-		             bootCheck2,'Bootstrap Test (n=2000)', HT.BR(), 
+		compTD.append(bootCheck2,'Bootstrap Test (n=2000)', HT.BR(), 
 		             optionbox3, 'Use Parents', HT.BR(), HT.BR(), CompositeMappingButton, HT.BR(), HT.BR())
 		compositeTable.append(HT.TR(compTD), HT.TR(HT.TD(HT.Span(HT.Href(url='/glossary.html#Composite',target='_blank',text='Composite Interval Mapping'),
 			" allows you to control for a single marker as",HT.BR()," a cofactor. ",

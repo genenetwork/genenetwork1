@@ -529,14 +529,14 @@ $(window).load(function () {
         $('input[name=scale]').val(scaleValue);
         $('input[name=controlLocus]').val('');
 
-        //Changed the way permValue, bootValue, and parentsValue are acquired; before it was $(____).is(':checked');
-        permValue = $('input[name=permCheck1]:checked').val();
-        $('input[name=permCheck]').val(permValue);
-
+        //Changed the way numPerm, bootValue, and parentsValue are acquired; before it was $(____).is(':checked');
+        numPerm = $('input[name=num_perm1]').val();
+        $('input[name=num_perm]').val(numPerm);        
+        
         bootValue = $('input[name=bootCheck1]:checked').val();
         $('input[name=bootCheck]').val(bootValue);
 
-		parentsValue = $('input[name=parentsf14regression1]:checked').val();
+        parentsValue = $('input[name=parentsf14regression1]:checked').val();
         $('input[name=parentsf14regression]').val(parentsValue);
 
         varValue = $('input[name=applyVarianceSE1]:checked').val();
@@ -581,14 +581,14 @@ $(window).load(function () {
             controlLocus.val('');
         }
 
-        //Changed the way permValue, bootValue, and parentsValue are acquired; before it was $(____).is(':checked');
-        permValue = $('input[name=permCheck2]:checked').val();
-        $('input[name=permCheck]').val(permValue);
+        //Changed the way numPerm, bootValue, and parentsValue are acquired; before it was $(____).is(':checked');
+        numPerm = $('input[name=num_perm2]').val();
+        $('input[name=num_perm]').val(numPerm);
 
         bootValue = $('input[name=bootCheck2]:checked').val();
         $('input[name=bootCheck]').val(bootValue);
 
-		parentsValue = $('input[name=parentsf14regression3]:checked').val();
+        parentsValue = $('input[name=parentsf14regression3]:checked').val();
         $('input[name=parentsf14regression]').val(parentsValue);
 
         dataEditingFunc(this.form, 'intervalMap');
@@ -598,7 +598,11 @@ $(window).load(function () {
     $('#sectionbody4').find('input[name=marker]').click(function () {
         //Changed the way parentsValue is acquired; before it was $(____).is(':checked');
 
-		parentsValue = $('input[name=parentsf14regression2]:checked').val();
+        //Changed the way numPerm, bootValue, and parentsValue are acquired; before it was $(____).is(':checked');
+        numPerm = $('input[name=num_perm3]').val();
+        $('input[name=num_perm]').val(numPerm);        
+        
+        parentsValue = $('input[name=parentsf14regression2]:checked').val();
         $('input[name=parentsf14regression]').val(parentsValue);
 
         varValue = $('input[name=applyVarianceSE2]:checked').val();

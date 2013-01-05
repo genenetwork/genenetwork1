@@ -192,7 +192,8 @@ class IntervalMappingPage(templatePage):
         self.plotScale = fd.formdata.getvalue('scale', 'physic')
         if self.plotScale == 'physic' and not fd.genotype.Mbmap:
             self.plotScale = 'morgan'
-        self.permChecked = fd.formdata.getvalue('permCheck')
+        self.nperm = int(fd.formdata.getvalue('num_perm', 0))
+        self.permChecked = fd.formdata.getvalue('permCheck', True)
         self.bootChecked = fd.formdata.getvalue('bootCheck', '')
         self.controlLocus = fd.formdata.getvalue('controlLocus', '')
         try:
@@ -2005,12 +2006,12 @@ class IntervalMappingPage(templatePage):
                 if self.permChecked:
                     if weightedRegression:
                         self.LRSArray = self.genotype.permutation(strains = _strains, trait = _vals,
-                                variance = _vars, nperm=fd.nperm)
+                                variance = _vars, nperm=self.nperm)
                     else:
                         self.LRSArray = self.genotype.permutation(strains = _strains, trait = _vals,
-                                nperm=fd.nperm)
-                    self.suggestive = self.LRSArray[int(fd.nperm*0.37-1)]
-                    self.significance = self.LRSArray[int(fd.nperm*0.95-1)]
+                                nperm=self.nperm)
+                    self.suggestive = self.LRSArray[int(self.nperm*0.37-1)]
+                    self.significance = self.LRSArray[int(self.nperm*0.95-1)]
 
                 else:
                     self.suggestive = 9.2
