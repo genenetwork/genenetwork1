@@ -304,6 +304,7 @@ class MarkerRegressionPage(templatePage):
 		self.ADDITIVE_COLOR_POSITIVE = pid.green
 		self.legendChecked =False
 		self.pValue=float(fd.formdata.getvalue('pValue',-1))
+		self.nperm = int(fd.formdata.getvalue('num_perm', 2000))
 
 		# allow user to input p-value greater than 1, 
 		# in this case, the value will be treated as -lgP value. so the input value needs to be transferred to power of 10 format
@@ -325,7 +326,7 @@ class MarkerRegressionPage(templatePage):
 		
 	def GenReportForPLINK(self, ChrNameOrderIdDict={},RISet='',plinkResultDict= {},thresholdPvalue=-1,chrList=[]):
 		
-		'Create an HTML division which reports any loci which are significantly associated with the submitted trait data.'	
+		'Create an HTML division which reports any loci which are significantly associated with the submitted trait data.'
 		#########################################
 		#      Genome Association report
 		#########################################
@@ -416,28 +417,28 @@ class MarkerRegressionPage(templatePage):
 		self.qtlresults = []
 		if webqtlUtil.ListNotNull(_vars):
 			qtlresults = _genotype.regression(strains = _strains, trait = _vals, variance = _vars)
-			LRSArray = _genotype.permutation(strains = _strains, trait = _vals, variance = _vars, nperm=fd.nperm)
+			LRSArray = _genotype.permutation(strains = _strains, trait = _vals, variance = _vars, nperm=self.nperm)
 		else:
 			qtlresults = _genotype.regression(strains = _strains, trait = _vals)
-			LRSArray = _genotype.permutation(strains = _strains, trait = _vals,nperm=fd.nperm)
+			LRSArray = _genotype.permutation(strains = _strains, trait = _vals,nperm=self.nperm)
 			
 		self.qtlresults.append(qtlresults)
 
 		filename= webqtlUtil.genRandStr("GenomeAsscociation_")
-			
+
 		# set suggestive, significant and highly significant LRS
 		if fd.suggestive == None:
-			fd.suggestive = LRSArray[int(fd.nperm*0.37-1)]
+			fd.suggestive = LRSArray[int(self.nperm*0.37-1)]
 		else:
 			fd.suggestive = float(fd.suggestive)
 		if fd.significance == None:
-			fd.significance = LRSArray[int(fd.nperm*0.95-1)]
+			fd.significance = LRSArray[int(self.nperm*0.95-1)]
 		else:
 			fd.significance = float(fd.significance)
-		
+
 		self.significance =fd.significance
 		self.suggestive = fd.suggestive
-		self.highlysignificant = LRSArray[int(fd.nperm*0.99-1)]
+		self.highlysignificant = LRSArray[int(self.nperm*0.99-1)]
 		_dispAllLRS = 0
 		if fd.formdata.getvalue('displayAllLRS'):
 			_dispAllLRS = 1
@@ -451,6 +452,33 @@ class MarkerRegressionPage(templatePage):
 			qtlresults2.sort()
 			filtered = qtlresults2[-10:]
 		
+		
+		#########################################
+		#      Permutation Graph
+		#########################################
+		myCanvas = pid.PILCanvas(size=(400,300))
+		#plotBar(myCanvas,10,10,390,290,LRSArray,XLabel='LRS',YLabel='Frequency',title=' Histogram of Permutation Test',identification=fd.identification)
+		Plot.plotBar(myCanvas, LRSArray,XLabel='LRS',YLabel='Frequency',title=' Histogram of Permutation Test')
+		filename= webqtlUtil.genRandStr("Reg_")
+		myCanvas.save(webqtlConfig.IMGDIR+filename, format='gif')
+		img=HT.Image('/image/'+filename+'.gif',border=0,alt='Histogram of Permutation Test')
+			
+		if fd.suggestive == None:
+			fd.suggestive = LRSArray[int(self.nperm*0.37-1)]
+		else:
+			fd.suggestive = float(fd.suggestive)
+		if fd.significance == None:
+			fd.significance = LRSArray[int(self.nperm*0.95-1)]
+		else:
+			fd.significance = float(fd.significance)
+		
+		permutationHeading = HT.Paragraph('Histogram of Permutation Test')
+		permutationHeading.__setattr__("class","title")
+		
+		permutation = HT.TableLite()
+		permutation.append(HT.TR(HT.TD(img)),
+						   HT.TR(HT.TD('')),
+						   HT.TR(HT.TD('Total of %d permutations'%self.nperm)))
 		
 		
 		#########################################
@@ -474,10 +502,14 @@ class MarkerRegressionPage(templatePage):
 		report.__setattr__("class","normalsize")
 		
 		fpText = open('%s.txt' % (webqtlConfig.TMPDIR+filename), 'wb')
-		fpText.write('Suggestive LRS =%3.2f\n'%self.suggestive)
-		fpText.write('Significant LRS =%3.2f\n'%self.significance)
-		fpText.write('Highly Significant LRS =%3.2f\n'%self.highlysignificant)
-		LRSInfo =HT.Paragraph('&nbsp;&nbsp;&nbsp;&nbsp;Suggestive LRS =%3.2f\n'%fd.suggestive, HT.BR(), '&nbsp;&nbsp;&nbsp;&nbsp;Significant LRS =%3.2f\n'%fd.significance,HT.BR(),'&nbsp;&nbsp;&nbsp;&nbsp;Highly Significant LRS =%3.2f\n' % self.highlysignificant)
+		fpText.write('Suggestive LRS = %3.2f\n'%self.suggestive)
+		fpText.write('Significant LRS = %3.2f\n'%self.significance)
+		fpText.write('Highly Significant LRS = %3.2f\n'%self.highlysignificant)
+		LRSInfo =HT.Paragraph('&nbsp;&nbsp;&nbsp;&nbsp;Suggestive LRS = %3.2f\n'%fd.suggestive,
+							  HT.BR(),
+							  '&nbsp;&nbsp;&nbsp;&nbsp;Significant LRS =%3.2f\n'%fd.significance,
+							  HT.BR(),
+							  '&nbsp;&nbsp;&nbsp;&nbsp;Highly Significant LRS =%3.2f\n' % self.highlysignificant)
 		
 		textUrl = HT.Href(text = 'Download', url= '/tmp/'+filename+'.txt', target = "_blank", Class='fs12 fwn')
 		
@@ -571,7 +603,7 @@ class MarkerRegressionPage(templatePage):
 		tblobj['header']=tblobj_header	
 		tblobj['body']=tblobj_body
 		
-		rv=HT.TD(regressionHeading,LRSInfo,report, locusForm, HT.P(),width='55%',valign='top', align='left', bgColor='#eeeeee')		
+		rv=HT.TD(regressionHeading, HT.Blockquote(permutation), LRSInfo,report, locusForm, HT.P(),width='55%',valign='top', align='left', bgColor='#eeeeee')
 		if fd.genotype.type == 'intercross':
 			bottomInfo.append(HT.BR(), HT.BR(), HT.Strong('Dominance Effect'),' is the difference between the mean trait value of cases heterozygous at a marker and the average mean for the two groups homozygous at this marker: e.g.,  BD - (BB+DD)/2]. A positive dominance effect indicates that the average phenotype of BD heterozygotes exceeds the mean of BB and DD homozygotes. No dominance deviation can be computed for a set of recombinant inbred strains or for a backcross.')
 			return rv,tblobj,bottomInfo

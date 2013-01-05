@@ -54,7 +54,7 @@ class cmdIntervalMappingPage(templatePage):
 		perm = 0
 		if fd.formdata.getvalue('permCheck'):
 			perm = 1
-			wtext += 'with %d permutation tests ' % fd.nperm
+			wtext += 'with %d permutation tests ' % int(fd.formdata.getvalue('num_perm', 2000))
 
 		boot = 0
 		if fd.formdata.getvalue('bootCheck'):
