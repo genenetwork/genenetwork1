@@ -1282,7 +1282,7 @@ class DataEditingPage(templatePage):
 		MarkerRegressionButton=HT.Input(type='button',name='marker', value=' Compute ', Class="button")					
 	
 		chrText = HT.Span("Chromosome:", Class="ffl fwb fs12") 
-		permText = HT.Span("# Permutations:", Class="ff1 fwb fs12")
+		permText = HT.Span("Permutations:", Class="ff1 fwb fs12")
 	
 		# updated by NL 5-28-2010 
 		# Interval Mapping 
@@ -1357,7 +1357,7 @@ class DataEditingPage(templatePage):
 			HT.TR(HT.TD(pairScanReturnText), HT.TD(pairScanReturnMenu)),
 			cellspacing=0, width="232px", cellpadding=2)		
 		
-		markerSuggestiveText = HT.Span(HT.Bold("Display LRS greater than:"), Class="ffl fwb fs12")
+		markerSuggestiveText = HT.Span(HT.Bold("Display LRS above:"), Class="ffl fwb fs12")
 		markerSuggestive = HT.Input(name='suggestive', size=5, maxlength=8)
 		markerNumPerm = HT.Input(name='num_perm3', value="2000", size=5, maxlength=8)
 		displayAllText = HT.Span(" Display all LRS ", Class="ffl fs12")
@@ -1372,7 +1372,7 @@ class DataEditingPage(templatePage):
 			HT.TR(HT.TD(displayAll,displayAllText)),
 			HT.TR(HT.TD(useParents,useParentsText)),
 			HT.TR(HT.TD(applyVariance2,applyVarianceText)),
-			cellspacing=0, width="263px", cellpadding=2)				
+			cellspacing=0, width="200px", cellpadding=2)				
 							
 		
 		mapping_row = HT.TR()
