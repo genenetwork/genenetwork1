@@ -334,11 +334,6 @@ class IntervalMappingPage(templatePage):
             self.traitList.append(thisTrait)
 
 
-
-
-
-
-
 ## BEGIN HaplotypeAnalyst
 ## count the amount of individuals to be plotted, and increase self.graphHeight
         if self.haplotypeAnalystChecked and self.selectedChr > -1:
@@ -357,9 +352,6 @@ class IntervalMappingPage(templatePage):
             self.graphHeight = self.graphHeight + 2 * (self.NR_INDIVIDUALS+10) * self.EACH_GENE_HEIGHT
 ## for paper:
             #self.graphHeight = self.graphHeight + 1 * self.NR_INDIVIDUALS * self.EACH_GENE_HEIGHT - 180
-
-
-
 ## END HaplotypeAnalyst
 
         ################################################################
@@ -498,6 +490,9 @@ class IntervalMappingPage(templatePage):
             showLocusForm.append(intImg)
         else:
             showLocusForm = intImg
+            
+        perm_histogram = self.drawPermutationHistogram()
+        perm_text_file = self.permutationTextFile()
 
         ################################################################
         # footnote goes here
@@ -510,7 +505,7 @@ class IntervalMappingPage(templatePage):
         if self.traitList and self.traitList[0].db and self.traitList[0].db.type == 'Geno':
             btminfo.append(HT.BR(), 'Mapping using genotype data as a trait will result in infinity LRS at one locus. In order to display the result properly, all LRSs higher than 100 are capped at 100.')
 
-        TD_LR = HT.TD(HT.Blockquote(topTable), HT.Blockquote(gifmap, showLocusForm, HT.P(), btminfo), bgColor='#eeeeee', height = 200)
+        TD_LR = HT.TD(HT.Blockquote(topTable), HT.Blockquote(gifmap, showLocusForm, HT.P(), btminfo, HT.P(), perm_histogram, HT.P(), perm_text_file), bgColor='#eeeeee', height = 200)
 
         if geneTable:
             iaForm = HT.Form(cgi= os.path.join(webqtlConfig.CGIDIR, "main.py?FormID=intervalAnalyst"), enctype='multipart/form-data',
@@ -2241,6 +2236,52 @@ class IntervalMappingPage(templatePage):
         else:
             heading2.append(HT.Strong("Trait Name: "), fd.identification)
         return HT.TD(intMapHeading, heading2, valign="top")
+
+    def drawPermutationHistogram(self):
+        #########################################
+        #      Permutation Graph
+        #########################################
+        myCanvas = pid.PILCanvas(size=(400,300))
+        #plotBar(myCanvas,10,10,390,290,LRSArray,XLabel='LRS',YLabel='Frequency',title=' Histogram of Permutation Test',identification=fd.identification)
+        Plot.plotBar(myCanvas, self.LRSArray,XLabel='LRS',YLabel='Frequency',title=' Histogram of Permutation Test')
+        filename= webqtlUtil.genRandStr("Reg_")
+        myCanvas.save(webqtlConfig.IMGDIR+filename, format='gif')
+        img=HT.Image('/image/'+filename+'.gif',border=0,alt='Histogram of Permutation Test')
+
+
+        self.suggestive = self.LRSArray[int(self.nperm*0.37-1)]
+        self.significant = self.LRSArray[int(self.nperm*0.95-1)]
+        self.highlysignificant = self.LRSArray[int(self.nperm*0.99-1)]
+
+        permutationHeading = HT.Paragraph('Histogram of Permutation Test')
+        permutationHeading.__setattr__("class","title")
+
+        permutation = HT.TableLite()
+        permutation.append(HT.TR(HT.TD(img)),
+                           HT.TR(HT.TD('')),
+                           HT.TR(HT.TD('Total of %d permutations'%self.nperm)))
+        
+        return permutation
+    
+    def permutationTextFile(self):
+        filename= webqtlUtil.genRandStr("Reg_")
+        fpText = open('%s.txt' % (webqtlConfig.TMPDIR+filename), 'wb')
+        fpText.write('Suggestive LRS (p = 0.63) = %3.2f\n'%self.suggestive)
+        fpText.write('Significant LRS (p = 0.05) = %3.2f\n'%self.significant)
+        fpText.write('Highly Significant LRS (p = 0.01) = %3.2f\n\n'%self.highlysignificant)
+        fpText.write('%s Permutations\n\n' % str(len(self.LRSArray)))
+        LRSInfo =HT.Paragraph('&nbsp;&nbsp;&nbsp;&nbsp;Suggestive LRS = %3.2f\n'%self.suggestive,
+                              HT.BR(),
+                              '&nbsp;&nbsp;&nbsp;&nbsp;Significant LRS =%3.2f\n'%self.significant,
+                              HT.BR(),
+                              '&nbsp;&nbsp;&nbsp;&nbsp;Highly Significant LRS =%3.2f\n' % self.highlysignificant)
+        
+        for lrs_value in self.LRSArray:
+            fpText.write(str(lrs_value) + "\n")
+        
+        textUrl = HT.Href(text = 'Download Permutation Results', url= '/tmp/'+filename+'.txt', target = "_blank", Class='fs12 fwn')
+        
+        return textUrl
 
     def geneTables(self, geneCol, refGene=None):
         SNPLink = 0

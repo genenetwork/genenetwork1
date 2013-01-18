@@ -522,6 +522,7 @@ $(window).load(function () {
     ///////////////////////////////
     //Mapping Tools
     ///////////////////////////////
+    
     $('#sectionbody4').find('input[name=interval]').click(function () {
         chrValue = $('select[name=chromosomes1] option:selected').val();
         $('input[name=chromosomes]').val(chrValue);
@@ -543,6 +544,15 @@ $(window).load(function () {
         $('input[name=applyVarianceSE]').val(varValue);
 
         dataEditingFunc(this.form, 'intervalMap');
+    });
+
+    $('input[name=num_perm1]').change(function(){
+        if (parseInt($('input[name=num_perm1]').val()) > 100000) {
+            $('input[name=num_perm1]').val("100000");
+        }
+        else if (parseInt($('input[name=num_perm1]').val()) < 1000) {
+            $('input[name=num_perm1]').val("1000");
+        }        
     });
 
     var tiptext = "e.g., rs12345";
@@ -592,8 +602,16 @@ $(window).load(function () {
         $('input[name=parentsf14regression]').val(parentsValue);
 
         dataEditingFunc(this.form, 'intervalMap');
-
     });
+    
+    $('input[name=num_perm2]').change(function(){
+        if (parseInt($('input[name=num_perm2]').val()) > 100000) {
+            $('input[name=num_perm2]').val("100000");
+        }
+        else if (parseInt($('input[name=num_perm2]').val()) < 1000) {
+            $('input[name=num_perm2]').val("1000");
+        }        
+    });    
 
     $('#sectionbody4').find('input[name=marker]').click(function () {
         //Changed the way parentsValue is acquired; before it was $(____).is(':checked');
@@ -611,6 +629,15 @@ $(window).load(function () {
         dataEditingFunc(this.form, 'markerRegression');
     });
 
+    $('input[name=num_perm3]').change(function(){
+        if (parseInt($('input[name=num_perm3]').val()) > 100000) {
+            $('input[name=num_perm3]').val("100000");
+        }
+        else if (parseInt($('input[name=num_perm3]').val()) < 1000) {
+            $('input[name=num_perm3]').val("1000");
+        }        
+    });    
+    
     ///////////////////////////////
     //Review and Edit Data
     ///////////////////////////////

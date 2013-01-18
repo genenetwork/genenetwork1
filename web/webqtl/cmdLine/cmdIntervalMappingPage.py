@@ -52,7 +52,7 @@ class cmdIntervalMappingPage(templatePage):
 			wtext += 'whole genome '
 
 		perm = 0
-		if fd.formdata.getvalue('permCheck'):
+		if fd.formdata.getvalue('num_perm'):
 			perm = 1
 			wtext += 'with %d permutation tests ' % int(fd.formdata.getvalue('num_perm', 2000))
 
