@@ -1994,23 +1994,18 @@ class IntervalMappingPage(templatePage):
                 else:
                     return "The control marker you selected is not in the genofile."
 
+            if weightedRegression:
+                self.LRSArray = self.genotype.permutation(strains = _strains, trait = _vals,
+                        variance = _vars, nperm=self.nperm)
+            else:
+                self.LRSArray = self.genotype.permutation(strains = _strains, trait = _vals,
+                        nperm=self.nperm)
 
             if self.significance and self.suggestive:
                 pass
             else:
-                if self.permChecked:
-                    if weightedRegression:
-                        self.LRSArray = self.genotype.permutation(strains = _strains, trait = _vals,
-                                variance = _vars, nperm=self.nperm)
-                    else:
-                        self.LRSArray = self.genotype.permutation(strains = _strains, trait = _vals,
-                                nperm=self.nperm)
-                    self.suggestive = self.LRSArray[int(self.nperm*0.37-1)]
-                    self.significance = self.LRSArray[int(self.nperm*0.95-1)]
-
-                else:
-                    self.suggestive = 9.2
-                    self.significance = 16.1
+                self.suggestive = self.LRSArray[int(self.nperm*0.37-1)]
+                self.significance = self.LRSArray[int(self.nperm*0.95-1)]
 
             #calculating bootstrap
             #from now on, genotype could only contain a single chromosome
