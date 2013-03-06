@@ -334,7 +334,7 @@ class AddToSelectionPage(templatePage):
             trId = str(thisTrait)
 
             #XZ: check box column
-            tr.append(TDCell(HT.TD(HT.Input(type="checkbox", Class="checkallbox", name="searchResult",value=trId, onClick="highlight(this)"), nowrap="on", Class=className)))
+            tr.append(TDCell(HT.TD(HT.Input(type="checkbox", Class="checkallbox", name="searchResult",value=trId, onClick="highlight(this)"), nowrap="on", Class=className), text=trId))
 
             #XZ: Dataset column
             tr.append(TDCell(HT.TD(thisTrait.db.name, Class="fs12 fwn b1 c222"), thisTrait.db.name, thisTrait.db.name.upper()))
