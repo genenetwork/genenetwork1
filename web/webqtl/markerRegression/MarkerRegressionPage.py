@@ -70,9 +70,9 @@ class MarkerRegressionPage(templatePage):
 			allTraitValueDict = fd.allTraitData
 			
 			#automatically generate pheno txt file for PLINK
-			self.genPhenoTxtFileForPlink(phenoFileName=plinkOutputFileName,RISetName=fd.RISet,probesetName=probesetName, valueDict=allTraitValueDict)
+			self.genPhenoTxtFileForPlink2(phenoFileName=plinkOutputFileName,RISetName=fd.RISet,probesetName=probesetName, valueDict=allTraitValueDict)
 			# os.system full path is required for input and output files; specify missing value is -9999
-			plink_command = '%splink/plink --noweb --ped %splink/%s.ped --no-fid --no-parents --no-sex --no-pheno --map %splink/%s.map --pheno %s/%s.txt --pheno-name %s --missing-phenotype -9999 --out %s%s --assoc ' % (webqtlConfig.HTMLPATH, webqtlConfig.HTMLPATH,  fd.RISet, webqtlConfig.HTMLPATH, fd.RISet, webqtlConfig.TMPDIR, plinkOutputFileName, probesetName, webqtlConfig.TMPDIR, plinkOutputFileName)
+			plink_command = '%splink/plink --noweb --ped %splink/%s.ped --no-fid --no-parents --no-sex --no-pheno --map %splink/%s.map --pheno %s%s.txt --pheno-name %s --missing-phenotype -9999 --out %s%s --assoc ' % (webqtlConfig.HTMLPATH, webqtlConfig.HTMLPATH,  fd.RISet, webqtlConfig.HTMLPATH, fd.RISet, webqtlConfig.TMPDIR, plinkOutputFileName, probesetName, webqtlConfig.TMPDIR, plinkOutputFileName)
 
 			os.system(plink_command)
 
@@ -1588,7 +1588,7 @@ class MarkerRegressionPage(templatePage):
 			newValueList.append(value)
 			
 			
-		newLine=''	
+		newLine=''
 		for i, strain in enumerate(pedFileStrainList):
 			j=i+1
 			value=newValueList[i]
@@ -1601,6 +1601,19 @@ class MarkerRegressionPage(templatePage):
 		if newLine:
 			outputFile.write(newLine)
 			
+		outputFile.close()
+		
+	# Lei Yan
+	# 2013-04-06
+	def genPhenoTxtFileForPlink2(self,phenoFileName='', RISetName='', probesetName='', valueDict={}):
+		outputFile = open("%s%s.txt"%(webqtlConfig.TMPDIR,phenoFileName),"wb")
+		headerLine = 'FID\tIID\t%s\n'%probesetName
+		outputFile.write(headerLine)
+		for strain in valueDict.keys():
+			value = valueDict[strain]
+			value = str(value).replace('value=','')
+			value=value.strip()
+			outputFile.write('%s\t%s\t%s\n'%(strain, strain, value))
 		outputFile.close()
 
 	# get strain name from ped file in order
