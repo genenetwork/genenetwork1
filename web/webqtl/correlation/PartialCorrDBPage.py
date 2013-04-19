@@ -353,7 +353,7 @@ class PartialCorrDBPage(CorrelationPage):
         addselect = HT.Href(url="#redirect", onClick="addRmvSelection('%s', document.getElementsByName('%s')[0], 'addToSelection');" % (RISet, mainfmName))
         addselect_img = HT.Image("/images/add_collection1_final.jpg", name="addselect", alt="Add To Collection", title="Add To Collection", style="border:none;")
         addselect.append(addselect_img)
-	selectall = HT.Href(url="#redirect", onClick="checkAll(document.getElementsByName('%s')[0]);" % mainfmName)
+        selectall = HT.Href(url="#redirect", onClick="checkAll(document.getElementsByName('%s')[0]);" % mainfmName)
         selectall_img = HT.Image("/images/select_all2_final.jpg", name="selectall", alt="Select All", title="Select All", style="border:none;")
         selectall.append(selectall_img)
         selectinvert = HT.Href(url="#redirect", onClick = "checkInvert(document.getElementsByName('%s')[0]);" % mainfmName)
@@ -369,18 +369,82 @@ class PartialCorrDBPage(CorrelationPage):
         selectandor.append(('AND','and'))
         selectandor.append(('OR','or'))
         selectandor.selected.append('AND')
+        #outside analysis part
+        gcat = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('%s')[0], 'GCAT');" % mainfmName)
+        gcat_img = HT.Image("/images/GCAT_logo_final.jpg", name="GCAT", alt="GCAT", title="GCAT", style="border:none")
+        gcat.append(gcat_img)
+        geneweaver = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('%s')[0], 'ODE');" % mainfmName)
+        geneweaver_img = HT.Image("/images/ODE_logo_final.jpg", name="GeneWeaver", alt="Gene Weaver", title="Gene Weaver", style="border:none")
+        geneweaver.append(geneweaver_img)
+        
+        #ZS: All of the below (until the variable pageTable is defined) is related to WebGestalt/Gene Set third party tool
+
+        '''
+        #XZ, 07/07/2010: I comment out this block of code.
+        WebGestaltScript = HT.Script(language="Javascript")
+        WebGestaltScript.append("""
+                setTimeout('openWebGestalt()', 2000);
+                function openWebGestalt(){
+                        var thisForm = document['WebGestalt'];
+                        makeWebGestaltTree(thisForm, '%s', %d, 'edag_only.php');
+                }
+            """ % (mainfmName, len(traitList)))	
+        '''
+
+        self.cursor.execute('SELECT GeneChip.GO_tree_value FROM GeneChip, ProbeFreeze, ProbeSetFreeze WHERE GeneChip.Id = ProbeFreeze.ChipId and ProbeSetFreeze.ProbeFreezeId = ProbeFreeze.Id and ProbeSetFreeze.Name = "%s"' % self.db.name)
+        result = self.cursor.fetchone()
+
+        if result:
+            GO_tree_value = result[0]
+
+            if GO_tree_value != None:
+            
+                WebGestalt = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('%s')[0], 'GOTree');" % mainfmName)
+                WebGestalt_img = HT.Image("/images/webgestalt_icon_final.jpg", name="webgestalt", alt="Gene Set Analysis Toolkit", title="Gene Set Analysis Toolkit", style="border:none")        
+                WebGestalt.append(WebGestalt_img)      
+                  
+                hddnWebGestalt = {
+                                  'id_list':'',
+                                  'correlation':'',
+                                  'id_value':'', 
+                                  'llid_list':'',
+                                  'id_type':GO_tree_value,
+                                  'idtype':'',
+                                  'species':'',
+                                  'list':'',
+                                  'client':''}
+
+                hddnWebGestalt['ref_type'] = hddnWebGestalt['id_type']
+                hddnWebGestalt['cat_type'] = 'GO'
+                hddnWebGestalt['significancelevel'] = 'Top10'
+
+                if species == 'rat':
+                    hddnWebGestalt['org'] = 'Rattus norvegicus'
+                elif species == 'human':
+                    hddnWebGestalt['org'] = 'Homo sapiens'
+                elif species == 'mouse':
+                    hddnWebGestalt['org'] = 'Mus musculus'
+                else:
+                    hddnWebGestalt['org'] = ''
+            
+                for key in hddnWebGestalt.keys():
+                        form.append(HT.Input(name=key, value=hddnWebGestalt[key], type='hidden'))
 
         chrMenu = HT.Input(type='hidden',name='chromosomes',value='all')
 
         corrHeading = HT.Paragraph('Partial Correlation Table', Class="title")
 
-        	
+        
         pageTable = HT.TableLite(cellSpacing=0,cellPadding=0,width="100%", border=0, align="Left")
         containerTable = HT.TableLite(cellSpacing=0,cellPadding=0,width="90%",border=0, align="Left")
 
-        optionsTable = HT.TableLite(cellSpacing=2, cellPadding=0,width="320", height="80", border=0, align="Left")
-        optionsTable.append(HT.TR(HT.TD(selectall), HT.TD(reset), HT.TD(selectinvert), HT.TD(addselect), align="left"))
-        optionsTable.append(HT.TR(HT.TD("&nbsp;"*1,"Select"), HT.TD("Deselect"), HT.TD("&nbsp;"*1,"Invert"), HT.TD("&nbsp;"*3,"Add")))
+        optionsTable = HT.TableLite(cellSpacing=2, cellPadding=0, height="80", border=0, align="Left")
+        try:
+            optionsTable.append(HT.TR(HT.TD(selectall, width="77"), HT.TD(reset, width="77"), HT.TD(selectinvert, width="77"), HT.TD(addselect, width="77"), HT.TD("&nbsp;"*3, geneweaver, width="94"), HT.TD(gcat, width="77"), HT.TD(WebGestalt, width="77"), align="left"))
+            optionsTable.append(HT.TR(HT.TD("&nbsp;"*1,"Select"), HT.TD("Deselect"), HT.TD("&nbsp;"*1,"Invert"), HT.TD("&nbsp;"*3,"Add"), HT.TD("Gene Weaver"), HT.TD("&nbsp;"*2, "GCAT"), HT.TD("Gene Set")))
+        except:
+            optionsTable.append(HT.TR(HT.TD(selectall, width="77"), HT.TD(reset, width="77"), HT.TD(selectinvert, width="77"), HT.TD(addselect, width="77"), HT.TD("&nbsp;"*3, geneweaver, width="94"), HT.TD(gcat, width="77"), align="left"))
+            optionsTable.append(HT.TR(HT.TD("&nbsp;"*1,"Select"), HT.TD("Deselect"), HT.TD("&nbsp;"*1,"Invert"), HT.TD("&nbsp;"*3,"Add"), HT.TD("Gene Weaver"), HT.TD("&nbsp;"*2, "GCAT")))
         containerTable.append(HT.TR(HT.TD(optionsTable)))
 
         functionTable = HT.TableLite(cellSpacing=2,cellPadding=0,width="480",height="80", border=0, align="Left")
@@ -393,11 +457,11 @@ class PartialCorrDBPage(CorrelationPage):
         fewerOptions = HT.Input(type='button',name='options',value='Fewer Options', onClick="",Class="toggle")
 
         if (fd.formdata.getvalue('showHideOptions') == 'less'):		
-			containerTable.append(HT.TR(HT.TD("&nbsp;"), height="10"), HT.TR(HT.TD(HT.Div(fewerOptions, Class="toggleShowHide"))))
-			containerTable.append(HT.TR(HT.TD("&nbsp;")))
-        else:	
-			containerTable.append(HT.TR(HT.TD("&nbsp;"), height="10"), HT.TR(HT.TD(HT.Div(moreOptions, Class="toggleShowHide"))))	
-			containerTable.append(HT.TR(HT.TD("&nbsp;")))
+            containerTable.append(HT.TR(HT.TD("&nbsp;"), height="10"), HT.TR(HT.TD(HT.Div(fewerOptions, Class="toggleShowHide"))))
+            containerTable.append(HT.TR(HT.TD("&nbsp;")))
+        else:
+            containerTable.append(HT.TR(HT.TD("&nbsp;"), height="10"), HT.TR(HT.TD(HT.Div(moreOptions, Class="toggleShowHide"))))	
+            containerTable.append(HT.TR(HT.TD("&nbsp;")))
 
         containerTable.append(HT.TR(HT.TD(HT.Span(selecttraits,' with partial r > ',selectgt, ' ',selectandor, ' r < ',selectlt,Class="bd1 cbddf fs11")), style="display:none;", Class="extra_options"))
 
@@ -406,10 +470,10 @@ class PartialCorrDBPage(CorrelationPage):
 
 
         if self.db.type=="Geno":
-        	
+
             containerTable.append(HT.TR(HT.TD(xlsUrl, height=40)))
             pageTable.append(HT.TR(HT.TD(containerTable)))
-        	
+
             tblobj['header'], worksheet = self.getTableHeaderForGeno( method=self.method, worksheet=worksheet, newrow=newrow, headingStyle=headingStyle)
             newrow += 1
             
@@ -424,7 +488,7 @@ class PartialCorrDBPage(CorrelationPage):
             objfile = open('%s.obj' % (webqtlConfig.TMPDIR+filename), 'wb')
             cPickle.dump(tblobj, objfile)
             objfile.close()
-			# NL, 07/27/2010. genTableObj function has been moved from templatePage.py to webqtlUtil.py;	
+            # NL, 07/27/2010. genTableObj function has been moved from templatePage.py to webqtlUtil.py;
             div = HT.Div(webqtlUtil.genTableObj(tblobj=tblobj, file=filename, sortby=sortby, tableID = "sortable", addIndex = "1"), corrScript, Id="sortable")
             pageTable.append(HT.TR(HT.TD(div)))
             form.append(HT.Input(name='ShowStrains',type='hidden', value =1),
