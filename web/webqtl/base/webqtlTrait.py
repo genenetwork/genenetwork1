@@ -490,7 +490,7 @@ class webqtlTrait:
 					else:
 						self.locus = self.lrs = ""
 		else:
-			raise KeyError, `self.name`+' information is not found in the database.'
+			raise KeyError, 'self.name %s information is not found in the database.' % self.name
 	
 	def genHTML(self, formName = "", dispFromDatabase=0, privilege="guest", userName="Guest", authorized_users=""):
 		if not self.haveinfo:

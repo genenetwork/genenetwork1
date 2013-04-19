@@ -218,10 +218,15 @@ Quick HELP Examples and </B>
 		<p style="font-size:12px;font-family:verdana;color:black">
 			<ul>
 				<li><a href="http://ucscbrowser.genenetwork.org/" target="_blank">Genome Browser</a> at UTHSC</li>
+				<li><a href="http://ucscbrowserbeta.genenetwork.org/" target="_blank">Genome Browser Beta</a> at UTHSC</li>
 				<li><a href="http://galaxy.genenetwork.org/" target="_blank">Galaxy</a> at UTHSC</li>
 				<li>GeneNetwork at <a href="http://ec2.genenetwork.org/" target="_blank">Amazon Cloud (EC2)</a></li>
 				<li>GeneNetwork Source Codes at <a href="http://sourceforge.net/projects/genenetwork/" target="_blank">SourceForge</a></li>
 				<li>GeneNetwork Source Codes at <a href="https://github.com/genenetwork/genenetwork" target="_blank">GitHub</a></li>
+			</ul>
+			<ul>
+				<li><a href="http://gn2python.genenetwork.org/" target="_blank">GeneNetwork II - Python</a> (under development)</li>
+				<li><a href="http://gn2java.genenetwork.org/" target="_blank">GeneNetwork II - Java</a> (under development)</li>
 			</ul>
 		</p>
 							<P>____________________________
