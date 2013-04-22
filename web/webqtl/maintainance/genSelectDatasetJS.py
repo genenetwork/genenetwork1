@@ -104,7 +104,7 @@ groupTotalResults.append(('all groups','All Groups'))
 							
 # built type array in js file for select menu in the main search page http://www.genenetwork.org/			
 cross = groupVal
-cursor.execute("select distinct Tissue.Name, concat(Tissue.Name, ' mRNA') from ProbeFreeze, ProbeSetFreeze, InbredSet, Tissue where ProbeFreeze.TissueId = Tissue.Id and ProbeFreeze.InbredSetId = InbredSet.Id and ProbeSetFreeze.ProbeFreezeId = ProbeFreeze.Id and ProbeSetFreeze.public > %d order by Tissue.Name" % (webqtlConfig.PUBLICTHRESH))
+cursor.execute("select distinct Tissue.Name, Tissue.Name from ProbeFreeze, ProbeSetFreeze, InbredSet, Tissue where ProbeFreeze.TissueId = Tissue.Id and ProbeFreeze.InbredSetId = InbredSet.Id and ProbeSetFreeze.ProbeFreezeId = ProbeFreeze.Id and ProbeSetFreeze.public > %d order by Tissue.Name" % (webqtlConfig.PUBLICTHRESH))
 typeResults = cursor.fetchall()
 typeTotalResults = list(typeResults)
 typeResultsTotalNum = cursor.rowcount
@@ -187,7 +187,7 @@ if speciesResultsTotalNum >0:
 					cross2 = "BXD', 'BXD300"
 				else:
 					cross2 = cross
-				cursor.execute("select distinct Tissue.Name, concat(Tissue.Name, ' mRNA') from ProbeFreeze, ProbeSetFreeze, InbredSet, Tissue where ProbeFreeze.TissueId = Tissue.Id and ProbeFreeze.InbredSetId = InbredSet.Id and InbredSet.Name in ('%s') and ProbeSetFreeze.ProbeFreezeId = ProbeFreeze.Id and ProbeSetFreeze.public > %d order by Tissue.Name" % (cross2, webqtlConfig.PUBLICTHRESH))
+				cursor.execute("select distinct Tissue.Name, Tissue.Name from ProbeFreeze, ProbeSetFreeze, InbredSet, Tissue where ProbeFreeze.TissueId = Tissue.Id and ProbeFreeze.InbredSetId = InbredSet.Id and InbredSet.Name in ('%s') and ProbeSetFreeze.ProbeFreezeId = ProbeFreeze.Id and ProbeSetFreeze.public > %d order by Tissue.Name" % (cross2, webqtlConfig.PUBLICTHRESH))
 				typeResults = cursor.fetchall()					
 				typeResultsNum = cursor.rowcount
 				
