@@ -54,6 +54,7 @@ var MENU_ITEMS = [
 	['B6D2F2-PSU', '/webqtl/main.py?FormID=dispSelection&RISet=B6D2F2-PSU'], 
 	['B6D2RI', '/webqtl/main.py?FormID=dispSelection&RISet=B6D2RI'], 
 	['SOTNOT-OHSU', '/webqtl/main.py?FormID=dispSelection&RISet=SOTNOT-OHSU'], 
+	['C57BL-6JxC57BL-6NJF2', '/webqtl/main.py?FormID=dispSelection&RISet=C57BL-6JxC57BL-6NJF2'], 
 ],
 ['Rat', null, null, 
 	['HXBBXH', '/webqtl/main.py?FormID=dispSelection&RISet=HXBBXH'], 
