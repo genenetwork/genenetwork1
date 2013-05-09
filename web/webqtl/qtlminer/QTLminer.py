@@ -161,7 +161,7 @@ function update4(self,form) {
 		
 		self.cursor.execute("""
 			select
-			   distinct Tissue.Name, concat(Tissue.Name, ' mRNA')
+			   distinct Tissue.Name, Tissue.Name
 			from ProbeFreeze, ProbeSetFreeze, InbredSet, Tissue
 			where
 			   ProbeFreeze.TissueId = Tissue.Id and
@@ -258,7 +258,7 @@ function update4(self,form) {
 		
 		self.cursor.execute("""
 			select
-			   distinct Tissue.Name, concat(Tissue.Name, ' mRNA')
+			   distinct Tissue.Name, Tissue.Name
 			from ProbeFreeze, ProbeSetFreeze, InbredSet, Tissue
 			where
 			   ProbeFreeze.TissueId = Tissue.Id and
@@ -356,7 +356,7 @@ function update4(self,form) {
 		
 		self.cursor.execute("""
 			select
-			   distinct Tissue.Name, concat(Tissue.Name, ' mRNA')
+			   distinct Tissue.Name, Tissue.Name
 			from ProbeFreeze, ProbeSetFreeze, InbredSet, Tissue
 			where
 			   ProbeFreeze.TissueId = Tissue.Id and
@@ -1054,7 +1054,7 @@ function update4(self,form) {
 
 		selectTypeBoxA = HT.Select(name="typeA",onChange="Javascript:this.form.submitter.value='a3';submit();")
 		for typeInfo in self.tyA:
-			selectTypeBoxA.append((typeInfo[0] + ' mRNA', typeInfo[0]))
+			selectTypeBoxA.append((typeInfo[0], typeInfo[0]))
 		selectTypeBoxA.selected.append(self.tyAsel)
 
 		selectDatabaseBoxA = HT.Select(name="databaseA",onChange="Javascript:this.form.submitter.value='a4';submit();")
@@ -1092,7 +1092,7 @@ function update4(self,form) {
 
 		selectTypeBoxB = HT.Select(name="typeB",onChange="Javascript:this.form.submitter.value='b3';submit();")
 		for typeInfo in self.tyB:
-			selectTypeBoxB.append((typeInfo[0] + ' mRNA', typeInfo[0]))
+			selectTypeBoxB.append((typeInfo[0], typeInfo[0]))
 		selectTypeBoxB.selected.append(self.tyBsel)
 
 		selectDatabaseBoxB = HT.Select(name="databaseB",onChange="Javascript:this.form.submitter.value='b4';submit();")
@@ -1131,7 +1131,7 @@ function update4(self,form) {
 
 		selectTypeBoxC = HT.Select(name="typeC",onChange="Javascript:this.form.submitter.value='c3';submit();")
 		for typeInfo in self.tyC:
-			selectTypeBoxC.append((typeInfo[0] + ' mRNA', typeInfo[0]))
+			selectTypeBoxC.append((typeInfo[0], typeInfo[0]))
 		selectTypeBoxC.selected.append(self.tyCsel)
 
 		selectDatabaseBoxC = HT.Select(name="databaseC",onChange="Javascript:this.form.submitter.value='c4';submit();")

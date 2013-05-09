@@ -60,7 +60,7 @@ class MarkerRegressionPage(templatePage):
 		ChrList,ChrNameOrderIdDict,ChrOrderIdNameDict,ChrLengthMbList= self.getChrNameOrderIdLength(RISet=fd.RISet)	
 
 		if self.mappingMethodId == '4': # For PLINK
-			
+		
 			traitInfoList = string.split(string.strip(fd.identification),':') 
 			probesetName = string.strip(traitInfoList[-1]) 
 			plinkOutputFileName= webqtlUtil.genRandStr("%s_%s_"%(fd.RISet,probesetName))			
@@ -77,8 +77,13 @@ class MarkerRegressionPage(templatePage):
 			os.system(plink_command)
 
 			if fd.identification:
-				heading2 = HT.Paragraph('Trait ID: %s' % fd.identification)
-				heading2.__setattr__("class","subtitle")
+				identification2 = fd.formdata.getvalue('fullname')
+				traitInfoList2 = string.split(identification2, '::')
+				database = traitInfoList2[0].strip()
+				ProbeSetID = traitInfoList2[1].strip()
+				trait_url = HT.Href(text=fd.identification, url=os.path.join(webqtlConfig.CGIDIR, webqtlConfig.SCRIPTFILE) + "?FormID=showDatabase&database=%s&ProbeSetID=%s" % (database, ProbeSetID), target='_blank', Class="normalsize")
+				heading2 = HT.Paragraph()
+				heading2.append(HT.Strong('Trait ID: '), trait_url)
 				self.dict['title'] = '%s: Genome Association' % fd.identification
 			else:
 				heading2 = ""
