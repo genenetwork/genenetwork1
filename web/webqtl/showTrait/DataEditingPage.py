@@ -315,8 +315,9 @@ class DataEditingPage(templatePage):
 
 			#XZ: Gene Alias
 			if thisTrait.alias:
-				alias = string.replace(thisTrait.alias, ";", " ")
-				alias = string.join(string.split(alias), ", ")
+				#alias = string.replace(thisTrait.alias, ";", " ")
+				#alias = string.join(string.split(alias), ", ")
+				alias = thisTrait.alias
 				tbl.append(HT.TR(
 					HT.TD('Aliases: ', Class="fwb fs13", valign="top", nowrap="on"),
 					HT.TD(width=10, valign="top"),
