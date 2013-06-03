@@ -219,7 +219,8 @@ Quick HELP Examples and </B>
 			<ul>
 				<li><a href="http://ucscbrowser.genenetwork.org/" target="_blank">Genome Browser</a> at UTHSC</li>
 				<li><a href="http://ucscbrowserbeta.genenetwork.org/" target="_blank">Genome Browser Beta</a> at UTHSC</li>
-				<li><a href="http://galaxy.genenetwork.org/" target="_blank">Galaxy</a> at UTHSC</li>
+				<li><a href="http://galaxylocal.genenetwork.org/" target="_blank">Galaxy Local</a> at UTHSC</li>
+				<li><a href="http://galaxycloud.genenetwork.org/" target="_blank">Galaxy Cloud</a> at UTHSC</li>
 				<li>GeneNetwork at <a href="http://ec2.genenetwork.org/" target="_blank">Amazon Cloud (EC2)</a></li>
 				<li>GeneNetwork Source Codes at <a href="http://sourceforge.net/projects/genenetwork/" target="_blank">SourceForge</a></li>
 				<li>GeneNetwork Source Codes at <a href="https://github.com/genenetwork/genenetwork" target="_blank">GitHub</a></li>
