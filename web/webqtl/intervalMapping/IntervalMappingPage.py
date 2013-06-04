@@ -490,9 +490,10 @@ class IntervalMappingPage(templatePage):
             showLocusForm.append(intImg)
         else:
             showLocusForm = intImg
-            
-        perm_histogram = self.drawPermutationHistogram()
-        perm_text_file = self.permutationTextFile()
+        
+        if self.permChecked and not self.multipleInterval:
+            perm_histogram = self.drawPermutationHistogram()
+            perm_text_file = self.permutationTextFile()
 
         ################################################################
         # footnote goes here
@@ -505,7 +506,11 @@ class IntervalMappingPage(templatePage):
         if self.traitList and self.traitList[0].db and self.traitList[0].db.type == 'Geno':
             btminfo.append(HT.BR(), 'Mapping using genotype data as a trait will result in infinity LRS at one locus. In order to display the result properly, all LRSs higher than 100 are capped at 100.')
 
-        TD_LR = HT.TD(HT.Blockquote(topTable), HT.Blockquote(gifmap, showLocusForm, HT.P(), btminfo, HT.P(), perm_histogram, HT.P(), perm_text_file), bgColor='#eeeeee', height = 200)
+        if self.permChecked and not self.multipleInterval:
+            TD_LR = HT.TD(HT.Blockquote(topTable), HT.Blockquote(gifmap, showLocusForm, HT.P(), btminfo, HT.P(), perm_histogram, HT.P(), perm_text_file), bgColor='#eeeeee', height = 200)
+        else:
+            TD_LR = HT.TD(HT.Blockquote(topTable), HT.Blockquote(gifmap, showLocusForm, HT.P(), btminfo), bgColor='#eeeeee', height = 200)
+
 
         if geneTable:
             iaForm = HT.Form(cgi= os.path.join(webqtlConfig.CGIDIR, "main.py?FormID=intervalAnalyst"), enctype='multipart/form-data',
