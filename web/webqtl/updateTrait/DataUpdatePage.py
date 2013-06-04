@@ -37,6 +37,7 @@ import string
 from htmlgen import HTMLgen2 as HT
 import os
 import time
+import re
 
 from base.webqtlTrait import webqtlTrait
 from base.templatePage import templatePage
@@ -640,6 +641,11 @@ class DataUpdatePage(templatePage):
 
 						if 'alias' in modifyField:
 							if thisTrait.alias:
+								newalias = []
+								for alias in re.split('[,;\s]+', thisTrait.alias):
+									if alias and 0<len(alias):
+										newalias.append(alias)
+								thisTrait.alias = '; '.join(newalias)
 								query = """UPDATE ProbeSet SET alias='%s' WHERE GeneId=%s""" % (thisTrait.alias, thisTrait.geneid)
 							else:
 								query = """UPDATE ProbeSet SET alias=NULL WHERE GeneId=%s""" % (thisTrait.geneid)
