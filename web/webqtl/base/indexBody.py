@@ -226,6 +226,9 @@ Quick HELP Examples and </B>
 				<li>GeneNetwork Source Codes at <a href="https://github.com/genenetwork/genenetwork" target="_blank">GitHub</a></li>
 			</ul>
 			<ul>
+				<li><a href="http://bnw.genenetwork.org/" target="_blank">Bayesian Network Web Server</a></li>
+			</ul>
+			<ul>
 				<li><a href="http://gn2python.genenetwork.org/" target="_blank">GeneNetwork II - Python</a> (under development)</li>
 				<li><a href="http://gn2java.genenetwork.org/" target="_blank">GeneNetwork II - Java</a> (under development)</li>
 			</ul>
