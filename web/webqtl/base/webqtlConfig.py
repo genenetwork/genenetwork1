@@ -31,6 +31,8 @@ MAXLIFE = 86400
 #MINIMUM Database public value
 PUBLICTHRESH = 0
 
+TEXTUI = 1
+
 #NBCI address
 NCBI_LOCUSID = "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=%s"
 UCSC_REFSEQ = "http://genome.cse.ucsc.edu/cgi-bin/hgGene?db=%s&hgg_gene=%s&hgg_chrom=chr%s&hgg_start=%s&hgg_end=%s"
