@@ -642,7 +642,7 @@ class DataUpdatePage(templatePage):
 						if 'alias' in modifyField:
 							if thisTrait.alias:
 								newalias = []
-								for alias in re.split('[,;\s]+', thisTrait.alias):
+								for alias in re.split('[,;|\s]+', thisTrait.alias):
 									if alias and 0<len(alias):
 										newalias.append(alias)
 								thisTrait.alias = '; '.join(newalias)
