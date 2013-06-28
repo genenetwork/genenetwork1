@@ -1567,6 +1567,8 @@ Resorting this table <br>
                 if not webqtlUtil.hasAccessToConfidentialPhenotypeTrait(privilege=self.privilege, userName=self.userName, authorized_users=thisTrait.authorized_users):
                     PhenotypeString = thisTrait.pre_publication_description
 
+            if PhenotypeString is None:
+                PhenotypeString = ""
             tr.append(TDCell(HT.TD(PhenotypeString, Class="fs12 fwn b1 c222"), PhenotypeString, PhenotypeString.upper()))
 
             tr.append(TDCell(HT.TD(thisTrait.authors, Class="fs12 fwn b1 c222 fsI"),thisTrait.authors, thisTrait.authors.strip().upper()))
