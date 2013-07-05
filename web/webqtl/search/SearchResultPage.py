@@ -24,7 +24,7 @@ import PubmedSearch
 
 class SearchResultPage(templatePage):
 
-	maxReturn = 3000
+	maxReturn = 5000
 #	NPerPage = 100
 	nkeywords = 0
 
