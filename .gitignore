@@ -1,2 +1,7 @@
-# gitignore
 *.pyc
+/web/ProbeSetFreeze_DataMatrix
+/web/bxd
+/web/genotypes
+/web/image
+/web/plink
+/web/tmp

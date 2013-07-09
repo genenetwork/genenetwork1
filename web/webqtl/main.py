@@ -266,6 +266,10 @@ def handler(req):
 				from collection import ExportSelectionDetailInfoPage
 				reload(ExportSelectionDetailInfoPage)
 				page = ExportSelectionDetailInfoPage.ExportSelectionDetailInfoPage(fd)
+			elif fd.formID == 'BNW':
+                                from collection import BNWPage
+                                reload(BNWPage)
+                                page = BNWPage.BNWPage(fd)
                         elif fd.formID == 'batSubmitResult':
                                 from collection import BatchSubmitSelectionPage
                                 reload(BatchSubmitSelectionPage)

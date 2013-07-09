@@ -168,6 +168,10 @@ class AddToSelectionPage(templatePage):
         GeneSet = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('showDatabase')[0],'GOTree');")
         GeneSet_img = HT.Image("/images/webgestalt_icon_final.jpg", name="webgestalt", alt="Gene Set Analysis Toolkit", title="Gene Set Analysis Toolkit", style="border:none")
         GeneSet.append(GeneSet_img)
+        
+        BNW = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('showDatabase')[0], 'BNW');")
+        BNW_img = HT.Image("/images/bnw.png", name="BNW", alt="Bayesian Network Webserver", title="Bayesian Network Webserver", style="border:none; width:57px; height:55px;")
+        BNW.append(BNW_img)
 
         #need to be refined
         if fd.genotype.Mbmap:
@@ -221,8 +225,26 @@ class AddToSelectionPage(templatePage):
         postContainerTable = HT.TableLite(cellSpacing=2,cellPadding=0,width="90%",border=0,align="Left")
 
         optionsTable = HT.TableLite(cellSpacing=2, cellPadding=0,width="640", border=0, align="Left")
-        optionsTable.append(HT.TR(HT.TD(selectall, width="77"), HT.TD(reset, width="77"), HT.TD(selectinvert, width="77"), HT.TD(removeselect, width="77"), HT.TD(exportSelect, width="77"), HT.TD("&nbsp;"*3, GeneWeaver, width="94"), HT.TD(GCATButton, width="77"), HT.TD(GeneSet, width="77")))
-        optionsTable.append(HT.TR(HT.TD("&nbsp;"*1,"Select"), HT.TD("Deselect"), HT.TD("&nbsp;"*1,"Invert"), HT.TD("&nbsp;"*1,"Remove"), HT.TD("&nbsp;"*1,"Export"), HT.TD(HT.Text("Gene Weaver")), HT.TD("&nbsp;"*2, HT.Text("GCAT")), HT.TD(HT.Text("Gene Set"))))
+        optionsTable.append(HT.TR(
+            HT.TD(selectall, width="77"),
+            HT.TD(reset, width="77"),
+            HT.TD(selectinvert, width="77"),
+            HT.TD(removeselect, width="77"),
+            HT.TD(exportSelect, width="77"),
+            HT.TD("&nbsp;"*3, GeneWeaver, width="94"),
+            HT.TD(GCATButton, width="77"),
+            HT.TD(GeneSet, width="77"),
+            HT.TD(BNW, width="77")))
+        optionsTable.append(HT.TR(
+            HT.TD("&nbsp;"*1,"Select"),
+            HT.TD("Deselect"),
+            HT.TD("&nbsp;"*1,"Invert"),
+            HT.TD("&nbsp;"*1,"Remove"),
+            HT.TD("&nbsp;"*1,"Export"),
+            HT.TD(HT.Text("Gene Weaver")),
+            HT.TD("&nbsp;"*2, HT.Text("GCAT")),
+            HT.TD(HT.Text("Gene Set")),
+            HT.TD(HT.Text("BNW"))))
         postContainerTable.append(HT.TR(HT.TD(optionsTable)))
         containerTable.append(HT.TR(HT.TD(optionsTable)))
 
