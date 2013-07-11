@@ -64,20 +64,29 @@ class BNWPage(templatePage):
 		strainlist = fd.f1list + fd.strainlist
 		
 		valuesList = []
+		formvalue = ''
 		for item in searchResult:
+			#
 			thisTrait = webqtlTrait(fullname=item, cursor=self.cursor)
 			thisTrait.retrieveData(strainlist=strainlist)
 			values = thisTrait.exportData(strainlist)
 			valuesList.append(values)
+			#
+			item = item.replace("Geno::", "_")
+			item = item.replace("Publish::", "_")
+			item = item.replace("::", "_")
+			formvalue += item
+			formvalue += ','
 		valuesList = zip(*valuesList)
-			
-		formvalue  = ','.join(searchResult)
+		formvalue = formvalue[:-1]
 		formvalue += ';'
+
 		for row in valuesList:
 			hasNone = False
 			for cell in row:
 				if not cell:
 					hasNone = True
+					break
 			if hasNone:
 				continue
 			formvalue += ','.join(str(cell) for cell in row)
