@@ -21,6 +21,26 @@
 <P class="title">Latest Updates and News from Genenetwork  <A HREF="/webqtl/main.py?FormID=editHtml"><img src="/images/modify.gif" alt="modify this page" border= 0 valign="middle"></A></P>
 
 <Blockquote>
+<STRONG>2013-07-11:</STRONG>
+Several features have been implemented or are currently being implemented for GeneNetwork 2:<br>
+<ul>
+	<li>
+		A new interface for user registration is being developed for GeneNetwork 2, as well as an interface with which users can designate groups of data-sets and assign read/write privileges.
+		(Implemented by Sam Ockman and Zach Sloan)
+	</li>
+	<li>
+		The correlation page has been mostly re-implemented. While the output is the same, all features re-implemented in GN2 have been almost entirely rewritten using much clearer business logic and a framework and templating language (Flask and Jinja2 respectively).
+		(Implemented by Lei Yan and Zach Sloan)
+	</li>
+	<li>
+		The marker regression function has been re-implemented using the PyLMM code written by Nick Furlotte. This code is much more robust than the code currently used in the marker regression function of GN1 and accounts for kinship between samples/strains.
+		(Implemented by Zach Sloan, Sam Ockman, and with code written by Nick Furlotte)
+	</li>
+</ul>
+Future updates will continue to be posted in the news as they're completed.
+</Blockquote>
+
+<Blockquote>
 <STRONG>2013-07-10:</STRONG>
 We added a link from GeneNetwork to BNW (<a href="http://bnw.genenetwork.org/">Bayesian Network Web Server</a>) at GeneNetwork collection page.
 (Implemented by Lei Yan).
@@ -1441,3 +1461,4 @@ urchinTracker();
 </script>
 </BODY>
 </HTML>
+
