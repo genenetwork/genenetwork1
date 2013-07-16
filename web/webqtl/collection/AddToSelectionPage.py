@@ -170,7 +170,7 @@ class AddToSelectionPage(templatePage):
         GeneSet.append(GeneSet_img)
         
         BNW = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('showDatabase')[0], 'BNW');")
-        BNW_img = HT.Image("/images/bnw.png", name="BNW", alt="Bayesian Network Webserver", title="Bayesian Network Webserver", style="border:none; width:57px; height:55px;")
+        BNW_img = HT.Image("/images/bnw.jpg", name="BNW", alt="Bayesian Network Webserver", title="Bayesian Network Webserver", style="border:none; width:57px; height:55px;")
         BNW.append(BNW_img)
 
         #need to be refined
