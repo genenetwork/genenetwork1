@@ -21,6 +21,7 @@ from utility import webqtlUtil
 from dbFunction import webqtlDatabaseFunction
 
 import PubmedSearch
+import GOSearch
 
 class SearchResultPage(templatePage):
 
@@ -155,11 +156,15 @@ class SearchResultPage(templatePage):
 		self.ANDkeyword = fd.formdata.getfirst('ANDkeyword', "")
 		pubmedSearchObject = PubmedSearch.PubmedSearch(self.ANDkeyword, self.database[0].id)
 		self.ANDkeyword = pubmedSearchObject.getNewS()
+		goSearchObject = GOSearch.GOSearch(self.ANDkeyword)
+		self.ANDkeyword = goSearchObject.getNewS()
 
 		self.ORkeyword = fd.formdata.getfirst('ORkeyword', "")
 		pubmedSearchObject = PubmedSearch.PubmedSearch(self.ORkeyword, self.database[0].id)
 		self.ORkeyword = pubmedSearchObject.getNewS()
-
+		goSearchObject = GOSearch.GOSearch(self.ORkeyword)
+		self.ORkeyword = goSearchObject.getNewS()
+		
 		self.ORkeyword += geneIdListQuery
 
 		self.ANDkeyword = self.ANDkeyword.replace("\\", "").strip()
