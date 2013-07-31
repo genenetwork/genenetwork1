@@ -7,27 +7,30 @@ class GOSearch:
 				cursor = webqtlDatabaseFunction.getCursor()
 				if not cursor:
 					return
+				#
 				self.olds = s
 				self.news = s
+				self.match = False
+				self.match_from = ''
+				self.match_to = ''
 				#
 				search_name = re.compile('\s*go\s*[:=]\s*\S+\s*', re.I).search(self.olds)
 				if search_name:
-					goterm = search_name.group()
-					self.news = self.news.replace(goterm, ' ')
-					goterm = re.compile('\s+').sub('', goterm)
+					self.match = True
+					self.match_from = search_name.group()
+					self.news = self.olds.replace(self.match_from, ' ')
+					self.match_from = re.compile('\s+').sub('', self.match_from)
 					cursor.execute(
 						"""
-						select genes from goref
+						select genes from GORef
 						where goterm=%s
-						""", (goterm))
+						""", (self.match_from))
 					gorefs = cursor.fetchall()
 					if len(gorefs) == 0:
-						genes = ""
+						self.match_to = ""
 					else:
-						genes = gorefs[0][0]
-					self.news = genes.strip() + ' ' + self.news.strip()
-				else:
-					self.news = self.olds
+						self.match_to = gorefs[0][0]
+					self.news = self.match_to.strip() + ' ' + self.news.strip()
 
 		def getNewS(self):
 				return self.news

@@ -156,14 +156,14 @@ class SearchResultPage(templatePage):
 		self.ANDkeyword = fd.formdata.getfirst('ANDkeyword', "")
 		pubmedSearchObject = PubmedSearch.PubmedSearch(self.ANDkeyword, self.database[0].id)
 		self.ANDkeyword = pubmedSearchObject.getNewS()
-		goSearchObject = GOSearch.GOSearch(self.ANDkeyword)
-		self.ANDkeyword = goSearchObject.getNewS()
+		goSearchAndObject = GOSearch.GOSearch(self.ANDkeyword)
+		self.ANDkeyword = goSearchAndObject.getNewS()
 
 		self.ORkeyword = fd.formdata.getfirst('ORkeyword', "")
 		pubmedSearchObject = PubmedSearch.PubmedSearch(self.ORkeyword, self.database[0].id)
 		self.ORkeyword = pubmedSearchObject.getNewS()
-		goSearchObject = GOSearch.GOSearch(self.ORkeyword)
-		self.ORkeyword = goSearchObject.getNewS()
+		goSearchOrObject = GOSearch.GOSearch(self.ORkeyword)
+		self.ORkeyword = goSearchOrObject.getNewS()
 		
 		self.ORkeyword += geneIdListQuery
 
@@ -201,7 +201,7 @@ class SearchResultPage(templatePage):
 		#descriptions, one for OR search, one for AND search
 		self.ANDDescriptionText = []
 		self.ORDescriptionText = []
-
+		
 		if not self.normalSearch():
 			return
 		if not self.patternSearch():
@@ -209,7 +209,7 @@ class SearchResultPage(templatePage):
 		if not self.assembleQuery():
 			return
 		self.nresults = self.executeQuery()
-
+		
 		if len(self.database) > 1:
 			dbUrl =  "Multiple phenotype databases"
 			dbUrlLink = " were"
@@ -219,13 +219,15 @@ class SearchResultPage(templatePage):
 
 		SearchText = HT.Blockquote('GeneNetwork searched the ', dbUrl, ' for all records ')
 		if self.ORkeyword2:
+			if goSearchOrObject.match:
+				self.ORkeyword2 = self.encregexp(goSearchOrObject.olds)
 			NNN = len(self.ORkeyword2)
 			if NNN > 1:
 				SearchText.append(' that match the terms ')
 			else:
 				SearchText.append(' that match the term ')
 			for j, term in enumerate(self.ORkeyword2):
-				SearchText.append(HT.U(term))
+				SearchText.append(HT.Italic(term))
 				if NNN > 1 and j < NNN-2:
 					SearchText.append(", ")
 				elif j == NNN-2:
@@ -244,7 +246,10 @@ class SearchResultPage(templatePage):
 
 		if (self.ORkeyword2 or self.ORDescriptionText) and (self.ANDkeyword2 or self.ANDDescriptionText):
 			SearchText.append("; ")
+			
 		if self.ANDkeyword2:
+			if goSearchAndObject.match:
+				self.ANDkeyword2 = self.encregexp(goSearchAndObject.olds)
 			if (self.ORkeyword2 or self.ORDescriptionText):
 				SearchText.append(' records')
 			NNN = len(self.ANDkeyword2)
@@ -253,7 +258,7 @@ class SearchResultPage(templatePage):
 			else:
 				SearchText.append(' that match the term ')
 			for j, term in enumerate(self.ANDkeyword2):
-				SearchText.append(HT.U(term))
+				SearchText.append(HT.Italic(term))
 				if NNN > 1 and j < NNN-2:
 					SearchText.append(", ")
 				elif j == NNN-2:
