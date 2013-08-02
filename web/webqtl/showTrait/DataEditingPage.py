@@ -120,10 +120,10 @@ class DataEditingPage(templatePage):
 		
 		if fd.identification:
 			hddn['identification'] = fd.identification
-			
 		else:
 			hddn['identification'] = "Un-named trait"  #If no identification, set identification to un-named
-			
+		
+		self.dispTraitInformation(fd, title1Body, hddn, thisTrait) # Display trait information + function buttons	
 		if thisTrait == None:
 			thisTrait = webqtlTrait(data=fd.allTraitData, db=None)		
 			
@@ -164,8 +164,6 @@ class DataEditingPage(templatePage):
 				hddn['description'] = thisTrait.description
 			else:
 				hddn['description'] = "Description not available"	
-			
-		self.dispTraitInformation(fd, title1Body, hddn, thisTrait) #Display trait information + function buttons	
 		
 		#############################
 		##  Generate form and buttons
@@ -176,7 +174,7 @@ class DataEditingPage(templatePage):
 		
 		next=HT.Input(type='submit', name='submit',value='Next',Class="button")
 		reset=HT.Input(type='Reset',name='',value=' Reset ',Class="button")
-		correlationMenus = []	
+		correlationMenus = []
 		
 		# Variance submit page only
 		if fd.enablevariance and not varianceDataPage:
