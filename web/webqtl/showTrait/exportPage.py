@@ -1,11 +1,14 @@
 import string
 import os
+import time
 import re
 import cPickle
 import pyXLWriter as xl
 
 from base import webqtlConfig
+from base.webqtlTrait import webqtlTrait
 from utility import webqtlUtil
+from dbFunction import webqtlDatabaseFunction
 from base.templatePage import templatePage
 
 class ExportPage(templatePage):
@@ -18,10 +21,53 @@ class ExportPage(templatePage):
 		workbook = xl.Writer('%s.xls' % (webqtlConfig.TMPDIR+filename))
 		style_formats = [] #Array with Excel style formats - Zach 9/2/2011
 		heading = workbook.add_format(align = 'center', bold = 1, border = 1, size=13, fg_color = 0x1E, color="white") #Style for the header cells
+		titleStyle = workbook.add_format(align = 'left', bold = 0, size=13, border = 1, border_color="gray")
 		right  = workbook.add_format(align = 'right') #Style to align cell contents to the right
 		style_formats.append(heading)
 		style_formats.append(right)
 		worksheet = workbook.add_worksheet()
+
+		worksheet.write([0, 0], "Data source: The GeneNetwork at %s" % webqtlConfig.PORTADDR, titleStyle)
+		worksheet.write([1, 0], "Citations: Please see %s/reference.html" % webqtlConfig.PORTADDR, titleStyle)
+		worksheet.write([2, 0], "Date : %s" % time.strftime("%B %d, %Y", time.gmtime()), titleStyle)
+		worksheet.write([3, 0], "Time : %s GMT" % time.strftime("%H:%M ", time.gmtime()), titleStyle)
+		worksheet.write([4, 0], "Status of data ownership: Possibly unpublished data; please see %s/statusandContact.html for details on sources, ownership, and usage of these data." % webqtlConfig.PORTADDR, titleStyle)
+
+		next_line = 5
+		trait_type = fd.formdata.getvalue('trait_type')
+		
+		if trait_type == 'ProbeSet':
+			worksheet.write([next_line, 0], "Trait ID: %s" % fd.formdata.getvalue('trait_name'), titleStyle)
+			next_line += 1
+			if fd.formdata.getvalue('symbol'):
+				worksheet.write([next_line, 0], "Symbol: %s" % fd.formdata.getvalue('symbol'), titleStyle)
+				next_line += 1
+			worksheet.write([next_line, 0], "Dataset: %s" % fd.formdata.getvalue('db_name'), titleStyle)
+			next_line += 1
+			if fd.formdata.getvalue('description'):
+				worksheet.write([next_line, 0], "Description: %s" % fd.formdata.getvalue('description'), titleStyle)
+				next_line += 1
+			worksheet.write([next_line, 0], "Location: %s" % fd.formdata.getvalue('location'), titleStyle)
+			next_line += 1
+		elif trait_type == "Publish":
+			if fd.formdata.getvalue('description'):
+				worksheet.write([next_line, 0], "Phenotype: %s" % fd.formdata.getvalue('description'), titleStyle)
+				next_line += 1
+			worksheet.write([next_line, 0], "Authors: %s" % fd.formdata.getvalue('authors'), titleStyle)
+			next_line += 1
+			worksheet.write([next_line, 0], "Title: %s" % fd.formdata.getvalue('title'), titleStyle)
+			next_line += 1
+			if fd.formdata.getvalue('journal'):
+				worksheet.write([next_line, 0], "Journal: %s" % fd.formdata.getvalue('journal'), titleStyle)
+				next_line += 1
+		elif trait_type == "Geno":
+			worksheet.write([next_line, 0], "Location: %s" % fd.formdata.getvalue('location'), titleStyle)
+			next_line += 1	
+		elif trait_type == "Temp":
+			worksheet.write([next_line, 0], "Description: %s" % fd.formdata.getvalue('title'), titleStyle)
+			next_line += 1
+
+		next_line += 1
 
 		primaryStrainNames = fd.formdata.getvalue('strainNames', '').split(',')
 		primaryVals = fd.formdata.getvalue('strainVals', '').split(',')
@@ -75,7 +121,7 @@ class ExportPage(templatePage):
 		for attr_name in attributeNames:
 			column_headers.append(attr_name)
 
-		start_line = 0 #Gets last line of "primary" strain values to define a start-point for "other" strain values
+		start_line = next_line#Gets last line of "primary" strain values to define a start-point for "other" strain values
 		for ncol, item in enumerate(column_headers):
 			worksheet.write([start_line, ncol], item, style_formats[0])
 			worksheet.set_column([ncol, ncol], 2*len(item))
@@ -132,9 +178,6 @@ class ExportPage(templatePage):
 		self.content_type = 'application/xls'
 		self.content_disposition = 'attachment; filename=%s' % ('%s.xls' % filename)
 		self.attachment = text
-		
-
-		
 
 
 

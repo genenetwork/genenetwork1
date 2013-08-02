@@ -80,14 +80,13 @@ class DataEditingPage(templatePage):
 		# Some fields, like method, are defaulted to None; otherwise in IE the field can't be changed using jquery
 		hddn = {'FormID':fmID, 'RISet':fd.RISet, 'submitID':'', 'scale':'physic', 'additiveCheck':'ON', 'showSNP':'ON', 'showGenes':'ON', 'method':None,\
 		'parentsf14regression':'OFF', 'stats_method':'1', 'chromosomes':'-1', 'topten':'', 'viewLegend':'ON', 'intervalAnalystCheck':'ON', 'valsHidden':'OFF',\
- 		'database':'', 'criteria':None, 'MDPChoice':None, 'bootCheck':None, 'num_perm':2000, 'applyVarianceSE':None, 'strainNames':'_', 'strainVals':'_',\
+		'criteria':None, 'MDPChoice':None, 'bootCheck':None, 'num_perm':2000, 'applyVarianceSE':None, 'strainNames':'_', 'strainVals':'_',\
 		'strainVars':'_', 'otherStrainNames':'_', 'otherStrainVals':'_', 'otherStrainVars':'_', 'extra_attributes':'_', 'other_extra_attributes':'_'}
 		
 		if fd.enablevariance:
 			hddn['enablevariance']='ON'
 		if fd.incparentsf1:
 			hddn['incparentsf1']='ON'
-		
 		if thisTrait:
 			hddn['fullname'] = str(thisTrait)
 			try:
@@ -96,6 +95,7 @@ class DataEditingPage(templatePage):
 				hddn['normalPlotTitle'] += thisTrait.name
 			except:
 				hddn['normalPlotTitle'] = str(thisTrait.name)
+				
 			hddn['fromDataEditingPage'] = 1	
 			if thisTrait.db and thisTrait.db.type and thisTrait.db.type == 'ProbeSet':
 				hddn['trait_type'] = thisTrait.db.type
@@ -106,7 +106,7 @@ class DataEditingPage(templatePage):
 					heritability = self.cursor.fetchone()
 					hddn['heritability'] = heritability	
 				
-				hddn['attribute_names'] = ""			
+				hddn['attribute_names'] = ""
 
 		hddn['mappingMethodId'] = webqtlDatabaseFunction.getMappingMethod (cursor=self.cursor, groupName=fd.RISet)
 
@@ -124,6 +124,47 @@ class DataEditingPage(templatePage):
 		else:
 			hddn['identification'] = "Un-named trait"  #If no identification, set identification to un-named
 			
+		if thisTrait == None:
+			thisTrait = webqtlTrait(data=fd.allTraitData, db=None)		
+			
+		#The code below is all for the header of the exported excel page
+		if thisTrait and thisTrait.db and thisTrait.db.type == 'ProbeSet':
+			hddn['trait_type'] = thisTrait.db.type
+			hddn['trait_name'] = thisTrait.name
+			if thisTrait.symbol:
+				hddn['symbol'] = thisTrait.symbol
+			hddn['db_name'] = thisTrait.db.fullname
+			if thisTrait.description:
+				hddn['description'] = thisTrait.description
+				if thisTrait.probe_target_description: 
+					hddn['description'] += '; ' + thisTrait.probe_target_description
+			location = ' Chr %s @ %s Mb' % (thisTrait.chr,thisTrait.mb)
+			hddn['location'] = location
+		elif thisTrait and thisTrait.db and thisTrait.db.type == 'Publish':
+			hddn['trait_type'] = thisTrait.db.type
+			if thisTrait.confidential:
+				if webqtlUtil.hasAccessToConfidentialPhenotypeTrait(privilege=self.privilege, userName=self.userName, authorized_users=thisTrait.authorized_users):
+					hddn['description'] = thisTrait.post_publication_description
+				else:
+					hddn['description'] = thisTrait.pre_publication_description
+			else:
+				hddn['description'] = thisTrait.post_publication_description
+			hddn['authors'] = thisTrait.authors
+			hddn['title'] = thisTrait.title
+			if thisTrait.journal:
+				hddn['journal'] = thisTrait.journal
+				
+		elif thisTrait and thisTrait.db and thisTrait.db.type == 'Geno':
+			hddn['trait_type'] = thisTrait.db.type
+			location = ' Chr %s @ %s Mb' % (thisTrait.chr,thisTrait.mb)
+			hddn['location'] = location
+			
+		elif thisTrait and thisTrait.db and thisTrait.db.type == 'Temp':
+			if thisTrait.description:
+				hddn['description'] = thisTrait.description
+			else:
+				hddn['description'] = "Description not available"	
+			
 		self.dispTraitInformation(fd, title1Body, hddn, thisTrait) #Display trait information + function buttons	
 		
 		#############################
@@ -135,10 +176,7 @@ class DataEditingPage(templatePage):
 		
 		next=HT.Input(type='submit', name='submit',value='Next',Class="button")
 		reset=HT.Input(type='Reset',name='',value=' Reset ',Class="button")
-		correlationMenus = []
-		
-		if thisTrait == None:
-			thisTrait = webqtlTrait(data=fd.allTraitData, db=None)			
+		correlationMenus = []	
 		
 		# Variance submit page only
 		if fd.enablevariance and not varianceDataPage:
@@ -483,13 +521,13 @@ class DataEditingPage(templatePage):
 						ProbeSetFreeze.Id = %d""" % thisTrait.db.id)
 				probeDBName = self.cursor.fetchone()[0]
 				tbl.append(HT.TR(
-					HT.TD('Database: ', Class="fs13 fwb", valign="top", nowrap="on"),
+					HT.TD('Database 2: ', Class="fs13 fwb", valign="top", nowrap="on"),
 					HT.TD(width=10, valign="top"),
 					HT.TD(HT.Span('%s' % probeDBName, Class="non_bold"), valign="top")
 					))				
 			else:
 				tbl.append(HT.TR(
-					HT.TD('Database: ', Class="fs13 fwb", valign="top", nowrap="on"),
+					HT.TD('Database 3: ', Class="fs13 fwb", valign="top", nowrap="on"),
 					HT.TD(width=10, valign="top"),
 					HT.TD(HT.Href(text=thisTrait.db.fullname, url = webqtlConfig.INFOPAGEHREF % thisTrait.db.name,
 					target='_blank', Class="fs13 fwn non_bold"), valign="top")
