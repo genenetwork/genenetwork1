@@ -80,7 +80,7 @@ class DataEditingPage(templatePage):
 		# Some fields, like method, are defaulted to None; otherwise in IE the field can't be changed using jquery
 		hddn = {'FormID':fmID, 'RISet':fd.RISet, 'submitID':'', 'scale':'physic', 'additiveCheck':'ON', 'showSNP':'ON', 'showGenes':'ON', 'method':None,\
 		'parentsf14regression':'OFF', 'stats_method':'1', 'chromosomes':'-1', 'topten':'', 'viewLegend':'ON', 'intervalAnalystCheck':'ON', 'valsHidden':'OFF',\
-		'criteria':None, 'MDPChoice':None, 'bootCheck':None, 'num_perm':2000, 'applyVarianceSE':None, 'strainNames':'_', 'strainVals':'_',\
+		'database':'', 'criteria':None, 'MDPChoice':None, 'bootCheck':None, 'num_perm':2000, 'applyVarianceSE':None, 'strainNames':'_', 'strainVals':'_',\
 		'strainVars':'_', 'otherStrainNames':'_', 'otherStrainVals':'_', 'otherStrainVars':'_', 'extra_attributes':'_', 'other_extra_attributes':'_'}
 		
 		if fd.enablevariance:
