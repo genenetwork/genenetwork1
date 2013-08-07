@@ -200,6 +200,7 @@ Quick HELP Examples and </B>
 
 <LI><B><I>GO:0045202</I></B> searches for synapse-associated genes listed in the <A HREF="http://www.godatabase.org/cgi-bin/amigo/go.cgi" target="_blank"  class="fs14"><small>Gene Ontology</small></A>.
 
+<LI><B><I>NAME=(watson jd)</I></B> searches for all genes associated in PubMed with the author J D Watson.</LI>
 
 <LI><B><I>GO:0045202 LRS=(9 99 Chr4 122 155) cisLRS=(9 999 10)</I> </B><BR> in <B>Combined</B> finds synapse-associated genes with <A HREF="http://www.genenetwork.org/glossary.html#E" target="_blank"  class="fs14"><small>cis eQTL</small></A> on Chr 4 from 122 and 155 Mb with LRS scores between 9 and 999.
 
