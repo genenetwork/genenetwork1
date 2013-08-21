@@ -1892,6 +1892,9 @@ class DataEditingPage(templatePage):
 						except:
 							pass
 				
+						if attributeValue == "":
+							attributeValue = "&nbsp;"
+				
 						span_Id = strains+"_attribute"+str(attr_counter)+"_sample"+str(i+1)
 						attr_container = HT.Span(attributeValue, Id=span_Id)
 						attr_className = str(attributeValue) + "&nbsp;" + className
