@@ -453,6 +453,7 @@ class IntervalMappingPage(templatePage):
         intCanvas.save(os.path.join(webqtlConfig.IMGDIR, filename), format='png')
         intImg=HT.Image('/image/'+filename+'.png', border=0, usemap='#WebQTLImageMap')
 
+        #Scales plot differently for high resolution
         if self.draw2X:
             intCanvasX2 = pid.PILCanvas(size=(self.graphWidth*2,self.graphHeight*2))
             gifmapX2 = self.plotIntMapping(fd, intCanvasX2, startMb = self.startMb, endMb = self.endMb, showLocusForm= showLocusForm, zoom=2)
@@ -613,6 +614,7 @@ class IntervalMappingPage(templatePage):
             yBottomOffset = max(120, yBottomOffset)
         fontZoom = zoom
         if zoom == 2:
+            xLeftOffset += 20
             fontZoom = 1.5
 
         xLeftOffset = int(xLeftOffset*fontZoom)
@@ -643,6 +645,9 @@ class IntervalMappingPage(templatePage):
             drawAreaHeight -= self.EACH_GENE_HEIGHT * (self.NR_INDIVIDUALS+10) * 2 * zoom
 ## END HaplotypeAnalyst
 
+        if zoom == 2:
+            drawAreaHeight -= 60
+
         #Image map
         gifmap = HT.Map(name='WebQTLImageMap')
 
@@ -656,17 +661,17 @@ class IntervalMappingPage(templatePage):
 
         # Draw clickable region and gene band if selected
         if self.plotScale == 'physic' and self.selectedChr > -1:
-            self.drawClickBand(canvas, gifmap, plotXScale, offset=newoffset, zoom= zoom, startMb=startMb, endMb = endMb)
+            self.drawClickBand(canvas, gifmap, plotXScale, offset=newoffset, zoom = zoom, startMb=startMb, endMb = endMb)
             if self.geneChecked and self.geneCol:
-                self.drawGeneBand(canvas, gifmap, plotXScale, offset=newoffset, zoom= zoom, startMb=startMb, endMb = endMb)
+                self.drawGeneBand(canvas, gifmap, plotXScale, offset=newoffset, zoom = zoom, startMb=startMb, endMb = endMb)
             if self.SNPChecked:
-                self.drawSNPTrackNew(canvas, offset=newoffset, zoom= 2*zoom, startMb=startMb, endMb = endMb)
+                self.drawSNPTrackNew(canvas, offset=newoffset, zoom = 2*zoom, startMb=startMb, endMb = endMb)
 ## BEGIN HaplotypeAnalyst
             if self.haplotypeAnalystChecked:
-                self.drawHaplotypeBand(canvas, gifmap, plotXScale, offset=newoffset, zoom= zoom, startMb=startMb, endMb = endMb)
+                self.drawHaplotypeBand(canvas, gifmap, plotXScale, offset=newoffset, zoom = zoom, startMb=startMb, endMb = endMb)
 ## END HaplotypeAnalyst
         # Draw X axis
-        self.drawXAxis(fd, canvas, drawAreaHeight, gifmap, plotXScale, showLocusForm, offset=newoffset, zoom= zoom, startMb=startMb, endMb = endMb)
+        self.drawXAxis(fd, canvas, drawAreaHeight, gifmap, plotXScale, showLocusForm, offset=newoffset, zoom = zoom, startMb=startMb, endMb = endMb)
         # Draw QTL curve
         self.drawQTL(canvas, drawAreaHeight, gifmap, plotXScale, offset=newoffset, zoom= zoom, startMb=startMb, endMb = endMb)
 
@@ -674,13 +679,13 @@ class IntervalMappingPage(templatePage):
         if self.multipleInterval:
             self.drawMultiTraitName(fd, canvas, gifmap, showLocusForm, offset=newoffset)
         elif self.legendChecked:
-            self.drawLegendPanel(fd, canvas, offset=newoffset)
+            self.drawLegendPanel(fd, canvas, offset=newoffset, zoom = zoom)
         else:
             pass
 
         #draw position, no need to use a separate function
         if fd.genotype.Mbmap:
-            self.drawProbeSetPosition(canvas, plotXScale, offset=newoffset)
+            self.drawProbeSetPosition(canvas, plotXScale, offset=newoffset, zoom = zoom)
 
         return gifmap
 
@@ -781,7 +786,7 @@ class IntervalMappingPage(templatePage):
         if self.legendChecked:
             startPosY = 30
             nCol = 2
-            smallLabelFont = pid.Font(ttf="trebuc", size=12, bold=1)
+            smallLabelFont = pid.Font(ttf="trebuc", size=12*fontZoom, bold=1)
             leftOffset = xLeftOffset+(nCol-1)*200
             canvas.drawRect(leftOffset,startPosY-6, leftOffset+12,startPosY+6, fillColor=pid.yellow)
             canvas.drawString('Frequency of the Peak LRS',leftOffset+ 20, startPosY+5,font=smallLabelFont,color=pid.black)
@@ -852,8 +857,8 @@ class IntervalMappingPage(templatePage):
         if self.legendChecked:
             startPosY = 15
             nCol = 2
-            smallLabelFont = pid.Font(ttf="trebuc", size=12, bold=1)
-            leftOffset = xLeftOffset+(nCol-1)*200
+            smallLabelFont = pid.Font(ttf="trebuc", size=12*fontZoom, bold=1)
+            leftOffset = xLeftOffset+(nCol-1)*200*fontZoom
             canvas.drawPolygon(((leftOffset+6, startPosY-6), (leftOffset, startPosY+6), (leftOffset+12, startPosY+6)), edgeColor=pid.black, fillColor=self.TRANSCRIPT_LOCATION_COLOR, closed=1)
             canvas.drawString("Sequence Site", (leftOffset+15), (startPosY+5), smallLabelFont, self.TOP_RIGHT_INFO_COLOR)
 
@@ -942,9 +947,9 @@ class IntervalMappingPage(templatePage):
             fontZoom = 1.5
 
 
-        labelFont=pid.Font(ttf="trebuc",size=12, bold=1)
+        labelFont=pid.Font(ttf="trebuc",size=12*fontZoom, bold=1)
         startPosY = 15
-        stepPosY = 12
+        stepPosY = 12*fontZoom
         canvas.drawLine(xLeftOffset,startPosY,xLeftOffset+32,startPosY,color=self.LRS_COLOR, width=2)
         canvas.drawString(self.LRS_LOD, xLeftOffset+40,startPosY+5,font=labelFont,color=pid.black)
         startPosY += stepPosY
@@ -984,7 +989,7 @@ class IntervalMappingPage(templatePage):
 
 
 
-        labelFont=pid.Font(ttf="verdana",size=12)
+        labelFont=pid.Font(ttf="verdana",size=12*fontZoom)
         labelColor = pid.black
         if self.selectedChr == -1:
             string1 = 'Mapping for Dataset: %s, mapping on All Chromosomes' % fd.RISet
@@ -997,10 +1002,10 @@ class IntervalMappingPage(templatePage):
         d = 4+ max(canvas.stringWidth(string1,font=labelFont),canvas.stringWidth(string2,font=labelFont))
         if fd.identification:
             identification = "Trait ID: %s" % fd.identification
-            canvas.drawString(identification,canvas.size[0] - xRightOffset-d,20,font=labelFont,color=labelColor)
+            canvas.drawString(identification,canvas.size[0] - xRightOffset-d,20*fontZoom,font=labelFont,color=labelColor)
 
-        canvas.drawString(string1,canvas.size[0] - xRightOffset-d,35,font=labelFont,color=labelColor)
-        canvas.drawString(string2,canvas.size[0] - xRightOffset-d,50,font=labelFont,color=labelColor)
+        canvas.drawString(string1,canvas.size[0] - xRightOffset-d,35*fontZoom,font=labelFont,color=labelColor)
+        canvas.drawString(string2,canvas.size[0] - xRightOffset-d,50*fontZoom,font=labelFont,color=labelColor)
 
 
     def drawGeneBand(self, canvas, gifmap, plotXScale, offset= (40, 120, 80, 10), zoom = 1, startMb = None, endMb = None):
@@ -1572,9 +1577,9 @@ class IntervalMappingPage(templatePage):
                         canvas.drawString(str(tickdists), startPosX+tickdists*plotXScale, yZero + 10*zoom, color=pid.black, font=MBLabelFont, angle=270)
                     startPosX +=  (self.ChrLengthDistList[i]+self.GraphInterval)*plotXScale
 
-            megabaseLabelFont = pid.Font(ttf="verdana", size=14*zoom*1.5, bold=0)
+            megabaseLabelFont = pid.Font(ttf="verdana", size=18*zoom*1.5, bold=0)
             canvas.drawString("Megabases", xLeftOffset + (plotWidth -canvas.stringWidth("Megabases", font=megabaseLabelFont))/2,
-                    strYLoc + canvas.fontHeight(MBLabelFont) + 5*zoom, font=megabaseLabelFont, color=pid.black)
+                    strYLoc + canvas.fontHeight(MBLabelFont) + 10, font=megabaseLabelFont, color=pid.black)
             pass
         else:
             ChrAInfo = []
@@ -1712,13 +1717,12 @@ class IntervalMappingPage(templatePage):
         LRSAxisList.append(round(LRSMax/lodm))
 
         #draw the "LRS" or "LOD" string to the left of the axis
-        LRSScaleFont=pid.Font(ttf="verdana", size=14*fontZoom, bold=0)
-        LRSLODFont=pid.Font(ttf="verdana", size=14*zoom*1.5, bold=0)
+        LRSScaleFont=pid.Font(ttf="verdana", size=16*fontZoom, bold=0)
+        LRSLODFont=pid.Font(ttf="verdana", size=18*zoom*1.5, bold=0)
         yZero = yTopOffset + plotHeight
 
-
-        canvas.drawString(self.LRS_LOD, xLeftOffset - canvas.stringWidth("999.99", font=LRSScaleFont) - 10*zoom, \
-                                          yZero - 150, font=LRSLODFont, color=pid.black, angle=90)
+        canvas.drawString(self.LRS_LOD, xLeftOffset - canvas.stringWidth("999.99", font=LRSScaleFont) - 40*(zoom-1), \
+                                          yZero - 150 - 300*(zoom - 1), font=LRSLODFont, color=pid.black, angle=90)
 
         for item in LRSAxisList:
             if LRSMax == 0.0:
@@ -1726,6 +1730,7 @@ class IntervalMappingPage(templatePage):
             yLRS = yZero - (item*lodm/LRSMax) * LRSHeightThresh
             canvas.drawLine(xLeftOffset, yLRS, xLeftOffset - 4, yLRS, color=self.LRS_COLOR, width=1*zoom)
             scaleStr = "%2.1f" % item
+            #Draw the LRS/LOD Y axis label
             canvas.drawString(scaleStr, xLeftOffset-4-canvas.stringWidth(scaleStr, font=LRSScaleFont)-5, yLRS+3, font=LRSScaleFont, color=self.LRS_COLOR)
 
 
@@ -1766,6 +1771,9 @@ class IntervalMappingPage(templatePage):
             else:
                 dominanceMax = -1
             lrsEdgeWidth = 2
+            
+        if zoom == 2:
+            lrsEdgeWidth = 2 * lrsEdgeWidth
         for i, qtlresult in enumerate(self.qtlresults):
             m = 0
             startPosX = xLeftOffset
@@ -1798,6 +1806,8 @@ class IntervalMappingPage(templatePage):
                         DominanceCoordXY.append((Xc, Yc))
                     m += 1
                 canvas.drawPolygon(LRSCoordXY,edgeColor=thisLRSColor,closed=0, edgeWidth=lrsEdgeWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+
+                lineWidth = 1
                 if not self.multipleInterval and self.additiveChecked:
                     plusColor = self.ADDITIVE_COLOR_POSITIVE
                     minusColor = self.ADDITIVE_COLOR_NEGATIVE
@@ -1811,22 +1821,22 @@ class IntervalMappingPage(templatePage):
                                 else:
                                     Xcm = (yZero-Yc0)/((Yc-Yc0)/(Xc-Xc0)) +Xc0
                                 if Yc0 < yZero:
-                                    canvas.drawLine(Xc0, Yc0, Xcm, yZero, color=plusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
-                                    canvas.drawLine(Xcm, yZero, Xc, yZero-(Yc-yZero), color=minusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xc0, Yc0, Xcm, yZero, color=plusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xcm, yZero, Xc, yZero-(Yc-yZero), color=minusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
                                 else:
-                                    canvas.drawLine(Xc0, yZero - (Yc0-yZero), Xcm, yZero, color=minusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
-                                    canvas.drawLine(Xcm, yZero, Xc, Yc, color=plusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xc0, yZero - (Yc0-yZero), Xcm, yZero, color=minusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xcm, yZero, Xc, Yc, color=plusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
                             elif (Yc0-yZero)*(Yc-yZero) > 0:
                                 if Yc < yZero:
-                                    canvas.drawLine(Xc0, Yc0, Xc, Yc, color=plusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xc0, Yc0, Xc, Yc, color=plusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
                                 else:
-                                    canvas.drawLine(Xc0, yZero - (Yc0-yZero), Xc, yZero - (Yc-yZero), color=minusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xc0, yZero - (Yc0-yZero), Xc, yZero - (Yc-yZero), color=minusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
                             else:
                                 minYc = min(Yc-yZero, Yc0-yZero)
                                 if minYc < 0:
-                                    canvas.drawLine(Xc0, Yc0, Xc, Yc, color=plusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xc0, Yc0, Xc, Yc, color=plusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
                                 else:
-                                    canvas.drawLine(Xc0, yZero - (Yc0-yZero), Xc, yZero - (Yc-yZero), color=minusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xc0, yZero - (Yc0-yZero), Xc, yZero - (Yc-yZero), color=minusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
                 if not self.multipleInterval and INTERCROSS and self.dominanceChecked:
                     plusColor = self.DOMINANCE_COLOR_POSITIVE
                     minusColor = self.DOMINANCE_COLOR_NEGATIVE
@@ -1840,22 +1850,22 @@ class IntervalMappingPage(templatePage):
                                 else:
                                     Xcm = (yZero-Yc0)/((Yc-Yc0)/(Xc-Xc0)) +Xc0
                                 if Yc0 < yZero:
-                                    canvas.drawLine(Xc0, Yc0, Xcm, yZero, color=plusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
-                                    canvas.drawLine(Xcm, yZero, Xc, yZero-(Yc-yZero), color=minusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xc0, Yc0, Xcm, yZero, color=plusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xcm, yZero, Xc, yZero-(Yc-yZero), color=minusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
                                 else:
-                                    canvas.drawLine(Xc0, yZero - (Yc0-yZero), Xcm, yZero, color=minusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
-                                    canvas.drawLine(Xcm, yZero, Xc, Yc, color=plusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xc0, yZero - (Yc0-yZero), Xcm, yZero, color=minusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xcm, yZero, Xc, Yc, color=plusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
                             elif (Yc0-yZero)*(Yc-yZero) > 0:
                                 if Yc < yZero:
-                                    canvas.drawLine(Xc0, Yc0, Xc, Yc, color=plusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xc0, Yc0, Xc, Yc, color=plusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
                                 else:
-                                    canvas.drawLine(Xc0, yZero - (Yc0-yZero), Xc, yZero - (Yc-yZero), color=minusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xc0, yZero - (Yc0-yZero), Xc, yZero - (Yc-yZero), color=minusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
                             else:
                                 minYc = min(Yc-yZero, Yc0-yZero)
                                 if minYc < 0:
-                                    canvas.drawLine(Xc0, Yc0, Xc, Yc, color=plusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xc0, Yc0, Xc, Yc, color=plusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
                                 else:
-                                    canvas.drawLine(Xc0, yZero - (Yc0-yZero), Xc, yZero - (Yc-yZero), color=minusColor, width=1, clipX=(xLeftOffset, xLeftOffset + plotWidth))
+                                    canvas.drawLine(Xc0, yZero - (Yc0-yZero), Xc, yZero - (Yc-yZero), color=minusColor, width=lineWidth, clipX=(xLeftOffset, xLeftOffset + plotWidth))
                 startPosX +=  (self.ChrLengthDistList[j]+self.GraphInterval)*plotXScale
 
         ###draw additive scale
@@ -1876,7 +1886,7 @@ class IntervalMappingPage(templatePage):
 
             canvas.drawLine(xLeftOffset+plotWidth,additiveY,xLeftOffset+plotWidth,yZero,color=self.ADDITIVE_COLOR_POSITIVE, width=1*zoom)
 
-        canvas.drawLine(xLeftOffset, yZero, xLeftOffset, yTopOffset, color=self.LRS_COLOR, width=1*zoom)  #the blue line running up the y axis
+        canvas.drawLine(xLeftOffset, yZero, xLeftOffset, yTopOffset + 30*(zoom - 1), color=self.LRS_COLOR, width=1*zoom)  #the blue line running up the y axis
 
 
     def drawGraphBackground(self, canvas, gifmap, offset= (80, 120, 80, 50), zoom = 1, startMb = None, endMb = None):
@@ -1887,10 +1897,12 @@ class IntervalMappingPage(templatePage):
         xLeftOffset, xRightOffset, yTopOffset, yBottomOffset = offset
         plotWidth = canvas.size[0] - xLeftOffset - xRightOffset
         plotHeight = canvas.size[1] - yTopOffset - yBottomOffset
+        yBottom = yTopOffset+plotHeight
         fontZoom = zoom
         if zoom == 2:
             fontZoom = 1.5
-
+            yTopOffset += 30
+        
         #calculate plot scale
         if self.plotScale != 'physic':
             self.ChrLengthDistList = self.ChrLengthCMList
@@ -1909,7 +1921,7 @@ class IntervalMappingPage(templatePage):
                     theBackColor = self.GRAPH_BACK_LIGHT_COLOR
                 i += 1
                 canvas.drawRect(startPix, yTopOffset, min(startPix+spacingAmt, xLeftOffset+plotWidth), \
-                        yTopOffset+plotHeight, edgeColor=theBackColor, fillColor=theBackColor)
+                        yBottom, edgeColor=theBackColor, fillColor=theBackColor)
 
             drawRegionDistance = self.ChrLengthDistList[self.selectedChr]
             self.ChrLengthDistList = [drawRegionDistance]
@@ -1922,7 +1934,11 @@ class IntervalMappingPage(templatePage):
             plotXScale = plotWidth / ((len(self.genotype)-1)*self.GraphInterval + drawRegionDistance)
 
             startPosX = xLeftOffset
-            chrLabelFont=pid.Font(ttf="verdana",size=24*fontZoom,bold=0)
+            if fontZoom == 1.5:
+                chrFontZoom = 2
+            else:
+                chrFontZoom = 1
+            chrLabelFont=pid.Font(ttf="verdana",size=24*chrFontZoom,bold=0)
 
             for i, _chr in enumerate(self.genotype):
                 if (i % 2 == 0):
@@ -1932,13 +1948,13 @@ class IntervalMappingPage(templatePage):
 
                 #draw the shaded boxes and the sig/sug thick lines
                 canvas.drawRect(startPosX, yTopOffset, startPosX + self.ChrLengthDistList[i]*plotXScale, \
-                                yTopOffset+plotHeight, edgeColor=pid.gainsboro,fillColor=theBackColor)
+                                yBottom, edgeColor=pid.gainsboro,fillColor=theBackColor)
 
                 chrNameWidth = canvas.stringWidth(_chr.name, font=chrLabelFont)
                 chrStartPix = startPosX + (self.ChrLengthDistList[i]*plotXScale -chrNameWidth)/2
                 chrEndPix = startPosX + (self.ChrLengthDistList[i]*plotXScale +chrNameWidth)/2
 
-                canvas.drawString(_chr.name, chrStartPix, yTopOffset +20,font = chrLabelFont,color=pid.dimgray)
+                canvas.drawString(_chr.name, chrStartPix, yTopOffset + 20 ,font = chrLabelFont,color=pid.black)
                 COORDS = "%d,%d,%d,%d" %(chrStartPix, yTopOffset, chrEndPix,yTopOffset +20)
 
                 #add by NL 09-03-2010
@@ -2774,7 +2790,13 @@ class IntervalMappingPage(templatePage):
 
                 """
                 if len(geneDesc) > 40:
-                        geneDesc = geneDesc[:37] + "..."
+                        geneDesc = gene0So apparently Angola prison (which used to be a slave plantation) has a rodeo that they invite the general public to.
+
+The prisoners are not trained before hand
+
+But its cool because its completely voluntary.
+
+And by voluntary, according to HFG when I talked to him, they have a choice between doing it or door number two and "door number 2 is... rather worse than volunteering"Desc[:37] + "..."
                 """
 
                 this_row.append(TDCell(HT.TD(gIndex + 1, selectCheck, align='left', Class=className), str(gIndex+1), gIndex+1))
