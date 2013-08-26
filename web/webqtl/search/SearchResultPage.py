@@ -157,13 +157,13 @@ class SearchResultPage(templatePage):
 		pubmedSearchObject = PubmedSearch.PubmedSearch(self.ANDkeyword, self.database[0].id)
 		self.ANDkeyword = pubmedSearchObject.getNewS()
 		goSearchAndObject = GOSearch.GOSearch(self.ANDkeyword)
-		self.ANDkeyword = goSearchAndObject.getNewS()
+		self.ANDkeyword = goSearchAndObject.news
 
 		self.ORkeyword = fd.formdata.getfirst('ORkeyword', "")
 		pubmedSearchObject = PubmedSearch.PubmedSearch(self.ORkeyword, self.database[0].id)
 		self.ORkeyword = pubmedSearchObject.getNewS()
 		goSearchOrObject = GOSearch.GOSearch(self.ORkeyword)
-		self.ORkeyword = goSearchOrObject.getNewS()
+		self.ORkeyword = goSearchOrObject.news
 		
 		self.ORkeyword += geneIdListQuery
 
@@ -217,7 +217,7 @@ class SearchResultPage(templatePage):
 			dbUrl =  self.database[0].genHTML()
 			dbUrlLink = " was"
 
-		SearchText = HT.Blockquote('GeneNetwork searched the ', dbUrl, ' for all records ')
+		SearchText = HT.Span('GeneNetwork searched the ', dbUrl, ' for all records ')
 		if self.ORkeyword2:
 			if goSearchOrObject.match:
 				self.ORkeyword2 = self.encregexp(goSearchOrObject.olds)
@@ -274,17 +274,17 @@ class SearchResultPage(templatePage):
 				SearchText.append(item)
 				if j < len(self.ANDDescriptionText) -1:
 					SearchText.append(" and ")
-
 		SearchText.append(". ")
+		
 		if self.nresults == 0:
 			heading = "Search Result"
 			detail = ["Sorry, GeneNetwork did not find any records matching your request. Please check the syntax or try the ANY rather than the ALL field."]
 			self.error(heading=heading,intro = SearchText.contents,detail=detail,error="Not Found")
 			return
 		elif self.nresults == 1:
-			SearchText.append(HT.P(), 'GeneNetwork found one record that matches your request. To study this record, click on its text below. To add this record to your Selection window, use the checkbox and then click the ', HT.Strong('Add to Collection'),' button. ')
+			SearchText.append('GeneNetwork found one record that matches your request.')
 		elif self.nresults >= 1 and self.nresults <= self.maxReturn:
-			SearchText.append(HT.P(), 'GeneNetwork found a total of ', HT.Span(self.nresults, Class='fwb cr'), ' records. To study any one of these records, click on its ID below. To add one or more records to your Selection window, use the checkbox and then click the ' , HT.Strong('Add to Collection'),' button. ')
+			SearchText.append('GeneNetwork found a total of ', HT.Span(self.nresults, Class='fwb cr'), ' records.')
 		else:
 			SearchText.append(' A total of ',HT.Span(self.nresults, Class='fwb cr'), ' records were found.')
 			heading = "Search Result"
@@ -295,12 +295,27 @@ class SearchResultPage(templatePage):
 			self.error(heading=heading,intro = SearchText.contents,detail=detail,error="Over %d" % self.maxReturn)
 			return
 
-
-		TD_LR.append(HT.Paragraph('Search Results', Class="title"), SearchText)
-		self.genSearchResultTable(TD_LR)
+		TD_LR.append(HT.Paragraph('Search Results', Class="title"))
+		
+		tab_searchresult_title1 = HT.Paragraph("&nbsp;&nbsp;Details and Links", style="border-radius: 5px;", Id="tab_searchresult_title1", Class="sectionheader")
+		tab_searchresult_body1 = HT.Paragraph(Id="tab_searchresult_body1")
+		tab_searchresult_body1.append(SearchText)
+		if goSearchAndObject.match:
+			tab_searchresult_body1.append(HT.BR(), HT.BR(), HT.Strong("The associated genes include:"), HT.BR(), HT.BR())
+			tab_searchresult_body1.append(goSearchAndObject.get_match_to())
+		elif goSearchOrObject.match:
+			tab_searchresult_body1.append(HT.BR(), HT.BR(), HT.Strong("The associated genes include:"), HT.BR(), HT.BR())
+			tab_searchresult_body1.append(goSearchOrObject.get_match_to())
+		TD_LR.append(tab_searchresult_title1, tab_searchresult_body1)
+		
+		tab_searchresult_title3 = HT.Paragraph("&nbsp;&nbsp;Records", style="border-radius: 5px;", Id="tab_searchresult_title3", Class="sectionheader")
+		tab_searchresult_body3 = HT.Span()
+		self.genSearchResultTable(tab_searchresult_body3)				
+		TD_LR.append(tab_searchresult_title3, tab_searchresult_body3)
+		
 		self.dict['body'] = str(TD_LR)
-            	self.dict['js1'] = ''
-            	self.dict['js2'] = 'onLoad="pageOffset()"'
+		self.dict['js1'] = ''
+		self.dict['js2'] = 'onLoad="pageOffset()"'
 		self.dict['layer'] = self.generateWarningLayer()
 
 	def genSearchResultTable(self, TD_LR):
@@ -422,7 +437,19 @@ class SearchResultPage(templatePage):
 			for key in hddn.keys():
 				traitForm.append(HT.Input(name=key, value=hddn[key], type='hidden'))
 
-			traitForm.append(HT.P(),pageTable)
+			tab_searchresult_body3 = HT.Paragraph(Id="tab_searchresult_body3")
+			tab_searchresult_body3.append(
+				'To add a group of ',
+				HT.Strong('Record IDs'),
+				' to your Trait Collection, use the ',
+				HT.Strong('Index'),
+				' checkboxes and click the ',
+				HT.Strong('Add'),
+				' button. To analyze any single record click on its ',
+				HT.Strong('Record ID.'))
+			tab_searchresult_body3.append(HT.BR(), HT.BR())
+			tab_searchresult_body3.append(pageTable)
+			traitForm.append(HT.P(), tab_searchresult_body3)
 
 			TD_LR.append(traitForm)
 			if len(self.results) > 1 and i < len(self.results) - 1:
@@ -873,7 +900,7 @@ class SearchResultPage(templatePage):
 
 		className = "fs13 fwb ffl b1 cw cbrb"
 
-		tblobj_header = [[THCell(HT.TD(' ', Class=className), sort=0),
+		tblobj_header = [[THCell(HT.TD('Index', Class=className), sort=0),
 			THCell(HT.TD('Record', HT.BR(), 'ID', HT.BR(), Class=className), text='record_id', idx=1),
 			THCell(HT.TD('Location', HT.BR(), 'Chr and Mb', HT.BR(), Class=className), text='location', idx=2)]]
 
@@ -934,7 +961,7 @@ class SearchResultPage(templatePage):
 
 		className = "fs13 fwb ffl b1 cw cbrb"
 
-		tblobj_header = [[THCell(HT.TD(' ', Class=className, nowrap="on"), sort=0), 
+		tblobj_header = [[THCell(HT.TD('Index', Class=className, nowrap="on"), sort=0), 
 			THCell(HT.TD('Record',HT.BR(), 'ID',HT.BR(), Class=className, nowrap="on"), text="recond_id", idx=1),
 			THCell(HT.TD('Phenotype',HT.BR(),HT.BR(), Class=className, nowrap="on"), text="pheno", idx=2),
 			THCell(HT.TD('Authors',HT.BR(),HT.BR(), Class=className, nowrap="on"), text="auth", idx=3),
@@ -1048,7 +1075,7 @@ class SearchResultPage(templatePage):
 
 		className = "fs13 fwb ffl b1 cw cbrb"
 	
-		tblobj_header = [[THCell(HT.TD(' ', Class="fs13 fwb ffl b1 cw cbrb",nowrap='ON'), sort=0),
+		tblobj_header = [[THCell(HT.TD('Index', Class="fs13 fwb ffl b1 cw cbrb",nowrap='ON'), sort=0),
 					  	THCell(HT.TD('Record',HT.BR(), 'ID',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text="record_id", idx=1),
 					 	 THCell(HT.TD('Symbol',HT.BR(),HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text="symbol", idx=2),
 					 	 THCell(HT.TD('Description',HT.BR(),HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text="desc", idx=3),

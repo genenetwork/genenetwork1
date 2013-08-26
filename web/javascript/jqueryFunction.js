@@ -1124,3 +1124,43 @@ function changeFormat(graphName) {
         }
     }
 }
+
+/*
+used by SearchResultPage.py
+*/
+$(document).ready(function () {
+
+	var expand_html		= '<span class="expand_container">	&nbsp;&nbsp;<IMG src="/images/Expand.gif"	alt="Expand">	</span>';
+	var contract_html	= '<span class="contract_container">&nbsp;&nbsp;<IMG src="/images/Contract.gif"	alt="Contract">	</span>';
+	
+	//$('#tab_searchresult_title1, #tab_searchresult_title2, #tab_searchresult_title3').prepend(expand_html).addClass('1');
+	$('#tab_searchresult_title1, #tab_searchresult_title2, #tab_searchresult_title3').prepend(contract_html).addClass('0');
+	//$('#tab_searchresult_body1').hide();
+	//$('#tab_searchresult_body2').hide();
+	//$('#tab_searchresult_body3').hide();
+
+	for (i = 1; i <= 3; i++) {
+        $('#tab_searchresult_title' + i).click(function () {
+            if ($(this).hasClass('0')) {
+                $(this).find('span').replaceWith(expand_html);
+                $(this).removeClass('0');
+                $(this).addClass('1');
+            } else {
+                $(this).find('span').replaceWith(contract_html);
+                $(this).removeClass('1');
+                $(this).addClass('0');
+            }
+        });
+	}
+	
+	$('#tab_searchresult_title1').click(function () {
+    	$('#tab_searchresult_body1').toggle();
+	});
+	$('#tab_searchresult_title2').click(function () {
+		$('#tab_searchresult_body2').toggle();
+	});
+	$('#tab_searchresult_title3').click(function () {
+		$('#tab_searchresult_body3').toggle();
+	});
+
+});
