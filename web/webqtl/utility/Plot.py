@@ -688,7 +688,7 @@ def plotXY(canvas, dataX, dataY, rank=0, dataLabel=[], plotColor = pid.black, ax
 	else:
 		sizeModifier = 1
 		fontModifier = -1	
-			
+
 	if rank == 0:    # Pearson correlation
 		bufferSpace = 0
 		dataXPrimary = dataX
