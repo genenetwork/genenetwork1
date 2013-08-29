@@ -1092,7 +1092,7 @@ class PartialCorrDBPage(CorrelationPage):
                                                    url = "/correlationAnnotation.html#tissue_p_r"),
                                            Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="tissuepvalue", idx=15)]]
 
-            for ncol, item in enumerate(['Record', 'Gene ID', 'Symbol', 'Description', 'Chr', 'Megabase', 'Mean Expr', 'N ', 'Sample Partial r', 'Sample p(partial r)', 'Sample r', 'Sample p(r)', 'delta r', 'Lit Corr', 'Tissue r', 'Tissue p(r)']):
+            for ncol, item in enumerate(['Record', 'Gene ID', 'Homologene ID', 'Symbol', 'Description', 'Chr', 'Megabase', 'Mean Expr', 'N ', 'Sample Partial r', 'Sample p(partial r)', 'Sample r', 'Sample p(r)', 'delta r', 'Lit Corr', 'Tissue r', 'Tissue p(r)']):
                 worksheet.write([newrow, ncol], item, headingStyle)
                 worksheet.set_column([ncol, ncol], 2*len(item))
         else:
@@ -1142,7 +1142,7 @@ class PartialCorrDBPage(CorrelationPage):
                                                    url = "/correlationAnnotation.html#tissue_p_rho"),
                                            Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="tissuepvalue", idx=15)]]
 
-            for ncol, item in enumerate(['Record', 'Gene ID', 'Symbol', 'Description', 'Chr', 'Megabase', 'Mean Expr', 'N ', 'Sample Partial rho', 'Sample p(partial rho)', 'Sample rho', 'Sample p(rho)', 'delta rho', 'Pubmed r', 'Tissue rho', 'Tissue p(rho)']):
+            for ncol, item in enumerate(['Record', 'Gene ID', 'Homologene ID', 'Symbol', 'Description', 'Chr', 'Megabase', 'Mean Expr', 'N ', 'Sample Partial rho', 'Sample p(partial rho)', 'Sample rho', 'Sample p(rho)', 'delta rho', 'Pubmed r', 'Tissue rho', 'Tissue p(rho)']):
                 worksheet.write([newrow, ncol], item, headingStyle)
                 worksheet.set_column([ncol, ncol], 2*len(item))
 
@@ -1304,7 +1304,7 @@ class PartialCorrDBPage(CorrelationPage):
 
             tblobj_body.append(tr)
 
-            for ncol, item in enumerate([thisTrait.name, thisTrait.geneid, thisTrait.symbol, thisTrait.description, thisTrait.chr, thisTrait.mb, mean, thisTrait.NOverlap, thisTrait.partial_corr, thisTrait.partial_corrPValue, thisTrait.corr, thisTrait.corrPValue, delta, LCorrStr, TCorrStr, TPValueStr]):
+            for ncol, item in enumerate([thisTrait.name, thisTrait.geneid, thisTrait.homologeneid, thisTrait.symbol, thisTrait.description, thisTrait.chr, thisTrait.mb, mean, thisTrait.NOverlap, thisTrait.partial_corr, thisTrait.partial_corrPValue, thisTrait.corr, thisTrait.corrPValue, delta, LCorrStr, TCorrStr, TPValueStr]):
                 worksheet.write([newrow, ncol], item)
 
             newrow += 1
