@@ -1448,59 +1448,68 @@ class IntervalMappingPage(templatePage):
 
         currentChromosome = self.genotype[0].name
         i = 0
-        for pixel in range(xLeftOffset, xLeftOffset + plotWidth, pixelStep):
+        
+        paddingTop = yTopOffset
+        ucscPaddingTop = paddingTop + self.WEBQTL_BAND_HEIGHT + self.BAND_SPACING
+        ensemblPaddingTop = ucscPaddingTop + self.UCSC_BAND_HEIGHT + self.BAND_SPACING
+        
+        if zoom == 1:
+            for pixel in range(xLeftOffset, xLeftOffset + plotWidth, pixelStep):
+    
+                calBase = self.kONE_MILLION*(startMb + (endMb-startMb)*(pixel-xLeftOffset-0.0)/plotWidth)
+    
+                xBrowse1 = pixel
+                xBrowse2 = min(xLeftOffset + plotWidth, (pixel + pixelStep - 1))
+    
+                WEBQTL_COORDS = "%d, %d, %d, %d" % (xBrowse1, paddingTop, xBrowse2, (paddingTop+self.WEBQTL_BAND_HEIGHT))
+                bandWidth = xBrowse2 - xBrowse1
+                WEBQTL_HREF = "javascript:centerIntervalMapOnRange2('%s', %f, %f, document.changeViewForm)" % (currentChromosome, max(0, (calBase-webqtlZoomWidth))/1000000.0, (calBase+webqtlZoomWidth)/1000000.0)
+    
+                WEBQTL_TITLE = "Click to view this section of the genome in WebQTL"
+                gifmap.areas.append(HT.Area(shape='rect',coords=WEBQTL_COORDS,href=WEBQTL_HREF, title=WEBQTL_TITLE))
+                canvas.drawRect(xBrowse1, paddingTop, xBrowse2, (paddingTop + self.WEBQTL_BAND_HEIGHT), edgeColor=self.CLICKABLE_WEBQTL_REGION_COLOR, fillColor=self.CLICKABLE_WEBQTL_REGION_COLOR)
+                canvas.drawLine(xBrowse1, paddingTop, xBrowse1, (paddingTop + self.WEBQTL_BAND_HEIGHT), color=self.CLICKABLE_WEBQTL_REGION_OUTLINE_COLOR)
+    
+                UCSC_COORDS = "%d, %d, %d, %d" %(xBrowse1, ucscPaddingTop, xBrowse2, (ucscPaddingTop+self.UCSC_BAND_HEIGHT))
+                if self.species == "mouse":
+                    UCSC_HREF = "http://genome.ucsc.edu/cgi-bin/hgTracks?db=%s&position=chr%s:%d-%d&hgt.customText=%s/snp/chr%s" % (self._ucscDb, currentChromosome, max(0, calBase-flankingWidthInBases), calBase+flankingWidthInBases, webqtlConfig.PORTADDR, currentChromosome)
+                else:
+                    UCSC_HREF = "http://genome.ucsc.edu/cgi-bin/hgTracks?db=%s&position=chr%s:%d-%d" % (self._ucscDb, currentChromosome, max(0, calBase-flankingWidthInBases), calBase+flankingWidthInBases)
+                UCSC_TITLE = "Click to view this section of the genome in the UCSC Genome Browser"
+                gifmap.areas.append(HT.Area(shape='rect',coords=UCSC_COORDS,href=UCSC_HREF, title=UCSC_TITLE))
+                canvas.drawRect(xBrowse1, ucscPaddingTop, xBrowse2, (ucscPaddingTop+self.UCSC_BAND_HEIGHT), edgeColor=self.CLICKABLE_UCSC_REGION_COLOR, fillColor=self.CLICKABLE_UCSC_REGION_COLOR)
+                canvas.drawLine(xBrowse1, ucscPaddingTop, xBrowse1, (ucscPaddingTop+self.UCSC_BAND_HEIGHT), color=self.CLICKABLE_UCSC_REGION_OUTLINE_COLOR)
+    
+                ENSEMBL_COORDS = "%d, %d, %d, %d" %(xBrowse1, ensemblPaddingTop, xBrowse2, (ensemblPaddingTop+self.ENSEMBL_BAND_HEIGHT))
+                if self.species == "mouse":
+                    ENSEMBL_HREF = "http://www.ensembl.org/Mus_musculus/contigview?highlight=&chr=%s&vc_start=%d&vc_end=%d&x=35&y=12" % (currentChromosome, max(0, calBase-flankingWidthInBases), calBase+flankingWidthInBases)
+                else:
+                    ENSEMBL_HREF = "http://www.ensembl.org/Rattus_norvegicus/contigview?chr=%s&start=%d&end=%d" % (currentChromosome, max(0, calBase-flankingWidthInBases), calBase+flankingWidthInBases)
+                ENSEMBL_TITLE = "Click to view this section of the genome in the Ensembl Genome Browser"
+                gifmap.areas.append(HT.Area(shape='rect',coords=ENSEMBL_COORDS,href=ENSEMBL_HREF, title=ENSEMBL_TITLE))
+                canvas.drawRect(xBrowse1, ensemblPaddingTop, xBrowse2, (ensemblPaddingTop+self.ENSEMBL_BAND_HEIGHT), edgeColor=self.CLICKABLE_ENSEMBL_REGION_COLOR, fillColor=self.CLICKABLE_ENSEMBL_REGION_COLOR)
+                canvas.drawLine(xBrowse1, ensemblPaddingTop, xBrowse1, (ensemblPaddingTop+self.ENSEMBL_BAND_HEIGHT), color=self.CLICKABLE_ENSEMBL_REGION_OUTLINE_COLOR)
+            # end for
 
-            calBase = self.kONE_MILLION*(startMb + (endMb-startMb)*(pixel-xLeftOffset-0.0)/plotWidth)
+            canvas.drawString("Click to view the corresponding section of the genome in an 8x expanded WebQTL map", (xLeftOffset + 10), paddingTop + self.WEBQTL_BAND_HEIGHT/2, font=clickableRegionLabelFont, color=self.CLICKABLE_WEBQTL_TEXT_COLOR)
+            canvas.drawString("Click to view the corresponding section of the genome in the UCSC Genome Browser", (xLeftOffset + 10), ucscPaddingTop + self.UCSC_BAND_HEIGHT/2, font=clickableRegionLabelFont, color=self.CLICKABLE_UCSC_TEXT_COLOR)
+            canvas.drawString("Click to view the corresponding section of the genome in the Ensembl Genome Browser", (xLeftOffset+10), ensemblPaddingTop + self.ENSEMBL_BAND_HEIGHT/2, font=clickableRegionLabelFont, color=self.CLICKABLE_ENSEMBL_TEXT_COLOR)
 
-            xBrowse1 = pixel
-            xBrowse2 = min(xLeftOffset + plotWidth, (pixel + pixelStep - 1))
-
-            paddingTop = yTopOffset
-            ucscPaddingTop = paddingTop + self.WEBQTL_BAND_HEIGHT + self.BAND_SPACING
-            ensemblPaddingTop = ucscPaddingTop + self.UCSC_BAND_HEIGHT + self.BAND_SPACING
-
-            WEBQTL_COORDS = "%d, %d, %d, %d" % (xBrowse1, paddingTop, xBrowse2, (paddingTop+self.WEBQTL_BAND_HEIGHT))
-            bandWidth = xBrowse2 - xBrowse1
-            WEBQTL_HREF = "javascript:centerIntervalMapOnRange2('%s', %f, %f, document.changeViewForm)" % (currentChromosome, max(0, (calBase-webqtlZoomWidth))/1000000.0, (calBase+webqtlZoomWidth)/1000000.0)
-
-            WEBQTL_TITLE = "Click to view this section of the genome in WebQTL"
-            gifmap.areas.append(HT.Area(shape='rect',coords=WEBQTL_COORDS,href=WEBQTL_HREF, title=WEBQTL_TITLE))
-            canvas.drawRect(xBrowse1, paddingTop, xBrowse2, (paddingTop + self.WEBQTL_BAND_HEIGHT), edgeColor=self.CLICKABLE_WEBQTL_REGION_COLOR, fillColor=self.CLICKABLE_WEBQTL_REGION_COLOR)
-            canvas.drawLine(xBrowse1, paddingTop, xBrowse1, (paddingTop + self.WEBQTL_BAND_HEIGHT), color=self.CLICKABLE_WEBQTL_REGION_OUTLINE_COLOR)
-
-            UCSC_COORDS = "%d, %d, %d, %d" %(xBrowse1, ucscPaddingTop, xBrowse2, (ucscPaddingTop+self.UCSC_BAND_HEIGHT))
-            if self.species == "mouse":
-                UCSC_HREF = "http://genome.ucsc.edu/cgi-bin/hgTracks?db=%s&position=chr%s:%d-%d&hgt.customText=%s/snp/chr%s" % (self._ucscDb, currentChromosome, max(0, calBase-flankingWidthInBases), calBase+flankingWidthInBases, webqtlConfig.PORTADDR, currentChromosome)
-            else:
-                UCSC_HREF = "http://genome.ucsc.edu/cgi-bin/hgTracks?db=%s&position=chr%s:%d-%d" % (self._ucscDb, currentChromosome, max(0, calBase-flankingWidthInBases), calBase+flankingWidthInBases)
-            UCSC_TITLE = "Click to view this section of the genome in the UCSC Genome Browser"
-            gifmap.areas.append(HT.Area(shape='rect',coords=UCSC_COORDS,href=UCSC_HREF, title=UCSC_TITLE))
-            canvas.drawRect(xBrowse1, ucscPaddingTop, xBrowse2, (ucscPaddingTop+self.UCSC_BAND_HEIGHT), edgeColor=self.CLICKABLE_UCSC_REGION_COLOR, fillColor=self.CLICKABLE_UCSC_REGION_COLOR)
-            canvas.drawLine(xBrowse1, ucscPaddingTop, xBrowse1, (ucscPaddingTop+self.UCSC_BAND_HEIGHT), color=self.CLICKABLE_UCSC_REGION_OUTLINE_COLOR)
-
-            ENSEMBL_COORDS = "%d, %d, %d, %d" %(xBrowse1, ensemblPaddingTop, xBrowse2, (ensemblPaddingTop+self.ENSEMBL_BAND_HEIGHT))
-            if self.species == "mouse":
-                ENSEMBL_HREF = "http://www.ensembl.org/Mus_musculus/contigview?highlight=&chr=%s&vc_start=%d&vc_end=%d&x=35&y=12" % (currentChromosome, max(0, calBase-flankingWidthInBases), calBase+flankingWidthInBases)
-            else:
-                ENSEMBL_HREF = "http://www.ensembl.org/Rattus_norvegicus/contigview?chr=%s&start=%d&end=%d" % (currentChromosome, max(0, calBase-flankingWidthInBases), calBase+flankingWidthInBases)
-            ENSEMBL_TITLE = "Click to view this section of the genome in the Ensembl Genome Browser"
-            gifmap.areas.append(HT.Area(shape='rect',coords=ENSEMBL_COORDS,href=ENSEMBL_HREF, title=ENSEMBL_TITLE))
-            canvas.drawRect(xBrowse1, ensemblPaddingTop, xBrowse2, (ensemblPaddingTop+self.ENSEMBL_BAND_HEIGHT), edgeColor=self.CLICKABLE_ENSEMBL_REGION_COLOR, fillColor=self.CLICKABLE_ENSEMBL_REGION_COLOR)
-            canvas.drawLine(xBrowse1, ensemblPaddingTop, xBrowse1, (ensemblPaddingTop+self.ENSEMBL_BAND_HEIGHT), color=self.CLICKABLE_ENSEMBL_REGION_OUTLINE_COLOR)
-        # end for
-
-        canvas.drawString("Click to view the corresponding section of the genome in an 8x expanded WebQTL map", (xLeftOffset + 10), paddingTop + self.WEBQTL_BAND_HEIGHT/2, font=clickableRegionLabelFont, color=self.CLICKABLE_WEBQTL_TEXT_COLOR)
-        canvas.drawString("Click to view the corresponding section of the genome in the UCSC Genome Browser", (xLeftOffset + 10), ucscPaddingTop + self.UCSC_BAND_HEIGHT/2, font=clickableRegionLabelFont, color=self.CLICKABLE_UCSC_TEXT_COLOR)
-        canvas.drawString("Click to view the corresponding section of the genome in the Ensembl Genome Browser", (xLeftOffset+10), ensemblPaddingTop + self.ENSEMBL_BAND_HEIGHT/2, font=clickableRegionLabelFont, color=self.CLICKABLE_ENSEMBL_TEXT_COLOR)
-
-        #draw the gray text
-        chrFont = pid.Font(ttf="verdana", size=26, bold=1)
-        traitFont = pid.Font(ttf="verdana", size=14, bold=0)
-        chrX = xLeftOffset + plotWidth - 2 - canvas.stringWidth("Chr %s" % currentChromosome, font=chrFont)
-        canvas.drawString("Chr %s" % currentChromosome, chrX, ensemblPaddingTop-5, font=chrFont, color=pid.gray)
-        traitX = chrX - 28 - canvas.stringWidth("database", font=traitFont)
-        # end of drawBrowserClickableRegions
-
+            #draw the gray text
+            chrFont = pid.Font(ttf="verdana", size=26*zoom, bold=1)
+            traitFont = pid.Font(ttf="verdana", size=14, bold=0)
+            chrX = xLeftOffset + plotWidth - 2 - canvas.stringWidth("Chr %s" % currentChromosome, font=chrFont)
+            canvas.drawString("Chr %s" % currentChromosome, chrX, ensemblPaddingTop-5, font=chrFont, color=pid.gray)
+            traitX = chrX - 28 - canvas.stringWidth("database", font=traitFont)
+            # end of drawBrowserClickableRegions
+        else:
+            #draw the gray text
+            chrFont = pid.Font(ttf="verdana", size=26*zoom, bold=1)
+            traitFont = pid.Font(ttf="verdana", size=14, bold=0)
+            chrX = xLeftOffset + (plotWidth - canvas.stringWidth("Chr %s" % currentChromosome, font=chrFont))/2
+            canvas.drawString("Chr %s" % currentChromosome, chrX, 32, font=chrFont, color=pid.gray)
+            traitX = chrX - 28 - canvas.stringWidth("database", font=traitFont)
+            # end of drawBrowserClickableRegions
         pass
 
     def drawXAxis(self, fd, canvas, drawAreaHeight, gifmap, plotXScale, showLocusForm, offset= (40, 120, 80, 10), zoom = 1, startMb = None, endMb = None):
@@ -1519,13 +1528,13 @@ class IntervalMappingPage(templatePage):
         X_AXIS_THICKNESS = 1*zoom
 
         # ======= Alex: Draw the X-axis labels (megabase location)
-        MBLabelFont = pid.Font(ttf="verdana", size=12*fontZoom, bold=0)
-        xMajorTickHeight = 15 # How high the tick extends below the axis
+        MBLabelFont = pid.Font(ttf="verdana", size=16*zoom, bold=0)
+        xMajorTickHeight = 10 * zoom # How high the tick extends below the axis
         xMinorTickHeight = 5*zoom
         xAxisTickMarkColor = pid.black
         xAxisLabelColor = pid.black
         fontHeight = 12*fontZoom # How tall the font that we're using is
-        spacingFromLabelToAxis = 20
+        spacingFromLabelToAxis = 5
         spacingFromLineToLabel = 3
 
         if self.plotScale == 'physic':
@@ -1579,7 +1588,7 @@ class IntervalMappingPage(templatePage):
 
             megabaseLabelFont = pid.Font(ttf="verdana", size=18*zoom*1.5, bold=0)
             canvas.drawString("Megabases", xLeftOffset + (plotWidth -canvas.stringWidth("Megabases", font=megabaseLabelFont))/2,
-                    strYLoc + canvas.fontHeight(MBLabelFont) + 10, font=megabaseLabelFont, color=pid.black)
+                    strYLoc + canvas.fontHeight(MBLabelFont)+ 15*(zoom%2) - 5, font=megabaseLabelFont, color=pid.black)
             pass
         else:
             ChrAInfo = []
@@ -1717,11 +1726,11 @@ class IntervalMappingPage(templatePage):
         LRSAxisList.append(round(LRSMax/lodm))
 
         #draw the "LRS" or "LOD" string to the left of the axis
-        LRSScaleFont=pid.Font(ttf="verdana", size=16*fontZoom, bold=0)
+        LRSScaleFont=pid.Font(ttf="verdana", size=16*zoom, bold=0)
         LRSLODFont=pid.Font(ttf="verdana", size=18*zoom*1.5, bold=0)
         yZero = yTopOffset + plotHeight
 
-        canvas.drawString(self.LRS_LOD, xLeftOffset - canvas.stringWidth("999.99", font=LRSScaleFont) - 40*(zoom-1), \
+        canvas.drawString(self.LRS_LOD, xLeftOffset - canvas.stringWidth("999.99", font=LRSScaleFont) - 15*(zoom-1), \
                                           yZero - 150 - 300*(zoom - 1), font=LRSLODFont, color=pid.black, angle=90)
 
         for item in LRSAxisList:
@@ -1870,7 +1879,7 @@ class IntervalMappingPage(templatePage):
 
         ###draw additive scale
         if not self.multipleInterval and self.additiveChecked:
-            additiveScaleFont=pid.Font(ttf="verdana",size=12*fontZoom,bold=0)
+            additiveScaleFont=pid.Font(ttf="verdana",size=16*zoom,bold=0)
             additiveScale = Plot.detScaleOld(0,additiveMax)
             additiveStep = (additiveScale[1]-additiveScale[0])/additiveScale[2]
             additiveAxisList = Plot.frange(0, additiveScale[1], additiveStep)

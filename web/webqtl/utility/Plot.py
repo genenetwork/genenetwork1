@@ -499,12 +499,17 @@ def plotBar(canvas, data, barColor=pid.blue, axesColor=pid.black, labelColor=pid
 	if len(data) < 2:
 		return
 		
+	debug_file = open("/home/zas1024/gn/web/plot_debug.txt", "w")
+		
 	max_D = max(data)
 	min_D = min(data)
 	#add by NL 06-20-2011: fix the error: when max_D is infinite, log function in detScale will go wrong
 	if max_D == float('inf') or max_D>webqtlConfig.MAXLRS:
 		max_D=webqtlConfig.MAXLRS #maximum LRS value
 		
+	debug_file.write("max_D: " + max_D + "\n")
+	debug_file.write("min_D: " + min_D + "\n")
+	
 	xLow, xTop, stepX = detScale(min_D, max_D)
 	
 	#reduce data
