@@ -507,8 +507,8 @@ def plotBar(canvas, data, barColor=pid.blue, axesColor=pid.black, labelColor=pid
 	if max_D == float('inf') or max_D>webqtlConfig.MAXLRS:
 		max_D=webqtlConfig.MAXLRS #maximum LRS value
 		
-	debug_file.write("max_D: " + max_D + "\n")
-	debug_file.write("min_D: " + min_D + "\n")
+	debug_file.write("max_D: " + str(max_D) + "\n")
+	debug_file.write("min_D: " + str(min_D) + "\n")
 	
 	xLow, xTop, stepX = detScale(min_D, max_D)
 	

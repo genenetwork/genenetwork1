@@ -195,8 +195,14 @@ class MarkerRegressionPage(templatePage):
 				heading.__setattr__("class","title")
 				
 				datadiv = HT.TD(heading, heading2,heading3, width='45%',valign='top', align='left', bgColor='#eeeeee')
-				resultstable,tblobj,bottomInfo  = self.GenReport(ChrNameOrderIdDict,fd, _genotype, _strains, _vals, _vars)
-				#resultstable = self.GenReport(fd, _genotype, _strains, _vals, _vars)
+				try:
+					resultstable,tblobj,bottomInfo  = self.GenReport(ChrNameOrderIdDict,fd, _genotype, _strains, _vals, _vars)
+					#resultstable = self.GenReport(fd, _genotype, _strains, _vals, _vars)
+				except TypeError:
+					heading = "Genome Association"
+					detail = ['Marker Regression not available for %s data sets. No mapping attempted.' % (fd.RISet)]
+					self.error(heading=heading,detail=detail)
+					return
 				
 				# creat object for result table for sort function
 				objfile = open('%s.obj' % (webqtlConfig.TMPDIR+filename), 'wb')
