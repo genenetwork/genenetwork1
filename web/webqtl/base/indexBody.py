@@ -285,7 +285,19 @@ Quick HELP Examples and </B>
 								<LI><A HREF="http://webqtl.bic.nus.edu.sg/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Singapore at the NUS</A>
  								<LI><A HREF="http://genenetwork.epfl.ch/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Switzerland at the EPFL</A>
 							</UL>
-
+							
+							<ul>
+								<li>
+									<a target="_blank" style="font-size:12px;font-family:verdana;color:blue" href="http://54.221.199.53/">GN instance on Amazon Cloud</a>
+									for
+									<a target="_blank" style="font-size:12px;font-family:verdana;color:blue" href="http://www.genome-explorations.com/">Genome Explorations</a>
+								</li>
+								<li>
+									<a target="_blank" style="font-size:12px;font-family:verdana;color:blue" href="http://ec2-23-21-212-22.compute-1.amazonaws.com/">GN instance on Amazon Cloud</a>
+									for
+									<a target="_blank" style="font-size:12px;font-family:verdana;color:blue" href="http://www.rti.org/">Research Triangle Institute International</a>
+								</li>
+							</ul>
 
 							<p style="font-size:14px;font-family:verdana;color:black"><B>History and Archive</B>
 
