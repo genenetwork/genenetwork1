@@ -1647,7 +1647,7 @@ class DataEditingPage(templatePage):
 		showHideMenuOptions.append(HT.Bold("&nbsp;&nbsp;Options:"), "&nbsp;"*5, showHideNoValue, "&nbsp;"*5, showHideOutliers, "&nbsp;"*5, resetButton, "&nbsp;"*5, exportButton)
 		
 		traitTableOptions.append(showHideMenuOptions,HT.BR(),HT.BR())		
-		traitTableOptions.append(HT.Span("&nbsp;&nbsp;Outliers highlighted in ", HT.Bold("&nbsp;yellow&nbsp;", style="background-color:yellow;"), " can be hidden using the ", 
+		traitTableOptions.append(HT.Span("&nbsp;&nbsp;", HT.Href(url="/glossary.html#O", target="_blank", text="Outliers")," highlighted in ", HT.Bold("&nbsp;yellow&nbsp;", style="background-color:yellow;"), " can be hidden using the ", 
 								    HT.Strong(" Hide Outliers "), " button,",HT.BR(),"&nbsp;&nbsp;and samples with no value (x) can be hidden by clicking ", 
 								    HT.Strong(" Hide No Value "), "."), HT.BR())
 
