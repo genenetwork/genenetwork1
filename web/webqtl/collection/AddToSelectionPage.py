@@ -224,27 +224,29 @@ class AddToSelectionPage(templatePage):
         containerTable = HT.TableLite(cellSpacing=2,cellPadding=0,width="90%",border=0,align="Left")
         postContainerTable = HT.TableLite(cellSpacing=2,cellPadding=0,width="90%",border=0,align="Left")
 
-        optionsTable = HT.TableLite(cellSpacing=2, cellPadding=0,width="640", border=0, align="Left")
+        optionsTable = HT.TableLite(cellSpacing=2, cellPadding=0, width="640", border=0, align="Left")
         optionsTable.append(HT.TR(
-            HT.TD(selectall, width="77"),
-            HT.TD(reset, width="77"),
-            HT.TD(selectinvert, width="77"),
-            HT.TD(removeselect, width="77"),
-            HT.TD(exportSelect, width="77"),
-            HT.TD("&nbsp;"*3, GeneWeaver, width="94"),
-            HT.TD(GCATButton, width="77"),
-            HT.TD(GeneSet, width="77"),
-            HT.TD(BNW, width="77")))
+            HT.TD(selectall,	width="77", style="text-align:center"),
+            HT.TD(reset,		width="77", style="text-align:center"),
+            HT.TD(selectinvert, width="77", style="text-align:center"),
+            HT.TD(removeselect, width="77", style="text-align:center"),
+            HT.TD(exportSelect, width="77", style="text-align:center"),
+			HT.TD("&nbsp;",		width="8"),
+            HT.TD(GeneWeaver,	width="77", style="text-align:center"),
+            HT.TD(GCATButton,	width="77", style="text-align:center"),
+            HT.TD(GeneSet,		width="77", style="text-align:center"),
+            HT.TD(BNW,			width="77", style="text-align:center")))
         optionsTable.append(HT.TR(
-            HT.TD("&nbsp;"*1,"Select"),
-            HT.TD("Deselect"),
-            HT.TD("&nbsp;"*1,"Invert"),
-            HT.TD("&nbsp;"*1,"Remove"),
-            HT.TD("&nbsp;"*1,"Export"),
-            HT.TD(HT.Text("Gene Weaver")),
-            HT.TD("&nbsp;"*2, HT.Text("GCAT")),
-            HT.TD(HT.Text("Gene Set")),
-            HT.TD(HT.Text("BNW"))))
+            HT.TD("Select",						style="text-align:center"),
+            HT.TD("Deselect",					style="text-align:center"),
+            HT.TD("Invert",						style="text-align:center"),
+            HT.TD("Remove",						style="text-align:center"),
+            HT.TD("Export",						style="text-align:center"),
+			HT.TD("&nbsp;"),
+            HT.TD("Gene", HT.BR(), "Weaver",	style="text-align:center"),
+            HT.TD("GCAT",						style="text-align:center"),
+            HT.TD("Gene Set",					style="text-align:center"),
+            HT.TD("BNW",						style="text-align:center")))
         postContainerTable.append(HT.TR(HT.TD(optionsTable)))
         containerTable.append(HT.TR(HT.TD(optionsTable)))
 
