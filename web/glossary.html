@@ -493,7 +493,11 @@ A <A HREF="http://en.wikipedia.org/wiki/Normal_probability_plot" TARGET= "_empty
 
 <P>However, correlations and QTL mapping methods can be highly sensitive to outlier values.  Make sure you review your data for outliers before mapping. GeneNetwork flags all outliers for you in the Trait Data and Analysis window and gives you the option of zapping these extreme values. Options include (1) do nothing, (2) delete the outliers and see what happens to your maps, (3) <A HREF="http://en.wikipedia.org/wiki/Winsorising" target="empty" class="fs14">Winsorize</A> the values of the outliers. You might try all three options and determine if your main results are stable or not. With small samples or extreme outliers, you may find the correlation and mapping results to be volatile. In general, if results (correlations, QTL positions or QTL LRS score) depend highly on one or two outliers (5-10% of the samples) then you should probably delete or winsorize the outliers.
  
-[Williams RW, Sept 2011] 
+<P>In order to calculate outliers, we first determine the Q1(25%) and Q3(75%) values and then multiply by a constant (in our case 1.5; a higher constant is less sensitive to outliers). This value is then subtracted from the Q1 value and added to the Q3 value in order to determine the lower and upper bounds. Values that fall above the upper bound or below the lower bound are considered outliers. 
+
+<P>The method is summarized <A HREF="http://www.wikihow.com/Calculate-Outliers" TARGET= "_empty" class="fs14">here</A>.
+ 
+[Sloan ZA, Oct 2013] 
 </Blockquote>
 
 
