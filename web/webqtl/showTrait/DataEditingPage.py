@@ -23,7 +23,7 @@ class DataEditingPage(templatePage):
 
 		templatePage.__init__(self, fd)
 
-		self.dict['title'] = 'Data Editing' 
+		self.dict['title'] = 'Data Editing'
 		TD_LR = HT.TD(valign="top",width="100%",bgcolor="#fafafa")
 		
 		if not self.openMysql():
@@ -1525,7 +1525,7 @@ class DataEditingPage(templatePage):
 					
 				markerSuggestive = HT.Input(name='pValue', value='0.001', size=10, maxlength=20,onClick="this.value='';",onBlur="if(this.value==''){this.value='0.001'};")					
 				markerMenu = HT.TableLite(HT.TR(HT.TD(markerSuggestiveText), HT.TD(markerSuggestive),HT.TD(HT.Italic('&nbsp;&nbsp;&nbsp;(e.g. 0.001 or 1e-3 or 1E-3 or 3)'))),cellspacing=0, width="400px", cellpadding=2)
-				MarkerRegressionButton=HT.Input(type='button',name='computePlink', value='&nbsp;&nbsp;Compute Using PLINK&nbsp;&nbsp;', onClick= "validatePvalue(this.form);", Class="button")
+				MarkerRegressionButton=HT.Input(type='button',name='computePlink', value='&nbsp;&nbsp;Compute Using PLINK&nbsp;&nbsp;', Class="button")
 
 				marker_div = HT.Div(id="mappingtabs-1")
 				marker_container = HT.Span()

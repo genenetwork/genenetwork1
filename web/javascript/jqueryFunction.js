@@ -626,9 +626,79 @@ $(window).load(function () {
         varValue = $('input[name=applyVarianceSE2]:checked').val();
         $('input[name=applyVarianceSE]').val(varValue);
 
-        dataEditingFunc(this.form, 'markerRegression');
+        if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
+            yesnodialog('Yes', 'No', this.form);
+        }
+        else {
+            dataEditingFunc(this.form, 'markerRegression');
+        }
     });
-
+    
+    $('#sectionbody4').find('input[name=computePlink]').click(function () {
+        pValue = this.form.pValue.value;
+        if (pValue == "") {
+            alert("Please enter the P-Value.");
+            this.form.pValue.focus();
+        }
+        else if(isNaN(pValue)) {
+            alert("Please enter numeric value.");
+            this.form.pValue.focus();
+        }
+        else if (pValue < 0) {
+            alert("Please enter the valid P-Value.");
+            this.form.pValue.focus();
+        }
+        else {
+            if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
+                yesnodialog('Yes', 'No', this.form);
+            }
+            else {
+                dataEditingFunc(this.form, 'computePlink');
+            }
+        }
+    });   
+    
+    function yesnodialog(button1, button2, element){
+        var btns = {};
+        btns[button1] = function(){ 
+            $(this).removeOutliers();
+            $(this).dialog("close");
+            dataEditingFunc(element, 'markerRegression');
+        };
+        btns[button2] = function(){ 
+            $(this).dialog("close");
+            dataEditingFunc(element, 'markerRegression');
+        };
+        $("<div style=\"font-size:14px;color:black;\">One or more outliers exist in this data set. Please review values before mapping. \
+Including outliers when mapping may lead to misleading results. \
+We recommend <A HREF=\"http://en.wikipedia.org/wiki/Winsorising\">winsorising</A> the outliers \
+or simply deleting them. If you would like to remove the outliers automatically, click \
+<B>Yes</B>. Otherwise, click <B>No</B> if you still wish to include them or modify the \
+the values yourself.</div>").dialog({
+            autoOpen: true,
+            title: 'Outliers Present',
+            height: 240,
+            width: 630,
+            modal:true,
+            buttons:btns
+        });
+    }
+    
+    $.fn.removeOutliers = function(){
+        for (i = 1; i <= numPrimaryRows - 1; i++) {
+            var thisRow = $('#Primary_' + i);
+            if (thisRow.is('.outlier')) {
+                thisRow.find('.valueField').val('x')
+            }
+        }
+        for (i = 1; i <= numOtherRows - 1; i++) {
+            var thisRow = $('#Other_' + i);
+            if (thisRow.is('.outlier')) {
+                thisRow.find('.valueField').val('x')
+            }
+        }
+    };
+    
     $('input[name=num_perm3]').change(function(){
         if (parseInt($('input[name=num_perm3]').val()) > 100000) {
             $('input[name=num_perm3]').val("100000");
@@ -768,7 +838,7 @@ $(window).load(function () {
             }
         }
     });
-
+    
     $('input[name=resetButton]').click(function () {
 
         //ZS: Reset "hide no value" and "hide outliers"
