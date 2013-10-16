@@ -1,8 +1,4 @@
 *.pyc
-
-/web/webqtl/.htaccess
-/web/webqtl/base/webqtlConfigLocal.py
-
 /web/ProbeSetFreeze_DataMatrix
 /web/bxd
 /web/genotypes
