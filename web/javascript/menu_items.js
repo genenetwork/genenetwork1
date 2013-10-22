@@ -30,6 +30,7 @@ var MENU_ITEMS = [
 	['HB', '/webqtl/main.py?FormID=dispSelection&RISet=HB'], 
 	['HSB', '/webqtl/main.py?FormID=dispSelection&RISet=HSB'], 
 	['HLT', '/webqtl/main.py?FormID=dispSelection&RISet=HLT'], 
+	['Aging-Brain-UCI', '/webqtl/main.py?FormID=dispSelection&RISet=Aging-Brain-UCI'], 
 ],
 ['Macaque monkey', null, null, 
 	['Macaca-fasicularis', '/webqtl/main.py?FormID=dispSelection&RISet=Macaca-fasicularis'], 
