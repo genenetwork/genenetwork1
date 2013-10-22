@@ -72,7 +72,7 @@ outputTypeStr ='var tArr = [\n{txt:\'\',val:\'\'},\n'
 outputDatabaseStr ='var dArr = [\n{txt:\'\',val:\'\'},\n'
 outputLinkStr ='var lArr = [\n null,\n'
 
-# built speices array in js file for select menu in the main search page http://www.genenetwork.org/
+# built Species array in js file for select menu in the main search page http://www.genenetwork.org/
 cursor.execute("select Name, MenuName from Species order by OrderId")		
 speciesResult = cursor.fetchall()
 speciesTotalResult = list(speciesResult)
@@ -88,7 +88,7 @@ outputSpeciesStr +='{txt:\'All Species\',val:\'All Species\'}];\n\n'
 speciesTotalResult.append(('All Species','All Species'))  
 
 # built group array in js file for select menu in the main search page http://www.genenetwork.org/
-cursor.execute("select distinct InbredSet.Name, InbredSet.FullName from InbredSet, Species, ProbeFreeze, GenoFreeze, PublishFreeze where InbredSet.SpeciesId= Species.Id and InbredSet.Name != 'BXD300' and (PublishFreeze.InbredSetId = InbredSet.Id or GenoFreeze.InbredSetId = InbredSet.Id or ProbeFreeze.InbredSetId = InbredSet.Id) order by InbredSet.Name")
+cursor.execute("select distinct InbredSet.Name, InbredSet.FullName from InbredSet, Species, ProbeFreeze, GenoFreeze, PublishFreeze where InbredSet.SpeciesId= Species.Id and InbredSet.Name != 'BXD300' and (PublishFreeze.InbredSetId = InbredSet.Id or GenoFreeze.InbredSetId = InbredSet.Id or ProbeFreeze.InbredSetId = InbredSet.Id) order by InbredSet.orderid, InbredSet.FullName")
 groupResults = cursor.fetchall()
 groupTotalResults = list(groupResults)
 groupResultsTotalNum = cursor.rowcount
@@ -140,7 +140,7 @@ if speciesResultsTotalNum >0:
 		sIndex = getIndex(searchArray=speciesTotalResult,targetValue=speciesVal)+1
 	 			
 		# retrieve group info based on specie
-		cursor.execute("select distinct InbredSet.Name, InbredSet.FullName from InbredSet, Species, ProbeFreeze, GenoFreeze, PublishFreeze where InbredSet.SpeciesId= Species.Id and Species.Name='%s' and InbredSet.Name != 'BXD300' and (PublishFreeze.InbredSetId = InbredSet.Id or GenoFreeze.InbredSetId = InbredSet.Id or ProbeFreeze.InbredSetId = InbredSet.Id) order by InbredSet.Name" % speciesVal)
+		cursor.execute("select distinct InbredSet.Name, InbredSet.FullName from InbredSet, Species, ProbeFreeze, GenoFreeze, PublishFreeze where InbredSet.SpeciesId= Species.Id and Species.Name='%s' and InbredSet.Name != 'BXD300' and (PublishFreeze.InbredSetId = InbredSet.Id or GenoFreeze.InbredSetId = InbredSet.Id or ProbeFreeze.InbredSetId = InbredSet.Id) order by InbredSet.orderid, InbredSet.FullName" % speciesVal)
 		groupResults = cursor.fetchall()
 		groupResultsNum = cursor.rowcount
 		
