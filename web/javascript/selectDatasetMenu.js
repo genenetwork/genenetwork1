@@ -269,7 +269,7 @@ var dArr = [
 {txt:'Full HEI Retina (April 2010) RankInv',val:'Illum_Retina_BXD_RankInv0410'},
 {txt:'ONC HEI Retina (April 2012) RankInv',val:'ONCRetILM6_0412'},
 {txt:'DoD TATRC Retina Affy MoGene 2.0 ST (Oct13) RMA **',val:'ONCRetMoGene2_0413'},
-{txt:'DoD TATRC Retina Affy MoGene 2.0 ST (Apr13) RMA Exon Level **',val:'ONCRetExMoGene2_0413'},
+{txt:'DoD TATRC Retina Affy MoGene 2.0 ST (Oct13) RMA Exon Level **',val:'ONCRetExMoGene2_0413'},
 {txt:'B6D2 ONC Retina (April 2012) RankInv **',val:'B6D2ONCILM_0412'},
 {txt:'INIA Macaca fasicularis Nucleus Accumbens (Jan10) RMA **',val:'INIA_MacFas_Ac_RMA_0110'},
 {txt:'UCLA CTB6/B6CTF2 Liver (2005) mlratio',val:'UCLA_CTB6B6CTF2_LIVER_2005'},

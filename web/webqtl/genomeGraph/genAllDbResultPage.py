@@ -296,7 +296,7 @@ class genAllDbResultPage(templatePage):
 				Chr_Length.SpeciesId = InbredSet.SpeciesId AND
 				InbredSet.Name = '%s'
 			Order by 
-				OrderId
+				Chr_Length.OrderId
 			""" % RISet)
 		lengths = self.cursor.fetchall()
 		ldict[lengths[0][0]] = 0
