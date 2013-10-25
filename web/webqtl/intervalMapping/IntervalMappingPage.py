@@ -1528,7 +1528,7 @@ class IntervalMappingPage(templatePage):
         X_AXIS_THICKNESS = 1*zoom
 
         # ======= Alex: Draw the X-axis labels (megabase location)
-        MBLabelFont = pid.Font(ttf="verdana", size=16*zoom, bold=0)
+        MBLabelFont = pid.Font(ttf="verdana", size=15*zoom, bold=0)
         xMajorTickHeight = 10 * zoom # How high the tick extends below the axis
         xMinorTickHeight = 5*zoom
         xAxisTickMarkColor = pid.black
