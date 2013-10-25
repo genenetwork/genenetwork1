@@ -270,7 +270,7 @@ class IntervalMappingPage(templatePage):
                         InbredSet.Name = '%s' AND
                         Chr_Length.Name in (%s)
                 Order by
-                        OrderId
+                        Chr_Length.OrderId
                 """ % (fd.RISet, string.join(map(lambda X: "'%s'" % X[0], self.ChrList[1:]), ", ")))
 
         self.ChrLengthMbList = self.cursor.fetchall()

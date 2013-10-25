@@ -238,7 +238,7 @@ class MarkerRegressionPage(templatePage):
 						InbredSet.Name = '%s' AND
 						Chr_Length.Name in (%s)
 					Order by
-						OrderId
+						Chr_Length.OrderId
 					""" % (fd.RISet, string.join(map(lambda X: "'%s'" % X[0], self.ChrList[1:]), ", ")))
 
 				self.ChrLengthMbList = self.cursor.fetchall()
@@ -1656,7 +1656,7 @@ class MarkerRegressionPage(templatePage):
 				where
 					Chr_Length.SpeciesId = InbredSet.SpeciesId AND
 					InbredSet.Name = '%s' 
-				Order by OrderId
+				Order by Chr_Length.OrderId
 				""" % (RISet)
 			self.cursor.execute(query)
 
