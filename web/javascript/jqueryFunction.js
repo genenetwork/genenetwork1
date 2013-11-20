@@ -543,7 +543,12 @@ $(window).load(function () {
         varValue = $('input[name=applyVarianceSE1]:checked').val();
         $('input[name=applyVarianceSE]').val(varValue);
 
-        dataEditingFunc(this.form, 'intervalMap');
+        if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
+            yesnodialog('Yes, remove outliers.', 'No, don\'t remove outliers.', this.form, "intervalMap");
+        }
+        else {
+            dataEditingFunc(this.form, 'intervalMap');
+        }
     });
 
     $('input[name=num_perm1]').change(function(){
@@ -601,7 +606,12 @@ $(window).load(function () {
         parentsValue = $('input[name=parentsf14regression3]:checked').val();
         $('input[name=parentsf14regression]').val(parentsValue);
 
-        dataEditingFunc(this.form, 'intervalMap');
+        if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
+            yesnodialog('Yes, remove outliers.', 'No, don\'t remove outliers.', this.form, "intervalMap");
+        }
+        else {
+            dataEditingFunc(this.form, 'intervalMap');
+        }
     });
     
     $('input[name=num_perm2]').change(function(){
@@ -627,7 +637,7 @@ $(window).load(function () {
         $('input[name=applyVarianceSE]').val(varValue);
 
         if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
-            yesnodialog('Yes, remove outliers.', 'No, don\'t remove outliers.', this.form);
+            yesnodialog('Yes, remove outliers.', 'No, don\'t remove outliers.', this.form, "markerRegression");
         }
         else {
             dataEditingFunc(this.form, 'markerRegression');
@@ -650,24 +660,24 @@ $(window).load(function () {
         }
         else {
             if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
-                yesnodialog('Yes, remove outliers.', 'No, don\'t remove outliers.', this.form);
+                yesnodialog('Yes, remove outliers.', 'No, don\'t remove outliers.', this.form, 'markerRegression');
             }
             else {
-                dataEditingFunc(this.form, 'computePlink');
+                dataEditingFunc(this.form, 'markerRegression');
             }
         }
     });   
     
-    function yesnodialog(button1, button2, element){
+    function yesnodialog(button1, button2, element, feature){
         var btns = {};
         btns[button1] = function(){ 
             $(this).removeOutliers();
             $(this).dialog("close");
-            dataEditingFunc(element, 'markerRegression');
+            dataEditingFunc(element, feature);
         };
         btns[button2] = function(){ 
             $(this).dialog("close");
-            dataEditingFunc(element, 'markerRegression');
+            dataEditingFunc(element, feature);
         };
         $("<div style=\"font-size:14px;color:black;\">One or more outliers exist in this data set. Please review values before mapping. \
 Including outliers when mapping may lead to misleading results. \
