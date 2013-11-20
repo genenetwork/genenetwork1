@@ -627,7 +627,7 @@ $(window).load(function () {
         $('input[name=applyVarianceSE]').val(varValue);
 
         if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
-            yesnodialog('Yes', 'No', this.form);
+            yesnodialog('Yes, remove outliers.', 'No, don\'t remove outliers.', this.form);
         }
         else {
             dataEditingFunc(this.form, 'markerRegression');
@@ -650,7 +650,7 @@ $(window).load(function () {
         }
         else {
             if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
-                yesnodialog('Yes', 'No', this.form);
+                yesnodialog('Yes, remove outliers.', 'No, don\'t remove outliers.', this.form);
             }
             else {
                 dataEditingFunc(this.form, 'computePlink');
@@ -677,8 +677,8 @@ or simply deleting them. If you would like to remove the outliers automatically,
 the values yourself.</div>").dialog({
             autoOpen: true,
             title: 'Outliers Present',
-            height: 240,
-            width: 630,
+            height: 250,
+            width: 700,
             modal:true,
             buttons:btns
         });

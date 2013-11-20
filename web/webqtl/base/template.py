@@ -42,7 +42,7 @@ template = """
 <LINK REL="stylesheet" TYPE="text/css" HREF='/css/menu.css'>
 <link rel="stylesheet" media="all" type="text/css" href="/css/tabbed_pages.css" />
 <LINK REL="apple-touch-icon" href="/images/ipad_icon3.png" />
-<link type="text/css" href='/css/custom-theme/jquery-ui-1.8.12.custom.css' rel='Stylesheet' />
+<link type="text/css" href='/css/custom-theme/jquery-ui-1.10.3.custom.css' rel='Stylesheet' />
 <link type="text/css" href='/css/tab_style.css' rel='Stylesheet' />
 
 <script type="text/javascript" src="/javascript/jquery-1.5.2.min.js"></script>
@@ -51,7 +51,7 @@ template = """
 <SCRIPT SRC="/javascript/tablesorter.js"></SCRIPT>
 <SCRIPT SRC="/javascript/jqueryFunction.js"></SCRIPT>
 <script src="/javascript/tabbed_pages.js" type="text/javascript"></script>
-<script src="/javascript/jquery-ui-1.8.12.custom.min.js" type="text/javascript"></script>
+<script src="/javascript/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
 %s
 
 <script type="text/javascript">
