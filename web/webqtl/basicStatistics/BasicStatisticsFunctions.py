@@ -47,8 +47,14 @@ def basicStatsTable(vals, trait_type=None, cellid=None, heritability=None):
 			#IRQuest.append(" (fold difference)")
 			tbl.append(HT.TR(HT.TD("Range (log2)",align="left", Class="fs13 b1 cbw c222",nowrap="yes"),
 				HT.TD("%2.3f" % (dataXZ[-1][1]-dataXZ[0][1]),nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
-			tbl.append(HT.TR(HT.TD(HT.Span("Range (fold)"),align="left", Class="fs13 b1 cbw c222",nowrap="yes"),
-				HT.TD("%2.2f" % pow(2.0,(dataXZ[-1][1]-dataXZ[0][1])), nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
+			try:
+				tbl.append(HT.TR(
+					HT.TD(HT.Span("Range (fold)"), align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
+					HT.TD("%2.2f" % pow(2.0, (dataXZ[-1][1]-dataXZ[0][1])), nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
+			except Exception, e:
+				tbl.append(HT.TR(
+					HT.TD(HT.Span("Range (fold)"), align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
+					HT.TD("%s" % e, nowrap="yes", Class="fs13 b1 cbw c222", style="color: red;"), align="right"))
 			tbl.append(HT.TR(HT.TD(HT.Span(HT.Href(url="/glossary.html#Interquartile", target="_blank", text="Interquartile Range", Class="non_bold")), align="left", Class="fs13 b1 cbw c222",nowrap="yes"),
 				HT.TD("%2.2f" % pow(2.0,(dataXZ[int((N-1)*3.0/4.0)][1]-dataXZ[int((N-1)/4.0)][1])), nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
 	
