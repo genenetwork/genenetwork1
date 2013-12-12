@@ -72,7 +72,7 @@ class deletePhenotypeTraitPage(templatePage):
 
         crossMenu = HT.Select(name='PublishFreeze_Name', onChange='xchange()')
 
-        self.cursor.execute('select PublishFreeze.Name from PublishFreeze, InbredSet where InbredSetId=InbredSet.Id')
+        self.cursor.execute('select PublishFreeze.Name from PublishFreeze, InbredSet where PublishFreeze.InbredSetId=InbredSet.Id')
         result = self.cursor.fetchall()
 
         for one_row in result:
