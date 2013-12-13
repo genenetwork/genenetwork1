@@ -43,7 +43,6 @@ import slink
 #      QTL heatmap Page
 #########################################
 class Heatmap:
-
         def __init__(self, fd=None, searchResult=None, colorScheme=None, userPrivilege=None, userName=None):
                 cursor = webqtlDatabaseFunction.getCursor()
                 if (not cursor):
@@ -52,7 +51,7 @@ class Heatmap:
                 clusterChecked = fd.formdata.getvalue('clusterCheck', '')
                 sessionfile = fd.formdata.getvalue("session")
                 genotype = fd.genotype
-                strainlist = fd.strainlist
+                strainlist = [strain for strain in fd.strainlist if strain not in fd.parlist]
                 ppolar = fd.ppolar
                 mpolar = fd.mpolar
                 traitList = []
@@ -60,9 +59,9 @@ class Heatmap:
                 for item in searchResult:
                         thisTrait = webqtlTrait(fullname=item, cursor=cursor)
                         thisTrait.retrieveInfo()
-                        thisTrait.retrieveData(fd.strainlist)
+                        thisTrait.retrieveData(strainlist)
                         traitList.append(thisTrait)
-                        traitDataList.append(thisTrait.exportData(fd.strainlist))
+                        traitDataList.append(thisTrait.exportData(strainlist))
                 self.buildCanvas(colorScheme=colorScheme, targetDescriptionChecked=targetDescriptionChecked, clusterChecked=clusterChecked, sessionfile=sessionfile, genotype=genotype, strainlist=strainlist, ppolar=ppolar, mpolar=mpolar, traitList=traitList, traitDataList=traitDataList, userPrivilege=userPrivilege, userName=userName)
 
        	def buildCanvas(self, colorScheme='', targetDescriptionChecked='', clusterChecked='', sessionfile='', genotype=None, strainlist=None, ppolar=None, mpolar=None, traitList=None, traitDataList=None, userPrivilege=None, userName=None):

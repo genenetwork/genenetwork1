@@ -544,7 +544,7 @@ $(window).load(function () {
         $('input[name=applyVarianceSE]').val(varValue);
 
         if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
-            yesnodialog('Yes, remove outliers.', 'No, don\'t remove outliers.', this.form, "intervalMap");
+            yesnodialog('Remove outliers', 'Keep outliers', this.form, 'intervalMap');
         }
         else {
             dataEditingFunc(this.form, 'intervalMap');
@@ -607,7 +607,7 @@ $(window).load(function () {
         $('input[name=parentsf14regression]').val(parentsValue);
 
         if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
-            yesnodialog('Yes, remove outliers.', 'No, don\'t remove outliers.', this.form, "intervalMap");
+            yesnodialog('Remove outliers', 'Keep outliers', this.form, 'intervalMap');
         }
         else {
             dataEditingFunc(this.form, 'intervalMap');
@@ -637,7 +637,7 @@ $(window).load(function () {
         $('input[name=applyVarianceSE]').val(varValue);
 
         if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
-            yesnodialog('Yes, remove outliers.', 'No, don\'t remove outliers.', this.form, "markerRegression");
+            yesnodialog('Remove outliers', 'Keep outliers', this.form, "markerRegression");
         }
         else {
             dataEditingFunc(this.form, 'markerRegression');
@@ -660,13 +660,13 @@ $(window).load(function () {
         }
         else {
             if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
-                yesnodialog('Yes, remove outliers.', 'No, don\'t remove outliers.', this.form, 'markerRegression');
+                yesnodialog('Remove outliers', 'Keep outliers', this.form, 'markerRegression');
             }
             else {
                 dataEditingFunc(this.form, 'markerRegression');
             }
         }
-    });   
+    });
     
     function yesnodialog(button1, button2, element, feature){
         var btns = {};
@@ -682,9 +682,7 @@ $(window).load(function () {
         $("<div style=\"font-size:14px;color:black;\">One or more outliers exist in this data set. Please review values before mapping. \
 Including outliers when mapping may lead to misleading results. \
 We recommend <A HREF=\"http://en.wikipedia.org/wiki/Winsorising\">winsorising</A> the outliers \
-or simply deleting them. If you would like to remove the outliers automatically, click \
-<B>Yes</B>. Otherwise, click <B>No</B> if you still wish to include them or modify the \
-the values yourself.</div>").dialog({
+or simply deleting them.").dialog({
             autoOpen: true,
             title: 'Outliers Present',
             height: 250,
