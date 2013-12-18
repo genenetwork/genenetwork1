@@ -356,9 +356,9 @@ class ShowProbeInfoPage(templatePage):
 		#UCSC
 		_Species = webqtlDatabaseFunction.retrieveSpecies(cursor=self.cursor, RISet=fd.RISet)
 		if _Species == "rat":
-			thisurl = webqtlConfig.UCSC_BLAT % ('rat', 'rn3', blatsequence)
+			thisurl = webqtlConfig.UTHSC_BLAT2 % ('rat', 'rn3', blatsequence)
 		elif _Species == "mouse":
-			thisurl = webqtlConfig.UCSC_BLAT % ('mouse', 'mm9', blatsequence)
+			thisurl = webqtlConfig.UTHSC_BLAT2 % ('mouse', 'mm9', blatsequence)
 		else:
 			thisurl = ""
 		if thisurl:	
