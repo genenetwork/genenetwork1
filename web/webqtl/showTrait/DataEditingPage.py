@@ -441,13 +441,13 @@ class DataEditingPage(templatePage):
 
 				#XZ: Pay attention to the parameter of version (rn, mm, hg). They need to be changed if necessary.
 				if _Species == "rat":
-					UCSC_BLAT_URL = webqtlConfig.UCSC_BLAT % ('rat', 'rn3', blatsequence)
+					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('rat', 'rn3', blatsequence)
 					UTHSC_BLAT_URL = ""
 				elif _Species == "mouse":
-					UCSC_BLAT_URL = webqtlConfig.UCSC_BLAT % ('mouse', 'mm9', blatsequence)
+					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('mouse', 'mm9', blatsequence)
 					UTHSC_BLAT_URL = webqtlConfig.UTHSC_BLAT % ('mouse', 'mm9', blatsequence)
 				elif _Species == "human":
-					UCSC_BLAT_URL = webqtlConfig.UCSC_BLAT % ('human', 'hg19', blatsequence)
+					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('human', 'hg19', blatsequence)
 					UTHSC_BLAT_URL = ""
 				else:
 					UCSC_BLAT_URL = ""
@@ -781,13 +781,13 @@ class DataEditingPage(templatePage):
 				
 			if thisTrait.sequence and len(thisTrait.sequence) > 100:
 				if _Species == "rat":
-					UCSC_BLAT_URL = webqtlConfig.UCSC_BLAT % ('rat', 'rn3', thisTrait.sequence)
+					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('rat', 'rn3', thisTrait.sequence)
 					UTHSC_BLAT_URL = webqtlConfig.UTHSC_BLAT % ('rat', 'rn3', thisTrait.sequence)
 				elif _Species == "mouse":
-					UCSC_BLAT_URL = webqtlConfig.UCSC_BLAT % ('mouse', 'mm9', thisTrait.sequence)
+					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('mouse', 'mm9', thisTrait.sequence)
 					UTHSC_BLAT_URL = webqtlConfig.UTHSC_BLAT % ('mouse', 'mm9', thisTrait.sequence)
 				elif _Species == "human":
-					UCSC_BLAT_URL = webqtlConfig.UCSC_BLAT % ('human', 'hg19', blatsequence)
+					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('human', 'hg19', blatsequence)
 					UTHSC_BLAT_URL = webqtlConfig.UTHSC_BLAT % ('human', 'hg19', thisTrait.sequence)
 				else:
 					UCSC_BLAT_URL = ""
