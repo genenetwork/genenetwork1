@@ -621,7 +621,7 @@ class DataEditingPage(templatePage):
 				#	title="Expression across many tissues and cell types"), style=linkStyle), "&nbsp;"*2)
 				if thisTrait.geneid and (_Species == "mouse" or _Species == "rat" or _Species == "human"):
 					tSpan.append(HT.Span(HT.Href(text= 'BioGPS',target="mainFrame",\
-						url="http://biogps.gnf.org/?org=%s#goto=genereport&id=%s" \
+						url="http://biogps.org/?org=%s#goto=genereport&id=%s" \
 						% (_Species, thisTrait.geneid),Class="fs14 fwn", \
 						title="Expression across many tissues and cell types"), style=linkStyle), "&nbsp;"*2)
 				tSpan.append(HT.Span(HT.Href(text= 'STRING',target="mainFrame",\
