@@ -54,7 +54,7 @@ if PublishFreezeIds:
 else:
 	#####get all of the dataset that need be updated
 	cursor.execute('select distinct(PublishFreeze.Id) from PublishFreeze, PublishXRef, InbredSet where PublishFreeze.InbredSetId = PublishXRef.InbredSetId \
-					and PublishFreeze.InbredSetId = InbredSet.Id and PublishXRef.LRS is NULL and not InbredSet.SpeciesId = 4 order by PublishFreeze.Id desc')
+					and PublishFreeze.InbredSetId = InbredSet.Id and not InbredSet.SpeciesId = 4 order by PublishFreeze.Id desc')
 	results = cursor.fetchall()
 	PublishFreezeIds = []
 	for item in results:

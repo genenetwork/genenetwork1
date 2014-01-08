@@ -473,7 +473,7 @@ A <A HREF="http://en.wikipedia.org/wiki/Normal_probability_plot" TARGET= "_empty
 
 <P>In genetic studies, the probability plot can be used to detect the effects of major effect loci. A classical Mendelian locus will typically be associated with either a bimodal or trimodal distribution. In the plot below based on 99 samples, the points definitely do not fall on a single line. Three samples (green squares) have unusually high values; the majority of samples fall on a straight line between z = -0.8 to z = 2; and 16 values have much lower trait values than would be predicted based on a single normal distribution (a low mode group). The abrupt discontinuity in the distribution at -0.8 z is due to the effect of a single major Mendelian effect.
 
-<P>Deviations from normality of the sort in the figure below should be considered good news from the point of view of likely success of tracking down the locations of QTLs. However, small numbers of outliers may require special statistical handling, such as their exclusion or <A HREF="http://en.wikipedia.org/wiki/Winsorising" TARGET= "_empty" class="fs14">winsorising</A>. [RWW June 2011]
+<P>Deviations from normality of the sort in the figure below should be considered good news from the point of view of likely success of tracking down the locations of QTLs. However, small numbers of outliers may require special statistical handling, such as their exclusion or <A HREF="http://en.wikipedia.org/wiki/Winsorising" TARGET= "_empty" class="fs14">winsorising</A> (see more below on "Winsorizing"). [RWW June 2011]
  
 
 <P><DIR><IMG src="/images/upload/Normal_Plot.gif" valign="top"></DIR>
@@ -709,6 +709,23 @@ d-separation</A>) and constructing causal models see Richard Scheines' site.
 
 <Blockquote>
 <a name="W" class="subtitle">W</a><BR>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<A NAME="winsorize">Winsorize, Winsorise:</A>
+<Blockquote>QTL mapping results can be greatly affected by inclusion of outlier data. GeneNetwork will do its best to flag outliers for you in the <B>Trait Data and Analysis</B> pages (yellow highlighting). Before mapping, review the data, and if necessary, change values. Options for handling outliers include: (1) do nothing, (2) delete the outliers (trimming), (3) transform the data (e.g., logarithmic,  arcsine, or logistic regression transforms), or (4) <A HREF="http://en.wikipedia.org/wiki/Winsorising"  target="empty" class="fs14">winsorize</A> the distribution of values. Winsorizing is usually the easiest method to implement directly in GeneNetwork. 
+
+<P><B>How to winsorize</B>: First review the distribution of values and define outliers. You should only do this one time, so think before you leap. Look at the <B>Probability Plot</B> of the trait by going to <B>Trait Data and Analysis</B> page and selecting  <B> Basic Statistics</B>). For example, the figure below from GeneNetwork shows that at many as seven cases have relatively high values and as many as three have relatively low values (this trait is taken from Species = Mouse, Group = LXS, Type = Phenotype, Trait 10182). GeneNetwork code only declares the highest two values to be outliers, but you can use a more liberal definition and give all seven high values a haircut. It is advisable to winsorizes equal numbers of cases on each side of the distribution (high and low cases). In this case, the seven highest values were changed to match that of the 8th highest value (0.860). To retain the original rank order I added an incremental value of 0.01 to each (0.861, 0.862, etc). I did the same thing to the lowest seven values. Adding this increment is not necessary.
+
+<P>The result in this case: a suggestive QTL on Chr 16 now reaches the significance threshold.
+
+<P>The <B>danger of winsorizing</B> is doing it multiple times in different ways. You should transform or winsorize the data before mapping. And you should ideally only do any transformation/correction one time. If you fool around with different methods of transforming your data then you are asking for trouble by adding yet another level of multiple testing. If you feel compelled to experiment with different transforms, then you should/must report this in publications and explain why you did so. Demonstrating that mapping results are robust even using multiple transforms is one good excuse. [Williams RW, Jan 2, 2014]
+ 
+
+<P><DIR><IMG src="/images/upload/Winsorize1.png" valign="top"></DIR>
+
+<P><DIR><IMG src="/images/upload/Winsorize3.png" valign="top"></DIR>
+
+<DIR><P><SMALL><B>Legend:</B> Example of a probability plot that should be winsorized. The top figures shows the original data. The bottom plot shows the plot after winsorizing the top and bottom 7 values. </SMALL></P>
+</DIR>
 
 <a href="#index" class= "fs12">Back to Index</a>
 </Blockquote>
