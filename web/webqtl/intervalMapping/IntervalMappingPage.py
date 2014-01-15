@@ -1243,6 +1243,7 @@ class IntervalMappingPage(templatePage):
             smd.append(temp)
 
         smd.sort(lambda A, B: cmp(A.value, B.value))
+        smd.reverse()
 
         bxdlist=list(self.genotype.prgy)
 
