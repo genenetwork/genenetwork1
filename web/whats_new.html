@@ -7,6 +7,16 @@
 <SCRIPT SRC="javascript/dhtml.js"></SCRIPT>
 </HEAD>
 <BODY  bottommargin="2" leftmargin="2" rightmargin="2" topmargin="2" text=#000000 bgColor=#ffffff>
+<!--Include the JavaScript SDK on your page once, ideally right after the opening <body> tag.-->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 <TABLE cellSpacing=5 cellPadding=4 width="100%" border=0>
 	<TBODY>
 	<TR>
@@ -19,6 +29,63 @@
 		<TD valign="top" height="200" width="100%" bgcolor="#eeeeee">
 
 <P class="title">Latest Updates and News from Genenetwork  <A HREF="/webqtl/main.py?FormID=editHtml"><img src="/images/modify.gif" alt="modify this page" border= 0 valign="middle"></A></P>
+<div class="fb-like" data-href="http://www.genenetwork.org/whats_new.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+
+<Blockquote>
+<STRONG>2014-01-06: BXD Mouse Retina Blast Gene expression</STRONG> profiling by array entered into GeneNetwork.
+<ul>
+	<li>DoD TATRC Retina Blast Affy MoGene 2.0 ST (Dec13) RMA <b>Gene Level</b> **</li>
+	<li>DoD TATRC Retina Blast Affy MoGene 2.0 ST (Dec13) RMA <b>Exon Level</b> **</li>
+</ul>
+Currently this dataset is confidential, please contact <a href="mailto:eldon.e.geisert@emory.edu">Eldon Geisert</a> Emory Eye Center for further information. (Implemented by Eldon Geisert, Justin Templeton, Arthur Centeno and Rob Williams).
+</Blockquote>
+
+<Blockquote>
+<STRONG>2013-12-16: BXD Liver Polar Metabolites and BXD Muscle Polar Metabolites Gene expression</STRONG> profiling by array entered into GeneNetwork.
+<ul>
+<li>EPFL/LISP BXD Liver Polar Metabolites CD+HFD (Dec13) **</li>
+<li>EPFL/LISP BXD Liver Polar Metabolites HFD (Dec13) **</li>
+<li>EPFL/LISP BXD Liver Polar Metabolites CD (Dec13) **</li>
+<li>EPFL/LISP BXD Muscle Polar Metabolites CD+HFD (Dec13) **</li>
+<li>EPFL/LISP BXD Muscle Polar Metabolites HFD (Dec13) **</li>
+<li>EPFL/LISP BXD Muscle Polar Metabolites CD (Dec13) **</li>
+</ul>
+Currently this dataset is confidential, please contact <a href="mailto:admin.auwerx@epfl.ch">Johan Auwerx</a> Ecole Polytechnique Federale de Lausanne for further information. (Implemented by Johan Auwerx, Evan Williams, Arthur Centeno and Rob Williams).
+</Blockquote>
+
+<Blockquote>
+<STRONG>2013-12-02: BXD Mouse Retina Gene expression</STRONG> profiling by array entered into GeneNetwork.
+<ul>
+	<li>DoD TATRC Retina Affy MoGene 2.0 ST (Dec13) RMA <b>Gene Level</b> **</li>
+	<li>DoD TATRC Retina Affy MoGene 2.0 ST (Dec13) RMA <b>Exon Level</b> **</li>
+</ul>
+Currently this dataset is confidential, please contact <a href="mailto:egeisert@uthsc.edu">Eldon Geisert</a> Hamilton Eye Institute Department of Ophthalmology for further information. (Implemented by Eldon Geisert, Justin Templeton, Arthur Centeno and Rob Williams).
+</Blockquote>
+
+<Blockquote>
+<STRONG>2013-11-19: HZI PR8M-Infected Lungs Females RNAseq (Nov13) RPKM **</STRONG> entered into GeneNetwork. Currently this dataset is confidential, please contact <a href="mailto:kls@helmholtz-hzi.de">Klaus Schughart</a> Department Experimental Mouse Genetics for further information.  (Implemented by Klaus Schughart, Ashutosh Pandey, Arthur Centeno and Rob Williams).
+</Blockquote>
+
+<Blockquote>
+<STRONG>2013-10-28: BXD CD Brown Adipose Gene expression</STRONG> profiling by array entered into GeneNetwork.
+<ul>
+	<li>EPFL/LISP BXD CD Brown Adipose Affy Mouse Gene 2.0 ST <b>Gene Level</b> (Oct13) RMA **</li>
+	<li>EPFL/LISP BXD CD Brown Adipose Affy Mouse Gene 2.0 ST <b>Exon Level</b> (Oct13) RMA **</li>
+</ul>
+Currently this dataset is confidential, please contact <a href="mailto:admin.auwerx@epfl.ch">Johan Auwerx</a> Ecole Polytechnique Federale de Lausanne for further information. (Implemented by Johan Auwerx, Evan Williams, Arthur Centeno and Rob Williams).
+</Blockquote>
+
+<Blockquote>
+<STRONG>2013-09-23: Gene expression changes in the course of normal brain aging are sexually dimorphic.</STRONG> Expression profiling by array (Platform: <a href="http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GPL570" target=_blank>GPL570</a> [HG-U133_Plus_2] Affymetrix Human Genome U133 Plus 2.0 Array) entered into GeneNetwork.
+<ul>
+	<li>GSE11882 UCI Human Entorhinal Cortex Affy U133 Plus2 (Sep13) RMA</li>
+	<li>GSE11882 UCI Human Hippocampus Affy U133 Plus2 (Sep13) RMA</li>
+	<li>GSE11882 UCI Human Postcentral Gyrus Affy U133 Plus2 (Sep13) RMA</li>
+	<li>GSE11882 UCI Human Superior Frontal Gyrus Affy U133 Plus2 (Sep13) RMA</li>
+
+</ul>
+PMID: <a href="http://www.ncbi.nlm.nih.gov/pubmed/18832152" target="_blank">18832152</a>. GEO Series <a href="http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE11882" target="_blank"> GSE11882</a>. (Implemented by <a href="mailto:nberchto@uci.edu">Nicole Claudia Berchtold</a>, Arthur Centeno and Rob Williams).
+</Blockquote>
 
 <Blockquote>
 <STRONG>2013-08-29:</STRONG>
@@ -47,6 +114,10 @@
 </OL>
 
 We plan to refine this type of query and to add a query for Institutions (INST=Yale). (Implemented by Lei Yan).
+</Blockquote>
+
+<Blockquote>
+<STRONG>2013-08-02: Experimental INIA Hypothalamus Affy MoGene 1.0 ST (Nov10) PCA (principal component analysis) v080813</STRONG> entered into GeneNetwork. Variance adjusted and denoised by Ashutosh Pandey (Implemented by Khyobeni Mozhui, Adrienne Adler, Jesse Ingels, Lu Lu, Ashutosh Pandey, Arthur Centeno and Rob Williams).
 </Blockquote>
 
 <Blockquote>
@@ -120,7 +191,7 @@ We have installed a second GeneNetwork UCSC Genome Browser mirror site that supp
 
 
 <Blockquote>
-<STRONG>2012-09-01: BXD Hypothalamic-Pituitary-Adrenal axis data sets have been completed and added to GeneNetwork.</STRONG> These data sets are accessible to all users without registration at two different levels of analysis--whole gene estimates of transcript expression, and single exon estimates of expression. The three primary data sets have now been error checked, and corrected. The hypothalamus data have been split by sex.  (Implemented by Khyobeni Mozhui, Adrienne Adler, Jesse Ingels, Arthur Centeno, Lu Lu, and Rob Williams).
+<STRONG>2012-09-01: BXD Hypothalamic-Pituitary-Adrenal axis data sets have been completed and added to GeneNetwork.</STRONG> These data sets are accessible to all users without registration at two different levels of analysis--whole gene estimates of transcript expression, and single exon estimates of expression. The three primary data sets have now been error checked, and corrected. The hypothalamus data have been split by sex. PMID: <a href="http://www.ncbi.nlm.nih.gov/pubmed/22593731" target="_blank">22593731</a>. GEO Series <a href="http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE36674" target="_blank">GSE36674</a>. (Implemented by Khyobeni Mozhui, Adrienne Adler, Jesse Ingels, Arthur Centeno, Lu Lu, and Rob Williams).
 </Blockquote>
 
 <Blockquote>
