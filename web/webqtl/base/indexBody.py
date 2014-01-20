@@ -283,7 +283,7 @@ Quick HELP Examples and </B>
 							<!--	<LI><A HREF="https://genenetwork.hubrecht.eu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Netherlands at the Hubrecht</A> (Development)-->
 								<LI><A HREF="http://genenetwork.memphis.edu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Memphis at the U of M</A>
 								<LI><A HREF="http://webqtl.bic.nus.edu.sg/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Singapore at the NUS</A>
- 							<!--	<LI><A HREF="http://genenetwork.epfl.ch/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Switzerland at the EPFL</A>-->
+ 								<LI><A HREF="http://genenetwork.epfl.ch/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Switzerland at the EPFL</A>
 							</UL>
 							
 							<ul>
