@@ -222,8 +222,9 @@ Quick HELP Examples and </B>
 				<li><a href="http://ucscbrowserbeta.genenetwork.org/" target="_blank">Genome Browser Beta</a> at UTHSC</li>
 				<li><a href="http://galaxylocal.genenetwork.org/" target="_blank">Galaxy Local</a> at UTHSC</li>
 				<li>GeneNetwork at <a href="http://ec2.genenetwork.org/" target="_blank">Amazon Cloud (EC2)</a></li>
-				<li>GeneNetwork Source Codes at <a href="http://sourceforge.net/projects/genenetwork/" target="_blank">SourceForge</a></li>
-				<li>GeneNetwork Source Codes at <a href="https://github.com/genenetwork/genenetwork" target="_blank">GitHub</a></li>
+				<li>GeneNetwork 1 Source Codes at <a href="http://sourceforge.net/projects/genenetwork/" target="_blank">SourceForge</a></li>
+				<li>GeneNetwork 1 Source Codes at <a href="https://github.com/genenetwork/genenetwork" target="_blank">GitHub</a></li>
+				<li>GeneNetwork 2 Source Codes at <a href="https://github.com/zsloan/genenetwork" target="_blank">GitHub</a></li>
 			</ul>
 			<ul>
 				<li><a href="http://bnw.genenetwork.org/" target="_blank">Bayesian Network Web Server</a></li>
