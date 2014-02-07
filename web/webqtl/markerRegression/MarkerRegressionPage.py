@@ -208,7 +208,7 @@ class MarkerRegressionPage(templatePage):
 				cPickle.dump(tblobj, objfile)
 				objfile.close()	
 
-				sortby = ("-log(P)", "down")
+				sortby = ("LRS", "down")
 				reportTable =HT.Div(webqtlUtil.genTableObj(tblobj=tblobj, file=filename, sortby=sortby, tableID = "sortable", addIndex = "1"), Id="sortable") 	
 				
 				descriptionTable =  HT.TableLite(border=0, cellpadding=0, cellspacing=0)
