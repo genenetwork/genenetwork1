@@ -55,7 +55,6 @@ class MarkerRegressionPage(templatePage):
 			return		
 
 		self.initializeParameters(fd)
-			
 		filename= webqtlUtil.genRandStr("Itvl_")
 		ChrList,ChrNameOrderIdDict,ChrOrderIdNameDict,ChrLengthMbList= self.getChrNameOrderIdLength(RISet=fd.RISet)	
 
@@ -121,8 +120,8 @@ class MarkerRegressionPage(templatePage):
 				cPickle.dump(tblobj, objfile)
 				objfile.close()	
 
-				sortby = ("Index", "up")
-				reportTable =HT.Div(webqtlUtil.genTableObj(tblobj=tblobj, file=filename, sortby=sortby, tableID = "sortable", addIndex = "0"), Id="sortable") 	
+				sortby = ("-log(P)", "down")
+				reportTable =HT.Div(webqtlUtil.genTableObj(tblobj=tblobj, file=filename, sortby=sortby, tableID = "sortable", addIndex = "1"), Id="sortable") 	
 				
 				descriptionTable =  HT.TableLite(border=0, cellpadding=0, cellspacing=0)
 				descriptionTable.append(HT.TR(HT.TD(reportTable, colspan=3)))
@@ -209,8 +208,8 @@ class MarkerRegressionPage(templatePage):
 				cPickle.dump(tblobj, objfile)
 				objfile.close()	
 
-				sortby = ("Index", "up")
-				reportTable =HT.Div(webqtlUtil.genTableObj(tblobj=tblobj, file=filename, sortby=sortby, tableID = "sortable", addIndex = "0"), Id="sortable") 	
+				sortby = ("-log(P)", "down")
+				reportTable =HT.Div(webqtlUtil.genTableObj(tblobj=tblobj, file=filename, sortby=sortby, tableID = "sortable", addIndex = "1"), Id="sortable") 	
 				
 				descriptionTable =  HT.TableLite(border=0, cellpadding=0, cellspacing=0)
 				descriptionTable.append(HT.TR(HT.TD(reportTable, colspan=3)))
@@ -364,7 +363,7 @@ class MarkerRegressionPage(templatePage):
 		tblobj_header = [] # value of key 'header'
 		tblobj_body=[]		# value of key 'body'			
 		reportHeaderRow=[]	# header row list for tblobj_header (html part)		
-		headerList=['Index','SNP Name','Chr','Mb','-log(P)']		
+		headerList=['Index','SNP Name','Chr','Mb','-log(P)']
 		headerStyle="fs14 fwb ffl b1 cw cbrb" # style of the header 
 		cellColorStyle = "fs13 b1 fwn c222" # style of the cells 
 		
@@ -376,10 +375,10 @@ class MarkerRegressionPage(templatePage):
 		
 		tblobj_header.append(reportHeaderRow)
 		tblobj['header']=tblobj_header
-		
+
 		index=1
 		for chr in chrList:	
-
+		
 			if plinkResultDict.has_key(chr):
 				if chr in ChrNameOrderIdDict.keys():
 					chrOrderId =ChrNameOrderIdDict[chr]
@@ -405,7 +404,7 @@ class MarkerRegressionPage(templatePage):
 					SnpHref = HT.Href(text=snpName, url="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=%s"%dbSnprs, target="_blank")
 					
 					selectCheck=HT.Input(type="checkbox", Class="checkbox", name="index",value=index, onClick="highlight(this)")				
-					reportBodyRow.append(TDCell(HT.TD(str(index),selectCheck, align='right',Class=cellColorStyle,nowrap='ON'),str(index),index))	
+					reportBodyRow.append(TDCell(HT.TD(selectCheck, align='right',Class=cellColorStyle,nowrap='ON'),str(index),index))	
 					reportBodyRow.append(TDCell(HT.TD(SnpHref, Class=cellColorStyle,nowrap='ON'),snpName, snpName))
 					reportBodyRow.append(TDCell(HT.TD(chr, Class=cellColorStyle, align="center",nowrap='ON'),chr, chrOrderId))
 					reportBodyRow.append(TDCell(HT.TD('%3.6f'%mb, Class=cellColorStyle, align="center",nowrap='ON'),mb, mb))
@@ -564,7 +563,7 @@ class MarkerRegressionPage(templatePage):
 				
 				reportBodyRow=[]	# row list for tblobj_body (html part)
 				selectCheck=HT.Input(type="checkbox", Class="checkbox", name="index",value=index, onClick="highlight(this)")				
-				reportBodyRow.append(TDCell(HT.TD(str(index),selectCheck, align='right',Class=cellColorStyle,nowrap='ON'),str(index),index))	
+				reportBodyRow.append(TDCell(HT.TD(selectCheck, align='right',Class=cellColorStyle,nowrap='ON'),str(index),index))	
 				reportBodyRow.append(TDCell(lrs,LRS, LRS))
 				reportBodyRow.append(TDCell(HT.TD(ii.locus.chr, Class=cellColorStyle, align="center",nowrap='ON'),ii.locus.chr, chrOrderId))
 				reportBodyRow.append(TDCell(HT.TD('%3.6f'%ii.locus.Mb, Class=cellColorStyle, align="center",nowrap='ON'),ii.locus.Mb, ii.locus.Mb))
@@ -599,7 +598,8 @@ class MarkerRegressionPage(templatePage):
 					
 				reportBodyRow=[]	# row list for tblobj_body (html part)
 				selectCheck=HT.Input(type="checkbox", Class="checkbox", name="index",value=index, onClick="highlight(this)")				
-				reportBodyRow.append(TDCell(HT.TD(str(index),selectCheck, align='right',Class=cellColorStyle,nowrap='ON'),str(index),index))	
+				#reportBodyRow.append(TDCell(HT.TD(str(index),selectCheck, align='right',Class=cellColorStyle,nowrap='ON'),str(index),index))
+				reportBodyRow.append(TDCell(HT.TD(selectCheck, align='right',Class=cellColorStyle,nowrap='ON'),str(index),index))	
 				reportBodyRow.append(TDCell(lrs,LRS, LRS))
 				reportBodyRow.append(TDCell(HT.TD(ii.locus.chr, Class=cellColorStyle, align="center",nowrap='ON'),ii.locus.chr, chrOrderId))
 				reportBodyRow.append(TDCell(HT.TD('%3.6f'%ii.locus.Mb, Class=cellColorStyle, align="center",nowrap='ON'),ii.locus.Mb, ii.locus.Mb))
@@ -1520,7 +1520,7 @@ class MarkerRegressionPage(templatePage):
 		while line:
 			#convert line from str to list
 			lineList=self.buildLineList(line=line)
-	
+
 			# only keep the records whose chromosome name is in db
 			if ChrOrderIdNameDict.has_key(int(lineList[0])) and lineList[-1] and lineList[-1].strip()!='NA':
 
