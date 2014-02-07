@@ -219,9 +219,9 @@ Quick HELP Examples and </B>
 		<p style="font-size:12px;font-family:verdana;color:black">
 			<ul>
 				<li>UTHSC Genome Browser
-					<a target="_blank" href="http://ucscbrowser.genenetwork.org/">&lt;Classic&gt;</a>
+					<a target="_blank" href="http://ucscbrowser.genenetwork.org/">Classic</a>
 					and
-					<a target="_blank" href="http://ucscbrowserbeta.genenetwork.org/">&lt;Newest&gt;</a>
+					<a target="_blank" href="http://ucscbrowserbeta.genenetwork.org/">Newest</a>
 				</li>
 				<li>UTHSC <a target="_blank" href="http://bnw.genenetwork.org/">Bayesian Network Web Server</a></li>
 				<li>GeneNetwork Classic on <a target="_blank" href="http://ec2.genenetwork.org/">Amazon Cloud</a></li>
