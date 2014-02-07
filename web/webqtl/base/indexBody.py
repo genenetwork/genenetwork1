@@ -218,19 +218,17 @@ Quick HELP Examples and </B>
 							<p style="font-size:15px;font-family:verdana;color:black"><B>Websites Affiliated with GeneNetwork</B></p>
 		<p style="font-size:12px;font-family:verdana;color:black">
 			<ul>
-				<li><a href="http://ucscbrowser.genenetwork.org/" target="_blank">Genome Browser</a> at UTHSC</li>
-				<li><a href="http://ucscbrowserbeta.genenetwork.org/" target="_blank">Genome Browser Beta</a> at UTHSC</li>
-				<li><a href="http://galaxylocal.genenetwork.org/" target="_blank">Galaxy Local</a> at UTHSC</li>
-				<li>GeneNetwork at <a href="http://ec2.genenetwork.org/" target="_blank">Amazon Cloud (EC2)</a></li>
-				<li>GeneNetwork Source Codes at <a href="http://sourceforge.net/projects/genenetwork/" target="_blank">SourceForge</a></li>
-				<li>GeneNetwork Source Codes at <a href="https://github.com/genenetwork/genenetwork" target="_blank">GitHub</a></li>
-			</ul>
-			<ul>
-				<li><a href="http://bnw.genenetwork.org/" target="_blank">Bayesian Network Web Server</a></li>
-			</ul>
-			<ul>
-				<li><a href="http://gn2python.genenetwork.org/" target="_blank">GeneNetwork II - Python</a> (under development)</li>
-				<li><a href="http://gn2java.genenetwork.org/" target="_blank">GeneNetwork II - Java</a> (under development)</li>
+				<li>UTHSC Genome Browser
+					<a target="_blank" href="http://ucscbrowser.genenetwork.org/">Classic</a>
+					and
+					<a target="_blank" href="http://ucscbrowserbeta.genenetwork.org/">Newest</a>
+				</li>
+				<li>UTHSC <a target="_blank" href="http://bnw.genenetwork.org/">Bayesian Network Web Server</a></li>
+				<li>GeneNetwork Classic on <a target="_blank" href="http://ec2.genenetwork.org/">Amazon Cloud</a></li>
+				<li>GeneNetwork Classic Code on <a target="_blank" href="https://github.com/genenetwork/genenetwork">GitHub</a></li>
+				<li>GeneNetwork 2.0 Development Code on <a target="_blank" href="https://github.com/zsloan/genenetwork">GitHub</a></li>
+				<li><a target="_blank" href="http://gn2python.genenetwork.org/">GeneNetwork 2.0 - Python</a> development</li>
+				<li><a target="_blank" href="http://gn2java.genenetwork.org/">GeneNetwork 2.0 - Java</a> demonstration</li>
 			</ul>
 		</p>
 							<P>____________________________
@@ -283,7 +281,7 @@ Quick HELP Examples and </B>
 							<!--	<LI><A HREF="https://genenetwork.hubrecht.eu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Netherlands at the Hubrecht</A> (Development)-->
 								<LI><A HREF="http://genenetwork.memphis.edu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Memphis at the U of M</A>
 								<LI><A HREF="http://webqtl.bic.nus.edu.sg/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Singapore at the NUS</A>
- 							<!--	<LI><A HREF="http://genenetwork.epfl.ch/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Switzerland at the EPFL</A>-->
+ 								<LI><A HREF="http://genenetwork.epfl.ch/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Switzerland at the EPFL</A>
 							</UL>
 							
 							<ul>

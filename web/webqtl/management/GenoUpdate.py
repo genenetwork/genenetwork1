@@ -75,7 +75,7 @@ def retrieveGenoCode(cursor, InbredSetName):
 			GenoCode, InbredSet
 		WHERE
 			InbredSet.Name = '%s' AND
-			InbredSetId = InbredSet.Id
+			GenoCode.InbredSetId = InbredSet.Id
                 """ % InbredSetName )
 	results = cursor.fetchall()
 
