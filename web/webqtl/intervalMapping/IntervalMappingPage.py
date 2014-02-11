@@ -599,7 +599,7 @@ class IntervalMappingPage(templatePage):
         textUrl = HT.Href(text = 'Download', url= '/tmp/'+filename+'.txt', target = "_blank", Class='smallsize')
         return textUrl
 
-    def plotIntMapping(self, fd, canvas, offset= (80, 120, 20, 80), zoom = 1, startMb = None, endMb = None, showLocusForm = ""):
+    def plotIntMapping(self, fd, canvas, offset= (80, 120, 20, 100), zoom = 1, startMb = None, endMb = None, showLocusForm = ""):
         #calculating margins
         xLeftOffset, xRightOffset, yTopOffset, yBottomOffset = offset
         if self.multipleInterval:
@@ -1588,8 +1588,8 @@ class IntervalMappingPage(templatePage):
                     startPosX +=  (self.ChrLengthDistList[i]+self.GraphInterval)*plotXScale
 
             megabaseLabelFont = pid.Font(ttf="verdana", size=18*zoom*1.5, bold=0)
-            canvas.drawString("Megabases", xLeftOffset + (plotWidth -canvas.stringWidth("Megabases", font=megabaseLabelFont))/2,
-                    strYLoc + canvas.fontHeight(MBLabelFont)+ 15*(zoom%2) - 5, font=megabaseLabelFont, color=pid.black)
+            canvas.drawString("Megabases", xLeftOffset + (plotWidth - canvas.stringWidth("Megabases", font=megabaseLabelFont))/2,
+                    strYLoc + canvas.fontHeight(MBLabelFont)+ 10*(zoom%2) + 10, font=megabaseLabelFont, color=pid.black)
             pass
         else:
             ChrAInfo = []
