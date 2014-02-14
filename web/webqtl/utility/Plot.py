@@ -821,7 +821,13 @@ def plotXY(canvas, dataX, dataY, rank=0, dataLabel=[], plotColor = pid.black, ax
 
 	labelFont=pid.Font(ttf="verdana",size=canvas.size[0]/45,bold=0)
 	titleFont=pid.Font(ttf="verdana",size=canvas.size[0]/40,bold=0)
-		
+	
+	if canvas.stringWidth(YLabel,font=labelFont) > canvas.size[1]:
+		fontSizeDivider = 45
+		while canvas.stringWidth(YLabel,font=labelFont) > canvas.size[1]:
+			fontSizeDivider += 2
+			labelFont = pid.Font(ttf="verdana", size=canvas.size[0]/fontSizeDivider)
+
 	if (rank == 1 and not title):
 		canvas.drawString("Spearman Rank Correlation", xLeftOffset-canvas.size[0]*.025+(plotWidth-canvas.stringWidth("Spearman Rank Correlation",font=titleFont))/2.0,
 						  25,font=titleFont,color=labelColor)
@@ -832,9 +838,9 @@ def plotXY(canvas, dataX, dataY, rank=0, dataLabel=[], plotColor = pid.black, ax
 	if XLabel:
 		canvas.drawString(XLabel,xLeftOffset+(plotWidth-canvas.stringWidth(XLabel,font=labelFont))/2.0,
 			yTopOffset+plotHeight+yBottomOffset-25,font=labelFont,color=labelColor)
-	
+
 	if YLabel:
-		canvas.drawString(YLabel, xLeftOffset-65, yTopOffset+plotHeight- (plotHeight-canvas.stringWidth(YLabel,font=labelFont))/2.0,
+		canvas.drawString(YLabel, xLeftOffset-75, yTopOffset+plotHeight- (plotHeight-canvas.stringWidth(YLabel,font=labelFont))/2.0,
 			font=labelFont,color=labelColor,angle=90)
 
 	labelFont=pid.Font(ttf="verdana",size=20,bold=0)
