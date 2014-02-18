@@ -664,9 +664,9 @@ def plotBarText(canvas, data, label, variance=None, barColor=pid.blue, axesColor
 		
 def plotXY(canvas, dataX, dataY, rank=0, dataLabel=[], plotColor = pid.black, axesColor=pid.black, labelColor=pid.black, lineSize="thin", lineColor=pid.grey, idFont="arial", idColor=pid.blue, idSize="14", symbolColor=pid.black, symbolType="circle", filled="yes", symbolSize="tiny", XLabel=None, YLabel=None, title=None, fitcurve=None, connectdot=1, displayR=None, loadingPlot = 0, offset= (80, 20, 40, 60), zoom = 1, specialCases=[], showLabel = 1, bufferSpace = 15):
 	'displayR : correlation scatter plot, loadings : loading plot'
-	
+
 	dataXRanked, dataYRanked = webqtlUtil.calRank(dataX, dataY, len(dataX))
-		
+
 	#get ID font size
 	idFontSize = int(idSize)	
 	
@@ -701,6 +701,10 @@ def plotXY(canvas, dataX, dataY, rank=0, dataLabel=[], plotColor = pid.black, ax
 		dataXAlt = dataX    #Values used just for printing the other corr type to the graph image
 		dataYAlt = dataY    #Values used just for printing the other corr type to the graph image
 	
+	labelFont=pid.Font(ttf=idFont,size=idFontSize,bold=0)
+	if canvas.stringWidth(YLabel,font=labelFont) > canvas.size[1]:
+		bufferSpace = 30
+	
 	xLeftOffset, xRightOffset, yTopOffset, yBottomOffset = offset
 	plotWidth = canvas.size[0] - xLeftOffset - xRightOffset
 	plotHeight = canvas.size[1] - yTopOffset - yBottomOffset
@@ -733,8 +737,6 @@ def plotXY(canvas, dataX, dataY, rank=0, dataLabel=[], plotColor = pid.black, ax
 	#calculate data points	
 	data = map(lambda X, Y: (X, Y), dataXPrimary, dataYPrimary)
 	xCoord = map(lambda X, Y: ((X-xLow)*xScale + xLeftOffset, yTopOffset+plotHeight-(Y-yLow)*yScale), dataXPrimary, dataYPrimary)
-
-	labelFont=pid.Font(ttf=idFont,size=idFontSize,bold=0)
 
 	if loadingPlot:
 		xZero = -xLow*xScale+xLeftOffset
@@ -822,9 +824,10 @@ def plotXY(canvas, dataX, dataY, rank=0, dataLabel=[], plotColor = pid.black, ax
 	labelFont=pid.Font(ttf="verdana",size=canvas.size[0]/45,bold=0)
 	titleFont=pid.Font(ttf="verdana",size=canvas.size[0]/40,bold=0)
 	
-	if canvas.stringWidth(YLabel,font=labelFont) > canvas.size[1]:
+	if (canvas.stringWidth(YLabel, font=labelFont) > canvas.size[1]) or (canvas.stringWidth(XLabel, font=labelFont) > canvas.size[1]):
+		
 		fontSizeDivider = 45
-		while canvas.stringWidth(YLabel,font=labelFont) > canvas.size[1]:
+		while canvas.stringWidth(YLabel, font=labelFont) > canvas.size[1] or canvas.stringWidth(XLabel, font=labelFont) > canvas.size[1]:
 			fontSizeDivider += 2
 			labelFont = pid.Font(ttf="verdana", size=canvas.size[0]/fontSizeDivider)
 
