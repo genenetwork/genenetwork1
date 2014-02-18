@@ -108,14 +108,18 @@ class PlotCorrelationPage(templatePage):
 		dataY=[]
 		dataZ=[] # shortname
 		fullTissueName=[]
-		xlabel = ''
-		ylabel = ''
 
 		if isTissueCorr:
 			dataX, dataY, xlabel, ylabel, dataZ, fullTissueName = self.getTissueLabelsValues(X_geneSymbol=self.X_geneSymbol, Y_geneSymbol=self.Y_geneSymbol, TissueProbeSetFreezeId=self.TissueProbeSetFreezeId)
 			plotHeading = HT.Paragraph('Tissue Correlation Scatterplot')
 			plotHeading.__setattr__("class","title")
 
+			if self.xAxisLabel == '':
+				self.xAxisLabel = xlabel
+
+			if self.yAxisLabel == '':
+				self.yAxisLabel = ylabel
+			
 		if isSampleCorr:
 			plotHeading = HT.Paragraph('Sample Correlation Scatterplot')
                         plotHeading.__setattr__("class","title")
@@ -139,9 +143,11 @@ class PlotCorrelationPage(templatePage):
 				trait1Url = Trait1.genHTML(dispFromDatabase=1, privilege=self.privilege, userName=self.userName, authorized_users=Trait1.authorized_users)
 			else:
 				trait1Url = Trait1.genHTML(dispFromDatabase=1)
-			ylabel = '%s : %s' % (Trait1.db.shortname, Trait1.name)
-			if Trait1.cellid:
-				ylabel += ' : ' + Trait1.cellid
+			
+			if self.yAxisLabel == '':
+				self.yAxisLabel= '%s : %s' % (Trait1.db.shortname, Trait1.name)
+				if Trait1.cellid:
+					self.yAxisLabel += ' : ' + Trait1.cellid
 
 
 			#XZ, retrieve trait 2 info, X axis
@@ -166,9 +172,11 @@ class PlotCorrelationPage(templatePage):
 					trait2Url = Trait2.genHTML(dispFromDatabase=1)
 				traitdata2 = Trait2.exportData(strainlist)
 				_vals = traitdata2[:]
-				xlabel = '%s : %s' % (Trait2.db.shortname, Trait2.name)
-				if Trait2.cellid:
-					xlabel += ' : ' + Trait2.cellid
+				
+				if self.xAxisLabel == '':
+					self.xAxisLabel = '%s : %s' % (Trait2.db.shortname, Trait2.name)
+					if Trait2.cellid:
+						self.xAxisLabel += ' : ' + Trait2.cellid
 			else:
 				for item in strainlist:
 					if fd.allTraitData.has_key(item):
@@ -176,16 +184,17 @@ class PlotCorrelationPage(templatePage):
 					else:
 						_vals.append(None)
 
-				if fd.identification:
-					xlabel = fd.identification
-				else:
-					xlabel = "User Input Data"
+				if self.xAxisLabel == '':
+					if fd.identification:
+						self.xAxisLabel = fd.identification
+					else:
+						self.xAxisLabel = "User Input Data"
 
 				try:
 					Trait2 = webqtlTrait(fullname=fd.formdata.getvalue('fullname'), cursor=self.cursor)
 					trait2Url = Trait2.genHTML(dispFromDatabase=1)
 				except:
-					trait2Url = xlabel
+					trait2Url = self.xAxisLabel
 
 			if (_vals and trait1_data):
 				if len(_vals) != len(trait1_data):
@@ -224,7 +233,7 @@ class PlotCorrelationPage(templatePage):
 			idColor = self.setIdColor();					
 				
 			c = pid.PILCanvas(size=(self.plotSize, self.plotSize*0.90))
-			data_coordinate = Plot.plotXY(canvas=c, dataX=dataX, dataY=dataY, rank=rankPrimary, dataLabel = dataZ, labelColor=pid.black, lineSize=self.lineSize, lineColor=lineColor, idColor=idColor, idFont=self.idFont, idSize=self.idSize, symbolColor=symbolColor, symbolType=self.symbol, filled=self.filled, symbolSize=self.symbolSize, XLabel=xlabel, connectdot=0, YLabel=ylabel, title='', fitcurve=self.showline, displayR =1, offset= (90, self.plotSize/20, self.plotSize/10, 90), showLabel = self.showIdentifiers)
+			data_coordinate = Plot.plotXY(canvas=c, dataX=dataX, dataY=dataY, rank=rankPrimary, dataLabel = dataZ, labelColor=pid.black, lineSize=self.lineSize, lineColor=lineColor, idColor=idColor, idFont=self.idFont, idSize=self.idSize, symbolColor=symbolColor, symbolType=self.symbol, filled=self.filled, symbolSize=self.symbolSize, XLabel=self.xAxisLabel, connectdot=0, YLabel=self.yAxisLabel, title='', fitcurve=self.showline, displayR =1, offset= (90, self.plotSize/20, self.plotSize/10, 90), showLabel = self.showIdentifiers)
 				
 			if rankPrimary == 1:
 				dataXlabel, dataYlabel = webqtlUtil.calRank(xVals=dataX, yVals=dataY, N=len(dataX))
@@ -290,7 +299,7 @@ class PlotCorrelationPage(templatePage):
 
 
 			c = pid.PILCanvas(size=(self.plotSize, self.plotSize*0.90))
-			data_coordinate = Plot.plotXY(canvas=c, dataX=dataX, dataY=dataY, rank=rankSecondary, dataLabel = dataZ, labelColor=pid.black,lineColor=lineColor, lineSize=self.lineSize, idColor=idColor, idFont=self.idFont, idSize=self.idSize, symbolColor=symbolColor, symbolType=self.symbol, filled=self.filled, symbolSize=self.symbolSize, XLabel=xlabel, connectdot=0, YLabel=ylabel,title='', fitcurve=self.showline, displayR =1, offset= (90, self.plotSize/20, self.plotSize/10, 90), showLabel = self.showIdentifiers)
+			data_coordinate = Plot.plotXY(canvas=c, dataX=dataX, dataY=dataY, rank=rankSecondary, dataLabel = dataZ, labelColor=pid.black,lineColor=lineColor, lineSize=self.lineSize, idColor=idColor, idFont=self.idFont, idSize=self.idSize, symbolColor=symbolColor, symbolType=self.symbol, filled=self.filled, symbolSize=self.symbolSize, XLabel=self.xAxisLabel, connectdot=0, YLabel=self.yAxisLabel,title='', fitcurve=self.showline, displayR =1, offset= (90, self.plotSize/20, self.plotSize/10, 90), showLabel = self.showIdentifiers)
 
 			if rankSecondary == 1:
 				dataXlabel, dataYlabel = webqtlUtil.calRank(xVals=dataX, yVals=dataY, N=len(dataX))
@@ -366,6 +375,8 @@ class PlotCorrelationPage(templatePage):
 		self.idSize = fd.formdata.getvalue('idSize', '14')
 		self.lineColor = fd.formdata.getvalue('lineColor', 'grey')
 		self.lineSize = fd.formdata.getvalue('lineSize', 'medium')
+		self.xAxisLabel = fd.formdata.getvalue('xAxisLabel', '')
+		self.yAxisLabel = fd.formdata.getvalue('yAxisLabel', '')
 		self.showOptions = fd.formdata.getvalue('showOptions', '0')
 		
 		try:
@@ -418,6 +429,7 @@ class PlotCorrelationPage(templatePage):
 		tagOptions = HT.TR(align="right")
 		markerOptions = HT.TR(align="right")
 		lineOptions = HT.TR(align="right")
+		axisLabelOptions = HT.TR(align="right")
 		replot_mdpOptions = HT.TR(align="right")
 
 		sizeOptions.append(HT.TD(HT.Bold("Size: "), "&nbsp;"*1, HT.Input(type='text' ,name='plotSize', value=self.plotSize, style="background-color: #FFFFFF; width: 50px;", onChange="checkWidth();"), align="left"))
@@ -482,13 +494,13 @@ class PlotCorrelationPage(templatePage):
     		symbolSel.append(("3-star","3-star"))
     		symbolSel.append(("cross", "cross"))
     		symbolSel.append(("circle","circle"))
-            	symbolSel.append(("diamond", "diamond"))
+    		symbolSel.append(("diamond", "diamond"))
     		symbolSel.append(("square", "square"))
     		symbolSel.append(("vert rect", "vertRect"))
     		symbolSel.append(("hori rect", "horiRect"))
     		
     		sizeSel = HT.Select(name="sizeSel", onChange="changeSize(); submit();", selected=self.symbolSize)
-		sizeSel.append(("tiny","tiny"))
+    		sizeSel.append(("tiny","tiny"))
     		sizeSel.append(("small","small"))
     		sizeSel.append(("medium","medium"))
     		sizeSel.append(("large","large"))         
@@ -522,15 +534,22 @@ class PlotCorrelationPage(templatePage):
     		lineOptions.append(HT.TD(HT.Text(HT.Bold("Line Settings: ")), align="left"))
     		lineOptions.append(HT.TD(HT.Text(text="Width: "), lineSizeSel))
     		lineOptions.append(HT.TD(HT.Text(text="Color: "), lineColorSel))
+
+    		axisLabelOptions.append(HT.TD(HT.Text(HT.Bold("Axis Settings: ")), align="left"))
+    		axisLabelOptions.append(HT.TD(HT.Text(text="X:"), HT.Input(type='text', name='xAxisLabel', value=self.xAxisLabel)))
+    		axisLabelOptions.append(HT.TD(HT.Text(text="Y:"),  HT.Input(type='text', name='yAxisLabel', value=self.yAxisLabel)))
+    								
+    		sizeOptions.append(HT.TD(HT.Bold("Size: "), "&nbsp;"*1, HT.Input(type='text' ,name='plotSize', value=self.plotSize, style="background-color: #FFFFFF; width: 50px;", onChange="checkWidth();"), align="left"))
+
     	
 		replotButton = HT.Input(type='button', name='', value='    Replot    ',onClick="checkWidth(); submit();", Class="button")
 	
     		if fd.allstrainlist and mdpchoice:
                     replot_mdpOptions.append(HT.TD(replotButton, align="left"), HT.TD(allStrainList, mdpChoice, btn0, btn1, btn2, align="center", colspan=3))
-		    optionsTable.append(markerOptions, lineOptions, HT.TR(HT.TD(HT.BR())), replot_mdpOptions )
+		    optionsTable.append(markerOptions, lineOptions, axisLabelOptions, HT.TR(HT.TD(HT.BR())), replot_mdpOptions )
                 else:
                     replot_mdpOptions.append(HT.TD(replotButton, align="left"))
-		    optionsTable.append(markerOptions, lineOptions, HT.TR(HT.TD(HT.BR())), replot_mdpOptions)
+		    optionsTable.append(markerOptions, lineOptions, axisLabelOptions, HT.TR(HT.TD(HT.BR())), replot_mdpOptions)
             
     		containerCell.append(optionsTable)
     		containerRow.append(containerCell)
