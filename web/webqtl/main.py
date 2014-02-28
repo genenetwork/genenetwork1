@@ -341,6 +341,11 @@ def handler(req):
                                 reload(ODEPage)
                                 req.content_type = 'text/html'
                                 page = ODEPage.ODEPage(fd)
+			elif fd.formID == 'ODEIM':
+                                from externalResource import ODEPageIM
+                                reload(ODEPageIM)
+                                req.content_type = 'text/html'
+                                page = ODEPageIM.ODEPageIM(fd)
                         elif fd.formID == 'GCAT':
                                 from externalResource import GCATPage
                                 reload(GCATPage)

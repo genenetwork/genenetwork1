@@ -435,6 +435,11 @@ class IntervalMappingPage(templatePage):
                 geneTableContainer = HT.Div(Id="sortable") #Div to hold table
                 geneTable = self.geneTable(self.geneCol,GENEID)
                 geneTableContainer.append(geneTable)
+                
+                mainfmName = webqtlUtil.genRandStr("fm_")
+                tableForm = HT.Form(cgi=os.path.join(webqtlConfig.CGIDIR, webqtlConfig.SCRIPTFILE), enctype='multipart/form-data', name=mainfmName, submit=HT.Input(type='hidden'))
+                tableForm.append(HT.Input(name='FormID', value='', type='hidden'))
+                tableForm.append(geneTableContainer)
 
         else:
             self.geneCol = None
@@ -524,7 +529,39 @@ class IntervalMappingPage(templatePage):
                 iaForm.append(HT.Input(name=key, value=hddn[key], type='hidden'))
             iaForm.append(HT.Paragraph("Interval Analyst : Chr %s from %2.6f to %2.6f Mb" % (self.genotype[0].name, self.startMb, self.endMb),
                 HT.Input(name='customize', value='Customize', onClick= "formInNewWindow(this.form);", type='button', Class="button"), Class="subtitle"))
-            TD_LR.append(HT.Blockquote(iaForm, geneTableContainer))
+            TD_LR.append(HT.Blockquote(iaForm))
+            # optionsTable
+            selectall = HT.Href(url="#redirect", onClick="checkAll(document.getElementsByName('%s')[0]);" % mainfmName)
+            selectall_img = HT.Image("/images/select_all2_final.jpg", name="selectall", alt="Select All", title="Select All", style="border:none;")
+            selectall.append(selectall_img)
+            reset = HT.Href(url="#redirect", onClick="checkNone(document.getElementsByName('%s')[0]); return false;" % mainfmName)
+            reset_img = HT.Image("/images/select_none2_final.jpg", alt="Select None", title="Select None", style="border:none;")
+            reset.append(reset_img)
+            selectinvert = HT.Href(url="#redirect", onClick = "checkInvert(document.getElementsByName('%s')[0]);" % mainfmName)
+            selectinvert_img = HT.Image("/images/invert_selection2_final.jpg", name="selectinvert", alt="Invert Selection", title="Invert Selection", style="border:none;")
+            selectinvert.append(selectinvert_img)
+            addselect = HT.Href(url="#redirect", onClick="addRmvSelection('%s', document.getElementsByName('%s')[0], 'addToSelection');" % (RISet, mainfmName))
+            addselect_img = HT.Image("/images/add_collection1_final.jpg", name="addselect", alt="Add To Collection", title="Add To Collection", style="border:none;")
+            addselect.append(addselect_img)
+            geneweaver = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('%s')[0], 'ODEIM');" % mainfmName)
+            geneweaver_img = HT.Image("/images/ODE_logo_final.jpg", name="GeneWeaver", alt="Gene Weaver", title="Gene Weaver", style="border:none")
+            geneweaver.append(geneweaver_img)
+            optionsTable = HT.TableLite()
+            optionsTable.append(HT.TR(
+                HT.TD(selectall, width="77", style="text-align:center"),
+                HT.TD(reset, width="77", style="text-align:center"),
+                HT.TD(selectinvert, width="77", style="text-align:center"),
+                HT.TD(geneweaver, width="77", style="text-align:center"),
+                ))
+            optionsTable.append(HT.TR(
+                HT.TD("Select", style="text-align:center"),
+                HT.TD("Deselect", style="text-align:center"),
+                HT.TD("Invert", style="text-align:center"),
+                HT.TD("Gene Weaver", style="text-align:center"),
+                ))
+            TD_LR.append(HT.Blockquote(optionsTable))
+            # geneTableContainer
+            TD_LR.append(HT.Blockquote(tableForm))
 
         self.dict['body'] = TD_LR
         self.dict['title'] = "Mapping"
@@ -2309,213 +2346,6 @@ class IntervalMappingPage(templatePage):
         
         return textUrl
 
-    def geneTables(self, geneCol, refGene=None):
-        SNPLink = 0
-        tableIterationsCnt = 0
-        if self.species == "mouse":
-            geneTableMain = HT.TableLite(border=0, width=1280, cellpadding=0, cellspacing=0, Class="collap")
-            columns = HT.TR(HT.TD(' ', Class="fs14 fwb ffl b1 cw cbrb"),
-            HT.TD('Gene Symbol',Class="fs14 fwb ffl b1 cw cbrb", colspan=2),
-            HT.TD('Mb Start (mm9)',Class="fs14 fwb ffl b1 cw cbrb", width=1),
-            HT.TD('Gene Length (Kb)',Class="fs14 fwb ffl b1 cw cbrb", width=1),
-            HT.TD("SNP Count", Class="fs14 fwb ffl b1 cw cbrb", width=1),
-            HT.TD("SNP Density (SNP/Kb)", Class="fs14 fwb ffl b1 cw cbrb", width=1),
-            HT.TD('Avg. Expr. Value', Class="fs14 fwb ffl b1 cw cbrb", width=1), # Max of all transcripts
-            HT.TD('Human Chr',Class="fs14 fwb ffl b1 cw cbrb", width=1),
-            HT.TD('Mb Start (hg19)', Class="fs14 fwb ffl b1 cw cbrb", width=1))
-
-            # http://compbio.uthsc.edu/miRSNP/
-
-            td_pd = HT.TD(Class="fs14 fwb ffl b1 cw cbrb")
-            td_pd.append(HT.Text("PolymiRTS"))
-            td_pd.append(HT.BR())
-            td_pd.append(HT.Text("Database"))
-            td_pd.append(HT.BR())
-            td_pd.append(HT.Href(url='http://compbio.uthsc.edu/miRSNP/', text='>>', target="_blank", Class="normalsize"))
-
-            if refGene:
-                columns.append(HT.TD('Literature Correlation', Class="fs14 fwb ffl b1 cw cbrb", width=1))
-            columns.append(HT.TD('Gene Description',Class="fs14 fwb ffl b1 cw cbrb"))
-            columns.append(td_pd)
-            geneTableMain.append(columns)
-
-            # polymiRTS
-            # http://lily.uthsc.edu:8080/20090422_UTHSC_cuiyan/PolymiRTS_CLS?chrom=2&chrom_from=115&chrom_to=125
-            #XZ: We can NOT assume their web service is always on. We must put this block of code in try except.
-            try:
-                conn = httplib.HTTPConnection("lily.uthsc.edu:8080")
-                conn.request("GET", "/20090422_UTHSC_cuiyan/PolymiRTS_CLS?chrom=%s&chrom_from=%s&chrom_to=%s" % (self.genotype[0].name, self.startMb, self.endMb))
-                response = conn.getresponse()
-                data = response.read()
-                data = data.split()
-                conn.close()
-                dic = {}
-                index = 0
-                for i in data:
-                    if index%3==0:
-                        dic[data[index]] = HT.Href(url=data[index+2], text=data[index+1], target="_blank", Class="normalsize")
-                    index = index+1
-            except Exception:
-                dic={}
-
-
-            for gIndex, theGO in enumerate(geneCol):
-                geneLength = (theGO["TxEnd"] - theGO["TxStart"])*1000.0
-                tenPercentLength = geneLength*0.0001
-                txStart = theGO["TxStart"]
-                txEnd = theGO["TxEnd"]
-                theGO["snpDensity"] = theGO["snpCount"]/geneLength
-                if (self.ALEX_DEBUG_BOOL_PRINT_GENE_LIST and geneTableMain):
-                    #accessionString = 'http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?CMD=Display&DB=gene&term=%s'  % theGO["NM_ID"]
-                    geneIdString = 'http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=%s' % theGO["GeneID"]
-
-                    allProbeString = '%s?cmd=sch&gene=%s&alias=1' % (os.path.join(webqtlConfig.CGIDIR, webqtlConfig.SCRIPTFILE), theGO["GeneSymbol"])
-                    if theGO["snpCount"]:
-                        snpString = HT.Href(url="%s&chr=%s&start=%s&end=%s&geneName=%s&s1=%d&s2=%d" % (os.path.join(webqtlConfig.CGIDIR, 'main.py?FormID=snpBrowser'),
-                                theGO["Chromosome"], theGO["TxStart"], theGO["TxEnd"], theGO["GeneSymbol"], self.diffCol[0], self.diffCol[1]),
-                                text=theGO["snpCount"], target="_blank", Class="normalsize")
-                    else:
-                        snpString = 0
-
-                    mouseStartString = "http://genome.ucsc.edu/cgi-bin/hgTracks?clade=vertebrate&org=Mouse&db=mm9&position=chr" + theGO["Chromosome"] + "%3A" + str(int(theGO["TxStart"] * 1000000.0))  + "-" + str(int(theGO["TxEnd"]*1000000.0)) +"&pix=620&Submit=submit"
-
-                    if theGO['humanGene']:
-                        huGO = theGO['humanGene']
-                        if huGO["TxStart"] == '':
-                            humanStartDisplay = ""
-                        else:
-                            humanStartDisplay = "%0.6f" % huGO["TxStart"]
-                        humanChr = huGO["Chromosome"]
-                        if humanChr.find("q") > -1:
-                            humanChr = humanChr[:humanChr.find("q")]
-                        if humanChr.find("p") > -1:
-                            humanChr = humanChr[:humanChr.find("p")]
-                        humanStartString = "http://genome.ucsc.edu/cgi-bin/hgTracks?clade=vertebrate&org=Human&db=hg17&position=chr%s:%d-%d" %  (humanChr, int(1000000*huGO["TxStart"]), int(1000000*huGO["TxEnd"]))
-                    else:
-                        humanStartString = humanChr = humanStartDisplay = ""
-
-                    geneDescription = theGO["GeneDescription"]
-                    if len(geneDescription) > 26:
-                        geneDescription = geneDescription[:26]+"..."
-                    probeSetSearch = HT.Href(allProbeString, HT.Image("/images/webqtl_search.gif", border=0), target="_blank")
-
-                    if theGO["snpDensity"] < 0.000001:
-                        snpDensityStr = "0"
-                    else:
-                        snpDensityStr = "%0.6f" % theGO["snpDensity"]
-
-                    avgExpr = []#theGO["avgExprVal")
-                    if avgExpr in ([], None):
-                        avgExpr = ""
-                    else:
-                        avgExpr = "%0.6f" % avgExpr
-
-                    tableIterationsCnt = tableIterationsCnt + 1
-
-                    # polymiRTS
-                    polymiRTS = ' '
-                    if dic.has_key(theGO["GeneID"]):
-                        polymiRTS = dic[theGO["GeneID"]]
-
-                    # If we have a referenceGene then we will show the Literature Correlation
-                    if refGene:
-                        literatureCorrelation = str(self.getLiteratureCorrelation(self.cursor,refGene,theGO['GeneID']) or "N/A")
-                        geneTableMain.append(HT.TR(HT.TD(tableIterationsCnt, align="right", Class="fs13 b1 cbw c222"),
-                                          HT.TD(probeSetSearch, align="center", Class="fs13 bt1 bb1 cbw c222", width=21),
-                                          HT.TD(HT.Href(geneIdString, theGO["GeneSymbol"], target="_blank", Class="normalsize"), align='left', Class="fs13 bt1 bb1 cbw c222"),
-                                          HT.TD(HT.Href(mouseStartString, "%0.6f" % txStart, target="_blank", Class="normalsize"), align='right', Class="fs13 b1 cbw c222"),
-                                          HT.TD(HT.Href("javascript:centerIntervalMapOnRange2('%s', " % theGO["Chromosome"]+str(txStart-tenPercentLength) + ", " + str(txEnd+tenPercentLength) + ", document.changeViewForm)", "%0.3f" % geneLength, Class="normalsize"), align='right', Class="fs13 b1 cbw c222"),
-                                          HT.TD(snpString, align="right", Class="fs13 b1 cbw c222"),
-                                          HT.TD(snpDensityStr, align='right', Class='fs13 b1 cbw c222'),
-                                          HT.TD(avgExpr, align="right", Class="fs13 b1 cbw c222"), # This should have a link to the "basic stats" (button on main selection page) of the gene
-                                          HT.TD(humanChr, align="right",Class="fs13 b1 cbw c222"),
-                                          HT.TD(HT.Href(humanStartString, humanStartDisplay, target="_blank", Class="normalsize"), align="right", Class="fs13 b1 cbw c222"),
-                                          HT.TD(literatureCorrelation, align='left',Class="fs13 b1 cbw c222"),
-                                          HT.TD(geneDescription, align='left',Class="fs13 b1 cbw c222"),
-                                          HT.TD(polymiRTS, align='left', Class="fs13 b1 cbw c222")))
-
-                    else:
-                        geneTableMain.append(HT.TR(HT.TD(tableIterationsCnt, align="right", Class="fs13 b1 cbw c222"),
-                                          HT.TD(probeSetSearch, align="center", Class="fs13 bt1 bb1 cbw c222", width=21),
-                                          HT.TD(HT.Href(geneIdString, theGO["GeneSymbol"], target="_blank", Class="normalsize"), align='left', Class="fs13 bt1 bb1 cbw c222"),
-                                          HT.TD(HT.Href(mouseStartString, "%0.6f" % txStart, target="_blank", Class="normalsize"), align='right', Class="fs13 b1 cbw c222"),
-                                          HT.TD(HT.Href("javascript:centerIntervalMapOnRange2('%s', " % theGO["Chromosome"]+str(txStart-tenPercentLength) + ", " + str(txEnd+tenPercentLength) + ", document.changeViewForm)", "%0.3f" % geneLength, Class="normalsize"), align='right', Class="fs13 b1 cbw c222"),
-                                          HT.TD(snpString, align="right", Class="fs13 b1 cbw c222"),
-                                          HT.TD(snpDensityStr, align='right', Class='fs13 b1 cbw c222'),
-                                          HT.TD(avgExpr, align="right", Class="fs13 b1 cbw c222"), # This should have a link to the "basic stats" (button on main selection page) of the gene
-                                          HT.TD(humanChr, align="right",Class="fs13 b1 cbw c222"),
-                                          HT.TD(HT.Href(humanStartString, humanStartDisplay, target="_blank", Class="normalsize"), align="right", Class="fs13 b1 cbw c222"),
-                                          HT.TD(geneDescription, align='left',Class="fs13 b1 cbw c222"),
-                                          HT.TD(polymiRTS, align='left', Class="fs13 b1 cbw c222")))
-
-            return geneTableMain
-        elif self.species == "rat":
-            geneTableMain = HT.TableLite(border=0, width=1050, cellpadding=0, cellspacing=0, Class="collap")
-            geneTableMain.append(HT.TR(HT.TD(' ', Class="fs14 fwb ffl b1 cw cbrb"),
-                                       HT.TD('Gene Symbol',Class="fs14 fwb ffl b1 cw cbrb", colspan=2),
-                                       HT.TD('Mb Start (rn3)',Class="fs14 fwb ffl b1 cw cbrb", width=1),
-                                       HT.TD('Gene Length (Kb)',Class="fs14 fwb ffl b1 cw cbrb", width=1),
-                                       HT.TD('Avg. Expr. Value', Class="fs14 fwb ffl b1 cw cbrb", width=1), # Max of all transcripts
-                                       HT.TD('Mouse Chr', Class="fs14 fwb ffl b1 cw cbrb", width=1),
-                                       HT.TD('Mb Start (mm9)', Class="fs14 fwb ffl b1 cw cbrb", width=1),
-                                       HT.TD('Human Chr',Class="fs14 fwb ffl b1 cw cbrb", width=1),
-                                       HT.TD('Mb Start (hg19)', Class="fs14 fwb ffl b1 cw cbrb", width=1),
-                                       HT.TD('Gene Description',Class="fs14 fwb ffl b1 cw cbrb")))
-
-            for gIndex, theGO in enumerate(geneCol):
-                geneDesc = theGO["GeneDescription"]
-                if geneDesc == "---":
-                    geneDesc = ""
-                geneLength = (float(theGO["TxEnd"]) - float(theGO["TxStart"]))
-                geneLengthURL = "javascript:centerIntervalMapOnRange2('%s', %f, %f, document.changeViewForm)" % (theGO["Chromosome"], float(theGO["TxStart"])-(geneLength*0.1), float(theGO["TxEnd"])+(geneLength*0.1))
-
-                #the chromosomes for human 1 are 1qXX.XX
-                if theGO['humanGene']:
-                    humanChr = theGO['humanGene']["Chromosome"]
-                    if 'q' in humanChr:
-                        humanChr = humanChr[:humanChr.find("q")]
-                    if 'p' in humanChr:
-                        humanChr = humanChr[:humanChr.find("p")]
-                    humanTxStart = theGO['humanGene']["TxStart"]
-                else:
-                    humanChr = humanTxStart = ""
-
-                #Mouse Gene
-                if theGO['mouseGene']:
-                    mouseChr = theGO['mouseGene']["Chromosome"]
-                    mouseTxStart = theGO['mouseGene']["TxStart"]
-                else:
-                    mouseChr = mouseTxStart = ""
-
-                if theGO["GeneID"] != "":
-                    geneSymbolURL = HT.Href("http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=%s" % theGO["GeneID"], theGO["GeneSymbol"], Class="normalsize", target="_blanK")
-                else:
-                    geneSymbolURL = theGO["GeneSymbol"]
-
-                if len(geneDesc) > 34:
-                    geneDesc = geneDesc[:32] + "..."
-
-                avgExprVal = [] #theGO["avgExprVal"]
-                if avgExprVal != "" and avgExprVal:
-                    avgExprVal = "%0.5f" % float(avgExprVal)
-                else:
-                    avgExprVal = ""
-
-                geneTableMain.append(HT.TR(HT.TD(gIndex+1, align="right", Class="fs13 b1 cbw c222"),
-                                       HT.TD(HT.Href(os.path.join(webqtlConfig.CGIDIR, webqtlConfig.SCRIPTFILE)+"?cmd=sch&gene=%s&alias=1&species=rat" % theGO["GeneSymbol"], HT.Image("/images/webqtl_search.gif", border=0), target="_blank"), Class="fs13 bt1 bb1 cbw c222"),
-                                       HT.TD(geneSymbolURL, Class="fs13 bt1 bb1 cbw c222"),
-                                       HT.TD(theGO["TxStart"], Class="fs13 b1 cbw c222"),
-                                       HT.TD(HT.Href(geneLengthURL, "%0.3f" % (geneLength*1000.0), Class="normalsize"), Class="fs13 b1 cbw c222"),
-                                       HT.TD(avgExprVal, Class="fs13 b1 cbw c222"),
-                                       HT.TD(mouseChr, Class="fs13 b1 cbw c222"),
-                                       HT.TD(mouseTxStart, Class="fs13 b1 cbw c222"),
-                                       HT.TD(humanChr, Class="fs13 b1 cbw c222"),
-                                       HT.TD(humanTxStart, Class="fs13 b1 cbw c222"),
-                                       HT.TD(geneDesc, Class="fs13 b1 cbw c222")))
-            return geneTableMain
-        else:
-            return ""
-
     def geneTable(self, geneCol, refGene=None):
         #SNPLink = 0 #Not sure what this is used for
 
@@ -2580,7 +2410,10 @@ class IntervalMappingPage(templatePage):
                         THCell(HT.TD('Literature',HT.BR(),'Correlation', align='left', width=100, Class=col_class), text="lit_corr", idx=9),
                         THCell(HT.TD('Gene Description', HT.BR(), HT.BR(), align='left', width=290, Class=col_class), text="description", idx=10),
                         THCell(HT.TD('PolymiRTS',HT.BR(),'Database', HT.BR(), HT.Href(url='http://compbio.uthsc.edu/miRSNP/', text='>>', target="_blank", Class="normalsize"),
-                                        align='left', width=100, Class=col_class), sort=0, idx=11)]]
+                                        align='left', width=100, Class=col_class), sort=0, idx=11),
+                        THCell(HT.TD('Gene Weaver', HT.BR(), 'Info Content', HT.BR(), HT.Href(url='http://geneweaver.org/', text='>>', target="_blank", Class="normalsize"),
+                                        align='left', width=110, Class=col_class), sort=0, idx=12),
+                                        ]]
             else:
                 gene_tblobj_header = [[THCell(HT.TD('Index', HT.BR(), HT.BR(), align='left', width=50, Class=col_class), text="index", idx=0),
                         THCell(HT.TD('Symbol', HT.BR(), HT.BR(), align='left', width=100, Class=col_class), text="symbol", idx=1),
@@ -2593,7 +2426,10 @@ class IntervalMappingPage(templatePage):
                         THCell(HT.TD('Mb Start',HT.BR(),'(hg19)', align='left', width=100, Class=col_class), text="mb_start_hg19", idx=8),
                         THCell(HT.TD('Gene Description', HT.BR(), HT.BR(), align='left', width=290, Class=col_class), text="description", idx=9),
                         THCell(HT.TD('PolymiRTS',HT.BR(),'Database', HT.BR(), HT.Href(url='http://compbio.uthsc.edu/miRSNP/', text='>>', target="_blank", Class="normalsize"),
-                                        align='left', width=100, Class=col_class), sort=0, idx=10)]]
+                                        align='left', width=100, Class=col_class), sort=0, idx=10),
+                        THCell(HT.TD('Gene Weaver', HT.BR(), 'Info Content', HT.BR(), HT.Href(url='http://geneweaver.org/', text='>>', target="_blank", Class="normalsize"),
+                                        align='left', width=110, Class=col_class), sort=0, idx=11),
+                                        ]]
 
         elif self.species == "rat":
 
@@ -2645,7 +2481,7 @@ class IntervalMappingPage(templatePage):
                 tableIterationsCnt = tableIterationsCnt + 1
 
                 this_row = [] #container for the cells of each row
-                selectCheck = HT.Input(type="checkbox", name="strainList", value=tableIterationsCnt, Class="checkbox", onClick="highlight(this)") #checkbox for each row
+                selectCheck = HT.Input(type="checkbox", name="searchResult", value=theGO["GeneSymbol"], Class="checkbox", onClick="highlight(this)") #checkbox for each row
 
                 geneLength = (theGO["TxEnd"] - theGO["TxStart"])*1000.0
                 tenPercentLength = geneLength*0.0001
@@ -2735,6 +2571,7 @@ class IntervalMappingPage(templatePage):
                         this_row.append(TDCell(HT.TD(literatureCorrelationString, align='right', Class=className), literatureCorrelationString, literatureCorrelation))
                         this_row.append(TDCell(HT.TD(geneDescription, align='right', Class=className), geneDescription, geneDescription))
                         this_row.append(TDCell(HT.TD(polymiRTS, align='right', Class=className), "", ""))
+                        this_row.append(TDCell(HT.TD("", align='right', Class=className), "", ""))
 
                     else:
                         this_row.append(TDCell(HT.TD(tableIterationsCnt, selectCheck, width=30, align='right', Class=className), tableIterationsCnt, tableIterationsCnt))
@@ -2748,6 +2585,7 @@ class IntervalMappingPage(templatePage):
                         this_row.append(TDCell(HT.TD(HT.Href(humanStartString, humanStartDisplay, target="_blank"), align='right', Class=className), humanStartDisplay, humanStartValue))
                         this_row.append(TDCell(HT.TD(geneDescription, align='right', Class=className), geneDescription, geneDescription))
                         this_row.append(TDCell(HT.TD(polymiRTS, align='right', Class=className), "", ""))
+                        this_row.append(TDCell(HT.TD("", align='right', Class=className), "", ""))
 
                 tblobj_body.append(this_row)
 
@@ -2756,7 +2594,7 @@ class IntervalMappingPage(templatePage):
             for gIndex, theGO in enumerate(geneCol):
 
                 this_row = [] #container for the cells of each row
-                selectCheck = HT.Input(type="checkbox", name="strainList", Class="checkbox", onClick="highlight(this)") #checkbox for each row
+                selectCheck = HT.Input(type="checkbox", name="searchResult", Class="checkbox", onClick="highlight(this)") #checkbox for each row
 
                 webqtlSearch = HT.Href(os.path.join(webqtlConfig.CGIDIR, webqtlConfig.SCRIPTFILE)+"?cmd=sch&gene=%s&alias=1&species=rat" % theGO["GeneSymbol"], HT.Image("/images/webqtl_search.gif", border=0), target="_blank")
 
