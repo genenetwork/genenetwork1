@@ -1,8 +1,5 @@
-from __future__ import absolute_import, print_function, division
-
 import sys
 import re
-import argparse
 
 import utilities
 import datastructure
@@ -11,7 +8,7 @@ def main(argv):
     config = utilities.get_config(argv[1])
     print("config file:")
     for item in config.items('config'):
-        print("\t", str(item))
+        print("\t%s" % str(item))
     parse_genofile(config, fetch_parameters(config))
 
 def fetch_parameters(config):
