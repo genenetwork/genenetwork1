@@ -127,3 +127,8 @@ def delete_publishxref(publishxrefid, inbredsetid):
     rowcount = cursor.rowcount
     con.close()
     return rowcount
+
+def delete(publishxrefid, inbredsetid):
+    delete_publishdata_publishxrefid(publishxrefid, inbredsetid)
+    delete_phenotype_publishxrefid(publishxrefid, inbredsetid)
+    return delete_publishxref(publishxrefid, inbredsetid)
