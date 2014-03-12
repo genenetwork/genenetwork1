@@ -73,8 +73,8 @@ def fetch():
     # release
     phenotypesfile.close()
 
-def delete(publishxrefid, inbredsetid):
-    cursor = utilities.get_cursor()
+def delete_phenotype_publishxrefid(publishxrefid, inbredsetid):
+    cursor, con = utilities.get_cursor()
     sql = """
         DELETE Phenotype
         FROM PublishXRef,Phenotype
@@ -83,6 +83,12 @@ def delete(publishxrefid, inbredsetid):
         AND PublishXRef.`PhenotypeId`=Phenotype.`Id`
         """
     cursor.execute(sql, (publishxrefid, inbredsetid))
+    rowcount = cursor.rowcount
+    con.close()
+    return rowcount
+
+def delete_publishdata_publishxrefid(publishxrefid, inbredsetid):
+    cursor, con = utilities.get_cursor()
     sql = """
         DELETE PublishData
         FROM PublishXRef,PublishData
@@ -92,9 +98,32 @@ def delete(publishxrefid, inbredsetid):
         """
     cursor.execute(sql, (publishxrefid, inbredsetid))
     sql = """
+        DELETE PublishSE
+        FROM PublishXRef,PublishSE
+        WHERE PublishXRef.`Id`=%s
+        AND PublishXRef.`InbredSetId`=%s
+        AND PublishXRef.`DataId`=PublishSE.`DataId`
+        """
+    cursor.execute(sql, (publishxrefid, inbredsetid))
+    sql = """
+        DELETE NStrain
+        FROM PublishXRef,NStrain
+        WHERE PublishXRef.`Id`=%s
+        AND PublishXRef.`InbredSetId`=%s
+        AND PublishXRef.`DataId`=NStrain.`DataId`
+        """
+    cursor.execute(sql, (publishxrefid, inbredsetid))
+    con.close()
+
+def delete_publishxref(publishxrefid, inbredsetid):
+    cursor, con = utilities.get_cursor()
+    sql = """
         DELETE PublishXRef
         FROM PublishXRef
         WHERE PublishXRef.`Id`=%s
         AND PublishXRef.`InbredSetId`=%s
         """
     cursor.execute(sql, (publishxrefid, inbredsetid))
+    rowcount = cursor.rowcount
+    con.close()
+    return rowcount
