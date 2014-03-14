@@ -387,8 +387,11 @@ class AddToSelectionPage(templatePage):
                     tr.append(TDCell(HT.TD("--", align="left", Class=className), "--", "Zz"))
                 else:
                     tr.append(TDCell(HT.TD(AbbreviationString, Class=className), AbbreviationString, AbbreviationString.upper()))
-
-                tr.append(TDCell(HT.TD(PhenotypeString, Class=className), PhenotypeString, PhenotypeString.upper()))
+                if PhenotypeString:
+                    PhenotypeString_upper = PhenotypeString.upper()
+                else:
+                    PhenotypeString_upper = PhenotypeString
+                tr.append(TDCell(HT.TD(PhenotypeString, Class=className), PhenotypeString, PhenotypeString_upper))
 
 
             elif (thisTrait.db.type == "ProbeSet" or thisTrait.db.type == "Temp"):
