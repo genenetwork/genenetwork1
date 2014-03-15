@@ -1,0 +1,7 @@
+Record	Phenotype	Authors	Year	Pubmed Id	Max LRS	Max LRS Location (Chr: Mb)
+15175	"Reproduction, development: Trait 1, SCNT 2 cell/constructs; lathamk1@msu.edu"	"Yong Cheng, John Gaughan, Uros Midic, Zhiming Han, Cheng-guang Liang, Bela Patel, Keith Latham"	2013	23307892	7.3	Chr16: 69.289857
+15955	"Reproduction, development: Trait 10, SCNT:Parthenote 4cell/2cell; lathamk1@msu.edu"	"Yong Cheng, John Gaughan, Uros Midic, Zhiming Han, Cheng-guang Liang, Bela Patel, Keith Latham"	2013	23307892	6.5	Chr8: 31.744604
+15655	Trait_84_AUW-BXD	"Williams EG, Andreux P, Houtkooper R, Auwerx J"	2013		10.3	ChrX: 81.842525
+15670	Trait_101_AUW-BXD	"Williams EG, Andreux P, Houtkooper R, Auwerx J"	2013		12.9	Chr7: 149.648426
+13057	"Urogenital system, renal system, morphology: Kidney weight of females (raw data) [mg]"	"Lu Lu, Rob Williams, Adrienne Adler, Kim Acklin"	2011		10.3	Chr4: 154.365177
+13058	"Urogenital system, renal system, morphology: Kidney weight of males (raw data, unadjusted) [mg]"	"Lu Lu, Rob Williams, Adrienne Adler, Kim Acklin"	2011		20	Chr4: 154.365177
