@@ -543,7 +543,9 @@ $(window).load(function () {
         varValue = $('input[name=applyVarianceSE1]:checked').val();
         $('input[name=applyVarianceSE]').val(varValue);
 
-        if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
+        isIE = detectIE();
+        
+        if (($('#sortable1,#sortable2').find('.outlier').size() > 0) && (isIE == false)) {
             yesnodialog('Remove outliers', 'Keep outliers', this.form, 'intervalMap');
         }
         else {
@@ -606,7 +608,9 @@ $(window).load(function () {
         parentsValue = $('input[name=parentsf14regression3]:checked').val();
         $('input[name=parentsf14regression]').val(parentsValue);
 
-        if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
+        isIE = detectIE();
+        
+        if (($('#sortable1,#sortable2').find('.outlier').size() > 0) && (isIE == false)) {
             yesnodialog('Remove outliers', 'Keep outliers', this.form, 'intervalMap');
         }
         else {
@@ -636,8 +640,10 @@ $(window).load(function () {
         varValue = $('input[name=applyVarianceSE2]:checked').val();
         $('input[name=applyVarianceSE]').val(varValue);
 
-        if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
-            yesnodialog('Remove outliers', 'Keep outliers', this.form, "markerRegression");
+        isIE = detectIE();
+        
+        if (($('#sortable1,#sortable2').find('.outlier').size() > 0) && (isIE == false)) {
+            yesnodialog('Remove outliers', 'Keep outliers', this.form, 'markerRegression');
         }
         else {
             dataEditingFunc(this.form, 'markerRegression');
@@ -659,7 +665,9 @@ $(window).load(function () {
             this.form.pValue.focus();
         }
         else {
-            if ($('#sortable1,#sortable2').find('.outlier').size() > 0) {
+            isIE = detectIE();
+            
+            if (($('#sortable1,#sortable2').find('.outlier').size() > 0) && (isIE == false)) {
                 yesnodialog('Remove outliers', 'Keep outliers', this.form, 'markerRegression');
             }
             else {
@@ -679,6 +687,7 @@ $(window).load(function () {
             $(this).dialog("close");
             dataEditingFunc(element, feature);
         };
+
         $("<div style=\"font-size:14px;color:black;\">One or more outliers exist in this data set. Please review values before mapping. \
 Including outliers when mapping may lead to misleading results. \
 We recommend <A HREF=\"http://en.wikipedia.org/wiki/Winsorising\">winsorising</A> the outliers \
@@ -690,6 +699,26 @@ or simply deleting them.").dialog({
             modal:true,
             buttons:btns
         });
+    }
+    
+    function detectIE() {
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf('MSIE ');
+        var trident = ua.indexOf('Trident/');
+    
+        if (msie > 0) {
+            // IE 10 or older => return version number
+            return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+        }
+    
+        if (trident > 0) {
+            // IE 11 (or newer) => return version number
+            var rv = ua.indexOf('rv:');
+            return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+        }
+    
+        // other browser
+        return false;
     }
     
     $.fn.removeOutliers = function(){

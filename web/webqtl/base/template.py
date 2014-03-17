@@ -26,7 +26,7 @@
 
 template = """
 <?XML VERSION="1.0" ENCODING="UTF-8">
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
 <TITLE>%s</TITLE>
