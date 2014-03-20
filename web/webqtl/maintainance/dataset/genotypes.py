@@ -1,7 +1,8 @@
 import utilities
+import datastructure
 
 def get_geno(inbredsetid, name):
-    cursor = utilities.get_cursor()
+    cursor, con = utilities.get_cursor()
     sql = """
         SELECT Geno.`Id`, Geno.`Name`, Geno.`Chr`, Geno.`Mb`
         FROM (Geno, InbredSet)
@@ -10,6 +11,7 @@ def get_geno(inbredsetid, name):
         AND Geno.`Name`=%s
         """
     cursor.execute(sql, (inbredsetid, name))
+    con.close()
     return cursor.fetchone()
 
 def load_genos(file):

@@ -3,6 +3,7 @@ import csv
 
 import utilities
 import datastructure
+import genotypes
 
 def main(argv):
     # config
