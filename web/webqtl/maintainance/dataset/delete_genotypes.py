@@ -13,22 +13,23 @@ def main(argv):
         print "\t%s" % (str(item))
     # var
     print "variable:"
-    genofreezeid = config.get('config', 'genofreezeid')
+    inbredsetid = config.get('config', 'inbredsetid')
+    print "\tinbredsetid: %s" % inbredsetid
+    genofreezeid = datastructure.get_genofreeze_byinbredsetid(inbredsetid=inbredsetid)[0]
     print "\tgenofreezeid: %s" % genofreezeid
-    return
     # datafile
     datafile = open(config.get('config', 'datafile'), 'r')
     datafile = csv.reader(datafile, delimiter='\t', quotechar='"')
+    datafile.next()
     delrowcount = 0
     for row in datafile:
         if len(row) == 0:
             continue
-        try:
-            publishxrefid = int(row[0])
-        except:
-            continue
+        genoname = row[0]
+        print genoname
+        continue
         delrowcount += phenotypes.delete(publishxrefid=publishxrefid, inbredsetid=inbredsetid)
-    print "deleted %d phenotypes" % (delrowcount)
+    print "deleted %d genotypes" % (delrowcount)
 
 if __name__ == "__main__":
     print "command line arguments:\n\t%s" % sys.argv
