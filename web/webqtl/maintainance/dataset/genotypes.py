@@ -76,6 +76,10 @@ def delete_genoxref(genoid, genofreezeid):
 
 def delete(genoname, inbredsetid):
     genofreezeid = datastructure.get_genofreeze_byinbredsetid(inbredsetid)[0]
-    genoid = get_geno(inbredsetid, genoname)[0]
+    geno = get_geno(inbredsetid, genoname)
+    if geno:
+        genoid = geno[0]
+    else:
+        return 0
     delete_genodata_genoid(genoid, genofreezeid)
     return delete_genoxref(genoid, genofreezeid)
