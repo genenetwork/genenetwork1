@@ -15,7 +15,6 @@ def main(argv):
     print "variable:"
     inbredsetid = config.get('config', 'inbredsetid')
     print "\tinbredsetid: %s" % inbredsetid
-    cursor, con = utilities.get_cursor()
     # datafile
     datafile = open(config.get('config', 'datafile'), 'r')
     datafile = csv.reader(datafile, delimiter='\t', quotechar='"')
@@ -29,9 +28,7 @@ def main(argv):
             continue
         delrowcount += phenotypes.delete(publishxrefid=publishxrefid, inbredsetid=inbredsetid)
     print "deleted %d phenotypes" % (delrowcount)
-    # release
-    con.close()
-    
+
 if __name__ == "__main__":
     print "command line arguments:\n\t%s" % sys.argv
     main(sys.argv)
