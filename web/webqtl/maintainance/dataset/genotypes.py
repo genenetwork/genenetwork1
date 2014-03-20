@@ -7,7 +7,7 @@ def get_geno(inbredsetid, name):
         FROM (Geno, InbredSet)
         WHERE Geno.`SpeciesId`=InbredSet.`SpeciesId`
         AND InbredSet.`Id`=%s
-        AND Geno.`Name` LIKE %s
+        AND Geno.`Name`=%s
         """
     cursor.execute(sql, (inbredsetid, name))
     return cursor.fetchone()
@@ -46,3 +46,34 @@ def to_number(char):
         'u': None,
         }
     return dic.get(char.lower(), None)
+
+def delete_genodata_genoid(genoid, genofreezeid):
+    cursor, con = utilities.get_cursor()
+    sql = """
+        DELETE GenoData
+        FROM GenoXRef,GenoData
+        WHERE GenoXRef.`GenoFreezeId`=%s
+        AND GenoXRef.`GenoId`=%s
+        AND GenoXRef.`DataId`=GenoData.`Id`
+        """
+    cursor.execute(sql, (genofreezeid, genoid))
+    con.close()
+
+def delete_genoxref(genoid, genofreezeid):
+    cursor, con = utilities.get_cursor()
+    sql = """
+        DELETE GenoXRef
+        FROM GenoXRef
+        WHERE GenoXRef.`GenoFreezeId`=%s
+        AND GenoXRef.`GenoId`=%s
+        """
+    cursor.execute(sql, (genofreezeid, genoid))
+    rowcount = cursor.rowcount
+    con.close()
+    return rowcount
+
+def delete(genoname, inbredsetid):
+    genofreezeid = datastructure.get_genofreeze_byinbredsetid(inbredsetid)[0]
+    genoid = get_geno(inbredsetid, genoname)[0]
+    delete_genodata_genoid(genoid, genofreezeid)
+    return delete_genoxref(genoid, genofreezeid)

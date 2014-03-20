@@ -3,7 +3,6 @@ import csv
 
 import utilities
 import datastructure
-import phenotypes
 
 def main(argv):
     # config
@@ -15,8 +14,6 @@ def main(argv):
     print "variable:"
     inbredsetid = config.get('config', 'inbredsetid')
     print "\tinbredsetid: %s" % inbredsetid
-    genofreezeid = datastructure.get_genofreeze_byinbredsetid(inbredsetid=inbredsetid)[0]
-    print "\tgenofreezeid: %s" % genofreezeid
     # datafile
     datafile = open(config.get('config', 'datafile'), 'r')
     datafile = csv.reader(datafile, delimiter='\t', quotechar='"')
@@ -26,9 +23,7 @@ def main(argv):
         if len(row) == 0:
             continue
         genoname = row[0]
-        print genoname
-        continue
-        delrowcount += phenotypes.delete(publishxrefid=publishxrefid, inbredsetid=inbredsetid)
+        delrowcount += genotypes.delete(genoname, inbredsetid)
     print "deleted %d genotypes" % (delrowcount)
 
 if __name__ == "__main__":
