@@ -13,8 +13,9 @@ def main(argv):
         print "\t%s" % (str(item))
     # var
     print "variable:"
-    inbredsetid = config.get('config', 'inbredsetid')
-    print "\tinbredsetid: %s" % inbredsetid
+    genofreezeid = config.get('config', 'genofreezeid')
+    print "\tgenofreezeid: %s" % genofreezeid
+    return
     # datafile
     datafile = open(config.get('config', 'datafile'), 'r')
     datafile = csv.reader(datafile, delimiter='\t', quotechar='"')
