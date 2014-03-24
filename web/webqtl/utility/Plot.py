@@ -299,6 +299,13 @@ def findOutliers(vals):
 			upHinge = gpercentile(catValue, 75)
 			Hstep = 1.5*(upHinge - lowHinge)
 			
+			if Hstep == 0:
+				minOrder = magnitude(catValue[0])
+				for value in catValue:
+					if magnitude(value) < minOrder:
+						minOrder = magnitude(value)
+				Hstep = 1.5* + float(1*10^minOrder)
+				
 			outlier = []
 			extreme = []
 			
@@ -326,6 +333,9 @@ def findOutliers(vals):
 				
 	return upperBound, lowerBound
 					
+					
+def magnitude(x):
+	return int(log10(x))
 					
 def plotBoxPlot(canvas, data, offset= (40, 40, 40, 40), XLabel="Category", YLabel="Value"):
 	xLeftOffset, xRightOffset, yTopOffset, yBottomOffset = offset
@@ -662,7 +672,7 @@ def plotBarText(canvas, data, label, variance=None, barColor=pid.blue, axesColor
 		
 	return
 		
-def plotXY(canvas, dataX, dataY, rank=0, dataLabel=[], plotColor = pid.black, axesColor=pid.black, labelColor=pid.black, lineSize="thin", lineColor=pid.grey, idFont="arial", idColor=pid.blue, idSize="14", symbolColor=pid.black, symbolType="circle", filled="yes", symbolSize="tiny", XLabel=None, YLabel=None, title=None, fitcurve=None, connectdot=1, displayR=None, loadingPlot = 0, offset= (80, 20, 40, 60), zoom = 1, specialCases=[], showLabel = 1, bufferSpace = 15):
+def plotXY(canvas, dataX, dataY, rank=0, dataLabel=[], plotColor = pid.black, axesColor=pid.black, labelColor=pid.black, lineSize="thin", lineColor=pid.grey, idFont="arial", idColor=pid.blue, idSize="14", symbolColor=pid.black, symbolType="circle", filled="yes", symbolSize="tiny", XLabel=None, YLabel=None, title=None, fitcurve=None, connectdot=1, displayR=None, loadingPlot = 0, offset= (90, 37.5, 75, 90), zoom = 1, specialCases=[], showLabel = 1, bufferSpace = 15):
 	'displayR : correlation scatter plot, loadings : loading plot'
 
 	dataXRanked, dataYRanked = webqtlUtil.calRank(dataX, dataY, len(dataX))
