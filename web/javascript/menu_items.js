@@ -32,6 +32,7 @@ var MENU_ITEMS = [
 	['HLT', '/webqtl/main.py?FormID=dispSelection&RISet=HLT'], 
 	['Aging-Brain-UCI', '/webqtl/main.py?FormID=dispSelection&RISet=Aging-Brain-UCI'], 
 	['Brain-Normal-NIH-Gibbs', '/webqtl/main.py?FormID=dispSelection&RISet=Brain-Normal-NIH-Gibbs'], 
+	['GTEx', '/webqtl/main.py?FormID=dispSelection&RISet=GTEx'], 
 ],
 ['Macaque monkey', null, null, 
 	['Macaca-fasicularis', '/webqtl/main.py?FormID=dispSelection&RISet=Macaca-fasicularis'], 
