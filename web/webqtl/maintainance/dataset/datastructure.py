@@ -116,7 +116,10 @@ def insert_strain(inbredsetid, strainname, updatestrainxref=None):
             """
         cursor.execute(sql, (inbredsetid))
         re = cursor.fetchone()
-        orderid = re[0] + 1
+        if re:
+            orderid = re[0] + 1
+        else:
+            orderid = 0
         #
         sql = """
             INSERT INTO StrainXRef

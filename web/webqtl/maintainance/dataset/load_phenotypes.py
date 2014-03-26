@@ -105,7 +105,7 @@ def main(argv):
                 utilities.to_db_string(metarow[14], None),
                 utilities.to_db_string(metarow[15], None),
                 utilities.to_db_string(metarow[16], None),
-                utilities.to_db_string(metarow[17], None),
+                utilities.to_db_string(metarow[17], ""),
                 ))
             rowcount = cursor.rowcount
             publicationid = con.insert_id()
