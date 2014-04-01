@@ -119,7 +119,7 @@ def bxd_correlations_givenprobesetfreezes(probesetfreezesfile):
     #
     inbredsetid = 1
     genofile = "/home/leiyan/gn/web/genotypes/BXD.geno"
-    outputdir = "/home/leiyan/gn2/wqflask/maintenance/dataset/datadir/20140205_Ash_correlations/output"
+    outputdir = "/home/leiyan/datadir/20140205_Ash_correlations/output"
     #
     t = genotypes.load_genos(genofile)
     genostrains = t[0]
@@ -136,4 +136,7 @@ def bxd_correlations_givenprobesetfreezes(probesetfreezesfile):
         correlations(outputdir=outputdir, genos=genos, probesetfreeze=probesetfreeze)
     file.close()
 
-bxd_correlations_givenprobesetfreezes('/home/leiyan/gn2/wqflask/maintenance/dataset/datadir/20140205_Ash_correlations/output/probesetfreezes_filter.txt')
+if __name__ == "__main__":
+    print("command line arguments:\n\t%s" % sys.argv)
+    bxd_correlations_givenprobesetfreezes(sys.argv[1])
+    print("exit successfully")
