@@ -1,3 +1,5 @@
+import sys
+
 import utilities
 import datastructure
 import genotypes
@@ -119,7 +121,7 @@ def bxd_correlations_givenprobesetfreezes(probesetfreezesfile):
     #
     inbredsetid = 1
     genofile = "/home/leiyan/gn/web/genotypes/BXD.geno"
-    outputdir = "/home/leiyan/gn2/wqflask/maintenance/dataset/datadir/20140205_Ash_correlations/output"
+    outputdir = "/home/leiyan/datadir/20140205_Ash_correlations/output"
     #
     t = genotypes.load_genos(genofile)
     genostrains = t[0]
@@ -136,4 +138,27 @@ def bxd_correlations_givenprobesetfreezes(probesetfreezesfile):
         correlations(outputdir=outputdir, genos=genos, probesetfreeze=probesetfreeze)
     file.close()
 
-bxd_correlations_givenprobesetfreezes('/home/leiyan/gn2/wqflask/maintenance/dataset/datadir/20140205_Ash_correlations/output/probesetfreezes_filter.txt')
+"""
+Date:   2014-04-01
+Function:
+    show how many probeset records
+    given probesetfreezes
+"""
+def bxd_givenprobesetfreezes(probesetfreezesfile):
+    file = open(probesetfreezesfile, 'r')
+    for line in file:
+        line = line.strip()
+        cells = line.split()
+        probesetfreezeid = cells[0]
+        probesetfreeze = datastructure.get_probesetfreeze(probesetfreezeid)
+        probesetfreezename = probesetfreeze[1]
+        probesetfreezefullname = probesetfreeze[2]
+        probesetxrefs = probesets.get_probesetxref(probesetfreezeid)
+        print "%s\t%s\t%s\t%d" % (probesetfreezeid, probesetfreezename, probesetfreezefullname, len(probesetxrefs))
+    file.close()
+
+if __name__ == "__main__":
+    print("command line arguments:\n\t%s" % sys.argv)
+    bxd_correlations_givenprobesetfreezes(sys.argv[1])
+    #bxd_givenprobesetfreezes(sys.argv[1])
+    print("exit successfully")

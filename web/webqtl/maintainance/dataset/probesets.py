@@ -3,7 +3,7 @@ import datastructure
 import genotypes
 
 def get_probesetxref(probesetfreezeid):
-    cursor = utilities.get_cursor()
+    cursor, con = utilities.get_cursor()
     sql = """
         SELECT ProbeSetXRef.`ProbeSetId`, ProbeSetXRef.`DataId`
         FROM ProbeSetXRef
@@ -13,7 +13,7 @@ def get_probesetxref(probesetfreezeid):
     return cursor.fetchall()
     
 def get_probeset(probesetid):
-    cursor = utilities.get_cursor()
+    cursor, con = utilities.get_cursor()
     sql = """
         SELECT ProbeSet.`Id`, ProbeSet.`Name`, ProbeSet.`Symbol`, ProbeSet.`description`, ProbeSet.`Probe_Target_Description`, ProbeSet.`Chr`, ProbeSet.`Mb`
         FROM ProbeSet
@@ -23,7 +23,7 @@ def get_probeset(probesetid):
     return cursor.fetchone()
     
 def get_probesetdata(probesetdataid):
-    cursor = utilities.get_cursor()
+    cursor, con = utilities.get_cursor()
     sql = """
         SELECT Strain.`Id`, Strain.`Name`, ProbeSetData.`value`
         FROM ProbeSetData, Strain
@@ -34,7 +34,7 @@ def get_probesetdata(probesetdataid):
     return cursor.fetchall()
 
 def get_probesetxref_probesetfreezeid(locus, probesetfreezeid):
-    cursor = utilities.get_cursor()
+    cursor, con = utilities.get_cursor()
     sql = """
         SELECT ProbeSetXRef.`ProbeSetId`
         FROM ProbeSetXRef
@@ -45,7 +45,7 @@ def get_probesetxref_probesetfreezeid(locus, probesetfreezeid):
     return cursor.fetchall()
     
 def get_probesetxref_inbredsetid(locus, inbredsetid):
-    cursor = utilities.get_cursor()
+    cursor, con = utilities.get_cursor()
     sql = """
         SELECT ProbeSetXRef.`ProbeSetId`, ProbeSetXRef.`mean`, ProbeSetXRef.`LRS`, ProbeSetXRef.`Locus`, ProbeSetXRef.`ProbeSetFreezeId`
         FROM (ProbeSetXRef, ProbeSetFreeze, ProbeFreeze)
