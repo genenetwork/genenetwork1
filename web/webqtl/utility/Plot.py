@@ -37,7 +37,6 @@ import svg
 import webqtlUtil
 from base import webqtlConfig
 
-
 def cformat(d, rank=0):
 	'custom string format'
 	strD = "%2.6f" % d
@@ -335,6 +334,8 @@ def findOutliers(vals):
 					
 					
 def magnitude(x):
+	if x == 0:
+		x = 0.0000000000000000000001
 	return int(log10(x))
 					
 def plotBoxPlot(canvas, data, offset= (40, 40, 40, 40), XLabel="Category", YLabel="Value"):
