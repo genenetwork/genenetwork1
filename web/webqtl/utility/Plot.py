@@ -1146,11 +1146,14 @@ def detScaleOld(min,max):
 
 def detScale(min=0,max=0,bufferSpace=3):
 
-	if min>=max:
+	if min>max:
 		return None
 	elif min == -1.0 and max == 1.0:
 		return [-1.2,1.2,12]
 	else:
+		if min==max:
+			min = min * 0.8
+			max = max * 1.2
 		a=max-min
 		if max != 0:
 			max += 0.1*a
