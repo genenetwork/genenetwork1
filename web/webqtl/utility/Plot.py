@@ -37,6 +37,10 @@ import svg
 import webqtlUtil
 from base import webqtlConfig
 
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("\gnshare\gn\web\webqtl\utility\Plot.py")
+
 def cformat(d, rank=0):
 	'custom string format'
 	strD = "%2.6f" % d
@@ -331,13 +335,15 @@ def findOutliers(vals):
 			lowerBound = -1000
 				
 	return upperBound, lowerBound
-					
-					
-def magnitude(x):
+
+def gnlog10(x):
 	if x == 0:
 		x = 0.0000000000000000000001
-	return int(log10(x))
-					
+	return log10(x)
+
+def magnitude(x):
+	return int(gnlog10(x))
+
 def plotBoxPlot(canvas, data, offset= (40, 40, 40, 40), XLabel="Category", YLabel="Value"):
 	xLeftOffset, xRightOffset, yTopOffset, yBottomOffset = offset
 	plotWidth = canvas.size[0] - xLeftOffset - xRightOffset
@@ -1136,7 +1142,7 @@ def detScaleOld(min,max):
 		return [-1.2,1.2,12]
 	else:
 		a=max-min
-		b=floor(log10(a))
+		b=floor(gnlog10(a))
 		c=pow(10.0,b)
 		if a < c*5.0:
 			c/=2.0
@@ -1153,8 +1159,12 @@ def detScale(min=0,max=0,bufferSpace=3):
 		return [-1.2,1.2,12]
 	else:
 		if min==max:
-			min = min * 0.8
-			max = max * 1.2
+			if min==0:
+				min = -0.01
+				max = 0.01
+			else:
+				min = min * 0.8
+				max = max * 1.2
 		a=max-min
 		if max != 0:
 			max += 0.1*a
@@ -1164,7 +1174,7 @@ def detScale(min=0,max=0,bufferSpace=3):
 			else:
 				min -= 0.1*a
 		a=max-min
-		b=floor(log10(a))
+		b=floor(gnlog10(a))
 		c=pow(10.0,b)
 		low=c*floor(min/c)
 		high=c*ceil(max/c)
