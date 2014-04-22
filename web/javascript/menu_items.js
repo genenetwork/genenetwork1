@@ -82,6 +82,7 @@ var MENU_ITEMS = [
 ],
 ['Soybean', null, null, 
 	['J12XJ58F2', '/webqtl/main.py?FormID=dispSelection&RISet=J12XJ58F2'], 
+	['J12XJ58F11', '/webqtl/main.py?FormID=dispSelection&RISet=J12XJ58F11'], 
 ],
 ['Tomato', null, null, 
 	['LXP', '/webqtl/main.py?FormID=dispSelection&RISet=LXP'], 
