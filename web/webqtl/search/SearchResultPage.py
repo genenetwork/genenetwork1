@@ -71,9 +71,7 @@ class SearchResultPage(templatePage):
 			#currently, webqtl wouldn't allow multiple crosses
 			#for other than multiple publish db search
 			#so we can use the first database as example
-			if self.database[0].type=="Publish":
-				pass
-			elif self.database[0].type in ("Geno", "ProbeSet"):
+			if self.database[0].type in ("Publish", "Geno", "ProbeSet"):
 
 				#userExist = None
 
@@ -89,7 +87,7 @@ class SearchResultPage(templatePage):
 						#2. 'user' can see the dataset that AuthorisedUsers contains his id(stored in the Id field of User table)
 						if webqtlConfig.USERDICT[self.privilege] > webqtlConfig.USERDICT['user']:
 							access_to_confidential_dataset = 1
-						else:
+						elif AuthorisedUsers:
 							AuthorisedUsersList=AuthorisedUsers.split(',')
 							if AuthorisedUsersList.__contains__(self.userName):
 								access_to_confidential_dataset = 1
