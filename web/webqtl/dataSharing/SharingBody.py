@@ -226,7 +226,7 @@ sharinginfo_body_string = """<td>
 	<tr><td> %s<br><br></td></tr> <!--info[20] Datasets.Citation-->
 <tr><td><span style="font-size:115%%;font-weight:bold;">Data source acknowledgment:</span></td></tr>
 	<tr><td> %s<br><br></td></tr> <!--info[17] Datasets.Acknowledgment-->
-<tr><td><span style="font-size:115%%;font-weight:bold;">DatasetId:</span></td></tr>
+<tr><td><span style="font-size:115%%;font-weight:bold;">Study Id:</span></td></tr>
 	<tr><td> %s<br><br></td></tr> <!--info[20] Datasets.Citation **-->
 
 </table>
