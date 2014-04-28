@@ -1,13 +1,13 @@
+import sys
 import utilities
 
-def fetch():
+def fetch(inbredsetid, filename):
     # parameters
-    inbredsetid = 1
-    phenotypesfile = open('bxdphenotypes.txt', 'w+')
+    phenotypesfile = open(filename, 'w+')
     #
     phenotypesfile.write("id\tAuthors\tOriginal_description\tPre_publication_description\tPost_publication_description\t")
     # open db
-    cursor = utilities.get_cursor()
+    cursor, con = utilities.get_cursor()
     # get strain list
     strains = []
     sql = """
@@ -132,3 +132,8 @@ def delete(publishxrefid, inbredsetid):
     delete_publishdata_publishxrefid(publishxrefid, inbredsetid)
     delete_phenotype_publishxrefid(publishxrefid, inbredsetid)
     return delete_publishxref(publishxrefid, inbredsetid)
+
+if __name__ == "__main__":
+    print("command line arguments:\n\t%s" % sys.argv)
+    fetch(inbredsetid=51, filename='hcp.pheno')
+    print("exit successfully")

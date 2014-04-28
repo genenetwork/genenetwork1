@@ -1,8 +1,10 @@
+import sys
+
 import utilities
 import datastructure
 import genotypes
 import probesets
-import calculate
+#import calculate
 
 def correlations(outputdir, genos, probesetfreeze):
     print probesetfreeze
@@ -112,6 +114,9 @@ def generate_probesets(probesetfreezesfile, outputdir):
         outputfile.close()
     file.close()
 
-probesetfreezesfile = "/home/leiyan/gn2/wqflask/maintenance/dataset/datadir/20140205_Ash_correlations/output2/probesetfreezes_filter.txt"
-outputdir           = "/home/leiyan/gn2/wqflask/maintenance/dataset/datadir/20140205_Ash_correlations/output2"
-generate_probesets(probesetfreezesfile, outputdir)
+if __name__ == "__main__":
+    print("command line arguments:\n\t%s" % sys.argv)
+    probesetfreezesfile = "/home/sysadm/datadir/20140427_HLC/probesetfreezes.txt"
+    outputdir           = "/home/sysadm/datadir/20140427_HLC"
+    generate_probesets(probesetfreezesfile, outputdir)
+    print("exit successfully")
