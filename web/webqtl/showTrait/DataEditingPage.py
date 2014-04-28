@@ -662,7 +662,7 @@ class DataEditingPage(templatePage):
 					#		title="Allen Brain Atlas"), style=linkStyle), "&nbsp;"*2)
                                         if _Species == "human":
                                                 tSpan.append(HT.Span(HT.Href(text= 'ABA',target="mainFrame",\
-                                                        url="http://humancortex.alleninstitute.org/has/human/imageseries/search/1.html?searchSym=t&searchAlt=t&searchName=t&gene_term=&entrez_term=%s" \
+                                                        url="http://human.brain-map.org/microarray/search/show?exact_match=false&search_term=%s" \
                                                         % thisTrait.geneid, Class="fs14 fwn", \
                                                         title="Allen Brain Atlas"), style=linkStyle), "&nbsp;"*2)
 				tbl.append(
