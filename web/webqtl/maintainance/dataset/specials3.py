@@ -114,9 +114,76 @@ def generate_probesets(probesetfreezesfile, outputdir):
         outputfile.close()
     file.close()
 
+"""
+For:    Ash
+Date:   2014-04-29
+Function:
+    Generate probeset data files.
+    with:
+        mapping info
+    given probesetfreeze list.
+"""
+def generate_probesets_2(probesetfreezesfile, outputdir):
+    file = open(probesetfreezesfile, 'r')
+    for line in file:
+        line = line.strip()
+        cells = line.split()
+        probesetfreezeid = cells[0]
+        probesetfreeze = datastructure.get_probesetfreeze(probesetfreezeid)
+        probesetfreezeid = probesetfreeze[0]
+        probesetfreezename = probesetfreeze[1]
+        inbredset = datastructure.get_inbredset(probesetfreezeid)
+        inbredsetid = inbredset[0]
+        #
+        outputfile = open("%s/%d_%s.txt" % (outputdir, probesetfreezeid, probesetfreezename), "w+")
+        outputfile.write("%s\t" % "ProbeSetId")
+        outputfile.write("%s\t" % "Symbol")
+        outputfile.write("%s\t" % "Description")
+        outputfile.write("%s\t" % "Chr")
+        outputfile.write("%s\t" % "MB")
+        outputfile.write("%s\t" % "Marker_Chr")
+        outputfile.write("%s\t" % "Marker_MB")
+        outputfile.write("%s\t" % "LRS")
+        outputfile.write("%s\t" % "pValue")
+        outputfile.write("\n")
+        outputfile.flush()
+        #
+        probesetxrefs = probesets.get_probesetxref(probesetfreezeid)
+        print("%s:\n\t%d probesetxrefs" % (probesetfreeze, len(probesetxrefs)))
+        for probesetxref in probesetxrefs:
+            #
+            probesetid = probesetxref[0]
+            locus = probesetxref[2]
+            lrs = probesetxref[3]
+            pvalue = probesetxref[4]
+            #
+            probeset = probesets.get_probeset(probesetid)
+            probesetname = probeset[1]
+            probesetsymbol = probeset[2]
+            probesetdescription = probeset[3]
+            probesetchr = probeset[5]
+            probesetmb = probeset[6]
+            #
+            geno = genotypes.get_geno(inbredsetid=inbredsetid, name=locus)
+            genochr = geno[2]
+            genomb = geno[3]
+            #
+            outputfile.write("%s\t" % probesetname)
+            outputfile.write("%s\t" % probesetsymbol)
+            outputfile.write("%s\t" % probesetdescription)
+            outputfile.write("%s\t" % probesetchr)
+            outputfile.write("%s\t" % probesetmb)
+            outputfile.write("%s\t" % genochr)
+            outputfile.write("%s\t" % genomb)
+            outputfile.write("%s\t" % lrs)
+            outputfile.write("%s\t" % pvalue)
+            outputfile.write("\n")
+            outputfile.flush()
+        #
+        outputfile.close()
+    file.close()
+
 if __name__ == "__main__":
     print("command line arguments:\n\t%s" % sys.argv)
-    probesetfreezesfile = "/home/sysadm/datadir/20140427_HLC/probesetfreezes.txt"
-    outputdir           = "/home/sysadm/datadir/20140427_HLC"
-    generate_probesets(probesetfreezesfile, outputdir)
+    generate_probesets_2(probesetfreezesfile=sys.argv[1], outputdir=sys.argv[2])
     print("exit successfully")
