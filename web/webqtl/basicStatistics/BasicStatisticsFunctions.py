@@ -69,7 +69,8 @@ def basicStatsTable(vals, trait_type=None, cellid=None, heritability=None):
 				pass
 			else:
 				if heritability:
-					tbl.append(HT.TR(HT.TD(HT.Span("Heritability"),align="center", Class="fs13 b1 cbw c222",nowrap="yes"),HT.TD("%s" % heritability, nowrap="yes",align="center", Class="fs13 b1 cbw c222")))
+					tbl.append(HT.TR(HT.TD(HT.Span("Heritability"), align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
+                                     HT.TD("%s" % heritability, nowrap="yes", align="right", Class="fs13 b1 cbw c222")))
 				else:
 					pass
 			# Lei Yan
