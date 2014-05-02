@@ -181,7 +181,7 @@ class DataEditingPage(templatePage):
 			title2Body.append("Click the next button to go to the variance submission form.", 
 				HT.Center(next,reset))
 		else:
-			self.dispBasicStatistics(fd, title2Body, thisTrait)
+			self.dispBasicStatistics(fd, title2Body, thisTrait, heritability)
 			self.dispCorrelationTools(fd, title3Body, thisTrait)
 			self.dispMappingTools(fd, title4Body, thisTrait)
 		
@@ -848,7 +848,7 @@ class DataEditingPage(templatePage):
 	##########################################
 	##  Function to display analysis tools
 	##########################################
-	def dispBasicStatistics(self, fd, title2Body, thisTrait):
+	def dispBasicStatistics(self, fd, title2Body, thisTrait, heritability):
 
 		#XZ, June 22, 2011: The definition and usage of primary_strains, other_strains, specialStrains, all_strains are not clear and hard to understand. But since they are only used in this function for draw graph purpose, they will not hurt the business logic outside. As of June 21, 2011, this function seems work fine, so no hurry to clean up. These parameters and code in this function should be cleaned along with fd.f1list, fd.parlist, fd.strainlist later.
 		stats_row = HT.TR()
@@ -1006,11 +1006,11 @@ class DataEditingPage(templatePage):
 				
 				if thisTrait.db:
 					if thisTrait.cellid:
-						statsTableCell = BasicStatisticsFunctions.basicStatsTable(vals=vals, trait_type=thisTrait.db.type, cellid=thisTrait.cellid)
+						statsTableCell = BasicStatisticsFunctions.basicStatsTable(vals=vals, trait_type=thisTrait.db.type, cellid=thisTrait.cellid, heritability=heritability)
 					else:
-						statsTableCell = BasicStatisticsFunctions.basicStatsTable(vals=vals, trait_type=thisTrait.db.type)
+						statsTableCell = BasicStatisticsFunctions.basicStatsTable(vals=vals, trait_type=thisTrait.db.type, heritability=heritability)
 				else:
-					  statsTableCell = BasicStatisticsFunctions.basicStatsTable(vals=vals)
+					  statsTableCell = BasicStatisticsFunctions.basicStatsTable(vals=vals, heritability=heritability)
 
 				statsTable.append(HT.TR(HT.TD(statsTableCell)))
 				
