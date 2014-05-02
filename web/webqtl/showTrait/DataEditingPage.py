@@ -181,7 +181,10 @@ class DataEditingPage(templatePage):
 			title2Body.append("Click the next button to go to the variance submission form.", 
 				HT.Center(next,reset))
 		else:
-			self.dispBasicStatistics(fd, title2Body, thisTrait, heritability[0])
+			try:
+				self.dispBasicStatistics(fd, title2Body, thisTrait, heritability[0])
+			except:
+				self.dispBasicStatistics(fd, title2Body, thisTrait, None)
 			self.dispCorrelationTools(fd, title3Body, thisTrait)
 			self.dispMappingTools(fd, title4Body, thisTrait)
 		
