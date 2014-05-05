@@ -118,7 +118,7 @@ def main(argv):
             se      = utilities.to_db_float(datarow_se[index+1], None)
             n       = utilities.to_db_int(datarow_n[index+1], None)
             #
-            if value:
+            if value is not None:
                 sql = """
                     INSERT INTO PublishData
                     SET
@@ -127,7 +127,7 @@ def main(argv):
                     PublishData.`value`=%s
                     """
                 cursor.execute(sql, (dataid, strainid, value))
-            if se:
+            if se is not None:
                 sql = """
                     INSERT INTO PublishSE
                     SET
@@ -136,7 +136,7 @@ def main(argv):
                     PublishSE.`error`=%s
                     """
                 cursor.execute(sql, (dataid, strainid, se))
-            if n:
+            if n is not None:
                 sql = """
                     INSERT INTO NStrain
                     SET
