@@ -1524,22 +1524,23 @@ class DataEditingPage(templatePage):
 				mapping_container.append(mapping_tabs)
 				
 				# Genome Association
+				markerTable = HT.TableLite(cellspacing=0, cellpadding=6, width="auto")
+				
 				markerSuggestiveText = HT.Span(HT.Bold("P Value:"), Class="ffl fwb fs12")
-					
-				markerSuggestive = HT.Input(name='pValue', value='0.001', size=10, maxlength=20,onClick="this.value='';",onBlur="if(this.value==''){this.value='0.001'};")					
-				markerMenu = HT.TableLite(HT.TR(HT.TD(markerSuggestiveText), HT.TD(markerSuggestive),HT.TD(HT.Italic('&nbsp;&nbsp;&nbsp;(e.g. 0.001 or 1e-3 or 1E-3 or 3)'))),cellspacing=0, width="400px", cellpadding=2)
-				MarkerRegressionButton=HT.Input(type='button',name='computePlink', value='&nbsp;&nbsp;Compute Using PLINK&nbsp;&nbsp;', Class="button")
+				markerSuggestive = HT.Input(name='pValue', value='0.001', size=10, maxlength=20, onBlur="if(this.value==''){this.value='0.001'};")
+				markerSuggestiveNote = HT.Italic('(e.g. 0.001 or 1e-3 or 1E-3 or 3)')
+				markerTable.append(HT.TR(HT.TD(markerSuggestiveText), HT.TD(markerSuggestive), HT.TD(markerSuggestiveNote)))
+                
+				markerMafText = HT.Span(HT.Bold("MAF (Minor Allele Frequency):"), Class="ffl fwb fs12")
+				markerMaf = HT.Input(name='maf', value='0.01', size=10, maxlength=20, onBlur="if(this.value==''){this.value='0.01'};")
+				markerMafNote = HT.Italic('')
+				markerTable.append(HT.TR(HT.TD(markerMafText), HT.TD(markerMaf), HT.TD(markerMafNote)))
+                
+				MarkerRegressionButton=HT.Input(type='button', name='computePlink', value='Compute Using PLINK', Class="button")
+				markerTable.append(HT.TR(HT.TD(MarkerRegressionButton)))
 
 				marker_div = HT.Div(id="mappingtabs-1")
-				marker_container = HT.Span()
-				markerTable = HT.TableLite(cellspacing=0, cellpadding=0, width="100%")		
-				markerTD = HT.TD(valign="top",NOWRAP='ON', Class="fs12 fwn")
-				markerTD.append(markerMenu,HT.BR())
-				markerTD.append(MarkerRegressionButton,HT.BR(),HT.BR())
-				markerTable.append(HT.TR(markerTD))
-				
-				marker_container.append(markerTable)
-				marker_div.append(marker_container)
+				marker_div.append(markerTable)
 				
 				mapping_container.append(marker_div)				
 				mapping_row.append(HT.TD(mapping_container))

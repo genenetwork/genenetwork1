@@ -43,7 +43,11 @@ from base.GeneralObject import GeneralObject
 import reaper
 import cPickle
 from utility.THCell import THCell
-from utility.TDCell import TDCell   
+from utility.TDCell import TDCell
+
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("\gn\web\webqtl\markerRegression\MarkerRegressionPage.py")
 
 class MarkerRegressionPage(templatePage):
 
@@ -71,8 +75,7 @@ class MarkerRegressionPage(templatePage):
 			#automatically generate pheno txt file for PLINK
 			self.genPhenoTxtFileForPlink2(phenoFileName=plinkOutputFileName,RISetName=fd.RISet,probesetName=probesetName, valueDict=allTraitValueDict)
 			# os.system full path is required for input and output files; specify missing value is -9999
-			plink_command = '%splink/plink --noweb --ped %splink/%s.ped --no-fid --no-parents --no-sex --no-pheno --map %splink/%s.map --pheno %s%s.txt --pheno-name %s --missing-phenotype -9999 --out %s%s --assoc ' % (webqtlConfig.HTMLPATH, webqtlConfig.HTMLPATH,  fd.RISet, webqtlConfig.HTMLPATH, fd.RISet, webqtlConfig.TMPDIR, plinkOutputFileName, probesetName, webqtlConfig.TMPDIR, plinkOutputFileName)
-
+			plink_command = '%splink/plink --noweb --ped %splink/%s.ped --no-fid --no-parents --no-sex --no-pheno --map %splink/%s.map --pheno %s%s.txt --pheno-name %s --missing-phenotype -9999 --out %s%s --assoc --maf %s' % (webqtlConfig.HTMLPATH, webqtlConfig.HTMLPATH,  fd.RISet, webqtlConfig.HTMLPATH, fd.RISet, webqtlConfig.TMPDIR, plinkOutputFileName, probesetName, webqtlConfig.TMPDIR, plinkOutputFileName, self.maf)
 			os.system(plink_command)
 
 			if fd.identification:
@@ -313,7 +316,8 @@ class MarkerRegressionPage(templatePage):
 		self.additiveChecked= True
 		self.ADDITIVE_COLOR_POSITIVE = pid.green
 		self.legendChecked =False
-		self.pValue=float(fd.formdata.getvalue('pValue',-1))
+		self.pValue=float(fd.formdata.getvalue('pValue', -1))
+		self.maf=float(fd.formdata.getvalue('maf', 0.01))
 		self.nperm = int(fd.formdata.getvalue('num_perm', 2000))
 
 		# allow user to input p-value greater than 1, 
