@@ -317,7 +317,7 @@ class MarkerRegressionPage(templatePage):
 		self.ADDITIVE_COLOR_POSITIVE = pid.green
 		self.legendChecked =False
 		self.pValue=float(fd.formdata.getvalue('pValue', -1))
-		self.maf=float(fd.formdata.getvalue('maf', 0.01))
+		self.maf=float(fd.formdata.getvalue('maf', 0.05))
 		self.nperm = int(fd.formdata.getvalue('num_perm', 2000))
 
 		# allow user to input p-value greater than 1, 
