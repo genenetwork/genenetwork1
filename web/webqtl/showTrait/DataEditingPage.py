@@ -1532,7 +1532,7 @@ class DataEditingPage(templatePage):
 				markerTable.append(HT.TR(HT.TD(markerSuggestiveText), HT.TD(markerSuggestive), HT.TD(markerSuggestiveNote)))
                 
 				markerMafText = HT.Span(HT.Bold("MAF (Minor Allele Frequency):"), Class="ffl fwb fs12")
-				markerMaf = HT.Input(name='maf', value='0.05', size=10, maxlength=20, onBlur="if(this.value==''){this.value='0.05'};")
+				markerMaf = HT.Input(name='maf', value='0.05', size=10, maxlength=20, onBlur="if(this.value==''){this.value='0.05'};if(this.value>0.2){this.value='0.2'};")
 				markerMafNote = HT.Italic('')
 				markerTable.append(HT.TR(HT.TD(markerMafText), HT.TD(markerMaf), HT.TD(markerMafNote)))
                 
