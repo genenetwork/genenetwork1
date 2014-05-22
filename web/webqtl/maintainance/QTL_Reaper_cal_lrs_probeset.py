@@ -84,7 +84,8 @@ for ProbeSetFreezeId in ProbeSetFreezeIds:
 		if not _strains or not _values:
 			continue
 		
-		print("%s\n%s" % (len(_strains), len(_values)))
+		if len(_strains) < 8:
+			continue
 		qtlresults = genotype_1.regression(strains = _strains, trait = _values)
 		_max = max(qtlresults)
 		_locus = _max.locus.name
