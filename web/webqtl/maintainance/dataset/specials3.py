@@ -143,6 +143,8 @@ def generate_probesets_2(probesetfreezesfile, outputdir):
         outputfile.write("%s\t" % "MB")
         outputfile.write("%s\t" % "Marker_Chr")
         outputfile.write("%s\t" % "Marker_MB")
+        outputfile.write("%s\t" % "Mean_Expression")
+        outputfile.write("%s\t" % "SE")
         outputfile.write("%s\t" % "LRS")
         outputfile.write("%s\t" % "pValue")
         outputfile.write("\n")
@@ -156,6 +158,8 @@ def generate_probesets_2(probesetfreezesfile, outputdir):
             locus = probesetxref[2]
             lrs = probesetxref[3]
             pvalue = probesetxref[4]
+            mean = probesetxref[5]
+            se = probesetxref[6]
             #
             probeset = probesets.get_probeset(probesetid)
             probesetname = probeset[1]
@@ -175,6 +179,8 @@ def generate_probesets_2(probesetfreezesfile, outputdir):
             outputfile.write("%s\t" % probesetmb)
             outputfile.write("%s\t" % genochr)
             outputfile.write("%s\t" % genomb)
+            outputfile.write("%s\t" % mean)
+            outputfile.write("%s\t" % se)
             outputfile.write("%s\t" % lrs)
             outputfile.write("%s\t" % pvalue)
             outputfile.write("\n")

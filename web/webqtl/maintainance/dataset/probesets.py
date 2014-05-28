@@ -5,7 +5,8 @@ import genotypes
 def get_probesetxref(probesetfreezeid):
     cursor, con = utilities.get_cursor()
     sql = """
-        SELECT ProbeSetXRef.`ProbeSetId`, ProbeSetXRef.`DataId`, ProbeSetXRef.`Locus`, ProbeSetXRef.`LRS`, ProbeSetXRef.`pValue`
+        SELECT ProbeSetXRef.`ProbeSetId`, ProbeSetXRef.`DataId`, ProbeSetXRef.`Locus`, ProbeSetXRef.`LRS`, ProbeSetXRef.`pValue`,
+			ProbeSetXRef.`mean`, ProbeSetXRef.`se`
         FROM ProbeSetXRef
         WHERE ProbeSetXRef.`ProbeSetFreezeId`=%s
         """
