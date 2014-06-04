@@ -202,7 +202,7 @@ class cmdGenomeScanPage(templatePage):
 			return
 			
 	def drawSVG(self, data, cLength = 2500, offset= (80, 160, 60, 60), size=(1280,880), 
-			XLabel="Marker GMb", YLabel="Transcript GMb"):
+			XLabel="Marker Gb", YLabel="Transcript Gb"):
 		entities = {
 				"colorText" : "fill:darkblue;",
 				"strokeText" : ";stroke:none;stroke-width:0;",
@@ -276,9 +276,9 @@ class cmdGenomeScanPage(templatePage):
 		mainSquare = cHeight-60
 		cordZOOM = 10
 		drawSpace.addElement(svg.rect(8, 8, mainSquare+4, mainSquare+4,'none',"orange",0.5, rx="5", ry="5"))
-		drawSpace.addElement(svg.text(10+mainSquare/2, 40+mainSquare,'Marker GMb', 
+		drawSpace.addElement(svg.text(10+mainSquare/2, 40+mainSquare,'Marker Gb', 
 			style="&colorText; &allText; &titleText; &middleText;", id="XLabel"))
-		drawSpace.addElement(svg.text(mainSquare + 80, 10+mainSquare/2,'Transcript GMb', 
+		drawSpace.addElement(svg.text(mainSquare + 80, 10+mainSquare/2,'Transcript Gb', 
 			style="&colorText; &allText; &titleText; &middleText; &vText;", id="YLabel"))
 		
 		#draw overview display area
@@ -428,7 +428,7 @@ class cmdGenomeScanPage(templatePage):
 		return canvasSVG
 			
 
-	def drawGraph(self, canvas, data, cLength = 2500, offset= (80, 160, 60, 60), XLabel="QTL location (GMb)", YLabel="Gene location (GMb)"):
+	def drawGraph(self, canvas, data, cLength = 2500, offset= (80, 160, 60, 60), XLabel="QTL location (Gb)", YLabel="Gene location (Gb)"):
 		xLeftOffset, xRightOffset, yTopOffset, yBottomOffset = offset
 		plotWidth = canvas.size[0] - xLeftOffset - xRightOffset
 		plotHeight = canvas.size[1] - yTopOffset - yBottomOffset
