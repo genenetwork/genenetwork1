@@ -277,22 +277,22 @@ function showChr(evt) {
 		if (chrLength[i] > myX) break;
 	}
 	i = (i==chrLength.length)? "X":i;
-	//xObj.setData("Marker GMb (Chr "+ i+")");
-	xObj.nodeValue="Marker GMb (Chr "+ i+")";
+	//xObj.setData("Marker Gb (Chr "+ i+")");
+	xObj.nodeValue="Marker Gb (Chr "+ i+")";
 
 	for (i=0; i<chrLength.length; i++){
 		if (chrLength[i] > myY) break;
 	}
 	i = (i==chrLength.length)? "X":i;
-	//yObj.setData("Transcript GMb (Chr "+ i+")");
-	yObj.nodeValue="Transcript GMb (Chr "+ i+")";
+	//yObj.setData("Transcript Gb (Chr "+ i+")");
+	yObj.nodeValue="Transcript Gb (Chr "+ i+")";
 }
 
 function showNoChr(evt) {
-	//xObj.setData("Marker GMb");
-	xObj.nodeValue="Marker GMb.";
-	//yObj.setData("Transcript GMb");
-	yObj.nodeValue="Transcript GMb.";
+	//xObj.setData("Marker Gb");
+	xObj.nodeValue="Marker Gb.";
+	//yObj.setData("Transcript Gb");
+	yObj.nodeValue="Transcript Gb.";
 }
 
 function mvMsgBox(evt) {
