@@ -39,9 +39,9 @@ from base import webqtlConfig
 from dbFunction import webqtlDatabaseFunction
 from correlation import correlationFunction
 
-import logging
-logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
-_log = logging.getLogger("gn\web\webqtl\correlation\PlotCorrelationComparisonPage.py")
+#import logging
+#logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
+#_log = logging.getLogger("gn\web\webqtl\correlation\PlotCorrelationComparisonPage.py")
 
 #########################################
 #      PlotCorrelationComparisonPage
@@ -84,9 +84,7 @@ class PlotCorrelationComparisonPage(templatePage):
 				detail = ["The database you just requested has not been established yet."]
 				self.error(heading=heading,detail=detail)
 				return
-			#_log.info("Trait1.data: "+str(len(Trait1.data))) # 99
 			trait1_data = Trait1.exportData(strainlist)
-			#_log.info("trait1_data: "+str(len(trait1_data))) # 95
 			trait1Url = Trait1.genHTML(dispFromDatabase=1)
 			ylabel = '%s : %s' % (Trait1.db.shortname, Trait1.name)
 			if Trait1.cellid:
