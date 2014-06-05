@@ -40,7 +40,9 @@ from base.webqtlTrait import webqtlTrait
 from utility import webqtlUtil
 from utility import Plot
 
-
+#import logging
+#logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
+#_log = logging.getLogger("gn\web\webqtl\correlationMatrix\CorrelationMatrixPage.py")
 
 # XZ, 09/09/2008: After adding several traits to collection, click "Correlation Matrix" button,
 # XZ, 09/09/2008: This class will generate what you see.
@@ -467,7 +469,7 @@ class CorrelationMatrixPage(templatePage):
        infoStrains = []
        infoStrainsPos = []
        dataArray  = [[] for i in range(NNN)]
-    
+
        for i in range(len(traitDataList[0])):
            currentStrain = 1
            for j in range(NNN):
