@@ -30,6 +30,7 @@ import random
 import sys, os
 from numarray import linear_algebra as la
 from numarray import ones, array, dot, swapaxes
+import numpy as np
 
 import reaper
 
@@ -38,8 +39,8 @@ import webqtlUtil
 from base import webqtlConfig
 
 #import logging
-#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
-#_log = logging.getLogger("\gnshare\gn\web\webqtl\utility\Plot.py")
+#logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
+#_log = logging.getLogger("gn\web\webqtl\utility\Plot.py")
 
 def cformat(d, rank=0):
 	'custom string format'
@@ -754,7 +755,7 @@ def plotXY(canvas, dataX, dataY, rank=0, dataLabel=[], plotColor = pid.black, ax
 	#calculate data points	
 	data = map(lambda X, Y: (X, Y), dataXPrimary, dataYPrimary)
 	xCoord = map(lambda X, Y: ((X-xLow)*xScale + xLeftOffset, yTopOffset+plotHeight-(Y-yLow)*yScale), dataXPrimary, dataYPrimary)
-
+	
 	if loadingPlot:
 		xZero = -xLow*xScale+xLeftOffset
 		yZero = yTopOffset+plotHeight+yLow*yScale
@@ -867,17 +868,15 @@ def plotXY(canvas, dataX, dataY, rank=0, dataLabel=[], plotColor = pid.black, ax
 	if title:
 		canvas.drawString(title,xLeftOffset+(plotWidth-canvas.stringWidth(title,font=labelFont))/2.0,
 			20,font=labelFont,color=labelColor)
-	
+			
 	if fitcurve:
-		import sys
-		sys.argv = [ "mod_python" ]
-		#from numarray import linear_algebra as la
-		#from numarray import ones, array, dot, swapaxes
-		fitYY = array(dataYPrimary)
-		fitXX = array([ones(len(dataXPrimary)),dataXPrimary])
-		AA = dot(fitXX,swapaxes(fitXX,0,1))
-		BB = dot(fitXX,fitYY)
-		bb = la.linear_least_squares(AA,BB)[0]
+		x = np.array(dataXPrimary)
+		y = np.array(dataYPrimary)
+		A = np.vstack([x, np.ones(len(x))]).T
+		bb = np.linalg.lstsq(A, y)[0]
+		tmp = bb[0]
+		bb[0] = bb[1]
+		bb[1] = tmp
 		
 		xc1 = xLeftOffset
 		yc1 = yTopOffset+plotHeight-(bb[0]+bb[1]*xLow-yLow)*yScale 

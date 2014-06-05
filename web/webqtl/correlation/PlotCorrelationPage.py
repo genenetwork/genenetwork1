@@ -39,6 +39,10 @@ from base import webqtlConfig
 from dbFunction import webqtlDatabaseFunction
 from correlation import correlationFunction
 
+#import logging
+#logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
+#_log = logging.getLogger("gn\web\webqtl\correlation\PlotCorrelationPage.py")
+
 #########################################
 #      PlotCorrelationPage
 #########################################
