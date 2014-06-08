@@ -63,7 +63,7 @@ def main(argv):
             utilities.to_db_string(metarow[7], None),
             utilities.to_db_string(metarow[8], None),
             utilities.to_db_string(metarow[9], ""),
-            utilities.to_db_string(metarow[18], None),
+            utilities.to_db_string(metarow[18], ""),
             ))
         rowcount = cursor.rowcount
         phenotypeid = con.insert_id()
