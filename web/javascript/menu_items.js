@@ -100,7 +100,7 @@ var MENU_ITEMS = [
 		['Movies','http://www.genenetwork.org/tutorial/movies'],
 		['Tutorials', null, null, 
                 ['GN Barley Tutorial','/tutorial/pdf/GN_Barley_Tutorial.pdf'],
-                ['GN Powerpoint', '/tutorial/ppt/index.html']],
+                ['GN Tutorials', '/tutorial']],
 		['HTML Tour','/tutorial/WebQTLTour/'],
 		['FAQ','/faq.html'],
 		['Glossary of Terms','/glossary.html'],

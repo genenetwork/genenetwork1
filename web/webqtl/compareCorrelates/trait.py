@@ -17,6 +17,10 @@ import string
 
 CONFIG_pubMedLinkURL = "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&list_uids=%s&dopt=Abstract"
 
+#import logging
+#logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
+#_log = logging.getLogger("gn\web\webqtl\compareCorrelates\trait.py")
+
 # RawPoint: to store information about the relationship between two particular
 # traits
 # RawPoint represents directly the input file

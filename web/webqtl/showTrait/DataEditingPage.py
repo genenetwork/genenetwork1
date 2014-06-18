@@ -1753,7 +1753,6 @@ class DataEditingPage(templatePage):
 			vals.append(thisValFull)			
 			
 		upperBound, lowerBound = Plot.findOutliers(vals) # ZS: Values greater than upperBound or less than lowerBound are considered outliers.
-
 		for i, strainNameOrig in enumerate(strainlist):
 
 			trId = strainNameOrig	
@@ -1864,18 +1863,26 @@ class DataEditingPage(templatePage):
 				table_row.append(HT.TD(strainNameDisp, strainNameAdd, align='left', width=140, Class=className))
 				table_row.append(HT.TD(valueField, width=70, align='right', Id="value_"+str(i)+"_"+strains, Class=className))
 
-			if thisTrait and thisTrait.db and thisTrait.db.type =='ProbeSet':
+			if thisTrait and thisTrait.db and (thisTrait.db.type =='ProbeSet' or thisTrait.db.type == 'Publish'):
 				if len(attribute_ids) > 0:
 
 					#ZS: Get StrainId value for the next query
-					self.cursor.execute("""SELECT Strain.Id
-									FROM Strain, StrainXRef, InbredSet 
-									WHERE Strain.Name = '%s' and 
-										StrainXRef.StrainId = Strain.Id and 
-										InbredSet.Id = StrainXRef.InbredSetId and 
-										InbredSet.Name = '%s'""" % (strainName, fd.RISet))
+					query = """SELECT Strain.Id
+							FROM Strain, StrainXRef, InbredSet 
+							WHERE Strain.Name = '%s' and 
+								StrainXRef.StrainId = Strain.Id and 
+								InbredSet.Id = StrainXRef.InbredSetId and 
+								InbredSet.Name = '%s'""" % (strainName, fd.RISet)
 
-					strain_id = self.cursor.fetchone()[0]
+					self.cursor.execute(query)
+
+					
+					result = self.cursor.fetchone()
+					if result != None:
+						strain_id = list(result)[0]
+					else:
+						continue
+					
 
 					attr_counter = 1 # This is needed so the javascript can know which attribute type to associate this value with for the exported excel sheet (each attribute type being a column).
 					for attribute_id in attribute_ids:
@@ -1888,7 +1895,7 @@ class DataEditingPage(templatePage):
                                           					CaseAttributeId = '%s'
 											group by CaseAttributeXRef.CaseAttributeId""" % (thisTrait.db.id, strain_id, str(attribute_id)))
 
-						attributeValue = self.cursor.fetchone()[0] #Trait-specific attributes, if any
+						attributeValue = list(self.cursor.fetchone())[0] #Trait-specific attributes, if any
 
 						#ZS: If it's an int, turn it into one for sorting (for example, 101 would be lower than 80 if they're strings instead of ints)
 						try:

@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>GeneNetwork Tutorials</TITLE>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<base href="http://www.genenetwork.org/">
+<LINK REL="stylesheet" TYPE="text/css" HREF='/css/general.css'>
+<LINK REL="stylesheet" TYPE="text/css" HREF='/css/menu.css'>
+<SCRIPT SRC="/javascript/webqtl.js"></SCRIPT>
+</HEAD>
+<BODY  bottommargin="2" leftmargin="2" rightmargin="2" topmargin="2" text=#000000 bgColor=#ffffff>
+<TABLE cellSpacing=5 cellPadding=4 width="100%" border=0>
+	<TBODY>
+	<TR>
+		<script language="JavaScript" src="/javascript/header.js"></script>
+	</TR>
+	<TR>
+		<TD bgColor=#eeeeee class="solidBorder">
+		<Table width= "100%" cellSpacing=0 cellPadding=5><TR>
+		<!-- Body Start from Here -->
+		<TD vAlign=top width="100%" height=200 bgColor=#eeeeee>
+		<P class="title">How to Evaluate and Use Human and Mouse mRNA Data Sets (e.g. GTEx)  <A HREF="/webqtl/WebQTL.py?FormID=editHtml"><img src="/images/modify.gif" alt="modify this page" border= 0 valign="middle"></A></P>
+		
+
+<p>In this HOW TO we evaluate the new human GTEx data using a single "pro band" gene called SIRT1.  There are about 48 GTEx data sets in GeneNetwork (May 2014)
+These data sets are RNA-seq RPKM data generated at the Broad Institute as part of a large NIH program (<a href="http://www.gtexportal.org/home/" target="_blank">http://www.gtexportal.org/home/</a>). All of the data are from a single large cohort of normal human subjects. There will eventually be hundreds of samples for each tissue, organ, or cell type, but at present numbers of cases per tissue can be low (e.g., n = 5 for liver). These are new data of unproven quality, but let's see what kind of data we get using GTEx and a brain region. Here are the steps along with images for the analysis of the GTEx amygdala data.
+<p>
+1. First we need to find the data in GeneNetwork (GN). There are many choices, including a number of brain regions (amygdala, caudate, cerebellum...). GN does not tell us how many samples are in each data set, but you can look it up quite easily. In the case of Adrenal Gland mRNA there are only 12 RNA-seq data sets. I would not bother with RNA-seq data (except for confirmatory analysis) when n < 20 cases.
+<p>
+For the amygdala, the sample size is now 23. This is marginalbut let's evaluate the data quality anyway.  Type in <b>SIRT1</b> in the search field.
+<p>
+<img src="/images/1.png">
+<p>
+You will see that <i>SIRT1</i> expression in human amygdala is low—2 to 3 units. This is on a log2 RPKM scale, and the <i>SIRT1</i> values are all between 2.3 and 3.2.  This is very low value***, but perhaps still useable. The distribution shown below is certainly interesting . In this type of "normal" plot, if values are normally distributed across the subjects then the points will be arrayed on a straight line oriented from bottom-left to top-right. In this case the points are obviously not on a straight "normal" line. In fact there is something odd going on in this distribution—an unexpected break at about 2.8 units. Ten individuals are in a high group, the remaining 13 are in a low group. This is either an artifact (e.g., a batch effect), a sampling error, or a genuine biological effect. Let's hope for the latter.
+<p>
+<img src="/images/2.gif">
+<p>
+***  In GN if the average log2 RPKM expression is less than 2, then we discard all of the values for that gene/transcript across all subjects. In this amygdala data, 40665 of 52776 gene/transcript entries were discarded in this way. What is a value of 2? ANSWER: When we download the GTEx RPKM values we add 1 to every value and then convert these counts to a log2 scale (1, 2, 4, 8, `6, 32, 64, 128, etc). Thus an original RPKM value of 0 is converted to 1, and log2 of 1 is 0. An RPKM value of 1 is converted to 2 and log2 of 2 is 1. An original RPKM value of 3 is converted to 4 and log2 of 4 is 2. In summary, if the average RPKM of the original data is less than 3 across all subjects, then we list the data with the value of 0 in GN. If for some reason you want to see the raw log2 values, then select the RawLog2 versions of the data. But beware, since the variation you see at this level will be very noisy.
+<p>
+
+How can we evaluate the quality of these <i>SIRT1</i> data and the curious distribution shown above. A simple way to do this is to evaluate te covariates of <i>SIRT1</i> expression in amygdala (or other tissues) to see if they "make sense". Use the <b>Calculate Correlations</b> tools shown below.
+<p>
+<img src="/images/3.png">
+<p>
+Note that I have selected the <b>Literature r</b> tab (one of three tabs) and requested that GN return a list of the top 2000 literature covariates. This procedure will generate a fixed list of genes/transcripts that are associated with <i>SIRT1</i> based strictly on a statistical analysis of word co-occurennce in PubMed abstracts (see work of Ramin Homayouni and Michael Berry for more detail,  PMID:  21533142l). Every search using <i>SIRT1</i> in any tissue or organ of human, mouse, or rat, will generate the same list.
+<p>
+
+Why is this useful?  Because, you can easily compare the literature correlations with the corresponding mRNA-based sample correlations to assess whether or not expression data are in line with expectation (scientific "priors"). Here is the output for <i>SIRT1</i>:
+<p>
+<img src="/images/4.png">
+<p>
+The three rows that I have highlighted in yellow have high sample correlations and high literature correlations (<b>Lit Corr</b>). For the gene in the first highlighted row (RRP8) there is already a known link to <i>SIRT1</i> that you can find in OMIM (<a href="http://omim.org/entry/615818" target="_blank">http://omim.org/entry/615818</a>).
+<p>
+
+By the way, as shown in the figure below, GeneNetwork provides OMIM links to most genes in the Trait Data page.
+<p>
+<img src="/images/5.png">
+<p>
+Based on these literature correlations, the <i>SIRT1</i> data appear to be of some value and it therefore makes sense to explore <i>SIRT1</i> function in amygdala (and probably other tissues) of humans using GTEx. 
+<p>
+The next step is to compute the top 2000 covariates of <i>SIRT1</i> in amygdala using the default <b>Sample r</b> method. Go ahead and do this yourself.
+<p>
+Correlations range from 0.888 to –0.531 in this list of top 2000 covariates. You can resort these table (click on the column heads) and you can also export the table. Note also that there is a <b>More Options</b> button.
+<p>
+<img src="/images/6.png">
+<p>
+Let's evaluate whether these covariates make sense by performing a Gene Ontology (GO) enrichment analysis of this set (or a subset) using WebGestalt. Click on the Gene Set function at the top of the page.
+<p>
+
+If you run the GO using the top 500 to 2000—unfiltered by polarity of correlation—then you will get this result page (you may need to export into a drawing program to see the categories.
+<p>
+
+The GO analysis is done by a web service at Vanderbilt University run by Bing Zhang and team ( PMID:  15980575,  PMID:  23703215).
+<p>
+<img src="/images/7.gif">
+<p>
+I'm not sure if this GO analysis above makes much biological sense, but it certainly does not flag the mitochondrion. This initial GO analysis is dominated by the positive covariates, and positive covariates will include positive signal from confounders in the data. Odd as it may seem the negative covariates are often more useful.
+<p>
+
+To separately evaluate all of the negative covariates you have to open up <b>More Options</b> and just select the negative value subset. Enter the values as shown below and then click on the <b>Select Traits</b> button. Now repeat the <b>Gene Set</b> GO analysis.
+<p>
+<img src="/images/8.png">
+<p>
+<img src="/images/9.gif">
+<p>
+At the bottom right you will see the category "mitochondrion" that includes this list of  96 mitochondrial genes. That is serious enrichment with a p value is about 1E-5. If you click on the red box that is labeled "Mitochondrion" then WebGestalt will list out all 96 of these genes and their negative r values.  Here is part of the table of covariates.
+<p>
+
+The important thing is that you should be able to replicate this analysis easily yourself and then extend to other tissues.
+<p>
+<img src="/images/10.png">
+<p>
+Try the same analysis with other tissues, the hypothalamus for example. Among the top 2000, there should be 158 negative covariates of <i>SIRT1</i>.  Statistics are even better than for the amygdala.
+<p>
+
+CONCLUSION: You now have an good idea of how to exploit covariation among mRNA microtraits to both evaluate data quality and to find potentially interesting biological associations—in this case between <i>SIRT1</i> and genes critical in mitochondrial function. Once you have a better feel for the data, you can try other genes and other tissues. Can you find novel functional or molecular companions of SIRT1?
+</p>
+
+		</TD>
+		</TR></TABLE>
+		</TD>
+	</TR>
+	<TR>
+		<TD align=center bgColor=#ddddff class="solidBorder">
+		<TABLE width="90%">
+		<script language='JavaScript' src='/javascript/footer.js'></script>
+		</TABLE>
+		</TD>
+	</TR>
+</TABLE>
+<!-- /Footer -->
+<!-- menu script itself. you should not modify this file -->
+<script language="JavaScript" src="/javascript/menu_new.js"></script>
+<!-- items structure. menu hierarchy and links are stored there -->
+<script language="JavaScript" src="/javascript/menu_items.js"></script>
+<!-- files with geometry and styles structures -->
+<script language="JavaScript" src="/javascript/menu_tpl.js"></script>
+<script language="JavaScript">
+	<!--//
+	// Note where menu initialization block is located in HTML document.
+	// Don't try to position menu locating menu initialization block in
+	// some table cell or other HTML element. Always put it before </body>
+	// each menu gets two parameters (see demo files)
+	// 1. items structure
+	// 2. geometry structure
+	new menu (MENU_ITEMS, MENU_POS);
+	// make sure files containing definitions for these variables are linked to the document
+	// if you got some javascript error like "MENU_POS is not defined", then you've made syntax
+	// error in menu_tpl.js file or that file isn't linked properly.
+	
+	// also take a look at stylesheets loaded in header in order to set styles
+	//-->
+</script>
+</BODY>
+</HTML>
