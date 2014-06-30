@@ -1,6 +1,47 @@
 import sys
 import utilities
 
+def get_publishxrefs(inbredsetid):
+    cursor, con = utilities.get_cursor()
+    sql = """
+        SELECT PublishXRef.`Id`, PublishXRef.`PhenotypeId`, PublishXRef.`PublicationId`, PublishXRef.`DataId`
+        FROM PublishXRef
+        WHERE PublishXRef.`InbredSetId`=%s
+        """
+    cursor.execute(sql, (inbredsetid))
+    return cursor.fetchall()
+    
+def get_phenotype(phenotypeid):
+    cursor, con = utilities.get_cursor()
+    sql = """
+        SELECT Phenotype.`Original_description`, Phenotype.`Pre_publication_description`, Phenotype.`Post_publication_description`
+        FROM Phenotype
+        WHERE Phenotype.`Id`=%s
+        """
+    cursor.execute(sql, (phenotypeid))
+    return cursor.fetchone()
+    
+def get_publication(publicationid):
+    cursor, con = utilities.get_cursor()
+    sql = """
+        SELECT Publication.`Authors`, Publication.`Abstract`
+        FROM Publication
+        WHERE Publication.`Id`=%s
+        """
+    cursor.execute(sql, (publicationid))
+    return cursor.fetchone()
+    
+def get_publishdata(publishdataid):
+    cursor, con = utilities.get_cursor()
+    sql = """
+        SELECT Strain.`Id`, Strain.`Name`, PublishData.`value`
+        FROM PublishData, Strain
+        WHERE PublishData.`Id`=%s
+        AND PublishData.`StrainId`=Strain.`Id`
+        """
+    cursor.execute(sql, (publishdataid))
+    return cursor.fetchall()
+
 def fetch(inbredsetid, filename):
     # parameters
     phenotypesfile = open(filename, 'w+')

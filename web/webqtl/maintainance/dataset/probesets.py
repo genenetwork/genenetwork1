@@ -29,7 +29,7 @@ def get_probesetdata(probesetdataid):
         SELECT Strain.`Id`, Strain.`Name`, ProbeSetData.`value`
         FROM ProbeSetData, Strain
         WHERE ProbeSetData.`Id`=%s
-        AND ProbeSetData.`StrainId`=Strain.`Id`;
+        AND ProbeSetData.`StrainId`=Strain.`Id`
         """
     cursor.execute(sql, (probesetdataid))
     return cursor.fetchall()
