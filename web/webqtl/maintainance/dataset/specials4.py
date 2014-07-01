@@ -50,6 +50,9 @@ def bxd_geno_pheno_correlations(file):
         publishdataid = publishxref[3]
         publishdata = phenotypes.get_publishdata(publishdataid)
         publishdata = zip(*publishdata)
+        if len(publishdata) != 3:
+            print("publishdata - %s: %d" % (publishxrefid, len(publishdata)))
+            continue
         publishdata = utilities.to_dic([strain.lower() for strain in publishdata[1]], publishdata[2])
         #
         for geno in genos:
