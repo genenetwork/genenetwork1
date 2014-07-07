@@ -136,6 +136,9 @@ def generate_probesets_2(probesetfreezesfile, outputdir):
         outputfile.close()
     file.close()
 
+# python specials3.py /home/leiyan/datadir/20140429_Ash_probesets/probesetfreezes1.txt /home/leiyan/datadir/20140429_Ash_probesets
+# python specials3.py /home/leiyan/datadir/20140429_Ash_probesets/probesetfreezes2.txt /home/leiyan/datadir/20140429_Ash_probesets
+
 if __name__ == "__main__":
     print("command line arguments:\n\t%s" % sys.argv)
     generate_probesets_2(probesetfreezesfile=sys.argv[1], outputdir=sys.argv[2])
