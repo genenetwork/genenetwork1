@@ -20,7 +20,6 @@ def fetch(inputfile, referfile, outputfile):
     referlines.pop(0)
     #
     outputfile = open(outputfile, 'w')
-    #
     outputfile.write("%s\n" % inputlines.pop(0))
     outputfile.flush()
     #
@@ -43,6 +42,7 @@ def fetch(inputfile, referfile, outputfile):
 
 def find_locus(inputlines, locus):
     for inputline in inputlines:
+        inputline = inputline.strip()
         inputcells = inputline.split()
         input_locus = inputcells[1]
         if locus.lower() == input_locus.lower():
@@ -50,10 +50,11 @@ def find_locus(inputlines, locus):
     return None
 
 def find_position(inputlines, chr, bp):
-    offset = 10000000
+    offset = 10000000000
     index = -1
     for i in range(len(inputlines)):
         inputline = inputlines[i]
+        inputline = inputline.strip()
         inputcells = inputline.split()
         input_chr = inputcells[2]
         input_bp = int(float(inputcells[3])*1000000)
@@ -62,7 +63,7 @@ def find_position(inputlines, chr, bp):
                 offset = abs(bp - input_bp)
                 index = i
     if -1 < index:
-        return inputlines[index]
+        return inputlines[index].strip()
     else:
         return None
 
