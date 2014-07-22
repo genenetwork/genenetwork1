@@ -727,7 +727,7 @@ class CorrelationPage(templatePage):
             corrScript = HT.Script(language="Javascript")
             corrScript.append("var corrArray = new Array();")
             
-            tblobj['body'], worksheet, corrScript = self.getTableBodyForPublish(traitList=traitList, formName=mainfmName, worksheet=worksheet, newrow=newrow, corrScript=corrScript, species=species)
+            tblobj['body'], worksheet, corrScript = self.getTableBodyForPublish(myTrait=myTrait, traitList=traitList, formName=mainfmName, worksheet=worksheet, newrow=newrow, corrScript=corrScript, species=species)
 
             workbook.close()
 
@@ -1547,7 +1547,7 @@ Resorting this table <br>
         return tblobj_header, worksheet
 
 
-    def getTableBodyForPublish(self, traitList, formName=None, worksheet=None, newrow=None, corrScript=None, species=''):
+    def getTableBodyForPublish(self, myTrait, traitList, formName=None, worksheet=None, newrow=None, corrScript=None, species=''):
 
         tblobj_body = []
 
@@ -1631,7 +1631,14 @@ Resorting this table <br>
                 tr.append(TDCell(HT.TD(LRS_location_repr, Class="fs12 fwn b1 c222"), LRS_location_repr, LRS_location_value))
 
             repr = '%3.4f' % thisTrait.corr
-            tr.append(TDCell(HT.TD(HT.Href(text=repr,url="javascript:showCorrPlot('%s', '%s')" % (formName,thisTrait.name), Class="fs12 fwn"), Class="fs12 fwn b1 c222", align='right',nowrap="on"), repr, abs(thisTrait.corr)))
+            link1 = HT.Href(text=repr, url="javascript:showCorrPlot('%s', '%s')" % (formName,thisTrait.name), Class="fs12 fwn")
+            link2 = HT.Href(text='GN-2',url="http://gn2python.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s" %
+                (myTrait.db.name, self.db.name, myTrait.name, thisTrait.name), Class="fs12 fwn", target="_blank")
+            td = HT.TD(Class="fs12 fwn b1 c222", align='right',nowrap="on")
+            td.append(link1)
+            td.append(HT.BR())
+            td.append(link2)
+            tr.append(TDCell(td, repr, abs(thisTrait.corr)))
 
             repr = '%d' % thisTrait.nOverlap
             tr.append(TDCell(HT.TD(repr, Class="fs12 fwn ffl b1 c222", align='right'),repr,thisTrait.nOverlap))
