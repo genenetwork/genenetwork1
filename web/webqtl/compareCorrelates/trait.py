@@ -1059,8 +1059,8 @@ def getSpeciesIdByDbTypeId (cursor, dbType, dbId):
       InbredSet, %sFreeze
     WHERE
     %sFreeze.Id = %s
-    and InbredSetId = InbredSet.Id
-    ''' % (dbType, dbType, dbId))
+    and %sFreeze.InbredSetId = InbredSet.Id
+    ''' % (dbType, dbType, dbId, dbType))
 
     row = cursor.fetchone()
     return row[0]
