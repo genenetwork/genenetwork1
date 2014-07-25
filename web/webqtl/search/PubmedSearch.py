@@ -28,6 +28,10 @@ import re
 
 from dbFunction import webqtlDatabaseFunction
 
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("\gn\web\webqtl\search\PubmedSearch.py")
+
 #########################################
 # name=megan inst=washington
 #########################################
@@ -53,7 +57,7 @@ class PubmedSearch:
 					keywords = keywords.strip()
 					keywords = keywords.split()
 					for keyword in keywords:
-						sql += "(MATCH (pubmedsearch.authorfullname,authorshortname) AGAINST ('%s' IN BOOLEAN MODE)) AND " % keyword
+						sql += "(pubmedsearch.authorfullname like '%s' or pubmedsearch.authorshortname like '%s') AND " % ("%" + keyword + "%", "%" + keyword + "%")
 				#
 				pattern_inst = re.compile('\s*inst\s*[:=]((\s*\(.+?\)\s*)|(\s*\S+\s*))', re.I)
 				search_inst = pattern_inst.search(self.news)
@@ -66,13 +70,15 @@ class PubmedSearch:
 					keywords = keywords.strip()
 					keywords = keywords.split()
 					for keyword in keywords:
-						sql += "(MATCH (pubmedsearch.institute) AGAINST ('%s' IN BOOLEAN MODE)) AND " % keyword
+						sql += "pubmedsearch.institute like '%s' AND " % ("%" + keyword + "%")
 				#
 				if search_name or search_inst:
 					sql += "pubmedsearch.geneid=ProbeSet.GeneId AND "
 					sql += "ProbeSet.Id=ProbeSetXRef.ProbeSetId AND "
 					sql += "ProbeSetXRef.ProbeSetFreezeId=%d " % ProbeSetFreezeId
-					sql += "GROUP BY ProbeSet.Symbol;"
+					sql += "GROUP BY ProbeSet.Symbol "
+					sql += "LIMIT 200"
+					#_log.info("pubmed sql: %s" % sql)
 					cursor.execute(sql)
 					symbols1 = cursor.fetchall()
 					symbols2 = ''
