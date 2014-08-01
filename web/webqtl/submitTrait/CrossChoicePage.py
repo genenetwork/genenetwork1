@@ -32,6 +32,10 @@ from base.templatePage import templatePage
 from utility import webqtlUtil
 from base import webqtlConfig
 
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("\gn\web\webqtl\submitTrait\CrossChoicePage.py")
+
 # XZ, 08/28/2008: From home, click "Enter Trait Data".
 # XZ, 08/28/2008: This class generate what you see	
 #########################################
@@ -95,34 +99,30 @@ class CrossChoicePage(templatePage):
 
 		STEP1 = HT.TableLite(cellSpacing=2,cellPadding=0,width="90%",border=0)
 		crossMenu = HT.Select(name='RISet', onChange='xchange()')
-		allRISets = map(lambda x: x[:-5], glob.glob1(webqtlConfig.GENODIR, '*.geno'))
-		allRISets.sort()
-		if authorized:
-			self.cursor.execute("select Name from InbredSet")
-		else:
-			self.cursor.execute("select Name from InbredSet where public > %d" % webqtlConfig.PUBLICTHRESH)
-		results = map(lambda X:X[0], self.cursor.fetchall())
-		allRISets = filter(lambda X:X in results, allRISets)
-			
-		specMenuSub1 = HT.Optgroup(label = 'MOUSE')
-		specMenuSub2 = HT.Optgroup(label = 'RAT')
-		specMenuSub3 = HT.Optgroup(label = 'ARABIDOPSIS')
-		specMenuSub4 = HT.Optgroup(label = 'BARLEY')
-		for item in allRISets:
-			if item == 'HXBBXH':
-				specMenuSub2.append(('HXB/BXH', 'HXBBXH'))
-			elif item in ('BayXSha', 'ColXCvi', 'ColXBur'):
-				specMenuSub3.append((item, item))
-			elif item in ('SXM'):
-				specMenuSub4.append((item, item))
-			elif item == 'AXBXA':
-				specMenuSub1.append(('AXB/BXA', 'AXBXA'))
-			else:
-				specMenuSub1.append(tuple([item,item]))
-		crossMenu.append(specMenuSub1)
-		crossMenu.append(specMenuSub2)
-		crossMenu.append(specMenuSub3)
-		crossMenu.append(specMenuSub4)
+
+		sql = """
+			SELECT Species.`Id`, Species.`MenuName`
+			FROM Species
+			ORDER BY Species.`OrderId`
+			"""
+		self.cursor.execute(sql)
+		for species in self.cursor.fetchall():
+			species_id = species[0]
+			species_name = species[1]
+			optgroup = HT.Optgroup(label = species_name)
+			crossMenu.append(optgroup)
+			sql = """
+				SELECT InbredSet.`Id`, InbredSet.`Name`, InbredSet.`FullName`
+				FROM InbredSet
+				WHERE InbredSet.`SpeciesId`=%s
+				ORDER BY InbredSet.`FullName`
+				"""
+			self.cursor.execute(sql, (species_id))
+			for inbredset in self.cursor.fetchall():
+				inbredset_name =  inbredset[1]
+				inbredset_fullname =  inbredset[2]
+				optgroup.append(tuple([inbredset_fullname, inbredset_name]))
+        
 		crossMenu.selected.append('BXD')
 		crossMenuText = HT.Paragraph('Select the cross or recombinant inbred \
 		    set from the menu below. If you wish, paste data or select a data \
