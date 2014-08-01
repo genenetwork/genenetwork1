@@ -55,9 +55,10 @@ class PubmedSearch:
 					keywords = keywords.strip('(')
 					keywords = keywords.strip(')')
 					keywords = keywords.strip()
-					keywords = keywords.split()
+					keywords = re.compile("[,;]").split(keywords)
 					for keyword in keywords:
-						sql += "(pubmedsearch.authorfullname like '%s' or pubmedsearch.authorshortname like '%s') AND " % ("%" + keyword + "%", "%" + keyword + "%")
+						keyword = keyword.strip()
+						sql += "pubmedsearch.authorshortname like '%s' AND " % ("%" + keyword + "%")
 				#
 				pattern_inst = re.compile('\s*inst\s*[:=]((\s*\(.+?\)\s*)|(\s*\S+\s*))', re.I)
 				search_inst = pattern_inst.search(self.news)
