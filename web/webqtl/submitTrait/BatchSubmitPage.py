@@ -46,6 +46,9 @@ class BatchSubmitPage(templatePage):
 		templatePage.__init__(self, fd)
 
 		self.dict['title'] = 'Batch Submission' 
+		
+		if not self.openMysql():
+			return
 
 		TD_LEFT = """
 		<TD vAlign=top width="40%" bgColor=#eeeeee>
@@ -75,20 +78,30 @@ class BatchSubmitPage(templatePage):
 
 		STEP1 = HT.TableLite(cellSpacing=2,cellPadding=0,width="90%",border=0)
 		crossMenu = HT.Select(name='RISet', onChange='xchange()')
-		allRISets = map(lambda x: x[:-5], glob.glob1(webqtlConfig.GENODIR, '*.geno'))
-		allRISets.sort()
-		allRISets.remove("BayXSha")
-		allRISets.remove("ColXBur")
-		allRISets.remove("ColXCvi")
-		specMenuSub1 = HT.Optgroup(label = 'MOUSE')
-		specMenuSub2 = HT.Optgroup(label = 'RAT')
-		for item in allRISets:
-			if item != 'HXBBXH':
-				specMenuSub1.append(tuple([item,item]))
-			else:
-				specMenuSub2.append(tuple(['HXB/BXH', 'HXBBXH']))
-		crossMenu.append(specMenuSub1)
-		crossMenu.append(specMenuSub2)
+		
+		sql = """
+			SELECT Species.`Id`, Species.`MenuName`
+			FROM Species
+			ORDER BY Species.`OrderId`
+			"""
+		self.cursor.execute(sql)
+		for species in self.cursor.fetchall():
+			species_id = species[0]
+			species_name = species[1]
+			optgroup = HT.Optgroup(label = species_name)
+			crossMenu.append(optgroup)
+			sql = """
+				SELECT InbredSet.`Id`, InbredSet.`Name`, InbredSet.`FullName`
+				FROM InbredSet
+				WHERE InbredSet.`SpeciesId`=%s
+				ORDER BY InbredSet.`FullName`
+				"""
+			self.cursor.execute(sql, (species_id))
+			for inbredset in self.cursor.fetchall():
+				inbredset_name =  inbredset[1]
+				inbredset_fullname =  inbredset[2]
+				optgroup.append(tuple([inbredset_fullname, inbredset_name]))
+		
 		crossMenu.selected.append('BXD')
 		crossMenuText = HT.Paragraph('Select the cross or recombinant inbred \
 		    set from the menu below. ')
