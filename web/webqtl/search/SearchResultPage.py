@@ -23,6 +23,10 @@ from dbFunction import webqtlDatabaseFunction
 import PubmedSearch
 import GOSearch
 
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("\gn\web\webqtl\search\SearchResultPage.py")
+
 class SearchResultPage(templatePage):
 
 	maxReturn = 5000
@@ -708,7 +712,7 @@ class SearchResultPage(templatePage):
 				self.error(heading=heading,detail=detail,error="Error")
 				return 0
 			elif self.dbType == "ProbeSet" and \
-				((_2Cmds and reduce(lambda x, y: (y not in ["MEAN", "LRS", "PVALUE", "TRANSLRS", "CISLRS", "RANGE", "H2"]) or x, _2Cmds, False))\
+				((_2Cmds and reduce(lambda x, y: (y not in ["SE", "MEAN", "LRS", "PVALUE", "TRANSLRS", "CISLRS", "RANGE", "H2"]) or x, _2Cmds, False))\
 				or (_3Cmds and reduce(lambda x, y: (y not in ["POS", "POSITION", "MB"]) or x, _3Cmds, False))\
 				or (_5Cmds and reduce(lambda x, y: (y not in ["LRS"]) or x, _5Cmds, False))\
 				or (_1Cmds and reduce(lambda x, y: (y not in ["FLAG", "STRAND_PROBE", "STRAND_GENE", "GO", "WIKI", "RIF", "GENEID"]) or x, _1Cmds, False))):

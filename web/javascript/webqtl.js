@@ -1192,6 +1192,12 @@ function asearch(thisform){
 		orkeyword += ' mean=('+any_mean_from+' '+any_mean_to+')';
 	}
 	//
+	var any_se_from = thisform.any_se_from.value.trim();
+	var any_se_to = thisform.any_se_to.value.trim();
+	if(0<any_se_from.length && 0<any_se_to.length){
+		orkeyword += ' se=('+any_se_from+' '+any_se_to+')';
+	}
+	//
 	var any_range_from = thisform.any_range_from.value.trim();
 	var any_range_to = thisform.any_range_to.value.trim();
 	if(0<any_range_from.length && 0<any_range_to.length){
@@ -1241,6 +1247,12 @@ function asearch(thisform){
 		andkeyword += ' mean=('+all_mean_from+' '+all_mean_to+')';
 	}
 	//
+	var all_se_from = thisform.all_se_from.value.trim();
+	var all_se_to = thisform.all_se_to.value.trim();
+	if(0<all_se_from.length && 0<all_se_to.length){
+		andkeyword += ' se=('+all_se_from+' '+all_se_to+')';
+	}
+	//
 	var all_range_from = thisform.all_range_from.value.trim();
 	var all_range_to = thisform.all_range_to.value.trim();
 	if(0<all_range_from.length && 0<all_range_to.length){
@@ -1276,7 +1288,9 @@ function asearch(thisform){
 	}
 
 	thisform.ORkeyword.value = orkeyword.trim();
+	// alert("ORkeyword: " + thisform.ORkeyword.value);
 	thisform.ANDkeyword.value = andkeyword.trim();
+	// alert("ANDkeyword: " + thisform.ANDkeyword.value);
 
 	thisform.submit();
         thisform.ORkeyword.value = "";
