@@ -34,7 +34,10 @@ from base.templatePage import templatePage
 from utility import webqtlUtil
 from AddToSelectionPage import AddToSelectionPage
 	
-
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("\gn\web\webqtl\collection\BatchSubmitSelectionPage.py")
+	
 #########################################
 #     batch submission result Page
 #########################################
