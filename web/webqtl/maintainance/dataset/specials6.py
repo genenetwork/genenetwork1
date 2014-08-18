@@ -2,9 +2,7 @@ import sys
 
 import utilities
 import datastructure
-import genotypes
 import phenotypes
-import calculate
 
 """
 Date:   2014-08-18
