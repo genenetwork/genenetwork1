@@ -25,7 +25,6 @@ def bxd_pheno(file):
     file.write("%s\t" % "PhenotypeID")
     file.write("%s\t" % "PhenotypeName")
     for strain in strains:
-        strainid = strain[0]
         strainname = strain[1]
         file.write("%s\t" % strainname)
     file.write("\n")
@@ -44,6 +43,8 @@ def bxd_pheno(file):
         if len(publishdata)==0:
             continue
         publishdata = utilities.to_dic([strain.lower() for strain in publishdata[1]], publishdata[2])
+        file.write("%s\t" % publishxrefid)
+        file.write("%s;%s;%s\t" % (phenotype[0], phenotype[1], phenotype[2]))
         #
         for strain in strains:
             strainname = strain[1]
