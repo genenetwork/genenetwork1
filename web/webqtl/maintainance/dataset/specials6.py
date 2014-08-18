@@ -60,6 +60,8 @@ def bxd_pheno(file):
     #
     file.close()
 
+# python specials6.py /home/leiyan/datadir/20140818_Ash_pheno/bxd_pheno.txt
+
 if __name__ == "__main__":
     print("command line arguments:\n\t%s" % sys.argv)
     bxd_pheno(sys.argv[1])
