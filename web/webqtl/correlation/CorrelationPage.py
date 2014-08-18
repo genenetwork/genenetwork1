@@ -1497,7 +1497,7 @@ Resorting this table <br>
         tblobj_header = []
 
         if method in ["1","3","4"]:
-            tblobj_header = [[THCell(HT.TD(' ', Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), sort=0), 
+            tblobj_header = [[THCell(HT.TD('Index', Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), sort=0), 
                               THCell(HT.TD('Record',HT.BR(), 'ID',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), text="Record ID", idx=1),
                               THCell(HT.TD('Phenotype', HT.BR(),HT.BR(), Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), text="Phenotype", idx=2),
                               THCell(HT.TD('Authors', HT.BR(),HT.BR(), Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), text="Authors", idx=3),
@@ -1509,19 +1509,19 @@ Resorting this table <br>
                                                    target = '_blank',
                                                    url = "/correlationAnnotation.html#genetic_r"), 
                                            Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Sample r", idx=7),
-                              THCell(HT.TD('GN2',HT.BR(),'Link', Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), idx=8),
-                              THCell(HT.TD('N',HT.BR(),'Cases',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text="N Cases", idx=9),
+                              THCell(HT.TD('N',HT.BR(),'Cases',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text="N Cases", idx=8),
                               THCell(HT.TD(HT.Href(
                                                    text = HT.Span('Sample',HT.BR(), 'p(r)', HT.Sup('  ?', style="color:#f00"),HT.BR(), Class="fs13 fwb ffl cw"),
                                                    target = '_blank',
                                                    url = "/correlationAnnotation.html#genetic_p_r"),
-                                           Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Sample p(r)", idx=10)]]
+                                           Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Sample p(r)", idx=9),
+                              THCell(HT.TD('GN2',HT.BR(),'Link', Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), idx=10)]]
 
             for ncol, item in enumerate(["Record", "Phenotype", "Authors", "Year", "Pubmed Id", "Max LRS", "Max LRS Location (Chr: Mb)", "Sample r", "N Cases", "Sample p(r)"]):
                 worksheet.write([newrow, ncol], item, headingStyle)
                 worksheet.set_column([ncol, ncol], 2*len(item))
         else:
-            tblobj_header = [[THCell(HT.TD(' ', Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), sort=0), 
+            tblobj_header = [[THCell(HT.TD('Index', Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), sort=0), 
                               THCell(HT.TD('Record',HT.BR(), 'ID',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), text="Record ID", idx=1),
                               THCell(HT.TD('Phenotype', HT.BR(),HT.BR(), Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), text="Phenotype", idx=2),
                               THCell(HT.TD('Authors', HT.BR(),HT.BR(), Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), text="Authors", idx=3),
@@ -1538,7 +1538,8 @@ Resorting this table <br>
                                                    text = HT.Span('Sample',HT.BR(), 'p(rho)', HT.Sup('  ?', style="color:#f00"),HT.BR(), Class="fs13 fwb ffl cw"),
                                                    target = '_blank',
                                                    url = "/correlationAnnotation.html#genetic_p_rho"),
-                                           Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Sample p(rho)", idx=9)]]
+                                           Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Sample p(rho)", idx=9),
+                              THCell(HT.TD('GN2',HT.BR(),'Link', Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), idx=10)]]
 
             for ncol, item in enumerate(["Record", "Phenotype", "Authors", "Year", "Pubmed Id", "Max LRS", "Max LRS Location (Chr: Mb)", "Sample rho", "N Cases", "Sample p(rho)"]):
                 worksheet.write([newrow, ncol], item, headingStyle)
@@ -1633,19 +1634,19 @@ Resorting this table <br>
 
             repr = '%3.4f' % thisTrait.corr
             tr.append(TDCell(HT.TD(HT.Href(text=repr,url="javascript:showCorrPlot('%s', '%s')" % (formName,thisTrait.name), Class="fs12 fwn"), Class="fs12 fwn b1 c222", align='right',nowrap="on"), repr, abs(thisTrait.corr)))
-            
-            gn2link = HT.Href(url="http://gn2python.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s" %
-                (myTrait.db.name, self.db.name, myTrait.name, thisTrait.name), Class="fs12 fwn", target="_blank")
-            gn2link.append(HT.Image("/images/link.gif"))
-            td = HT.TD(Class="fs12 fwn b1 c222", align='right',nowrap="on")
-            td.append(gn2link)
-            tr.append(TDCell(td, "", 0))
 
             repr = '%d' % thisTrait.nOverlap
             tr.append(TDCell(HT.TD(repr, Class="fs12 fwn ffl b1 c222", align='right'),repr,thisTrait.nOverlap))
 
             repr = webqtlUtil.SciFloat(thisTrait.corrPValue)
             tr.append(TDCell(HT.TD(repr,nowrap='ON', Class="fs12 fwn ffl b1 c222", align='right'),repr,thisTrait.corrPValue))
+			
+            gn2link = HT.Href(url="http://gn2python.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s" %
+                (myTrait.db.name, self.db.name, myTrait.name, thisTrait.name), Class="fs12 fwn", target="_blank")
+            gn2link.append(HT.Image("/images/link.gif"))
+            td = HT.TD(Class="fs12 fwn b1 c222", align='right',nowrap="on")
+            td.append(gn2link)
+            tr.append(TDCell(td, "", 0))
 
             tblobj_body.append(tr)
             
@@ -1661,7 +1662,7 @@ Resorting this table <br>
         tblobj_header = []
 
         if method in ["1","3","4"]:
-                tblobj_header = [[THCell(HT.TD(' ', Class="fs13 fwb ffl b1 cw cbrb",nowrap='ON'), sort=0),
+                tblobj_header = [[THCell(HT.TD('Index', Class="fs13 fwb ffl b1 cw cbrb",nowrap='ON'), sort=0),
                                   THCell(HT.TD('Record',HT.BR(), 'ID',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text="Record ID", idx=1),
                                   THCell(HT.TD('Gene',HT.BR(), 'ID',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text="Gene ID", idx=2),
                                   THCell(HT.TD('Homologene',HT.BR(), 'ID',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text="Homologene ID", idx=3),
@@ -1697,13 +1698,14 @@ Resorting this table <br>
                                                        text = HT.Span('Tissue',HT.BR(), 'p(r)', HT.Sup('  ?', style="color:#f00"),HT.BR(), Class="fs13 fwb ffl cw"),
                                                        target = '_blank',
                                                        url = "/correlationAnnotation.html#tissue_p_r"),
-                                               Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Tissue p(r)", idx=15)]]
+                                               Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Tissue p(r)", idx=15),
+                                  THCell(HT.TD('GN2',HT.BR(),'Link', Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), idx=16)]]
 
                 for ncol, item in enumerate(['Record', 'Gene ID', 'Homologene ID', 'Symbol', 'Description', 'Location (Chr: Mb)', 'Mean Expr', 'Max LRS', 'Max LRS Location (Chr: Mb)', 'Sample r', 'N Cases', 'Sample p(r)', 'Lit Corr', 'Tissue r', 'Tissue p(r)']):
                     worksheet.write([newrow, ncol], item, headingStyle)
                     worksheet.set_column([ncol, ncol], 2*len(item))
         else:
-                tblobj_header = [[THCell(HT.TD(' ', Class="fs13 fwb ffl b1 cw cbrb",nowrap='ON'), sort=0),
+                tblobj_header = [[THCell(HT.TD('Index', Class="fs13 fwb ffl b1 cw cbrb",nowrap='ON'), sort=0),
                                   THCell(HT.TD('Record',HT.BR(), 'ID',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text="Record ID", idx=1),
                                   THCell(HT.TD('Gene',HT.BR(), 'ID',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text="Gene ID", idx=2),
                                   THCell(HT.TD('Homologene',HT.BR(), 'ID',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text="Homologene ID", idx=3),
@@ -1739,7 +1741,8 @@ Resorting this table <br>
                                                        text = HT.Span('Tissue',HT.BR(), 'p(rho)', HT.Sup('  ?', style="color:#f00"),HT.BR(), Class="fs13 fwb ffl cw"),
                                                        target = '_blank',
                                                        url = "/correlationAnnotation.html#tissue_p_r"),
-                                               Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Tissue p(rho)", idx=15)]]
+                                               Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Tissue p(rho)", idx=15),
+                                  THCell(HT.TD('GN2',HT.BR(),'Link', Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), idx=16)]]
 
                 for ncol, item in enumerate(['Record ID', 'Gene ID', 'Homologene ID', 'Symbol', 'Description', 'Location (Chr: Mb)', 'Mean Expr', 'Max LRS', 'Max LRS Location (Chr: Mb)', 'Sample rho', 'N Cases', 'Sample p(rho)', 'Lit Corr', 'Tissue rho', 'Tissue p(rho)']):
                     worksheet.write([newrow, ncol], item, headingStyle)
@@ -1946,6 +1949,13 @@ Resorting this table <br>
                 TPValue = thisTrait.tissuePValue
                 TPValueStr = "%2.3f" % thisTrait.tissuePValue
             tr.append(TDCell(HT.TD(TPValueStr, Class="fs12 fwn b1 c222", align='right'), TPValueStr, TPValue))
+			
+            gn2link = HT.Href(url="http://gn2python.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s" %
+                (primaryTrait.db.name, self.db.name, primaryTrait.name, thisTrait.name), Class="fs12 fwn", target="_blank")
+            gn2link.append(HT.Image("/images/link.gif"))
+            td = HT.TD(Class="fs12 fwn b1 c222", align='right',nowrap="on")
+            td.append(gn2link)
+            tr.append(TDCell(td, "", 0))
 
             tblobj_body.append(tr)
 
