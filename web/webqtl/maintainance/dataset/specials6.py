@@ -1,4 +1,5 @@
 import sys
+import re
 
 import utilities
 import datastructure
@@ -42,7 +43,9 @@ def bxd_pheno(file):
             continue
         publishdata = utilities.to_dic([strain.lower() for strain in publishdata[1]], publishdata[2])
         file.write("%s\t" % publishxrefid)
-        file.write("%s;%s;%s\t" % (phenotype[0], phenotype[1], phenotype[2]))
+        phenotypename = "%s;%s;%s" % (phenotype[0], phenotype[1], phenotype[2])
+        phenotypename = re.sub('\s+', ' ', phenotypename)
+        file.write("%s\t" % phenotypename)
         #
         for strain in strains:
             strainname = strain[1]
