@@ -105,4 +105,4 @@ class SharingInfo2:
 								htmlfilelist += "</li>\n"
 				htmlfilelist += "</ul>"
 				info = self.info
-				return SharingBody.sharinginfo_body_string % (info[9], info[0], infoupdate, info[1], info[10], info[10], info[10], info[11], info[3], info[2], info[5], info[4], info[12], info[7], info[6], info[8], info[22], info[23], info[33], info[24], info[25], info[26], info[27], info[28], info[29], info[30], info[31], info[31], htmlfilelist, info[13], info[14], info[15], info[37], info[16], info[21], info[18], info[19], info[20], info[17], info[35])
+				return SharingBody.sharinginfo_body_string % (info[9], info[0], info[35], infoupdate, info[1], info[10], info[10], info[10], info[11], info[3], info[2], info[5], info[4], info[12], info[7], info[6], info[8], info[22], info[23], info[33], info[24], info[25], info[26], info[27], info[28], info[29], info[30], info[31], info[31], htmlfilelist, info[13], info[14], info[15], info[37], info[16], info[21], info[18], info[19], info[20], info[17], info[35])

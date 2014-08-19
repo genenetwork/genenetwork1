@@ -133,7 +133,10 @@ sharinginfo_body_string = """<td>
 <!--<a href="/webqtl/main.py?FormID=sharingListDataset">List of DataSets</a><br>-->
 
 <H1 class="title" id="parent-fieldname-title">%s <!--info[9] Datasets.DatasetName-->
-<!--<a href="/webqtl/main.py?FormID=sharinginfoedit&InfoPageName=%s"><img src="/images/modify.gif" alt="modify this page" border="0" valign="middle"></a>-->
+<!--
+<a href="/webqtl/main.py?FormID=sharinginfoedit&InfoPageName=%s"><img src="/images/modify.gif" alt="modify this page" border="0" valign="middle"></a>
+-->
+<a href="/infoshare/manager/member-studies-edit.html?DatasetId=%s"><img src="/images/modify.gif" alt="modify this page" border="0" valign="middle"></a>
 <span style="color:red;">%s</span> <!--info[0] InfoPageName-->
 </H1>
 <table border="0" width="100%%">
