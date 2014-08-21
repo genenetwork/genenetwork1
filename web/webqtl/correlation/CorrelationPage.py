@@ -695,7 +695,7 @@ class CorrelationPage(templatePage):
             corrScript = HT.Script(language="Javascript")
             corrScript.append("var corrArray = new Array();")
 
-            tblobj['body'], worksheet, corrScript = self.getTableBodyForGeno(traitList=traitList, formName=mainfmName, worksheet=worksheet, newrow=newrow, corrScript=corrScript) 
+            tblobj['body'], worksheet, corrScript = self.getTableBodyForGeno(myTrait=myTrait, traitList=traitList, formName=mainfmName, worksheet=worksheet, newrow=newrow, corrScript=corrScript) 
 
             workbook.close()
             objfile = open('%s.obj' % (webqtlConfig.TMPDIR+filename), 'wb')
@@ -1399,7 +1399,7 @@ Resorting this table <br>
         tblobj_header = []
 
         if method in ["1","3","4"]:
-            tblobj_header = [[THCell(HT.TD(' ', Class="fs13 fwb ffl b1 cw cbrb"), sort=0),
+            tblobj_header = [[THCell(HT.TD('Index', Class="fs13 fwb ffl b1 cw cbrb"), sort=0),
                               THCell(HT.TD('Record', HT.BR(), 'ID', HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text='Record ID', idx=1),
                               THCell(HT.TD('Location', HT.BR(), 'Chr and Mb', HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text='Location (Chr and Mb)', idx=2),
                               THCell(HT.TD(HT.Href(
@@ -1412,7 +1412,8 @@ Resorting this table <br>
                                                    text = HT.Span('Sample',HT.BR(), 'p(r)', HT.Sup('  ?', style="color:#f00"),HT.BR(), Class="fs13 fwb ffl cw"),
                                                    target = '_blank',
                                                    url = "/correlationAnnotation.html#genetic_p_r"),
-                                           Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Sample p(r)", idx=5)]]
+                                           Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Sample p(r)", idx=5),
+                              THCell(HT.TD('GN2',HT.BR(),'Link', Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), idx=6)]]
 
             for ncol, item in enumerate(['Record ID', 'Location (Chr, Mb)', 'Sample r', 'N Cases', 'Sample p(r)']):
                 worksheet.write([newrow, ncol], item, headingStyle)
@@ -1431,7 +1432,8 @@ Resorting this table <br>
                                                    text = HT.Span('Sample',HT.BR(), 'p(rho)', HT.Sup('  ?', style="color:#f00"),HT.BR(), Class="fs13 fwb ffl cw"),
                                                    target = '_blank',
                                                    url = "/correlationAnnotation.html#genetic_p_rho"),
-                                           Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Sample p(rho)", idx=5)]]
+                                           Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Sample p(rho)", idx=5),
+                              THCell(HT.TD('GN2',HT.BR(),'Link', Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), idx=6)]]
 
             for ncol, item in enumerate(['Record ID', 'Location (Chr, Mb)', 'Sample rho', 'N Cases', 'Sample p(rho)']):
                 worksheet.write([newrow, ncol], item, headingStyle)
@@ -1441,7 +1443,7 @@ Resorting this table <br>
         return tblobj_header, worksheet
 
 
-    def getTableBodyForGeno(self, traitList, formName=None, worksheet=None, newrow=None, corrScript=None):
+    def getTableBodyForGeno(self, myTrait, traitList, formName=None, worksheet=None, newrow=None, corrScript=None):
 
         tblobj_body = []
 
@@ -1482,6 +1484,13 @@ Resorting this table <br>
 
                 repr = webqtlUtil.SciFloat(thisTrait.corrPValue)
                 tr.append(TDCell(HT.TD(repr,nowrap='ON', Class="fs12 fwn ffl b1 c222", align='right'),repr,thisTrait.corrPValue))
+				
+                gn2link = HT.Href(url="http://gn2python.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s" %
+                (myTrait.db.name, self.db.name, myTrait.name, thisTrait.name), Class="fs12 fwn", target="_blank")
+                gn2link.append(HT.Image("/images/link.gif"))
+                td = HT.TD(Class="fs12 fwn b1 c222", align='right',nowrap="on")
+                td.append(gn2link)
+                tr.append(TDCell(td, "", 0))
 
                 tblobj_body.append(tr)
 
