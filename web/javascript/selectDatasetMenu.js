@@ -334,7 +334,7 @@ var dArr = [
 {txt:'HZI Lung M430v2 (Apr08) RMA',val:'HZI_0408_R'},
 {txt:'HQF Striatum Affy Mouse Exon 1.0ST Exon Level (Dec09) RMA',val:'Striatum_Exon_0209'},
 {txt:'HZI Lung M430v2 (Apr08) MAS5',val:'HZI_0408_M'},
-{txt:'HZI PR8M-Infected Lungs Females RNAseq (Nov13) RPKM **',val:'HZI_PR8M-F_1113'},
+{txt:'HZI PR8M-Infected Lungs Females RNAseq (Nov13) RPKM Log2 **',val:'HZI_PR8M-F_1113'},
 {txt:'Super Series GSE23546 Whole-Genome GXD Non-Tumorous Human Lung Tissues Affy HuRSTA array (Jun11) RMA',val:'GSE23546HLT0613'},
 {txt:'UL/GSE23352 Whole-Genome GXD Non-Tumorous Human Lung Tissues Affy HuRSTA (Jun11) RMA',val:'luCA_GSE23352HLT0613'},
 {txt:'UBC/GSE23529 Whole-Genome GXD Non-Tumorous Human Lung Tissues Affy HuRSTA array (Jun11) RMA',val:'UBC-GSE23529HLT0613'},
