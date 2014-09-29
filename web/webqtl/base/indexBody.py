@@ -223,13 +223,17 @@ Quick HELP Examples and </B>
 					and
 					<a target="_blank" href="http://ucscbrowserbeta.genenetwork.org/">Newest</a>
 				</li>
+				<!--
 				<li>UTHSC <a target="_blank" href="http://galaxy.genenetwork.org/">Galaxy</a> Service</li>
+				-->
 				<li>UTHSC <a target="_blank" href="http://bnw.genenetwork.org/">Bayesian Network Web Server</a></li>
 				<li>GeneNetwork Classic on <a target="_blank" href="http://ec2.genenetwork.org/">Amazon Cloud</a></li>
 				<li>GeneNetwork Classic Code on <a target="_blank" href="https://github.com/genenetwork/genenetwork">GitHub</a></li>
 				<li>GeneNetwork 2.0 Development Code on <a target="_blank" href="https://github.com/zsloan/genenetwork">GitHub</a></li>
 				<li><a target="_blank" href="http://gn2python.genenetwork.org/">GeneNetwork 2.0 - Python</a> development</li>
+				<!--
 				<li><a target="_blank" href="http://gn2java.genenetwork.org/">GeneNetwork 2.0 - Java</a> demonstration</li>
+				-->
 			</ul>
 		</p>
 							<P>____________________________
