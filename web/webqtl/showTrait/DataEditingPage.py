@@ -1770,7 +1770,7 @@ class DataEditingPage(templatePage):
 				else:
 					pass
 			except:
-				thisval = thisvar = 'x'
+				thisval = thisvar = thisNP = 'x'
 			
 			try:
 				traitVal = thisval
@@ -1803,6 +1803,10 @@ class DataEditingPage(templatePage):
 				except:
 					traitVar = ''
 					dispVar = 'x'
+				try:
+					dispN = "%2.3f" % thisNP
+				except:
+					dispN = 'x'
 			
 			if thisval == 'x':
 				traitVar = '' #ZS: Used to be 0, but it doesn't seem like a good idea for values of 0 to *always* be at the bottom when you sort; it makes more sense to put "nothing"
@@ -1836,16 +1840,19 @@ class DataEditingPage(templatePage):
 					if varianceDataPage:
 						seField = HT.Input(name='V'+strainNameOrig, size=8, maxlength=8, style="text-align:right", value=dispVar,
 							onChange= "javascript:this.form['V_2nd_%s'].value=this.form['V%s'].value;" % (strainNameOrig.replace("/", ""), strainNameOrig.replace("/", "")), Class=varClassName)
+						nField = HT.Input(name='N'+strainNameOrig, size=8, maxlength=8, style="text-align:right", value=dispN, Class=varClassName)
 				else:
 					valueField = HT.Input(name=strainNameOrig, size=8, maxlength=8, style="text-align:right; background-color:#FFFFFF;", value=dispVal, Class=valueClassName)
 					if varianceDataPage:
 						seField = HT.Input(name='V'+strainNameOrig, size=8, maxlength=8, style="text-align:right", value=dispVar, Class=varClassName)
+						nField = HT.Input(name='N'+strainNameOrig, size=8, maxlength=8, style="text-align:right", value=dispN, Class=varClassName)
 			else:
 				valueField = HT.Input(name=strainNameOrig, size=8, maxlength=8, style="text-align:right", value=dispVal, 
 						      onChange= "javascript:this.form['%s'].value=this.form['%s'].value;" % (strainNameOrig.replace("/", ""), strainNameOrig.replace("/", "")), Class=valueClassName)
 				if varianceDataPage:
 					seField = HT.Input(name='V'+strainNameOrig, size=8, maxlength=8, style="text-align:right", value=dispVar, 
 						onChange= "javascript:this.form['V%s'].value=this.form['V%s'].value;" % (strainNameOrig.replace("/", ""), strainNameOrig.replace("/", "")), Class=varClassName)
+					nField = HT.Input(name='N'+strainNameOrig, size=8, maxlength=8, style="text-align:right", value=dispN, Class=varClassName)
 
 			if (strains == 'primary'):
 				table_row = HT.TR(Id="Primary_"+str(i+1), Class=rowClassName)
@@ -1857,7 +1864,8 @@ class DataEditingPage(templatePage):
 				table_row.append(HT.TD(strainNameDisp, strainNameAdd, align='left', width=140, Class=className))
 				table_row.append(HT.TD(valueField, width=70, align='right', Id="value_"+str(i)+"_"+strains, Class=className))
 				table_row.append(HT.TD("&plusmn;", width=20, align='center', Class=className))
-				table_row.append(HT.TD(seField, width=80, align='right', Id="SE_"+str(i)+"_"+strains, Class=className))		
+				table_row.append(HT.TD(seField, width=80, align='right', Id="SE_"+str(i)+"_"+strains, Class=className))
+				table_row.append(HT.TD(nField, width=80, align='right', Id="N_"+str(i)+"_"+strains, Class=className))
 			else:
 				table_row.append(HT.TD(str(i+1), selectCheck, width=45, align='right', Class=className))
 				table_row.append(HT.TD(strainNameDisp, strainNameAdd, align='left', width=140, Class=className))
@@ -1932,7 +1940,8 @@ class DataEditingPage(templatePage):
 				HT.TH('Sample', align='left', width=140, Class=col_class),
 				HT.TH('Value', align='right', width=70, Class=col_class),
 				HT.TH('&nbsp;', width=20, Class=col_class),
-				HT.TH(fd.varianceDispName, align='right', width=80, Class=col_class))
+				HT.TH(fd.varianceDispName, align='right', width=80, Class=col_class),
+				HT.TH('N', align='right', width=80, Class=col_class))
 
 		elif nCols == 4:
 			table_header.append(HT.TH('Index', align='right', width=60, Class=col_class),
