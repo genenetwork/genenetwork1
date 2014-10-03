@@ -1662,9 +1662,25 @@ class DataEditingPage(templatePage):
 		container = HT.Div() #This will contain everything and be put into a cell of the table defined above
 
 		container.append(dispintro, traitTableOptions, HT.BR())
+		
+		try:		
+			self.cursor.execute("""
+							SELECT COUNT(Strain.Id)
+							FROM PublishFreeze,PublishXRef,Strain,NStrain
+							WHERE PublishFreeze.Id=%s
+							AND PublishFreeze.InbredSetId=PublishXRef.InbredSetId
+							AND PublishXRef.Id=%s
+							AND PublishXRef.DataId=NStrain.DataId
+							AND Strain.Id=NStrain.StrainId
+							AND NStrain.count IS NOT NULL
+							""" % (thisTrait.db.id, thisTrait.name))
+			ncount = self.cursor.fetchone()[0]
+			hasN = 0 < ncount
+		except:
+			hasN = False
 
 		primary_table = HT.TableLite(cellspacing=0, cellpadding=0, Id="sortable1", Class="tablesorter")
-		primary_header = self.getTableHeader(fd=fd, thisTrait=thisTrait, nCols=nCols, attribute_names=attribute_names) #Generate header for primary table object
+		primary_header = self.getTableHeader(fd=fd, thisTrait=thisTrait, nCols=nCols, attribute_names=attribute_names, hasN=hasN) #Generate header for primary table object
 			
 		other_strainsExist = False
 		for strain in thisTrait.data.keys():
@@ -1672,7 +1688,7 @@ class DataEditingPage(templatePage):
 				other_strainsExist = True
 				break
 				
-		primary_body = self.addTrait2Table(fd=fd, varianceDataPage=varianceDataPage, strainlist=allstrainlist_neworder, mainForm=mainForm, thisTrait=thisTrait, other_strainsExist=other_strainsExist, attribute_ids=attribute_ids, attribute_names=attribute_names, strains='primary')		
+		primary_body = self.addTrait2Table(fd=fd, varianceDataPage=varianceDataPage, strainlist=allstrainlist_neworder, mainForm=mainForm, thisTrait=thisTrait, other_strainsExist=other_strainsExist, attribute_ids=attribute_ids, attribute_names=attribute_names, strains='primary', hasN=hasN)		
 
 		primary_table.append(primary_header)
 		for i in range(len(primary_body)):
@@ -1686,7 +1702,7 @@ class DataEditingPage(templatePage):
 		
 		if other_strains:
 			other_table = HT.TableLite(cellspacing=0, cellpadding=0, Id="sortable2", Class="tablesorter") #Table object with other (for example, non-BXD / MDP) traits
-			other_header = self.getTableHeader(fd=fd, thisTrait=thisTrait, nCols=nCols, attribute_names=attribute_names) #Generate header for other table object; same function is used as the one used for the primary table, since the header is the same
+			other_header = self.getTableHeader(fd=fd, thisTrait=thisTrait, nCols=nCols, attribute_names=attribute_names, hasN=hasN) #Generate header for other table object; same function is used as the one used for the primary table, since the header is the same
 			other_strains.sort() #Sort other strains
 			other_strains = map(lambda X:"_2nd_"+X, fd.f1list + fd.parlist) + other_strains #Append F1 and parent strains to the beginning of the sorted list of other strains
 
@@ -1707,7 +1723,7 @@ class DataEditingPage(templatePage):
 			self.MDPRow2.append(HT.TD(MDPText),HT.TD(MDPMenu2))
 			self.MDPRow3.append(HT.TD(MDPText),HT.TD(MDPMenu3))
 
-			other_body = self.addTrait2Table(fd=fd, varianceDataPage=varianceDataPage, strainlist=other_strains, mainForm=mainForm, thisTrait=thisTrait, attribute_ids=attribute_ids, attribute_names=attribute_names, strains='other')
+			other_body = self.addTrait2Table(fd=fd, varianceDataPage=varianceDataPage, strainlist=other_strains, mainForm=mainForm, thisTrait=thisTrait, attribute_ids=attribute_ids, attribute_names=attribute_names, strains='other', hasN=hasN)
 			
 			other_table.append(other_header)
 			for i in range(len(other_body)):
@@ -1733,7 +1749,7 @@ class DataEditingPage(templatePage):
 		table.append(HT.TR(HT.TD(container)))
 		title5Body.append(table)
 
-	def addTrait2Table(self, fd, varianceDataPage, strainlist, mainForm, thisTrait, other_strainsExist=None, attribute_ids=[], attribute_names=[], strains='primary'):
+	def addTrait2Table(self, fd, varianceDataPage, strainlist, mainForm, thisTrait, other_strainsExist=None, attribute_ids=[], attribute_names=[], strains='primary', hasN=False):
 		#XZ, Aug 23, 2010: I commented the code related to the display of animal case
 		#strainInfo = thisTrait.has_key('strainInfo') and thisTrait.strainInfo
 
@@ -1804,7 +1820,7 @@ class DataEditingPage(templatePage):
 					traitVar = ''
 					dispVar = 'x'
 				try:
-					dispN = "%2.3f" % thisNP
+					dispN = "%d" % thisNP
 				except:
 					dispN = 'x'
 			
@@ -1865,7 +1881,8 @@ class DataEditingPage(templatePage):
 				table_row.append(HT.TD(valueField, width=70, align='right', Id="value_"+str(i)+"_"+strains, Class=className))
 				table_row.append(HT.TD("&plusmn;", width=20, align='center', Class=className))
 				table_row.append(HT.TD(seField, width=80, align='right', Id="SE_"+str(i)+"_"+strains, Class=className))
-				table_row.append(HT.TD(nField, width=80, align='right', Id="N_"+str(i)+"_"+strains, Class=className))
+				if hasN:
+					table_row.append(HT.TD(nField, width=80, align='right', Id="N_"+str(i)+"_"+strains, Class=className))
 			else:
 				table_row.append(HT.TD(str(i+1), selectCheck, width=45, align='right', Class=className))
 				table_row.append(HT.TD(strainNameDisp, strainNameAdd, align='left', width=140, Class=className))
@@ -1923,7 +1940,7 @@ class DataEditingPage(templatePage):
 			table_body.append(table_row)	
 		return table_body
 
-	def getTableHeader(self, fd, thisTrait, nCols, attribute_names):
+	def getTableHeader(self, fd, thisTrait, nCols, attribute_names, hasN=False):
 	
 		table_header = HT.TR()
 
@@ -1936,12 +1953,14 @@ class DataEditingPage(templatePage):
 			except:
 				fd.varianceDispName = 'Variance'
 				
-			table_header.append(HT.TH('Index', align='right', width=60, Class=col_class),
+			table_header.append(
+				HT.TH('Index', align='right', width=60, Class=col_class),
 				HT.TH('Sample', align='left', width=140, Class=col_class),
 				HT.TH('Value', align='right', width=70, Class=col_class),
 				HT.TH('&nbsp;', width=20, Class=col_class),
-				HT.TH(fd.varianceDispName, align='right', width=80, Class=col_class),
-				HT.TH('N', align='right', width=80, Class=col_class))
+				HT.TH(fd.varianceDispName, align='right', width=80, Class=col_class))
+			if hasN:
+				table_header.append(HT.TH('N', align='right', width=80, Class=col_class))
 
 		elif nCols == 4:
 			table_header.append(HT.TH('Index', align='right', width=60, Class=col_class),
