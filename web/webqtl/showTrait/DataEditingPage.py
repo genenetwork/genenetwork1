@@ -1856,19 +1856,19 @@ class DataEditingPage(templatePage):
 					if varianceDataPage:
 						seField = HT.Input(name='V'+strainNameOrig, size=8, maxlength=8, style="text-align:right", value=dispVar,
 							onChange= "javascript:this.form['V_2nd_%s'].value=this.form['V%s'].value;" % (strainNameOrig.replace("/", ""), strainNameOrig.replace("/", "")), Class=varClassName)
-						nField = HT.Input(name='N'+strainNameOrig, size=8, maxlength=8, style="text-align:right", value=dispN, Class=varClassName)
+						nField = HT.Input(name='N'+strainNameOrig, size=3, maxlength=8, style="text-align:right", value=dispN, Class=varClassName)
 				else:
 					valueField = HT.Input(name=strainNameOrig, size=8, maxlength=8, style="text-align:right; background-color:#FFFFFF;", value=dispVal, Class=valueClassName)
 					if varianceDataPage:
 						seField = HT.Input(name='V'+strainNameOrig, size=8, maxlength=8, style="text-align:right", value=dispVar, Class=varClassName)
-						nField = HT.Input(name='N'+strainNameOrig, size=8, maxlength=8, style="text-align:right", value=dispN, Class=varClassName)
+						nField = HT.Input(name='N'+strainNameOrig, size=3, maxlength=8, style="text-align:right", value=dispN, Class=varClassName)
 			else:
 				valueField = HT.Input(name=strainNameOrig, size=8, maxlength=8, style="text-align:right", value=dispVal, 
 						      onChange= "javascript:this.form['%s'].value=this.form['%s'].value;" % (strainNameOrig.replace("/", ""), strainNameOrig.replace("/", "")), Class=valueClassName)
 				if varianceDataPage:
 					seField = HT.Input(name='V'+strainNameOrig, size=8, maxlength=8, style="text-align:right", value=dispVar, 
 						onChange= "javascript:this.form['V%s'].value=this.form['V%s'].value;" % (strainNameOrig.replace("/", ""), strainNameOrig.replace("/", "")), Class=varClassName)
-					nField = HT.Input(name='N'+strainNameOrig, size=8, maxlength=8, style="text-align:right", value=dispN, Class=varClassName)
+					nField = HT.Input(name='N'+strainNameOrig, size=3, maxlength=8, style="text-align:right", value=dispN, Class=varClassName)
 
 			if (strains == 'primary'):
 				table_row = HT.TR(Id="Primary_"+str(i+1), Class=rowClassName)
@@ -1878,15 +1878,15 @@ class DataEditingPage(templatePage):
 			if varianceDataPage:
 				table_row.append(HT.TD(str(i+1), selectCheck, width=45, align='right', Class=className))
 				table_row.append(HT.TD(strainNameDisp, strainNameAdd, align='left', width=140, Class=className))
-				table_row.append(HT.TD(valueField, width=70, align='right', Id="value_"+str(i)+"_"+strains, Class=className))
+				table_row.append(HT.TD(valueField, width=80, align='right', Id="value_"+str(i)+"_"+strains, Class=className))
 				table_row.append(HT.TD("&plusmn;", width=20, align='center', Class=className))
 				table_row.append(HT.TD(seField, width=80, align='right', Id="SE_"+str(i)+"_"+strains, Class=className))
 				if hasN:
-					table_row.append(HT.TD(nField, width=80, align='right', Id="N_"+str(i)+"_"+strains, Class=className))
+					table_row.append(HT.TD(nField, width=30, align='right', Id="N_"+str(i)+"_"+strains, Class=className))
 			else:
 				table_row.append(HT.TD(str(i+1), selectCheck, width=45, align='right', Class=className))
 				table_row.append(HT.TD(strainNameDisp, strainNameAdd, align='left', width=140, Class=className))
-				table_row.append(HT.TD(valueField, width=70, align='right', Id="value_"+str(i)+"_"+strains, Class=className))
+				table_row.append(HT.TD(valueField, width=80, align='right', Id="value_"+str(i)+"_"+strains, Class=className))
 
 			if thisTrait and thisTrait.db and (thisTrait.db.type =='ProbeSet' or thisTrait.db.type == 'Publish'):
 				if len(attribute_ids) > 0:
@@ -1956,16 +1956,16 @@ class DataEditingPage(templatePage):
 			table_header.append(
 				HT.TH('Index', align='right', width=60, Class=col_class),
 				HT.TH('Sample', align='left', width=140, Class=col_class),
-				HT.TH('Value', align='right', width=70, Class=col_class),
+				HT.TH('Value', align='right', width=80, Class=col_class),
 				HT.TH('&nbsp;', width=20, Class=col_class),
 				HT.TH(fd.varianceDispName, align='right', width=80, Class=col_class))
 			if hasN:
-				table_header.append(HT.TH('N', align='right', width=80, Class=col_class))
+				table_header.append(HT.TH('N', align='right', width=40, Class=col_class))
 
 		elif nCols == 4:
 			table_header.append(HT.TH('Index', align='right', width=60, Class=col_class),
 				HT.TH('Sample', align='left', width=140, Class=col_class),
-				HT.TH('Value', align='right', width=70, Class=col_class))
+				HT.TH('Value', align='right', width=80, Class=col_class))
 
 		else:
 			pass
