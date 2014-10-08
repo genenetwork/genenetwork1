@@ -152,7 +152,7 @@ class webqtlDataset:
 	
 	def genHTML(self, Class='c0dd'):
 		return  HT.Href(text = HT.Span('%s Database' % self.fullname, Class= "fwb " + Class), 
-			url= webqtlConfig.INFOPAGEHREF % self.id,target="_blank")
+			url= webqtlConfig.INFOPAGEHREF % self.name,target="_blank")
 
 
 

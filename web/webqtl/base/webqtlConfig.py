@@ -68,8 +68,7 @@ ChangableHtmlPath = GNROOT + 'web/'
 SITENAME = 'GN'
 PORTADDR = "http://132.192.47.32"
 BASEHREF = '<base href="http://132.192.47.32/">'
-#INFOPAGEHREF = '/dbdoc/%s.html'
-INFOPAGEHREF = '/webqtl/main.py?FormID=sharinginfo&GN_AccessionId=%s'
+INFOPAGEHREF = '/webqtl/main.py?FormID=sharinginfo&InfoPageName=%s'
 GLOSSARYFILE = "/glossary.html"
 CGIDIR = '/webqtl/' #XZ: The variable name 'CGIDIR' should be changed to 'PYTHONDIR'
 SCRIPTFILE = 'main.py'
