@@ -1,3 +1,8 @@
+import sys
+
+import datastructure
+import probesets
+
 """
 For:	Ash
 Date:   2014-10-10
@@ -19,13 +24,12 @@ def generate_probesets(probesetfreezesfile, outputdir):
 		probesetfreezename = probesetfreeze[1]
 		#
 		outputfile = open("%s/%d_%s.txt" % (outputdir, probesetfreezeid, probesetfreezename), "w+")
-		outputfile.write("%s\t" % "ProbeSet Id")
-		outputfile.write("%s\t" % "ProbeSet Name")
+		outputfile.write("%s\t" % "ProbeSetId")
+		outputfile.write("%s\t" % "ProbeSetName")
 		outputfile.write("%s\t" % "Symbol")
 		outputfile.write("%s\t" % "StrainNumbers")
 		outputfile.write("\n")
 		outputfile.flush()
-		return
 		#
 		probesetxrefs = probesets.get_probesetxref(probesetfreezeid)
 		print probesetfreeze
@@ -35,28 +39,23 @@ def generate_probesets(probesetfreezesfile, outputdir):
 			probesetdataid = probesetxref[1]
 			probeset = probesets.get_probeset(probesetid)
 			probesetname = probeset[1]
+			probesetsymbol = probeset[2]
+			probesetdescription = probeset[3]
+			probesetchr = probeset[5]
+			probesetmb = probeset[6]
 			probesetdata = probesets.get_probesetdata(probesetdataid)
-			probesetdata = zip(*probesetdata)
-			probesetdata = utilities.to_dic([strain.lower() for strain in probesetdata[1]], probesetdata[2])
 			#
 			outputfile.write("%s\t" % probesetid)
 			outputfile.write("%s\t" % probesetname)
-			#
-			for strain in strains:
-				strainname = strain[1]
-				strainname = strainname.lower()
-				if strainname in probesetdata:
-					value = probesetdata[strainname]
-				else:
-					value = 'x'
-				outputfile.write("%s\t" % value)
+			outputfile.write("%s\t" % probesetsymbol)
+			outputfile.write("%d" % len(probesetdata))
 			outputfile.write("\n")
 			outputfile.flush()
 		#
 		outputfile.close()
 	file.close()
 
-# python specials7.py /home/leiyan/datadir/20140429_Ash_probesets/probesetfreezes1.txt /home/leiyan/datadir/20140429_Ash_probesets
+# python specials7.py /home/leiyan/datadir/20140205_Ash_BXD/probesetfreezes_filter7.txt /home/leiyan/datadir/20140205_Ash_BXD/expression_n
 
 if __name__ == "__main__":
 	print("command line arguments:\n\t%s" % sys.argv)
