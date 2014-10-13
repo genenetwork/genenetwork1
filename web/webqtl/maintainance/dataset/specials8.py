@@ -3,6 +3,7 @@ import sys
 import utilities
 import datastructure
 import probesets
+import phenotypes
 
 """
 For:	Ash
