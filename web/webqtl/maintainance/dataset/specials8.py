@@ -38,6 +38,19 @@ def traverse(outputfile):
 		file.write("%s\t" % probesetfreezefullname)
 		file.write("%d\t" % len(probesetxrefs))
 		#
+		for strain in strains:
+			sql = """
+				SELECT COUNT(ProbeSetData.`Id`)
+				FROM ProbeSetXRef,ProbeSetData
+				WHERE ProbeSetXRef.`ProbeSetFreezeId`=%s
+				AND ProbeSetXRef.`DataId`=ProbeSetData.`Id`
+				AND ProbeSetData.`StrainId`=%s
+				AND ProbeSetData.`value` is not null
+				"""
+			cursor.execute(sql, (probesetfreezeid, strain[0]))
+			n = cursor.fetchone()[0]
+			file.write("%d\t" % n)
+		#
 		file.write("\n")
 		file.flush()
 		#
