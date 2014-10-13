@@ -9,7 +9,8 @@ For:	Ash
 Date:   2014-10-13
 Function:
 	Get a probesetfreeze list.
-	For each probesetfreeze, each strain, record/trait numbers
+	For each probesetfreeze, each strain, count record/trait numbers
+	and phenotypes
 """
 def traverse(outputfile):
 	#
@@ -27,6 +28,28 @@ def traverse(outputfile):
 	file.write("RecordNumber\t")
 	for strain in strains:
 		file.write("%s\t" % strain[1])
+	file.write("\n")
+	file.flush()
+	# phenotypes
+	publishxrefs = phenotypes.get_publishxrefs(inbredsetid)
+	file.write("-\t")
+	file.write("%s\t" % "Phenotypes")
+	file.write("%d\t" % len(publishxrefs))
+	#
+	for strain in strains:
+		sql = """
+			SELECT COUNT(PublishData.Id)
+			FROM PublishXRef,PublishData
+			WHERE PublishXRef.InbredSetId=%s
+			AND PublishXRef.DataId=PublishData.Id
+			AND PublishData.StrainId=%s
+			AND PublishData.value IS NOT NULL
+			"""
+		cursor.execute(sql, (inbredsetid, strain[0]))
+		n = cursor.fetchone()[0]
+		file.write("%d\t" % n)
+		file.flush()
+	#
 	file.write("\n")
 	file.flush()
 	#
@@ -48,11 +71,12 @@ def traverse(outputfile):
 				WHERE ProbeSetXRef.`ProbeSetFreezeId`=%s
 				AND ProbeSetXRef.`DataId`=ProbeSetData.`Id`
 				AND ProbeSetData.`StrainId`=%s
-				AND ProbeSetData.`value` is not null
+				AND ProbeSetData.`value` IS NOT NULL
 				"""
 			cursor.execute(sql, (probesetfreezeid, strain[0]))
 			n = cursor.fetchone()[0]
 			file.write("%d\t" % n)
+			file.flush()
 		#
 		file.write("\n")
 		file.flush()
