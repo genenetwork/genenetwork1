@@ -1,5 +1,6 @@
 import sys
 
+import utilities
 import datastructure
 import probesets
 
@@ -18,6 +19,8 @@ def traverse(outputfile):
 	print("strains: %s" % len(strains))
 	probesetfreezes = datastructure.get_probesetfreezes(inbredsetid)
 	print("probesetfreezes: %s" % len(probesetfreezes))
+	#
+	cursor, con = utilities.get_cursor()
 	#
 	file.write("DatasetID\t")
 	file.write("DatasetName\t")
@@ -55,6 +58,7 @@ def traverse(outputfile):
 		file.flush()
 		#
 	file.close()
+	con.close()
 
 #  python specials8.py /home/leiyan/datadir/20140205_Ash_BXD/statistic/trait_numbers.txt
 
