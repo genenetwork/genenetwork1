@@ -19,6 +19,7 @@ def traverse(outputfile):
 	inbredsetid = 1
 	strains = datastructure.get_strains(inbredsetid)
 	print("strains: %s" % len(strains))
+	sum = [0] * len(strains)
 	probesetfreezes = datastructure.get_probesetfreezes(inbredsetid)
 	print("probesetfreezes: %s" % len(probesetfreezes))
 	#
@@ -37,7 +38,7 @@ def traverse(outputfile):
 	file.write("%s\t" % "Phenotypes")
 	file.write("%d\t" % len(publishxrefs))
 	#
-	for strain in strains:
+	for i,strain in enumerate(strains):
 		sql = """
 			SELECT COUNT(PublishData.Id)
 			FROM PublishXRef,PublishData
@@ -50,6 +51,7 @@ def traverse(outputfile):
 		n = cursor.fetchone()[0]
 		file.write("%d\t" % n)
 		file.flush()
+		sum[i] += n
 	#
 	file.write("\n")
 	file.flush()
@@ -65,7 +67,7 @@ def traverse(outputfile):
 		file.write("%s\t" % probesetfreezefullname)
 		file.write("%d\t" % len(probesetxrefs))
 		#
-		for strain in strains:
+		for i,strain in enumerate(strains):
 			sql = """
 				SELECT COUNT(ProbeSetData.`Id`)
 				FROM ProbeSetXRef,ProbeSetData
@@ -78,10 +80,22 @@ def traverse(outputfile):
 			n = cursor.fetchone()[0]
 			file.write("%d\t" % n)
 			file.flush()
+			sum[i] += n
 		#
 		file.write("\n")
 		file.flush()
-		#
+	# sum
+	file.write("-\t")
+	file.write("%s\t" % "Sum")
+	file.write("-\t")
+	#
+	for e in sum:
+		file.write("%d\t" % e)
+		file.flush()
+	#
+	file.write("\n")
+	file.flush()
+	#
 	file.close()
 	con.close()
 
