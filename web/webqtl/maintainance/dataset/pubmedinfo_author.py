@@ -22,8 +22,7 @@ def convert(inputfile, outputfile):
 		outputfile.write("%s\t" % fullname)
 		outputfile.write("%s\t" % shortname)
 		outputfile.write("%s\t" % institute)
-		outputfile.write("%s" % geneid)
-		outputfile.write("\n")
+		outputfile.write("%s\n" % geneid)
 		outputfile.flush()
 	#
 	inputfile.close()
@@ -40,7 +39,7 @@ def convert_name(s):
 		b.append(a)
 	return ', '.join(b)
 	
-# python scripts/20141017_Pubmedinfo_author/pubmedinfo_author.py datadir/20141017_Pubmedinfo_author/Pubmedinfo_AU.txt datadir/20141017_Pubmedinfo_author/Pubmedinfo_AU_new.txt
+# python gn/web/webqtl/maintainance/dataset/pubmedinfo_author.py datadir/20141017_Pubmedinfo_author/Pubmedinfo_AU.txt datadir/20141017_Pubmedinfo_author/Pubmedinfo_AU_new.txt
 
 if __name__ == "__main__":
 	print("command line arguments:\n\t%s" % sys.argv)
