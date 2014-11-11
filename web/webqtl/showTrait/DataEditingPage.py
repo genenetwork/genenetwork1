@@ -1009,11 +1009,11 @@ class DataEditingPage(templatePage):
 				
 				if thisTrait.db:
 					if thisTrait.cellid:
-						statsTableCell = BasicStatisticsFunctions.basicStatsTable(vals=vals, trait_type=thisTrait.db.type, cellid=thisTrait.cellid, heritability=heritability)
+						statsTableCell = BasicStatisticsFunctions.basicStatsTable(vals=vals, trait_type=thisTrait.db.type, cellid=thisTrait.cellid, heritability=heritability, trait=thisTrait)
 					else:
-						statsTableCell = BasicStatisticsFunctions.basicStatsTable(vals=vals, trait_type=thisTrait.db.type, heritability=heritability)
+						statsTableCell = BasicStatisticsFunctions.basicStatsTable(vals=vals, trait_type=thisTrait.db.type, heritability=heritability, trait=thisTrait)
 				else:
-					  statsTableCell = BasicStatisticsFunctions.basicStatsTable(vals=vals, heritability=heritability)
+					  statsTableCell = BasicStatisticsFunctions.basicStatsTable(vals=vals, heritability=heritability, trait=thisTrait)
 
 				statsTable.append(HT.TR(HT.TD(statsTableCell)))
 				

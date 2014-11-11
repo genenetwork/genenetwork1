@@ -11,7 +11,7 @@ from utility import webqtlUtil
 from base import webqtlConfig
 from dbFunction import webqtlDatabaseFunction	
 		
-def basicStatsTable(vals, trait_type=None, cellid=None, heritability=None):
+def basicStatsTable(vals, trait_type=None, cellid=None, heritability=None, trait=None):
 	
 	valsOnly = []
 	dataXZ = vals[:]
@@ -42,27 +42,67 @@ def basicStatsTable(vals, trait_type=None, cellid=None, heritability=None):
 	tbl.append(HT.TR(HT.TD("Maximum", align="left", Class="fs13 b1 cbw c222",nowrap="yes"),
 			HT.TD("%s" % dataXZ[-1][1],nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
 	if (trait_type != None and trait_type == 'ProbeSet'):
-			#IRQuest = HT.Href(text="Interquartile Range", url=webqtlConfig.glossaryfile +"#Interquartile",target="_blank", Class="fs14")
-			#IRQuest.append(HT.BR())
-			#IRQuest.append(" (fold difference)")
-			tbl.append(HT.TR(HT.TD("Range (log2)",align="left", Class="fs13 b1 cbw c222",nowrap="yes"),
-				HT.TD("%2.3f" % (dataXZ[-1][1]-dataXZ[0][1]),nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
+		if trait != None and trait.db.datascale == "linear":
 			try:
 				tbl.append(HT.TR(
-					HT.TD(HT.Span("Range (fold)"), align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
-					HT.TD("%2.2f" % pow(2.0, (dataXZ[-1][1]-dataXZ[0][1])), nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
+					HT.TD("Range", align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
+					HT.TD("%2.3f" % (dataXZ[-1][1] - dataXZ[0][1]), nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
 			except Exception, e:
-				tbl.append(HT.TR(
-					HT.TD(HT.Span("Range (fold)"), align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
-					HT.TD("%s" % e, nowrap="yes", Class="fs13 b1 cbw c222", style="color: red;"), align="right"))
+				pass
 			try:
 				tbl.append(HT.TR(
-					HT.TD(HT.Span(HT.Href(url="/glossary.html#Interquartile", target="_blank", text="Interquartile Range", Class="non_bold")), align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
-					HT.TD("%2.2f" % pow(2.0,(dataXZ[int((N-1)*3.0/4.0)][1]-dataXZ[int((N-1)/4.0)][1])), nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
+					HT.TD("Range (fold)", align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
+					HT.TD("%2.3f" % pow(2.0, (dataXZ[-1][1] - dataXZ[0][1])), nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
 			except Exception, e:
+				pass
+			try:
 				tbl.append(HT.TR(
-					HT.TD(HT.Span(HT.Href(url="/glossary.html#Interquartile", target="_blank", text="Interquartile Range", Class="non_bold")), align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
-					HT.TD("%s" % e, nowrap="yes", Class="fs13 b1 cbw c222", style="color: red;"), align="right"))
+					HT.TD(HT.Href(url="/glossary.html#Interquartile", target="_blank", text="Interquartile Range", Class="non_bold"), align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
+					HT.TD("%2.3f" % pow(2.0, (dataXZ[int((N-1)*3.0/4.0)][1] - dataXZ[int((N-1)/4.0)][1])), nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
+			except Exception, e:
+				pass
+		elif trait != None and trait.db.datascale == "linear_positive":
+			try:
+				tbl.append(HT.TR(
+					HT.TD("Range (log2)", align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
+					HT.TD("%2.3f" % (log(dataXZ[-1][1], 2) - log(dataXZ[0][1], 2)), nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
+			except Exception, e:
+				pass
+			try:
+				tbl.append(HT.TR(
+					HT.TD("Range (fold)", align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
+					HT.TD("%2.3f" % pow(2.0, (log(dataXZ[-1][1], 2) - log(dataXZ[0][1], 2))), nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
+			except Exception, e:
+				pass
+			try:
+				tbl.append(HT.TR(
+					HT.TD(HT.Href(url="/glossary.html#Interquartile", target="_blank", text="Interquartile Range", Class="non_bold"), align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
+					HT.TD("%2.3f" % pow(2.0, (log(dataXZ[int((N-1)*3.0/4.0)][1], 2) - log(dataXZ[int((N-1)/4.0)][1], 2))), nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
+			except Exception, e:
+				pass
+		elif trait != None and trait.db.datascale == "z_score":
+			pass
+		elif trait != None and trait.db.datascale == "log2":
+			try:
+				tbl.append(HT.TR(
+					HT.TD("Range (log2)", align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
+					HT.TD("%2.3f" % (dataXZ[-1][1] - dataXZ[0][1]), nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
+			except Exception, e:
+				pass
+			try:
+				tbl.append(HT.TR(
+					HT.TD("Range (fold)", align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
+					HT.TD("%2.3f" % pow(2.0, (dataXZ[-1][1] - dataXZ[0][1])), nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
+			except Exception, e:
+				pass
+			try:
+				tbl.append(HT.TR(
+					HT.TD(HT.Href(url="/glossary.html#Interquartile", target="_blank", text="Interquartile Range", Class="non_bold"), align="left", Class="fs13 b1 cbw c222", nowrap="yes"),
+					HT.TD("%2.3f" % pow(2.0, (dataXZ[int((N-1)*3.0/4.0)][1] - dataXZ[int((N-1)/4.0)][1])), nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
+			except Exception, e:
+				pass
+		else:
+			pass
 	
 			#XZ, 04/01/2009: don't try to get H2 value for probe.
 			if cellid:
@@ -75,7 +115,6 @@ def basicStatsTable(vals, trait_type=None, cellid=None, heritability=None):
 					pass
 			# Lei Yan
 			# 2008/12/19
-	
 	return tbl	
 
 def plotNormalProbability(vals=None, RISet='', title=None, showstrains=0, specialStrains=[None], size=(750,500)):

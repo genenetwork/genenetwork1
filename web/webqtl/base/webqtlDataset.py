@@ -130,31 +130,40 @@ class webqtlDataset:
 		self.riset = RISet
 		self.risetid = RIID
 		return RISet
-
 		
 	def retrieveName(self):
 		assert self.id == 0 and self.cursor
-		query = '''
-			SELECT 
-				Id, Name, FullName, ShortName 
-			FROM 
-				%sFreeze 
-			WHERE 
-				public > %d AND 
-				(Name = "%s" OR FullName = "%s" OR ShortName = "%s")
-		  '''% (self.type, webqtlConfig.PUBLICTHRESH, self.name, self.name, self.name)
-		try:
-			self.cursor.execute(query)
-			self.id,self.name,self.fullname,self.shortname=self.cursor.fetchone()
-		except:
-			raise KeyError, `self.name`+' doesn\'t exist.'
-
+		if self.type == 'ProbeSet':
+			query = '''
+				SELECT 
+					Id, Name, FullName, ShortName, DataScale
+				FROM 
+					%sFreeze 
+				WHERE 
+					public > %d AND 
+					(Name = "%s" OR FullName = "%s" OR ShortName = "%s")
+			  '''% (self.type, webqtlConfig.PUBLICTHRESH, self.name, self.name, self.name)
+			try:
+				self.cursor.execute(query)
+				self.id, self.name, self.fullname, self.shortname, self.datascale = self.cursor.fetchone()
+			except:
+				raise KeyError, `self.name`+' doesn\'t exist.'
+		else:
+			query = '''
+				SELECT 
+					Id, Name, FullName, ShortName 
+				FROM 
+					%sFreeze 
+				WHERE 
+					public > %d AND 
+					(Name = "%s" OR FullName = "%s" OR ShortName = "%s")
+			  '''% (self.type, webqtlConfig.PUBLICTHRESH, self.name, self.name, self.name)
+			try:
+				self.cursor.execute(query)
+				self.id,self.name,self.fullname,self.shortname=self.cursor.fetchone()
+			except:
+				raise KeyError, `self.name`+' doesn\'t exist.'
 	
 	def genHTML(self, Class='c0dd'):
 		return  HT.Href(text = HT.Span('%s Database' % self.fullname, Class= "fwb " + Class), 
 			url= webqtlConfig.INFOPAGEHREF % self.name,target="_blank")
-
-
-
-
-	
