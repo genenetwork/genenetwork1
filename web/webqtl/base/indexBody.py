@@ -230,10 +230,7 @@ Quick HELP Examples and </B>
 				<li>GeneNetwork Classic on <a target="_blank" href="http://ec2.genenetwork.org/">Amazon Cloud</a></li>
 				<li>GeneNetwork Classic Code on <a target="_blank" href="https://github.com/genenetwork/genenetwork">GitHub</a></li>
 				<li>GeneNetwork 2.0 Development Code on <a target="_blank" href="https://github.com/zsloan/genenetwork">GitHub</a></li>
-				<li><a target="_blank" href="http://gn2python.genenetwork.org/">GeneNetwork 2.0 - Python</a> development</li>
-				<!--
-				<li><a target="_blank" href="http://gn2java.genenetwork.org/">GeneNetwork 2.0 - Java</a> demonstration</li>
-				-->
+				<li><a target="_blank" href="http://gn2.genenetwork.org/">GeneNetwork 2.0</a> Development</li>
 			</ul>
 		</p>
 							<P>____________________________

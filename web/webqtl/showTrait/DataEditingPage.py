@@ -1809,7 +1809,7 @@ class DataEditingPage(templatePage):
 			if strainName==strainName2:
 				sn = strainName
 			else:
-				sn = strainName2 + " (" + strainName + ")"
+				sn = strainName + " (" + strainName2 + ")"
 			strainNameDisp = HT.Span(sn, Class='fs14 fwn ffl')
 
 			if varianceDataPage:
