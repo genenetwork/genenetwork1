@@ -487,8 +487,18 @@ class CorrelationMatrixPage(templatePage):
 
        StrainIds = []
        for item in infoStrains:
-           self.cursor.execute('SELECT Strain.Id FROM Strain,StrainXRef, InbredSet WHERE Strain.Name="%s" and Strain.Id = StrainXRef.StrainId and StrainXRef.InbredSetId = InbredSet.Id and InbredSet.Name = "%s"' % (item, fd.RISet))
-           StrainIds.append('%d' % self.cursor.fetchone()[0])
+           sql = '''
+				SELECT Strain.Id
+				FROM Strain,StrainXRef,InbredSet
+				WHERE Strain.Name=%s
+				and Strain.Id = StrainXRef.StrainId
+				and StrainXRef.InbredSetId = InbredSet.Id
+				and InbredSet.Name=%s
+				'''
+           self.cursor.execute(sql, (item, fd.RISet))
+           strainid = self.cursor.fetchone()
+           if strainid:
+               StrainIds.append('%d' % strainid[0])
     
        """
        #minimal 12 overlapping strains      
