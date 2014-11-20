@@ -293,9 +293,9 @@ Quick HELP Examples and </B>
 									<a target="_blank" style="font-size:12px;font-family:verdana;color:blue" href="http://www.genome-explorations.com/">Genome Explorations</a>
 								</li>
 								<li>
-									<a target="_blank" style="font-size:12px;font-family:verdana;color:blue" href="http://ec2-23-21-212-22.compute-1.amazonaws.com/">GN instance on Amazon Cloud</a>
+									<a target="_blank" style="font-size:12px;font-family:verdana;color:blue" href="http://ec2-54-90-172-25.compute-1.amazonaws.com/">GN instance on Amazon Cloud</a>
 									for
-									<a target="_blank" style="font-size:12px;font-family:verdana;color:blue" href="http://www.rti.org/">Research Triangle Institute International</a>
+									<a target="_blank" style="font-size:12px;font-family:verdana;color:blue" href="http://www.rti.org/">RTI International</a>
 								</li>
 							</ul>
 
