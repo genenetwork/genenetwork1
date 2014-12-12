@@ -50,6 +50,9 @@ from base import webqtlConfig
 from base.templatePage import templatePage
 from utility import webqtlUtil
 
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("gn\web\webqtl\cmdLine\webqtlCmdLine.py")
 
 if __name__ == "__main__":
 	try:

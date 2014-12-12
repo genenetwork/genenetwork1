@@ -292,6 +292,7 @@ class IntervalMappingPage(templatePage):
             self.GraphInterval = self.cMGraphInterval #cM
 
 
+			
         ################################################################
         # Get Trait Values and Infomation
         ################################################################
@@ -443,7 +444,6 @@ class IntervalMappingPage(templatePage):
 
         else:
             self.geneCol = None
-
         ################################################################
         # Plots goes here
         ################################################################
@@ -476,11 +476,9 @@ class IntervalMappingPage(templatePage):
             traitInfoTD.append(HT.P(), DLintImgX2, ' a higher resolution 2X image. ')
         else:
             traitInfoTD.append(HT.P())
-
         if textUrl:
             traitInfoTD.append(HT.BR(), textUrl, ' results in tab-delimited text format.')
         traitRemapTD = self.traitRemapTD(self.cursor, fd)
-
         topTable = HT.TableLite(HT.TR(traitInfoTD, HT.TD("&nbsp;", width=25), traitRemapTD), border=0, cellspacing=0, cellpadding=0)
 
         ################################################################
@@ -497,7 +495,7 @@ class IntervalMappingPage(templatePage):
         else:
             showLocusForm = intImg
         
-        if self.permChecked and not self.multipleInterval:
+        if self.permChecked and not self.multipleInterval and 0<self.nperm:
             perm_histogram = self.drawPermutationHistogram()
             perm_text_file = self.permutationTextFile()
 
@@ -512,7 +510,7 @@ class IntervalMappingPage(templatePage):
         if self.traitList and self.traitList[0].db and self.traitList[0].db.type == 'Geno':
             btminfo.append(HT.BR(), 'Mapping using genotype data as a trait will result in infinity LRS at one locus. In order to display the result properly, all LRSs higher than 100 are capped at 100.')
 
-        if self.permChecked and not self.multipleInterval:
+        if self.permChecked and not self.multipleInterval and 0<self.nperm:
             TD_LR = HT.TD(HT.Blockquote(topTable), HT.Blockquote(gifmap, showLocusForm, HT.P(), btminfo, HT.P(), perm_histogram, HT.P(), perm_text_file), bgColor='#eeeeee', height = 200)
         else:
             TD_LR = HT.TD(HT.Blockquote(topTable), HT.Blockquote(gifmap, showLocusForm, HT.P(), btminfo), bgColor='#eeeeee', height = 200)
@@ -620,8 +618,12 @@ class IntervalMappingPage(templatePage):
                     fpText.write("%s\t%s\t%2.3f\t%s\t%2.3f\t%2.3f\t%2.3f\t%2.3f\n" %(qtlresult.locus.chr, \
                             qtlresult.locus.name, qtlresult.locus.cM, locusMb , qtlresult.lrs, P_value,  qtlresult.additive, qtlresult.dominance))
                 else:
-                    fpText.write("%s\t%s\t%2.3f\t%s\t%2.3f\t%2.3f\t%2.3f\n" %(qtlresult.locus.chr, \
+                    if P_value:
+                        fpText.write("%s\t%s\t%2.3f\t%s\t%2.3f\t%2.3f\t%2.3f\n" %(qtlresult.locus.chr, \
                             qtlresult.locus.name, qtlresult.locus.cM, locusMb , qtlresult.lrs, P_value,  qtlresult.additive))
+                    else:
+                        fpText.write("%s\t%s\t%2.3f\t%s\t%2.3f\t%s\t%2.3f\n" %(qtlresult.locus.chr, \
+                            qtlresult.locus.name, qtlresult.locus.cM, locusMb , qtlresult.lrs, '-',  qtlresult.additive))
             else:
                 if _dominance:
                     fpText.write("%s\t%s\t%2.3f\t%s\t%2.3f\t%2.3f\t%2.3f\n" %(qtlresult.locus.chr, \
@@ -2072,8 +2074,12 @@ class IntervalMappingPage(templatePage):
             if self.significance and self.suggestive:
                 pass
             else:
-                self.suggestive = self.LRSArray[int(self.nperm*0.37-1)]
-                self.significance = self.LRSArray[int(self.nperm*0.95-1)]
+                if self.nperm < 100:
+                    self.suggestive = 0
+                    self.significance = 0
+                else:
+                    self.suggestive = self.LRSArray[int(self.nperm*0.37-1)]
+                    self.significance = self.LRSArray[int(self.nperm*0.95-1)]
 
             #calculating bootstrap
             #from now on, genotype could only contain a single chromosome
@@ -2135,9 +2141,10 @@ class IntervalMappingPage(templatePage):
             if one_permutation_LRS >= query_LRS:
                 query_index = i
                 break
-
-        P_value = float(len(permutation_LRS_array) - query_index) / len(permutation_LRS_array)
-
+        try:
+            P_value = float(len(permutation_LRS_array) - query_index) / len(permutation_LRS_array)
+        except:
+            P_value = ''
         return P_value
 
     def helpButton(self, anchor):
@@ -2196,7 +2203,6 @@ class IntervalMappingPage(templatePage):
         draw2XText = HT.Span("2X Plot", Class="fs12 fwn")
 
         regraphButton = HT.Input(type="button", Class="button", onClick="javascript:databaseFunc(this.form,'showIntMap');", value="Remap")
-
         controlsForm = HT.Form(cgi= os.path.join(webqtlConfig.CGIDIR, webqtlConfig.SCRIPTFILE), enctype="multipart/form-data", name="changeViewForm", submit=HT.Input(type='hidden'))
         controlsTable = HT.TableLite(border=0)
         innerControlsTable = HT.TableLite(border=0)
@@ -2204,7 +2210,6 @@ class IntervalMappingPage(templatePage):
             minimumGraphWidth = self.MULT_GRAPH_MIN_WIDTH
         else:
             minimumGraphWidth = self.GRAPH_MIN_WIDTH
-
         innerControlsTable.append(
                 HT.TR(HT.TD("Chr: ", Class="fs12 fwb ffl"),HT.TD(chrList, scaleBox, regraphButton)),
                 HT.TR(HT.TD("View: ", Class="fs12 fwb ffl"),HT.TD(leftBox, " to ", rightBox, "Mb", physicOnly, NOWRAP="on")),
@@ -2213,8 +2218,10 @@ class IntervalMappingPage(templatePage):
                 HT.TR(HT.TD("Width: ", Class="fs12 fwb ffl"), HT.TD(widthBox, "pixels (minimum=%d)" % minimumGraphWidth, Class="fs11 fwn "))
         )
         #whether SNP
-        cursor.execute("Select Species.Id from SnpAll, Species where SnpAll.SpeciesId = Species.Id and Species.Name = %s limit 1", self.species)
-        SNPorNot = cursor.fetchall()
+        # comment this, because this will make caculation very slow.
+        #cursor.execute("Select Species.Id from SnpAll, Species where SnpAll.SpeciesId = Species.Id and Species.Name = %s limit 1", self.species)
+        #SNPorNot = cursor.fetchall()
+        SNPorNot = True
         #Whether Gene
         cursor.execute("Select Species.Id from GeneList, Species where GeneList.SpeciesId = Species.Id and Species.Name = %s limit 1", self.species)
         GeneorNot = cursor.fetchall()
@@ -2223,7 +2230,7 @@ class IntervalMappingPage(templatePage):
             optionPanel = HT.TD(valign="top", NOWRAP="on")
         else:
             optionPanel = HT.TD(permBox, permText, HT.BR(), bootBox, bootText, HT.BR(), additiveBox, additiveText, HT.BR(), valign="top", NOWRAP="on")
-        #whether dominance
+		#whether dominance
         if self.genotype.type == 'intercross':
             optionPanel.append(dominanceBox, dominanceText, HT.BR())
         if SNPorNot:
@@ -2261,7 +2268,6 @@ class IntervalMappingPage(templatePage):
         # updated by NL, move function changeView(i) to webqtl.js and change it to function changeView(i, Chr_Mb_list)
         #                move function chrLength(a, b, c) to webqtl.js and change it to function chrLength(a, b, c, Chr_Mb_list)
         self.dict['js1'] = '<script src="/javascript/sorttable.js"></script>'
-
         return HT.TD(controlsForm, Class="doubleBorder", width=400)
 
     def traitInfoTD(self, fd):
