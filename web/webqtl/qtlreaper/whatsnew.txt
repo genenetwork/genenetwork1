@@ -1,0 +1,12 @@
+version 1.1.0
+Update since version 1.0.0
+
+1. Add intercross support
+2. Add Mb position for each marker
+3. Domiance regression
+4. interval values
+
+version 1.1.1
+Update since version 1.1.0
+1. Increase maximum locus in one single chromosome from 200 to 500
+2. New code to claculate missing markers
