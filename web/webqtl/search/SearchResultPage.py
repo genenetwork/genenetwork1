@@ -966,8 +966,17 @@ class SearchResultPage(templatePage):
 			THCell(HT.TD('Phenotype',HT.BR(),HT.BR(), Class=className, nowrap="on"), text="pheno", idx=2),
 			THCell(HT.TD('Authors',HT.BR(),HT.BR(), Class=className, nowrap="on"), text="auth", idx=3),
 			THCell(HT.TD('Year',HT.BR(),HT.BR(), Class=className, nowrap="on"), text="year", idx=4),
-			THCell(HT.TD('Max',HT.BR(), 'LRS', HT.BR(), Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), text="lrs", idx=5),
-			THCell(HT.TD('Max LRS Location',HT.BR(),'Chr and Mb',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), text="lrs_location", idx=6)]]
+			THCell(HT.TD(HT.Href(
+							text = HT.Span('Max', HT.BR(), 'LRS', HT.Sup('  ?', style="color:#f00"), Class="fs13 fwb ffl cw"),
+							target = '_blank',
+                            url = "/glossary.html#L"),
+							Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="lrs", idx=5),
+			THCell(HT.TD('Max LRS Location',HT.BR(),'Chr and Mb',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb", nowrap="on"), text="lrs_location", idx=6),
+			THCell(HT.TD(HT.Href(
+							text = HT.Span('Add', HT.Sup('  ?', style="color:#f00"), Class="fs13 fwb ffl cw"),
+							target = '_blank',
+                            url = "/glossary.html#A"),
+                            Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Additive", idx=7)]]
 
 		for ncol, item in enumerate(["Record", "Phenotype", "Authors", "Year", "Pubmed Id", "Max LRS", "Max LRS Location (Chr: Mb)"]):
 			worksheet.write([newrow, ncol], item, headingStyle)
@@ -1058,7 +1067,13 @@ class SearchResultPage(templatePage):
 
 			else:
 				tr.append(TDCell(HT.TD("N/A", Class=className), "N/A", "N/A"))
-            			tr.append(TDCell(HT.TD("N/A", Class=className), "N/A", "N/A"))
+				tr.append(TDCell(HT.TD("N/A", Class=className), "N/A", "N/A"))
+						
+			try:
+				additive = '%3.3f' % thisTrait.additive
+			except Exception:
+				additive = ''
+			tr.append(TDCell(HT.TD(additive, Class=className, align="right", nowrap="on"), additive, additive))
 
 			tblobj_body.append(tr)
 
