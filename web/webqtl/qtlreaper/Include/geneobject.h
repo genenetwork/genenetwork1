@@ -12,7 +12,7 @@ extern "C" {
 #endif
 
 #define WHITES " \n\r\t "
-#define PERMUTATION_TESTSIZE 1000
+#define PERMUTATION_TESTSIZE 0
 #define BOOTSTRAP_TESTSIZE 1000
 #define MAXPERMUTATION 1000000
 

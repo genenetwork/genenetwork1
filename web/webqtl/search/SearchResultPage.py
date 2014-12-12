@@ -55,8 +55,6 @@ class SearchResultPage(templatePage):
 			#was used for multiple databases search, this
 			#feature has been abandoned,
 			self.database = string.split(self.database,',')
-		else:
-			pass
 
 		###########################################
 		#   Names and IDs of RISet / F2 set
@@ -1083,8 +1081,17 @@ class SearchResultPage(templatePage):
 					 	 THCell(HT.TD('Description',HT.BR(),HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text="desc", idx=3),
 					 	 THCell(HT.TD('Location',HT.BR(), 'Chr and Mb', HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text="location", idx=4),
 					 	 THCell(HT.TD('Mean',HT.BR(),'Expr',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb"), text="mean", idx=5),
-					 	 THCell(HT.TD('Max',HT.BR(),'LRS',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="lrs", idx=6),
-					  	THCell(HT.TD('Max LRS Location',HT.BR(),'Chr and Mb',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="lrs_location", idx=7)]]
+					 	 THCell(HT.TD(HT.Href(
+							text = HT.Span('Max', HT.BR(), 'LRS', HT.Sup('  ?', style="color:#f00"), Class="fs13 fwb ffl cw"),
+							target = '_blank',
+                            url = "/glossary.html#L"),
+							Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="lrs", idx=6),
+					  	THCell(HT.TD('Max LRS Location',HT.BR(),'Chr and Mb',HT.BR(), Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="lrs_location", idx=7),
+						THCell(HT.TD(HT.Href(
+							text = HT.Span('Add', HT.Sup('  ?', style="color:#f00"), Class="fs13 fwb ffl cw"),
+							target = '_blank',
+                            url = "/glossary.html#A"),
+                            Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Additive", idx=8)]]
 
 		for ncol, item in enumerate(['Record', 'Gene ID', 'Homologene ID', 'Symbol', 'Description', 'Location (Chr, Mb)', 'Mean Expr', 'Max LRS', 'Max LRS Location (Chr: Mb)']):
 			worksheet.write([newrow, ncol], item, headingStyle)
@@ -1230,6 +1237,12 @@ class SearchResultPage(templatePage):
 			else:
 				tr.append(TDCell(HT.TD("N/A", Class=className), "N/A", "N/A"))
 				tr.append(TDCell(HT.TD("N/A", Class=className), "N/A", "N/A"))
+				
+			try:
+				additive = '%3.3f' % thisTrait.additive
+			except Exception:
+				additive = ''
+			tr.append(TDCell(HT.TD(additive, Class=className, align="right", nowrap="on"), additive, additive))
 
 			tblobj_body.append(tr)
 

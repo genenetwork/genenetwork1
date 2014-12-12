@@ -30,6 +30,10 @@ import string
 
 from base.webqtlFormData import webqtlFormData
 
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("gn\web\webqtl\main.py")
+
 def handler(req):
 	req.content_type = 'text/html'
 

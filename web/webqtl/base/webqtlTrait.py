@@ -458,7 +458,7 @@ class webqtlTrait:
 				if self.db.type == 'ProbeSet' and not self.cellid:
 					query = '''
 						SELECT 
-							ProbeSetXRef.Locus, ProbeSetXRef.LRS, ProbeSetXRef.pValue, ProbeSetXRef.mean 
+							ProbeSetXRef.Locus, ProbeSetXRef.LRS, ProbeSetXRef.pValue, ProbeSetXRef.mean, ProbeSetXRef.additive 
 						FROM 
 							ProbeSetXRef, ProbeSet
 						WHERE 
@@ -469,13 +469,13 @@ class webqtlTrait:
 					self.cursor.execute(query)
 					traitQTL = self.cursor.fetchone()
 					if traitQTL:
-						self.locus, self.lrs, self.pvalue, self.mean = traitQTL
+						self.locus, self.lrs, self.pvalue, self.mean, self.additive = traitQTL
 					else:
-						self.locus = self.lrs = self.pvalue = self.mean = ""
+						self.locus = self.lrs = self.pvalue = self.mean = self.additive = ""
 				if self.db.type == 'Publish':
 					query = '''
 						SELECT
-							PublishXRef.Locus, PublishXRef.LRS
+							PublishXRef.Locus, PublishXRef.LRS, PublishXRef.additive
 						FROM
 							PublishXRef, PublishFreeze
 						WHERE
@@ -486,9 +486,9 @@ class webqtlTrait:
 					self.cursor.execute(query)
 					traitQTL = self.cursor.fetchone()
 					if traitQTL:
-						self.locus, self.lrs = traitQTL
+						self.locus, self.lrs, self.additive = traitQTL
 					else:
-						self.locus = self.lrs = ""
+						self.locus = self.lrs = self.additive = ""
 		else:
 			raise KeyError, 'self.name %s information is not found in the database.' % self.name
 	

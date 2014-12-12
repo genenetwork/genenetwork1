@@ -1331,7 +1331,7 @@ class DataEditingPage(templatePage):
 		for i in range(len(fd.genotype)):
 			if  len(fd.genotype[i]) > 1:
 				chrMenu.append(tuple([fd.genotype[i].name,i]))
-		numPerm = HT.Input(name="num_perm1", value="2000")
+		numPerm = HT.Input(name="num_perm1", value="5000")
 		
 		#Menu for Composite Interval Mapping		
 		chrMenu2 = HT.Select(name='chromosomes2')

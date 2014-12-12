@@ -335,8 +335,17 @@ class AddToSelectionPage(templatePage):
                 THCell(HT.TD('Location', HT.BR(), HT.BR(), valign="top", Class=className, nowrap="on"), text="location", idx=5),
                 THCell(HT.TD('Mean', HT.BR(), HT.BR(), valign="top", Class=className, nowrap="on"), text="mean", idx=6),
                 THCell(HT.TD('N', HT.BR(), 'Cases', HT.BR(), valign="top", Class=className, nowrap="on"), text="samples", idx=7),
-                THCell(HT.TD('Max LRS', HT.BR(), HT.BR(), valign="top", Class=className, nowrap="on"), text="lrs", idx=8),
-                THCell(HT.TD('Max LRS Location',HT.BR(),'Chr and Mb', HT.BR(), valign="top", Class=className, nowrap="on"), text="lrs_location", idx=9)]]
+                THCell(HT.TD(HT.Href(
+					text = HT.Span('Max', HT.BR(), 'LRS', HT.Sup('  ?', style="color:#f00"), Class="fs13 fwb ffl cw"),
+					target = '_blank',
+                    url = "/glossary.html#L"),
+					Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="lrs", idx=8),
+                THCell(HT.TD('Max LRS Location',HT.BR(),'Chr and Mb', HT.BR(), valign="top", Class=className, nowrap="on"), text="lrs_location", idx=9),
+				THCell(HT.TD(HT.Href(
+					text = HT.Span('Add', HT.Sup('  ?', style="color:#f00"), Class="fs13 fwb ffl cw"),
+					target = '_blank',
+                    url = "/glossary.html#A"),
+                    Class="fs13 fwb ffl b1 cw cbrb", nowrap='ON'), text="Additive", idx=10)]]
 
         return tblobj_header
 
@@ -685,6 +694,12 @@ class AddToSelectionPage(templatePage):
                 tr.append(TDCell(HT.TD("--", align="left", Class=className), "--", 0))
                 tr.append(TDCell(HT.TD("--", align="left", Class=className), "--", 1000000))
 
+            try:
+                additive = 	'%3.3f' % thisTrait.additive
+            except Exception:
+                additive = 	''
+            tr.append(TDCell(HT.TD(additive, Class=className, align="right", nowrap="on"), additive, additive))
+			
             tblobj_body.append(tr)
 
         return tblobj_body

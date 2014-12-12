@@ -554,10 +554,11 @@ $(window).load(function () {
     });
 
     $('input[name=num_perm1]').change(function(){
+	$('input[name=num_perm1]').val(parseInt($('input[name=num_perm1]').val()));
         if (parseInt($('input[name=num_perm1]').val()) > 100000) {
             $('input[name=num_perm1]').val("100000");
         }
-        else if (parseInt($('input[name=num_perm1]').val()) < 1000) {
+        else if (parseInt($('input[name=num_perm1]').val()) < 0) {
             $('input[name=num_perm1]').val("1000");
         }        
     });
