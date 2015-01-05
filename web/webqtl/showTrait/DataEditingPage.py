@@ -1353,8 +1353,10 @@ class DataEditingPage(templatePage):
 			scaleMenu2 = HT.Select(name='scale2', onChange="checkUncheck(window.document.dataInput.scale2.value, window.document.dataInput.bootCheck2)")
 			scaleMenu2.append(("Megabase",'physic'))
 			scaleMenu2.append(("Centimorgan",'morgan'))				
-		
-		controlLocus = self.get_nearest_marker(fd, thisTrait, thisTrait.db)
+		if thisTrait and thisTrait.db and (thisTrait.db.type == 'ProbeSet' or thisTrait.db.type == 'Geno'):
+			controlLocus = self.get_nearest_marker(fd, thisTrait)
+		else:
+			controlLocus = ''
 		controlText = HT.Span("Control Locus:", Class="ffl fwb fs12")
 		controlMenu = HT.Input(type="text", name="controlLocus", value=controlLocus, Class="controlLocus")
 				
@@ -1561,7 +1563,7 @@ class DataEditingPage(templatePage):
 			
 		title4Body.append(submitTable)	
 
-	def get_nearest_marker(self, fd, this_trait, this_db):
+	def get_nearest_marker(self, fd, this_trait):
 		query = """
 			SELECT Geno.Name
 			FROM Geno, GenoXRef, GenoFreeze
@@ -1575,7 +1577,10 @@ class DataEditingPage(templatePage):
 			"""
 		self.cursor.execute(query, (this_trait.chr, fd.RISet+"Geno", 'Y', this_trait.mb))
 		result = self.cursor.fetchall()
-		return result[0][0]
+		try:
+			return result[0][0]
+		except:
+			return ''
 		
 	def natural_sort(strain_list):
 		

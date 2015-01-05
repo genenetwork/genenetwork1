@@ -220,6 +220,8 @@ class Heatmap:
                                         _strains.append(strainlist[i])
                                         _vals.append(tempVal[i])
 
+                        if len(_strains) < 5:
+                            continue
                         qtlresult = genotype.regression(strains = _strains, trait = _vals)
 
                         if sessionfile:
