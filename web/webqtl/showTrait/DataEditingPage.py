@@ -14,6 +14,10 @@ from basicStatistics import BasicStatisticsFunctions
 
 from pprint import pformat as pf
 
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("\gn\web\webqtl\showTrait\DataEditingPage.py")
+
 #########################################
 #      DataEditingPage
 #########################################
@@ -1350,8 +1354,9 @@ class DataEditingPage(templatePage):
 			scaleMenu2.append(("Megabase",'physic'))
 			scaleMenu2.append(("Centimorgan",'morgan'))				
 		
+		controlLocus = self.get_nearest_marker(fd, thisTrait, thisTrait.db)
 		controlText = HT.Span("Control Locus:", Class="ffl fwb fs12")
-		controlMenu = HT.Input(type="text", name="controlLocus", Class="controlLocus")
+		controlMenu = HT.Input(type="text", name="controlLocus", value=controlLocus, Class="controlLocus")
 				
 		if fd.genotype.Mbmap:			
 			intMappingMenu = HT.TableLite( 
@@ -1556,6 +1561,21 @@ class DataEditingPage(templatePage):
 			
 		title4Body.append(submitTable)	
 
+	def get_nearest_marker(self, fd, this_trait, this_db):
+		query = """
+			SELECT Geno.Name
+			FROM Geno, GenoXRef, GenoFreeze
+			WHERE Geno.Chr = %s
+			AND GenoXRef.GenoId = Geno.Id
+			AND GenoFreeze.Id = GenoXRef.GenoFreezeId
+			AND GenoFreeze.Name = %s
+			AND GenoXRef.Used_for_mapping = %s
+			ORDER BY ABS(Geno.Mb - %s)
+			LIMIT 1
+			"""
+		self.cursor.execute(query, (this_trait.chr, fd.RISet+"Geno", 'Y', this_trait.mb))
+		result = self.cursor.fetchall()
+		return result[0][0]
 		
 	def natural_sort(strain_list):
 		
