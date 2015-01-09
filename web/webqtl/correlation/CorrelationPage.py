@@ -1485,7 +1485,7 @@ Resorting this table <br>
                 repr = webqtlUtil.SciFloat(thisTrait.corrPValue)
                 tr.append(TDCell(HT.TD(repr,nowrap='ON', Class="fs12 fwn ffl b1 c222", align='right'),repr,thisTrait.corrPValue))
 				
-                gn2link = HT.Href(url="http://gn2python.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s" %
+                gn2link = HT.Href(url="http://gn2.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s" %
                 (myTrait.db.name, self.db.name, myTrait.name, thisTrait.name), Class="fs12 fwn", target="_blank")
                 gn2link.append(HT.Image("/images/link.gif"))
                 td = HT.TD(Class="fs12 fwn b1 c222", align='right',nowrap="on")
@@ -1650,7 +1650,7 @@ Resorting this table <br>
             repr = webqtlUtil.SciFloat(thisTrait.corrPValue)
             tr.append(TDCell(HT.TD(repr,nowrap='ON', Class="fs12 fwn ffl b1 c222", align='right'),repr,thisTrait.corrPValue))
 			
-            gn2link = HT.Href(url="http://gn2python.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s" %
+            gn2link = HT.Href(url="http://gn2.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s" %
                 (myTrait.db.name, self.db.name, myTrait.name, thisTrait.name), Class="fs12 fwn", target="_blank")
             gn2link.append(HT.Image("/images/link.gif"))
             td = HT.TD(Class="fs12 fwn b1 c222", align='right',nowrap="on")
@@ -1959,9 +1959,12 @@ Resorting this table <br>
                 TPValueStr = "%2.3f" % thisTrait.tissuePValue
             tr.append(TDCell(HT.TD(TPValueStr, Class="fs12 fwn b1 c222", align='right'), TPValueStr, TPValue))
 			
-            gn2link = HT.Href(url="http://gn2python.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s" %
+            try:
+                gn2link = HT.Href(url="http://gn2.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s" %
                 (primaryTrait.db.name, self.db.name, primaryTrait.name, thisTrait.name), Class="fs12 fwn", target="_blank")
-            gn2link.append(HT.Image("/images/link.gif"))
+                gn2link.append(HT.Image("/images/link.gif"))
+            except:
+                gn2link = ""
             td = HT.TD(Class="fs12 fwn b1 c222", align='right',nowrap="on")
             td.append(gn2link)
             tr.append(TDCell(td, "", 0))
