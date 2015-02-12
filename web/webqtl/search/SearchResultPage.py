@@ -801,7 +801,7 @@ class SearchResultPage(templatePage):
 						query.append(" (%s) " % clauseItem)
 						DescriptionText.append(HT.Span(' with a range of expression that varied between %g and %g' % (min(lowerLimit, upperLimit),  max(lowerLimit, upperLimit)), "  (fold difference)"))
 					else:
-						clauseItem = " %sXRef.%s > %2.7f and %sXRef.%s < %2.7f " % \
+						clauseItem = " %sXRef.%s >= %2.7f and %sXRef.%s <= %2.7f " % \
 							(self.dbType, itemCmd, min(lowerLimit, upperLimit), self.dbType, itemCmd, max(lowerLimit, upperLimit))
 						query.append(" (%s) " % clauseItem)
 						self.orderByDefalut = itemCmd
