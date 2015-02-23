@@ -36,7 +36,7 @@ for row1 in fileinput.input([input1]):
 		print row1
 		print sys.exc_info()
 	count1 += 1
-	if(count1%10000==0):
+	if(count1%100000==0):
 		print count1
 
 count2 = 0
@@ -45,27 +45,27 @@ for row2 in fileinput.input([input2]):
 		continue
 	row2 = row2.strip("\n")
 	array2 = row2.split("\t")
-	if array2[0] == "23":
-		array2[0] = "X"
-	if array2[0] == "24":
-		array2[0] = "Y"
-	if array2[0] == "26":
-		array2[0] = "M"
-	array2[0] = "chr" + array2[0]
-	
-	if array2[0] in SNP1:
-		if int(float(array2[-1])/1000000.0) in SNP1[array2[0]]:
-			if array2[-1] in SNP1[array2[0]][int(float(array2[-1])/1000000.0)]:
-				output.write(row2[0])
-				output.write(SNP1[array2[0]][int(float(array2[-1])/1000000.0)][array2[-1]])
-				output.write(row2[2])
-				output.write(row2[3])
+	chr = array2[0]
+	if chr == "23":
+		chr = "X"
+	if chr == "24":
+		chr = "Y"
+	if chr == "26":
+		chr = "M"
+	chr = "chr" + chr
+	if chr in SNP1:
+		if int(float(array2[-1])/1000000.0) in SNP1[chr]:
+			if array2[-1] in SNP1[chr][int(float(array2[-1])/1000000.0)]:
+				output.write(array2[0])
+				output.write(SNP1[chr][int(float(array2[-1])/1000000.0)][array2[-1]])
+				output.write(array2[2])
+				output.write(array2[3])
 			else:
-				output.write(str(row2))
+				output.write(row2)
 		else:
-			output.write(str(row2))
+			output.write(row2)
 	else:
-		output.write(str(row2))
+		output.write(row2)
 	output.write("\n")
 	output.flush()
 	count2 += 1
@@ -73,3 +73,4 @@ for row2 in fileinput.input([input2]):
 		print count2
 
 output.close()
+print "exit successfully"
