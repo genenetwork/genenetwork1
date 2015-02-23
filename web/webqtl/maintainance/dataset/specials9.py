@@ -56,9 +56,9 @@ for row2 in fileinput.input([input2]):
 	if chr in SNP1:
 		if int(float(array2[-1])/1000000.0) in SNP1[chr]:
 			if array2[-1] in SNP1[chr][int(float(array2[-1])/1000000.0)]:
-				output.write(array2[0])
-				output.write(SNP1[chr][int(float(array2[-1])/1000000.0)][array2[-1]])
-				output.write(array2[2])
+				output.write(array2[0] + "\t")
+				output.write(SNP1[chr][int(float(array2[-1])/1000000.0)][array2[-1]] + "\t")
+				output.write(array2[2] + "\t")
 				output.write(array2[3])
 			else:
 				output.write(row2)
