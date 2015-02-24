@@ -448,7 +448,7 @@ class DataEditingPage(templatePage):
 
 				#XZ: Pay attention to the parameter of version (rn, mm, hg). They need to be changed if necessary.
 				if _Species == "rat":
-					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('rat', 'rn3', blatsequence)
+					UCSC_BLAT_URL = webqtlConfig.UCSC_BLAT % ('rat', 'rn3', blatsequence)
 					UTHSC_BLAT_URL = ""
 				elif _Species == "mouse":
 					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('mouse', 'mm9', blatsequence)
