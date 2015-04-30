@@ -40,7 +40,7 @@ from base import webqtlConfig
 
 def fetchrif():
 	try:
-		con = MySQLdb.Connect(db=webqtlConfig.DB_NAME,host=webqtlConfig.MYSQL_SERVER, user=webqtlConfig.DB_USER,passwd=webqtlConfig.DB_PASSWD)
+		con = MySQLdb.Connect(db=webqtlConfig.DB_NAME, host=webqtlConfig.MYSQL_SERVER, user=webqtlConfig.DB_USER, passwd=webqtlConfig.DB_PASSWD)
 		cursor = con.cursor()
 		print "You have successfully connected to mysql.\n"
 	except:
@@ -65,19 +65,14 @@ def fetchrif():
 		if line1.startswith('#'):
 			continue
 		line2 = map(string.strip, string.split(line1, "\t"))
-		#print("line1: %s" % (line1))
-		#print("line2: %s" % (line2))
 		if line2[0] in taxIdKeys:
 			genedict[line2[1]] = line2[2]
 		i += 1
 		if i%10000 == 0:
 			print("finished: %d" % (i))
-			break
 	print("finished all: %d" % (i))
 	file.close()
 	
-	print("genedict: %s" % (genedict))
-
 	os.system("rm -vf generifs_basic")
 	os.system("wget ftp://ftp.ncbi.nlm.nih.gov/gene/GeneRIF/generifs_basic.gz")
 	os.system("gunzip generifs_basic.gz")
@@ -90,8 +85,6 @@ def fetchrif():
 			continue
 		line2 = map(string.strip, string.split(line1, "\t"))
 		if line2[0] in taxIdKeys and len(line2) >= 5:
-			print("line1: %s" % (line1))
-			print("line2: %s" % (line2))
 			line2[0] = taxIds[line2[0]]
 			try:
 				symbol = genedict[line2[1]]
@@ -109,7 +102,7 @@ def fetchrif():
 			cursor.execute(sql, (line2[0], line2[1], line2[2], line2[3], line2[4]))
 			c = cursor.fetchone()[0]
 			if c == 0:
-				print("to insert")
+				print("to insert...")
 				sql = """
 					INSERT INTO GeneRIF_BASIC
 					SET GeneRIF_BASIC.`SpeciesId`=%s,
@@ -120,13 +113,11 @@ def fetchrif():
 						GeneRIF_BASIC.`comment`=%s
 					"""
 				cursor.execute(sql, (line2[0], line2[1], symbol, line2[2], line2[3], line2[4]))
-				break
 		i += 1
 		if i%10000 == 0:
 			print("finished: %d" % (i))
 	print("finished all: %d" % (i))
 	file.close()
-	
 	cursor.close()
 	
 # /usr/bin/python addRif.py
