@@ -52,7 +52,7 @@ def fetchrif():
 
 	os.chdir(path3)
 	print("path3: %s" % (path3))
-	cdict = {}
+	genedict = {}
 
 	os.system("rm -vf gene_info")
 	os.system("wget ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_info.gz")
@@ -68,15 +68,15 @@ def fetchrif():
 		#print("line1: %s" % (line1))
 		#print("line2: %s" % (line2))
 		if line2[0] in taxIdKeys:
-			cdict[line2[1]] = line2[2]
+			genedict[line2[1]] = line2[2]
 		i += 1
 		if i%10000 == 0:
 			print("finished: %d" % (i))
-			#break
+			break
 	print("finished all: %d" % (i))
 	file.close()
 	
-	print("cdict: %s" % (cdict))
+	print("genedict: %s" % (genedict))
 
 	os.system("rm -vf generifs_basic")
 	os.system("wget ftp://ftp.ncbi.nlm.nih.gov/gene/GeneRIF/generifs_basic.gz")
@@ -89,25 +89,35 @@ def fetchrif():
 		if line1.startswith('#'):
 			continue
 		line2 = map(string.strip, string.split(line1, "\t"))
-		#print("line1: %s" % (line1))
-		#print("line2: %s" % (line2))
-		if line2[0] in taxIdKeys:
-			i += 1
+		print("line1: %s" % (line1))
+		print("line2: %s" % (line2))
+		if line2[0] in taxIdKeys and len(line2) >= 5:
 			line2[0] = taxIds[line2[0]]
-			if len(line2) !=5:
-				print line
-			else:
-				try:
-					symbol=cdict[line2[1]]
-				except:
-					symbol= ""
-				
-				line2 = line2[:2] + [symbol] + line2[2:]
-				cursor.execute("insert into GeneRIF_BASIC(SpeciesId, GeneId, Symbol, PubMed_ID, createtime, comment) values(%s, %s, %s, %s, %s, %s)", tuple(line2))
-		line = fp.readline()
-
-	fp.close()
-	print count, "\n"
+			try:
+				symbol = genedict[line2[1]]
+			except:
+				symbol = ""
+			sql = """
+				SELECT COUNT(*)
+				FROM GeneRIF_BASIC
+				WHERE GeneRIF_BASIC.`SpeciesId`=%s
+				AND GeneRIF_BASIC.`GeneId`=%s
+				AND GeneRIF_BASIC.`PubMed_ID`=%s
+				AND GeneRIF_BASIC.`createtime`=%s
+				AND GeneRIF_BASIC.`comment`=""
+				"""
+			cursor.execute(sql, (line2[0], line2[1], line2[2], line2[3], line2[4]))
+			c = cursor.fetchone()[0]
+			if c == 0:
+				print("to insert")
+				#line2 = line2[:2] + [symbol] + line2[2:]
+				#cursor.execute("insert into GeneRIF_BASIC(SpeciesId, GeneId, Symbol, PubMed_ID, createtime, comment) values(%s, %s, %s, %s, %s, %s)", tuple(line2))
+		i += 1
+		if i%10000 == 0:
+			print("finished: %d" % (i))
+	print("finished all: %d" % (i))
+	file.close()
+	
 	cursor.close()
 	
 # /usr/bin/python addRif.py
