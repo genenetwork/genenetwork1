@@ -89,9 +89,9 @@ def fetchrif():
 		if line1.startswith('#'):
 			continue
 		line2 = map(string.strip, string.split(line1, "\t"))
-		print("line1: %s" % (line1))
-		print("line2: %s" % (line2))
 		if line2[0] in taxIdKeys and len(line2) >= 5:
+			print("line1: %s" % (line1))
+			print("line2: %s" % (line2))
 			line2[0] = taxIds[line2[0]]
 			try:
 				symbol = genedict[line2[1]]
@@ -104,14 +104,23 @@ def fetchrif():
 				AND GeneRIF_BASIC.`GeneId`=%s
 				AND GeneRIF_BASIC.`PubMed_ID`=%s
 				AND GeneRIF_BASIC.`createtime`=%s
-				AND GeneRIF_BASIC.`comment`=""
+				AND GeneRIF_BASIC.`comment`=%s
 				"""
 			cursor.execute(sql, (line2[0], line2[1], line2[2], line2[3], line2[4]))
 			c = cursor.fetchone()[0]
 			if c == 0:
 				print("to insert")
-				#line2 = line2[:2] + [symbol] + line2[2:]
-				#cursor.execute("insert into GeneRIF_BASIC(SpeciesId, GeneId, Symbol, PubMed_ID, createtime, comment) values(%s, %s, %s, %s, %s, %s)", tuple(line2))
+				sql = """
+					INSERT INTO GeneRIF_BASIC
+					SET GeneRIF_BASIC.`SpeciesId`=%s,
+						GeneRIF_BASIC.`GeneId`=%s,
+						GeneRIF_BASIC.`symbol`=%s,
+						GeneRIF_BASIC.`PubMed_ID`=%s,
+						GeneRIF_BASIC.`createtime`=%s,
+						GeneRIF_BASIC.`comment`=%s
+					"""
+				cursor.execute(sql, (line2[0], line2[1], symbol, line2[2], line2[3], line2[4]))
+				break
 		i += 1
 		if i%10000 == 0:
 			print("finished: %d" % (i))
