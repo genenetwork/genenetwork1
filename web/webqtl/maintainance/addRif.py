@@ -68,7 +68,7 @@ def fetchrif():
 		if line2[0] in taxIdKeys:
 			genedict[line2[1]] = line2[2]
 		i += 1
-		if i%10000 == 0:
+		if i%1000000 == 0:
 			print("finished: %d" % (i))
 	print("finished all: %d" % (i))
 	file.close()
@@ -114,7 +114,7 @@ def fetchrif():
 					"""
 				cursor.execute(sql, (line2[0], line2[1], symbol, line2[2], line2[3], line2[4]))
 		i += 1
-		if i%10000 == 0:
+		if i%100000 == 0:
 			print("finished: %d" % (i))
 	print("finished all: %d" % (i))
 	file.close()
