@@ -1824,7 +1824,7 @@ class DataEditingPage(templatePage):
 			# change the view of strainName only
 			strainName2 = None
 			try:
-				sql = "SELECT Strain.Name2 FROM Strain,InbredSet WHERE Strain.Name LIKE '%s' AND Strain.SpeciesId=InbredSet.SpeciesId AND InbredSet.Name LIKE '%s'"
+				sql = "SELECT Strain.Name2 FROM Strain,InbredSet WHERE Strain.Name='%s' AND Strain.SpeciesId=InbredSet.SpeciesId AND InbredSet.Name LIKE '%s'"
 				self.cursor.execute(sql % (strainName, fd.RISet))
 				strainName2 = self.cursor.fetchone()[0]
 			except:
@@ -1933,18 +1933,16 @@ class DataEditingPage(templatePage):
 					else:
 						continue
 					
-
 					attr_counter = 1 # This is needed so the javascript can know which attribute type to associate this value with for the exported excel sheet (each attribute type being a column).
 					for attribute_id in attribute_ids:
-
 						#ZS: Add extra case attribute values (if any)
-						self.cursor.execute("""SELECT Value
-                                						FROM CaseAttributeXRef
-                                          				WHERE ProbeSetFreezeId = '%s' AND
-                                          					StrainId = '%s' AND
-                                          					CaseAttributeId = '%s'
-											group by CaseAttributeXRef.CaseAttributeId""" % (thisTrait.db.id, strain_id, str(attribute_id)))
-
+						self.cursor.execute("""
+							SELECT Value
+       						FROM CaseAttributeXRef
+							WHERE ProbeSetFreezeId = '%s' AND
+							StrainId = '%s' AND
+							CaseAttributeId = '%s'
+							group by CaseAttributeXRef.CaseAttributeId""" % (thisTrait.db.id, strain_id, str(attribute_id)))
 						attributeValue = list(self.cursor.fetchone())[0] #Trait-specific attributes, if any
 
 						#ZS: If it's an int, turn it into one for sorting (for example, 101 would be lower than 80 if they're strings instead of ints)
