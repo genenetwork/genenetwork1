@@ -108,7 +108,7 @@ index_body_string = """
 
 										<TD NOWRAP width="85%" align="left">
 
-											<input id="tfor" name="ORkeyword" style="width:420px; background-color:white; font-family:verdana; font-size:14px" type="text" maxlength="500">
+											<input id="tfor" name="ORkeyword" style="width:420px; background-color:white; font-family:verdana; font-size:14px" type="text" maxlength="50000">
 										</TD>
 									</TR>
 
@@ -275,15 +275,16 @@ Quick HELP Examples and </B>
 
 							<UL>
 								<LI><A HREF="http://www.genenetwork.org/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Main GN site at UTHSC</A> (main site)
-								<LI><A HREF="http://www.genenetwork.waimr.uwa.edu.au/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Australia at the UWA</A>
-								<LI><A HREF="http://gn.genetics.ucla.edu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">California at UCLA</A>
+							<!--	<LI><A HREF="http://www.genenetwork.waimr.uwa.edu.au/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Australia at the UWA</A> -->
+							<!--	<LI><A HREF="http://gn.genetics.ucla.edu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">California at UCLA</A> -->
 								<LI><A HREF="http://genenetwork.helmholtz-hzi.de/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Germany at the HZI</A>
-							<!--	<LI><A HREF="https://genenetwork.hubrecht.eu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Netherlands at the Hubrecht</A> (Development)-->
+							<!--	<LI><A HREF="https://genenetwork.hubrecht.eu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Netherlands at the Hubrecht</A> (Development) -->
 								<LI><A HREF="http://genenetwork.memphis.edu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Memphis at the U of M</A>
-								<LI><A HREF="http://webqtl.bic.nus.edu.sg/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Singapore at the NUS</A>
- 								<LI><A HREF="http://genenetwork.epfl.ch/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Switzerland at the EPFL</A>
+							<!--	<LI><A HREF="http://webqtl.bic.nus.edu.sg/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Singapore at the NUS</A> -->
+ 							<!--	<LI><A HREF="http://genenetwork.epfl.ch/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Switzerland at the EPFL</A> -->
 							</UL>
 							
+							<!--
 							<ul>
 								<li>
 									<a target="_blank" style="font-size:12px;font-family:verdana;color:blue" href="http://54.221.199.53/">GN instance on Amazon Cloud</a>
@@ -296,6 +297,7 @@ Quick HELP Examples and </B>
 									<a target="_blank" style="font-size:12px;font-family:verdana;color:blue" href="http://www.rti.org/">RTI International</a>
 								</li>
 							</ul>
+							-->
 
 							<p style="font-size:14px;font-family:verdana;color:black"><B>History and Archive</B>
 

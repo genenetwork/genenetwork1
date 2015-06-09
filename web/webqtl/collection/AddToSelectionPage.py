@@ -77,9 +77,9 @@ class AddToSelectionPage(templatePage):
             if not item:
                 self.searchResult.remove(item)
 
-        if len(self.searchResult) > 3000:
+        if len(self.searchResult) > 20000:
             heading = 'Add Collections'
-            detail = ['You are adding over 3000 traits to selections, please reduce your number of traits.']
+            detail = ['You are adding over 20000 traits to selections, please reduce your number of traits.']
             self.error(heading=heading,detail=detail)
             return 0
 
