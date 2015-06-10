@@ -253,7 +253,11 @@ class PartialCorrTraitPage(CorrelationPage):
 
             #XZ: Description column
             if thisTrait.db.type =="ProbeSet" or thisTrait.db.type == "Temp":
-                tr.append(TDCell(HT.TD(thisTrait.description, Class="fs12 fwn ffl b1 c222"), text=thisTrait.description, val=thisTrait.description.upper()))
+                if thisTrait.description is None:
+                    description = ''
+                else:
+                    description = thisTrait.description
+                tr.append(TDCell(HT.TD(description, Class="fs12 fwn ffl b1 c222"), text=description, val=description.upper()))
             elif thisTrait.db.type =="Publish":
 		PhenotypeString = thisTrait.post_publication_description
 		if thisTrait.confidential:

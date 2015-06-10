@@ -33,11 +33,11 @@ from base import webqtlConfig
 from base.templatePage import templatePage
 from utility import webqtlUtil
 from AddToSelectionPage import AddToSelectionPage
-	
+
 #import logging
 #logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
 #_log = logging.getLogger("\gn\web\webqtl\collection\BatchSubmitSelectionPage.py")
-	
+
 #########################################
 #     batch submission result Page
 #########################################
@@ -86,18 +86,19 @@ class BatchSubmitSelectionPage(AddToSelectionPage):
 				if len(strainNames) != len(item):
 					raise 'ValueError'
 			for item in strainNames:
- 				self.cursor.execute('''Select 
- 								Strain.Id 
- 							from Strain, StrainXRef,InbredSet 
- 							where 
- 								Strain.Name = "%s" AND
- 								StrainXRef.StrainId = Strain.Id AND
- 								StrainXRef.InbredSetId = InbredSet.Id AND
- 								InbredSet.Name = "%s"
- 							''' % (item, fd.RISet))
- 				strainId = self.cursor.fetchone()[0]
+				sql = """
+					Select Strain.Id
+					from Strain, StrainXRef, InbredSet
+					where Strain.Name = '%s'
+					AND	StrainXRef.StrainId = Strain.Id
+					AND	StrainXRef.InbredSetId = InbredSet.Id
+					AND	InbredSet.Name = '%s'
+					"""
+ 				self.cursor.execute(sql % (item, fd.RISet))
+				t = self.cursor.fetchone()
+ 				strainId = t[0]
  				strainIds.append(strainId)
- 		except:
+ 		except Exception, e:
 			templatePage.__init__(self, fd)
 			detail = ['The format of the file is incorrect, or it contains unknown strains.']
 			self.error(heading=heading,detail=detail)
