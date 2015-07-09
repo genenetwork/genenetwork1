@@ -45,9 +45,9 @@ from base import webqtlConfig
 from utility import webqtlUtil
 from dbFunction import webqtlDatabaseFunction
 
-import logging
-logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
-_log = logging.getLogger("gn\web\webqtl\updateTrait\DataUpdatePage.py")
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("gn\web\webqtl\updateTrait\DataUpdatePage.py")
 
 #########################################
 #      Update Trait
