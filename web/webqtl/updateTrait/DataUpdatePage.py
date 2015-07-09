@@ -45,6 +45,10 @@ from base import webqtlConfig
 from utility import webqtlUtil
 from dbFunction import webqtlDatabaseFunction
 
+import logging
+logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+_log = logging.getLogger("gn\web\webqtl\updateTrait\DataUpdatePage.py")
+
 #########################################
 #      Update Trait
 #########################################
@@ -698,7 +702,10 @@ class DataUpdatePage(templatePage):
 		if thisTrait.db.type == 'Publish' and dataID > 0 and fd.formdata.getvalue("modifiedDataField"):
 			StrainIds = []
 			for item in fd.strainlist:
-				self.cursor.execute('SelecT Id from Strain where Name = "%s"' % item)
+				sql = """
+					select Id from Strain where Name = '%s'
+					"""
+				self.cursor.execute(sql % item)
 				StrainId = self.cursor.fetchone()
 				if not StrainId:
 					raise ValueError
