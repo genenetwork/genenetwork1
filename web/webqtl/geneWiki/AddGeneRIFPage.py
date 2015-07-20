@@ -458,7 +458,7 @@ class AddGeneRIFPage(templatePage):
 		formBody.append(HT.TR(
 			HT.TD("Web resource URL: "), 
 			HT.TD("&nbsp;", width=10), 
-			HT.TD(HT.Input(type="text", size = 50, maxlength=100, name="weburl", value=oldweburl), " (optional)")
+			HT.TD(HT.Input(type="text", size = 100, maxlength=255, name="weburl", value=oldweburl), " (optional)")
 		))
 		formBody.append(HT.TR(
 			HT.TD("Text: "), 
