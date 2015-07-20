@@ -78,14 +78,15 @@ class SearchResultPage(templatePage):
 				#userExist = None
 
 				for individualDB in self.database:
-                                        self.secureQuery = 'SELECT Id, Name, FullName, confidentiality, AuthorisedUsers FROM %sFreeze WHERE Name = "%s"';
-                                        # TODO: Even though I have "Secured" this query, the fact that we are doing %sFreeze means that we can't escape out potential issues
-                                        # there. What could happen is that we could select the "name" column from another "Freeze" table.. if the Name column exists
-                                        # on any of them. So someone needs to figure out a better way of doing this.
-                                        #
-                                        # It also looks like this issue is endemic to the entire codebase. To find all the potential problem areas search
-                                        # the codebase for ".execute(" and "%s" 
-					self.cursor.execute(self.secureQuery, (self.database[0].type, individualDB))
+					self.cursor.execute('SELECT Id, Name, FullName, confidentiality, AuthorisedUsers FROM %sFreeze WHERE Name = "%s"' %  (self.database[0].type, individualDB))
+					# sql = """SELECT Id, Name, FullName, confidentiality, AuthorisedUsers FROM %sFreeze WHERE Name = %s"""
+					# TODO: Even though I have "Secured" this query, the fact that we are doing %sFreeze means that we can't escape out potential issues
+					# there. What could happen is that we could select the "name" column from another "Freeze" table.. if the Name column exists
+					# on any of them. So someone needs to figure out a better way of doing this.
+					#
+					# It also looks like this issue is endemic to the entire codebase. To find all the potential problem areas search
+					# the codebase for ".execute(" and "%s"
+					# self.cursor.execute(sql, (self.database[0].type, individualDB))
 
 					indId, indName, indFullName, confidential, AuthorisedUsers = self.cursor.fetchall()[0]
 				
@@ -177,8 +178,8 @@ class SearchResultPage(templatePage):
 
 		self.ANDkeyword = self.ANDkeyword.replace("\\", "").strip()
 		self.ORkeyword = self.ORkeyword.replace("\\", "").strip()
-                self.ANDkeyword = string.replace(self.ANDkeyword.replace, ",", "")
-                self.ORkeyword - self.ORkeyword.replace(",", "")
+		# self.ANDkeyword = string.replace(self.ANDkeyword.replace, ",", "")
+		# self.ORkeyword - self.ORkeyword.replace(",", "")
 		#user defined sort option
 		self.orderByUserInput = fd.formdata.getfirst('orderByUserInput', "").strip()
 		#default sort option if user have not defined
