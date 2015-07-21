@@ -34,12 +34,16 @@ PUBLICTHRESH = 0
 TEXTUI = 1
 
 #NBCI address
-NCBI_LOCUSID = "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=%s"
-UCSC_REFSEQ = "http://genome.cse.ucsc.edu/cgi-bin/hgGene?db=%s&hgg_gene=%s&hgg_chrom=chr%s&hgg_start=%s&hgg_end=%s"
+NCBI_LOCUSID = "http://www.ncbi.nlm.nih.gov/gene?cmd=Retrieve&dopt=Graphics&list_uids=%s"
+UCSC_REFSEQ = "http://genome.cse.ucsc.edu/cgi-bin/hgTracks?db=%s&hgg_gene=%s&hgg_chrom=chr%s&hgg_start=%s&hgg_end=%s"
+STRING_URL = "http://string-db.org/newstring_cgi/show_network_section.pl?identifier=%s"
+PANTHER_URL = "http://www.pantherdb.org/genes/geneList.do?searchType=basic&fieldName=all&organism=all&listType=1&fieldValue=%s"
+ABA_URL = "http://mouse.brain-map.org/search/show?search_type=gene&search_term=%s"
+EBIGWAS_URL = "https://www.ebi.ac.uk/gwas/search?query=%s"
 GENBANK_ID = "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=Nucleotide&cmd=search&doptcmdl=DocSum&term=%s"
 OMIM_ID = "http://www.ncbi.nlm.nih.gov/omim/%s"
 UNIGEN_ID = "http://www.ncbi.nlm.nih.gov/UniGene/clust.cgi?ORG=%s&CID=%s"
-HOMOLOGENE_ID = "http://www.ncbi.nlm.nih.gov/sites/entrez?Db=homologene&Cmd=DetailsSearch&Term=%s"
+HOMOLOGENE_ID = "http://www.ncbi.nlm.nih.gov/homologene/?term=%s"
 PUBMEDLINK_URL = "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&list_uids=%s&dopt=Abstract"
 UCSC_POS = "http://genome.ucsc.edu/cgi-bin/hgTracks?clade=mammal&org=%s&db=%s&position=chr%s:%s-%s&pix=800&Submit=submit"
 UCSC_BLAT = 'http://genome.ucsc.edu/cgi-bin/hgBlat?org=%s&db=%s&type=0&sort=0&output=0&userSeq=%s'

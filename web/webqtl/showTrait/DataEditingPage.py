@@ -632,13 +632,13 @@ class DataEditingPage(templatePage):
 						% (_Species, thisTrait.geneid),Class="fs14 fwn", \
 						title="Expression across many tissues and cell types"), style=linkStyle), "&nbsp;"*2)
 				tSpan.append(HT.Span(HT.Href(text= 'STRING',target="mainFrame",\
-					url="http://string.embl.de/newstring_cgi/show_link_summary.pl?identifier=%s" \
+					url = webqtlConfig.STRING_URL \
 					% thisTrait.symbol,Class="fs14 fwn", \
 					title="Protein interactions: known and inferred"), style=linkStyle), "&nbsp;"*2)
 				if thisTrait.geneid:
 					tSpan.append(HT.Span(HT.Href(text= 'PANTHER',target="mainFrame", \
-						url="http://www.pantherdb.org/genes/gene.do?acc=%s"  \
-						% thisTrait.geneid,Class="fs14 fwn", \
+						url = webqtlConfig.PANTHER_URL \
+						% thisTrait.symbol,Class="fs14 fwn", \
 					title="Gene and protein data resources from Celera-ABI"), style=linkStyle), "&nbsp;"*2)
 				else:
 					pass
@@ -651,13 +651,9 @@ class DataEditingPage(templatePage):
 						url="http://www.chibi.ubc.ca/Gemma/gene/showGene.html?ncbiid=%s" \
 						% thisTrait.geneid, Class="fs14 fwn", \
 						title="Meta-analysis of gene expression data"), style=linkStyle), "&nbsp;"*2)
-				tSpan.append(HT.Span(HT.Href(text= 'SynDB',target="mainFrame",\
-					url="http://lily.uthsc.edu:8080/20091027_GNInterfaces/20091027_redirectSynDB.jsp?query=%s" \
-					% thisTrait.symbol, Class="fs14 fwn", \
-					title="Brain synapse database"), style=linkStyle), "&nbsp;"*2)
 				if _Species == "mouse":
                                                 tSpan.append(HT.Span(HT.Href(text= 'ABA',target="mainFrame",\
-                                                        url="http://mouse.brain-map.org/brain/%s.html" \
+                                                        url = webqtlConfig.ABA_URL \
                                                         % thisTrait.symbol, Class="fs14 fwn", \
                                                         title="Allen Brain Atlas"), style=linkStyle), "&nbsp;"*2)
 
@@ -672,6 +668,10 @@ class DataEditingPage(templatePage):
                                                         url="http://human.brain-map.org/microarray/search/show?exact_match=false&search_term=%s" \
                                                         % thisTrait.geneid, Class="fs14 fwn", \
                                                         title="Allen Brain Atlas"), style=linkStyle), "&nbsp;"*2)
+				tSpan.append(HT.Span(HT.Href(text='EBI GWAS',target="mainFrame",\
+					url = webqtlConfig.EBIGWAS_URL \
+					% thisTrait.symbol,Class="fs14 fwn", \
+					title="EBI GWAS"), style=linkStyle), "&nbsp;"*2)
 				tbl.append(
 					HT.TR(HT.TD(colspan=3,height=6)),
 					HT.TR(
