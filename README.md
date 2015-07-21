@@ -5,6 +5,7 @@ www.genenetwork.org
 Released under Affero General Public License 3 (AGPLv3)
 
 For background see: http://en.wikipedia.org/wiki/Genenetwork
+Please link to https://github.com/genenetwork/genenetwork2 for the most recent developments on GeneNetwork 2 on GitHub.
 
 WWW service initiated January, 1994 as The Portable Dictionary of the Mouse Genome and 
 June 15, 2001 as WebQTL. 
