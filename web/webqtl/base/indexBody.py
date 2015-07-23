@@ -223,7 +223,9 @@ Quick HELP Examples and </B>
 					and
 					<a target="_blank" href="http://ucscbrowserbeta.genenetwork.org/">Newest</a>
 				</li>
+				<!--
 				<li>UTHSC <a target="_blank" href="http://galaxy.genenetwork.org/">Galaxy</a> Service</li>
+				-->
 				<li>UTHSC <a target="_blank" href="http://bnw.genenetwork.org/">Bayesian Network Web Server</a></li>
 				<li>GeneNetwork Classic on <a target="_blank" href="http://ec2.genenetwork.org/">Amazon Cloud</a></li>
 				<li>GeneNetwork Classic Code on <a target="_blank" href="https://github.com/genenetwork/genenetwork">GitHub</a></li>
