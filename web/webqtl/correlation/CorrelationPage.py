@@ -1649,13 +1649,17 @@ Resorting this table <br>
 
             repr = webqtlUtil.SciFloat(thisTrait.corrPValue)
             tr.append(TDCell(HT.TD(repr,nowrap='ON', Class="fs12 fwn ffl b1 c222", align='right'),repr,thisTrait.corrPValue))
-			
-            gn2link = HT.Href(url="http://gn2.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s" %
-                (myTrait.db.name, self.db.name, myTrait.name, thisTrait.name), Class="fs12 fwn", target="_blank")
-            gn2link.append(HT.Image("/images/link.gif"))
-            td = HT.TD(Class="fs12 fwn b1 c222", align='right',nowrap="on")
-            td.append(gn2link)
-            tr.append(TDCell(td, "", 0))
+
+            if myTrait and myTrait.db:
+                gn2link = HT.Href(url="http://gn2.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s" %
+                    (myTrait.db.name, self.db.name, myTrait.name, thisTrait.name), Class="fs12 fwn", target="_blank")
+                gn2link.append(HT.Image("/images/link.gif"))
+                td = HT.TD(Class="fs12 fwn b1 c222", align='right', nowrap="on")
+                td.append(gn2link)
+                tr.append(TDCell(td, "", 0))
+            else:
+                td = HT.TD(Class="fs12 fwn b1 c222", align='right', nowrap="on")
+                tr.append(TDCell(td, "", 0))
 
             tblobj_body.append(tr)
             
