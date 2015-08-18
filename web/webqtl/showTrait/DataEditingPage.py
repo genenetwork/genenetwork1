@@ -672,6 +672,7 @@ class DataEditingPage(templatePage):
 					url = webqtlConfig.EBIGWAS_URL \
 					% thisTrait.symbol,Class="fs14 fwn", \
 					title="EBI GWAS"), style=linkStyle), "&nbsp;"*2)
+				tSpan.append(HT.Span(HT.Href(text='Wiki-Pi', target="mainFrame", url = webqtlConfig.WikiPi % thisTrait.symbol, Class="fs14 fwn", title="Wiki-Pi"), style=linkStyle), "&nbsp;"*2)
 				tbl.append(
 					HT.TR(HT.TD(colspan=3,height=6)),
 					HT.TR(
