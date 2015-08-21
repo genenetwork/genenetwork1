@@ -22,6 +22,7 @@
 # Last updated by GeneNetwork Core Team 2010/10/20
 
 import httplib
+import re
 
 from dbFunction import webqtlDatabaseFunction
 import SharingBody
@@ -29,7 +30,6 @@ import SharingBody
 #import logging
 #logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
 #_log = logging.getLogger("gn\web\webqtl\dataSharing\SharingInfo2.py")
-
 
 #########################################
 #      Sharing Info 2
@@ -68,41 +68,28 @@ class SharingInfo2:
 				self.filelist = []
 				if self.GN_AccessionId:
 					try:
-						conn = httplib.HTTPConnection("atlas.uthsc.edu")
-						conn.request("GET", "/scandatasets.php?GN_AccesionId=%s" % (self.GN_AccessionId))
-						response = conn.getresponse()
-						data = response.read()
-						self.filelist = data.split()
+						conn = httplib.HTTPConnection("datafiles.genenetwork.org")
+						conn.request("GET", "/download/GN%s/" % (self.GN_AccessionId))
+						data = conn.getresponse().read()
 						conn.close()
-					except Exception:
+						matches = re.findall(r"<tr><td valign=\"top\">.+?</tr>", data)
+						for match in matches:
+							if "/icons/back.gif" in match:
+								continue
+							filename = re.search(r"<a href=\"(.+?)\"", match).group(1).strip()
+							datesize = re.findall(r"<td align=\"right\">.+?</td>", match)
+							filedate = re.search(r">(.+?)<", datesize[0]).group(1).strip()
+							filesize = re.search(r">(.+?)<", datesize[1]).group(1).strip()
+							self.filelist.append([filename, filedate, filesize])
+					except Exception, e:
 						pass
-				return self.filelist
 				
 		def getBody(self, infoupdate=""):
 				htmlfilelist = '<ul style="line-height:160%;">\n'
-				for i in range(len(self.filelist)):
-						if i%2==0:
-								filename = self.filelist[i]
-								filesize = self.filelist[i+1]
-								htmlfilelist += "<li>"
-								htmlfilelist += '<a href="ftp://atlas.uthsc.edu/users/shared/Genenetwork/GN%s/%s">%s</a>' % (self.GN_AccessionId, filename, filename)
-								htmlfilelist += '&nbsp;&nbsp;&nbsp;'
-								#r=re.compile(r'(?<=\d)(?=(\d\d\d)+(?!\d))')
-								#htmlfilelist += '[%s&nbsp;B]' % r.sub(r',',filesize)
-								if 12<len(filesize):
-									filesize=filesize[0:-12]
-									filesize += ' T'
-								elif 9<len(filesize):
-									filesize=filesize[0:-9]
-									filesize += ' G'
-								elif 6<len(filesize):
-									filesize=filesize[0:-6]
-									filesize += ' M'
-								elif 3<len(filesize):
-									filesize=filesize[0:-3]
-									filesize += ' K'
-								htmlfilelist += '[%sB]' % filesize
-								htmlfilelist += "</li>\n"
+				for file in self.filelist:
+					htmlfilelist += "<li>"
+					htmlfilelist += '<a href="http://datafiles.genenetwork.org/download/GN%s/%s">%s (%s)</a>' % (self.GN_AccessionId, file[0], file[0], file[2])
+					htmlfilelist += "</li>\n"
 				htmlfilelist += "</ul>"
 				info = self.info
 				return SharingBody.sharinginfo_body_string % (info[9], info[0], info[35], infoupdate, info[1], info[10], info[10], info[10], info[11], info[3], info[2], info[5], info[4], info[12], info[7], info[6], info[8], info[22], info[23], info[33], info[24], info[25], info[26], info[27], info[28], info[29], info[30], info[31], info[31], htmlfilelist, info[13], info[14], info[15], info[37], info[16], info[21], info[18], info[19], info[20], info[17], info[35])
