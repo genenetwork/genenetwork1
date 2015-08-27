@@ -774,7 +774,7 @@ you have selected in the Filter step.
             <tr bgcolor="%s"><td><a href="/dbdoc/%s.html">%s</a></td>
                 <td><a href="javascript:showDatabase2('%s', '%s', '')">%s</a></td>
                 </tr>
-            ''' % (colors[flip], trait.db.name, trait.db.name, trait.db.name, trait.name, descriptionString)
+            ''' % (colors[flip], trait.db.name, trait.db.displayname, trait.db.name, trait.name, descriptionString)
             flip = not flip
 
         output += "</table></form>"

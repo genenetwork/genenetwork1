@@ -218,7 +218,7 @@ class BatchSubmitSelectionPage(AddToSelectionPage):
 			self.cursor.execute('Select Id  from InbredSet where Name = "%s"' % fd.RISet)
 			InbredSetId = self.cursor.fetchall()[0][0]
 					
-			self.cursor.execute('insert into Temp(Name,description, createtime,DataId,InbredSetId,IP) values(%s,%s,Now(),%s,%s,%s)' ,(newProbeSetID, newDescription, DataId,InbredSetId,user_ip))
+			self.cursor.execute('insert into Temp(dbdisplayname,Name,description,createtime,DataId,InbredSetId,IP) values(%s,%s,%s,Now(),%s,%s,%s)', (fd.formdata.getvalue('datasetname'),newProbeSetID,newDescription,DataId,InbredSetId,user_ip))
 			
 			for k in range(len(traitValues[i])):
 				if traitValues[i][k] != None:
@@ -226,4 +226,3 @@ class BatchSubmitSelectionPage(AddToSelectionPage):
 			
 			self.searchResult.append('Temp::%s'	% newProbeSetID)
 			i += 1
-	

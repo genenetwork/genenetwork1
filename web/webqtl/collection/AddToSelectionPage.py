@@ -12,10 +12,12 @@ from utility.THCell import THCell
 from utility.TDCell import TDCell
 from utility import webqtlUtil
 from showTrait import ShowProbeInfoPage
-# NL, 07/27/2010: add 'import webqtlDatabaseFunction' for retrieveSpecies function
 from dbFunction import webqtlDatabaseFunction
 from base.webqtlTrait import webqtlTrait
 
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("\gn\web\webqtl\collection\AddToSelectionPage.py")
 
 #########################################
 #      Add to Selection Page
@@ -88,10 +90,12 @@ class AddToSelectionPage(templatePage):
         for item in self.searchResult:
             try:
                 thisTrait = webqtlTrait(fullname=item, cursor=self.cursor)
+                if fd.formdata.getvalue('datasetname') and not thisTrait.db.displayname:
+                    thisTrait.db.displayname = fd.formdata.getvalue('datasetname')
                 thisTrait.retrieveInfo(QTL=1)
                 self.theseTraits.append(thisTrait)
                 searchResult2.append(item)
-            except:
+            except Exception, e:
                 pass
 
         allTraitStr = string.join(searchResult2,',')
@@ -370,7 +374,7 @@ class AddToSelectionPage(templatePage):
             tr.append(TDCell(HT.TD(HT.Input(type="checkbox", Class="checkallbox", name="searchResult",value=trId, onClick="highlight(this)"), nowrap="on", Class=className), text=trId))
 
             #XZ: Dataset column
-            tr.append(TDCell(HT.TD(thisTrait.db.name, Class="fs12 fwn b1 c222"), thisTrait.db.name, thisTrait.db.name.upper()))
+            tr.append(TDCell(HT.TD(thisTrait.db.displayname, Class="fs12 fwn b1 c222"), thisTrait.db.displayname, thisTrait.db.displayname.upper()))
 
             #XZ: Trait ID column
             if thisTrait.cellid:

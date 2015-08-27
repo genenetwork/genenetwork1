@@ -8,6 +8,9 @@ from webqtlDataset import webqtlDataset
 from dbFunction import webqtlDatabaseFunction
 from utility import webqtlUtil
 
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("\gn\web\webqtl\base\webqtlTrait.py")
 
 class webqtlTrait:
 	"""
@@ -56,6 +59,17 @@ class webqtlTrait:
 						Temp.Name = "%s"
 				''' % self.name)
 				self.riset = self.cursor.fetchone()[0]
+				self.cursor.execute('''
+					SELECT 
+						Temp.dbdisplayname
+					FROM 
+						Temp
+					WHERE 
+						Temp.Name = "%s"
+				''' % self.name)
+				dbdisplayname = self.cursor.fetchone()[0]
+				if dbdisplayname and dbdisplayname.strip():
+					self.db.displayname = dbdisplayname
 			else:	
 				self.riset = self.db.getRISet()
 
@@ -130,14 +144,13 @@ class webqtlTrait:
 					desc = desc[desc.rindex(':')+1:].strip()
 				else:
 					desc = desc[:desc.index('entered')].strip()
-				str = "%s::%s" % (self.db, desc)
+				str = "%s::%s" % (self.db.displayname, desc)
 			else:
 				str = "%s::%s" % (self.db, self.name)
 				if self.cellid:
 					str += "::" + self.cellid
 		else:
 			str = self.description
-	
 		return str
 
 	

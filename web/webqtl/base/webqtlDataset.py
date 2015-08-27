@@ -41,6 +41,7 @@ class webqtlDataset:
 		assert dbName
 		self.id = 0
 		self.name = ''
+		self.displayname = ''
 		self.type = ''
 		self.riset = ''
 		self.cursor = cursor
@@ -79,6 +80,7 @@ class webqtlDataset:
 				'probe_set_note_by_rw', 'flag']
 			self.type = 'ProbeSet'
 		self.name = dbName
+		self.displayname = self.name
 		if self.cursor and self.id == 0:
 			self.retrieveName()
 	

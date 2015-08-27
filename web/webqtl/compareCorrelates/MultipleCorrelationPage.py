@@ -102,7 +102,3 @@ class MultipleCorrelationPage(templatePage):
                 self.dict['body'] = multitrait.TraitCorrelationPage(fd, params, self.cursor, traitList, results, 
                                                         fd.RISet,txtOutputFileName).dict['body']
                 self.dict['title'] = 'Compare Correlates'
-            
-
-
-

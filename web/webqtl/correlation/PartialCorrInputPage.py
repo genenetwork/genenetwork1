@@ -38,8 +38,6 @@ from base.templatePage import templatePage
 from dbFunction import webqtlDatabaseFunction
 from utility import webqtlUtil
 
-
-
 class PartialCorrInputPage(templatePage):
 
     def __init__(self,fd):
@@ -257,7 +255,7 @@ class PartialCorrInputPage(templatePage):
                         tr.append(TDCell( HT.TD(HT.Input(type="radio", name=oneRadioName, value="target", checked="true"),align="center",valign="center",Class=className) ))
                         tr.append(TDCell( HT.TD(HT.Input(type="radio", name=oneRadioName, value="ignored"),align="center",valign="center",Class=className) ))
 
-                        tr.append(TDCell(HT.TD(thisTrait.db.name, Class="fs12 fwn b1 c222"), thisTrait.db.name, thisTrait.db.name.upper()))
+                        tr.append(TDCell(HT.TD(thisTrait.db.displayname, Class="fs12 fwn b1 c222"), thisTrait.db.displayname, thisTrait.db.displayname.upper()))
 
                         tr.append(TDCell(HT.TD(HT.Href(text=thisTrait.name,url="javascript:showDatabase3('%s','%s','%s','')" % (formName, thisTrait.db.name, thisTrait.name), Class="fs12 fwn"), nowrap="yes",align="left", Class=className
 ),str(thisTrait.name), thisTrait.name))

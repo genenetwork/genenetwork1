@@ -133,6 +133,19 @@ class BatchSubmitPage(templatePage):
 		TD2.append(Para1,filebox)
 		STEP2.append(HT.TR(TD1,TD2),HT.TR(HT.TD(colspan=2,height=20)))
 		
+		#############################
+		title3 = HT.Paragraph("&nbsp;&nbsp;3. Enter Dataset Name:")
+		title3.__setattr__("class","subtitle")
+
+		STEP3 = HT.TableLite(cellSpacing=2,cellPadding=0,width="90%",border=0)
+		Para3 = HT.Paragraph()
+		textfield = HT.Paragraph(HT.Input(type='text', name='datasetname', size=20, value="Temp"))
+
+		TD1 = HT.TD(webqtlUtil.IMGSTEP3, width=58)
+		TD2 = HT.TD()
+		TD2.append(Para3, textfield)
+		STEP3.append(HT.TR(TD1,TD2),HT.TR(HT.TD(colspan=2,height=20)))		
+		
 		#########################################
 		hddn = {'FormID':'batSubmitResult'}
 		
@@ -143,8 +156,10 @@ class BatchSubmitPage(templatePage):
 		    'batchSelection(this.form);',Class="button") 			
 		reset = HT.Input(type='reset' ,name='reset' ,value='Reset',Class="button")
 		# NL, 07/27/2010. variable 'IMGNEXT' has been moved from templatePage.py to webqtlUtil.py;	
-		form.append(HT.Blockquote(title1,HT.Center(STEP1,webqtlUtil.IMGNEXT),title2,\
-		    HT.Center(STEP2,webqtlUtil.IMGNEXT)),HT.Center(HT.P(),submit,reset))
+		form.append(HT.Blockquote(
+			title1, HT.Center(STEP1,webqtlUtil.IMGNEXT),
+			title2, HT.Center(STEP2,webqtlUtil.IMGNEXT),
+			title3, HT.Center(STEP3,webqtlUtil.IMGNEXT)), HT.Center(HT.P(), submit, reset))
 			
 		for key in hddn.keys():
 			form.append(HT.Input(name=key, value=hddn[key], type='hidden'))
@@ -152,4 +167,3 @@ class BatchSubmitPage(templatePage):
 		TD_RIGHT.append(main_title,form)
 		
 		self.dict['body'] = TD_LEFT + str(TD_RIGHT)
-		
