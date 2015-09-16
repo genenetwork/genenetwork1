@@ -1626,8 +1626,10 @@ class MarkerRegressionPage(templatePage):
 		outputFile.write(headerLine)
 		for strain in valueDict.keys():
 			value = valueDict[strain]
-			value = str(value).replace('value=','')
-			value=value.strip()
+			# value=0.762 variance=0.113
+			d = dict(e.split('=') for e in str(value).split())
+			value = d['value']
+			value = value.strip()
 			outputFile.write('%s\t%s\t%s\n'%(strain, strain, value))
 		outputFile.close()
 
