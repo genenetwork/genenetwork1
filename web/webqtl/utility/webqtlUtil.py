@@ -62,7 +62,8 @@ ParInfo ={
 'BayXSha':['BayXShaF1', 'ShaXBayF1', 'Bay-0','Shahdara'],
 'ColXBur':['ColXBurF1', 'BurXColF1', 'Col-0','Bur-0'],
 'ColXCvi':['ColXCviF1', 'CviXColF1', 'Col-0','Cvi'],
-'SXM':['SMF1', 'MSF1', 'Steptoe','Morex']
+'SXM':['SMF1', 'MSF1', 'Steptoe','Morex'],
+'CMS':['', '', '', '']
 }
 
 
