@@ -46,6 +46,7 @@ results = cursor.fetchall()
 InbredSets = {}
 for item in results:
 	InbredSets[item[0]] = genotypeDir+str(item[1])+'.geno'
+print("InbredSets: %s\n" % InbredSets)
 
 PublishFreezeIds=sys.argv[1:]
 if PublishFreezeIds:
@@ -59,7 +60,7 @@ else:
 	PublishFreezeIds = []
 	for item in results:
 		PublishFreezeIds.append(item[0])
-
+print("PublishFreezeIds: %s\n" % PublishFreezeIds)
 #####update 
 for PublishFreezeId in PublishFreezeIds:
 	cursor.execute("""
@@ -74,7 +75,7 @@ for PublishFreezeId in PublishFreezeIds:
 	#if InbredSetId==12:
 	#	InbredSetId=2
 
-	print PublishFreezeId, InbredSetId, InbredSets[InbredSetId]
+	print("PublishFreezeId=%s, InbredSetId=%s, InbredSetName=%s" % (PublishFreezeId, InbredSetId, InbredSets[InbredSetId]))
 
 	genotype_1.read(InbredSets[InbredSetId])
 	locuses = []
@@ -82,8 +83,9 @@ for PublishFreezeId in PublishFreezeIds:
 		for locus in geno:
 			locuses.append(locus.name)
 
-	cursor.execute('select PhenotypeId, Locus, DataId, Phenotype.Post_publication_description from PublishXRef, Phenotype where PublishXRef.PhenotypeId = Phenotype.Id and InbredSetId=%s'%InbredSetId)
+	cursor.execute('select PhenotypeId, Locus, DataId, Phenotype.Post_publication_description from PublishXRef, Phenotype where PublishXRef.PhenotypeId = Phenotype.Id and InbredSetId=%s' % InbredSetId)
 	PublishXRefInfos = cursor.fetchall()
+	print("PublishXRefInfos: %s" % len(PublishXRefInfos))
 
 	kj=0
 	for aPublishXRef in PublishXRefInfos:
@@ -117,12 +119,10 @@ for PublishFreezeId in PublishFreezeIds:
 		if str(_max) == 'inf': # if the calculation returns 'inf' (infinite) then replace with a very high non-infinite value (LOD=100, LRS=460). This happens when the phenotype and genotypes are identical (r = 1 or -1).
 			_max = 460
 
-		#output_file.write('%s\t%s\t%s\t%s\t%s\n' % (PublishFreezeId, ProbeSetId, _locus, _max, _additive))
-
 		cursor.execute('update PublishXRef set Locus=%s, LRS=%s, additive=%s where PhenotypeId=%s and InbredSetId=%s', (_locus, _max, _additive, PhenotypeId, InbredSetId))
 
-		kj += 1
 		if kj%1000==0:
-			print PublishFreezeId, InbredSets[InbredSetId],kj
+			print("[%s]" % kj)
+		kj += 1
 
-	print PublishFreezeIds
+	print("finish\n")
