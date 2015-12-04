@@ -1216,9 +1216,15 @@ class SearchResultPage(templatePage):
             		repr = "%2.3f" % mean
             		tr.append(TDCell(HT.TD(repr, Class=className, align='right', nowrap='ON'),repr, mean))
 
-            		#LRS and its location
+            		#LRS value
             		LRS_score_repr = 'N/A'
             		LRS_score_value = 0
+			if thisTrait.lrs:
+				LRS_score_repr = '%3.1f' % thisTrait.lrs
+				LRS_score_value = thisTrait.lrs
+			tr.append(TDCell(HT.TD(LRS_score_repr, Class=className, align='right', nowrap="on"), LRS_score_repr, LRS_score_value))
+
+			#LRS location
             		LRS_location_repr = 'N/A'
             		LRS_location_value = 1000000
             		LRS_flag = 1
@@ -1247,21 +1253,16 @@ class SearchResultPage(templatePage):
 							else:
 								LRS_location_value = ord(str(LRS_chr).upper()[0])*1000 + float(LRS_Mb)
 
-                        			LRS_score_repr = '%3.1f' % thisTrait.lrs
-                        			LRS_score_value = thisTrait.lrs
                         			LRS_location_repr = 'Chr%s: %.6f' % (LRS_Chr, float(LRS_Mb) )
                         			LRS_flag = 0
 
                         			#tr.append(TDCell(HT.TD(HT.Href(text=LRS_score_repr,url="javascript:showIntervalMapping('%s', '%s : %s')" % (formName, thisTrait.db.shortname, thisTrait.name), Class="fs12 fwn"), Class=className, align='right', nowrap="on"),LRS_score_repr, LRS_score_value))
-                        			tr.append(TDCell(HT.TD(LRS_score_repr, Class=className, align='right', nowrap="on"), LRS_score_repr, LRS_score_value))
                         			tr.append(TDCell(HT.TD(LRS_location_repr, Class=className, nowrap="on"), LRS_location_repr, LRS_location_value))
 
           			if LRS_flag:
-                			tr.append(TDCell(HT.TD(LRS_score_repr, Class=className), LRS_score_repr, LRS_score_value))
                 			tr.append(TDCell(HT.TD(LRS_location_repr, Class=className), LRS_location_repr, LRS_location_value))
 		
 			else:
-				tr.append(TDCell(HT.TD("N/A", Class=className), "N/A", "N/A"))
 				tr.append(TDCell(HT.TD("N/A", Class=className), "N/A", "N/A"))
 				
 			try:
