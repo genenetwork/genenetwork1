@@ -116,6 +116,7 @@ for PublishFreezeId in PublishFreezeIds:
 		_locus = _max.locus.name
 		_additive = _max.additive
 		_max = _max.lrs
+
 		if str(_max) == 'inf': # if the calculation returns 'inf' (infinite) then replace with a very high non-infinite value (LOD=100, LRS=460). This happens when the phenotype and genotypes are identical (r = 1 or -1).
 			_max = 460
 
