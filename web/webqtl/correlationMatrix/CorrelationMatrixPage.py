@@ -211,9 +211,15 @@ class CorrelationMatrixPage(templatePage):
                     _verboseName2 = ''
                     _verboseName3 = ''
                 else:
-                    abbreviation = thisTrait.symbol
+                    if thisTrait.symbol:
+                        abbreviation = thisTrait.symbol
+                    else:
+                        abbreviation = ''
                     _shortName = 'Symbol: %s ' % thisTrait.symbol
-                    _verboseName = thisTrait.symbol
+                    if thisTrait.symbol:
+                        _verboseName = thisTrait.symbol
+                    else:
+                        _verboseName = ''
                     _verboseName2 = ''
                     _verboseName3 = ''
                     if thisTrait.chr and thisTrait.mb:
