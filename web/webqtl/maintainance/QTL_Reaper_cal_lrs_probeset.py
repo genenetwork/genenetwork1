@@ -65,6 +65,7 @@ for ProbeSetFreezeId in ProbeSetFreezeIds:
 	for geno in genotype_1:
 		for locus in geno:
 			locuses.append(locus.name)
+	print("locuses: %s" % len(locuses))
 
 	cursor.execute('select ProbeSetId, Locus, DataId from ProbeSetXRef where ProbeSetFreezeId=%s' % ProbeSetFreezeId)
 	ProbeSetXRefInfos = cursor.fetchall()
