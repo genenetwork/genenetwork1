@@ -26,7 +26,7 @@
 
 body_string = """
 <TD vAlign=top width="100%" align="left" bgColor=#eeeeee>
-<p style="font-size:18px;font-family:verdana;color:black"><B> Annotation Database for Microarray</B></p>
+<p style="font-size:18px;font-family:verdana;color:black"><B>Annotation Databases</B></p>
 <iframe src="http://lily.uthsc.edu:8080/20090504_UTHSC_dbDownload/download.jsp" frameborder="0" scrolling="no" width="100%" height="1250"></iframe>
 </td>
 """
