@@ -55,7 +55,6 @@ class CorrelationMatrixPage(templatePage):
     def __init__(self,fd,InputData=None):
 
         templatePage.__init__(self, fd)
-
         self.dict['title'] = 'Correlation Matrix'
 
         if not self.openMysql():
@@ -585,6 +584,8 @@ class CorrelationMatrixPage(templatePage):
                 mean = S/N
                 var = SS - S*S/N
                 stdev = math.sqrt(var/(N-1))
+                if stdev == 0:
+                    stdev = 1e-100
                 data2 = map(lambda x:(x-mean)/stdev,data)
                 dataArray[i] = data2
                 i += 1
