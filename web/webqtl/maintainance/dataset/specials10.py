@@ -27,7 +27,6 @@ def mapping():
 		for locus in geno:
 			locuses.append(locus.name)
 	print("locuses: %s" % (len(locuses)))
-	print("locuses: %s" % (str(locuses)))
 	#
 	cursor.execute('select PhenotypeId, Locus, DataId, Phenotype.Post_publication_description from PublishXRef, Phenotype where PublishXRef.PhenotypeId = Phenotype.Id and InbredSetId=%s' % inbredsetid)
 	publishxrefinfos = cursor.fetchall()
