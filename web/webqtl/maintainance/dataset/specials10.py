@@ -50,9 +50,6 @@ def mapping():
 		if not strains or not values or len(values) < 8 or len(strains) < 8:
 			continue
 		qtlresults = genotype.regression(strains = strains, trait = values)
-		print("qtlresults: %s" % (len(qtlresults)))
-		print("qtlresults: %s" % (str(qtlresults)))
-		return
 		i += 1
 		if i%1000==1:
 			print("[%s]" % i)
