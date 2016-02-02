@@ -1165,6 +1165,8 @@ class DataEditingPage(templatePage):
 				criteriaMenu1.append(('top 10000','10000'))
 				criteriaMenu1.append(('top 15000','15000'))
 				criteriaMenu1.append(('top 20000','20000'))
+				criteriaMenu1.append(('top 30000','30000'))
+				criteriaMenu1.append(('top 40000','40000'))
 
 				criteriaMenu2 = HT.Select(name='criteria2', selected='500', onMouseOver="if (NS4 || IE4) activateEl('criterias', event);")
 				criteriaMenu2.append(('top 100','100'))
@@ -1176,6 +1178,8 @@ class DataEditingPage(templatePage):
 				criteriaMenu2.append(('top 10000','10000'))
 				criteriaMenu2.append(('top 15000','15000'))
 				criteriaMenu2.append(('top 20000','20000'))
+				criteriaMenu2.append(('top 30000','30000'))
+				criteriaMenu2.append(('top 40000','40000'))
 
 				criteriaMenu3 = HT.Select(name='criteria3', selected='500', onMouseOver="if (NS4 || IE4) activateEl('criterias', event);")
 				criteriaMenu3.append(('top 100','100'))
@@ -1187,6 +1191,8 @@ class DataEditingPage(templatePage):
 				criteriaMenu3.append(('top 10000','10000'))
 				criteriaMenu3.append(('top 15000','15000'))
 				criteriaMenu3.append(('top 20000','20000'))
+				criteriaMenu3.append(('top 30000','30000'))
+				criteriaMenu3.append(('top 40000','40000'))
 
 
 				self.MDPRow1 = HT.TR(Class='mdp1')
