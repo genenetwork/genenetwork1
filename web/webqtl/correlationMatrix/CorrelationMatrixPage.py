@@ -391,9 +391,10 @@ class CorrelationMatrixPage(templatePage):
 					pearsonEigenVectors[i][j] = pearsonEigenVectors[i][j].real		      
 		"""
         
-		if type(pearsonEigenValue[0]).__name__ == 'complex':
+		#if type(pearsonEigenValue[0]).__name__ == 'complex':
+		if False:
 		   pass
-		else:	
+		else:
             	   traitHeading = HT.Paragraph('PCA Traits',align='left', Class="title")  
                    
         	   tbl2 = self.calcPCATraits(traitDataList=traitDataList, nnCorr=nnCorr, NNN=NNN, pearsonEigenValue=pearsonEigenValue, 
@@ -436,18 +437,36 @@ class CorrelationMatrixPage(templatePage):
     def screePlot(self, NNN=0, pearsonEigenValue=None):
 
         c1 = pid.PILCanvas(size=(700,500))
+        if type(pearsonEigenValue[0]).__name__ == 'complex':
+            pearsonEigenValue = self.removeimag_array(values=pearsonEigenValue)
         Plot.plotXY(canvas=c1, dataX=range(1,NNN+1), dataY=pearsonEigenValue, rank=0, labelColor=pid.blue,plotColor=pid.red, symbolColor=pid.blue, XLabel='Factor Number', connectdot=1,YLabel='Percent of Total Variance %', title='Pearson\'s R Scree Plot')
         filename= webqtlUtil.genRandStr("Scree_")
         c1.save(webqtlConfig.IMGDIR+filename, format='gif')
         img=HT.Image('/image/'+filename+'.gif',border=0)
         
         return img
+		
+    def removeimag_unit(self, value):
+        return value.real
+		
+    def removeimag_array(self, values):
+        newvalues = []
+        for value in values:
+            newvalues.append(self.removeimag_unit(value))
+        return newvalues
     
     def factorLoadingsPlot(self, pearsonEigenVectors=None, traitList=None):
-        
         traitname = map(lambda X:str(X.name), traitList)
         c2 = pid.PILCanvas(size=(700,500))
-        Plot.plotXY(c2, pearsonEigenVectors[0],pearsonEigenVectors[1], 0, dataLabel = traitname, labelColor=pid.blue, plotColor=pid.red, symbolColor=pid.blue,XLabel='Factor (1)', connectdot=1, YLabel='Factor (2)', title='Factor Loadings Plot (Pearson)', loadingPlot=1)
+        if type(pearsonEigenVectors[0][0]).__name__ == 'complex':
+            pearsonEigenVectors_0 = self.removeimag_array(values=pearsonEigenVectors[0])
+        else:
+            pearsonEigenVectors_0 = pearsonEigenVectors[0]
+        if type(pearsonEigenVectors[1][0]).__name__ == 'complex':
+            pearsonEigenVectors_1 = self.removeimag_array(values=pearsonEigenVectors[1])
+        else:
+            pearsonEigenVectors_1 = pearsonEigenVectors[1]
+        Plot.plotXY(c2, pearsonEigenVectors_0,pearsonEigenVectors_1, 0, dataLabel = traitname, labelColor=pid.blue, plotColor=pid.red, symbolColor=pid.blue,XLabel='Factor (1)', connectdot=1, YLabel='Factor (2)', title='Factor Loadings Plot (Pearson)', loadingPlot=1)
         filename= webqtlUtil.genRandStr("FacL_")
         c2.save(webqtlConfig.IMGDIR+filename, format='gif')
         img = HT.Image('/image/'+filename+'.gif',border=0)
@@ -536,7 +555,7 @@ class CorrelationMatrixPage(templatePage):
        	   newNames = 0
        
        for item in dataArray2:
-           if pearsonEigenValue[j-1] < 100.0/NNN:
+           if type(pearsonEigenValue[0]).__name__ != 'complex' and pearsonEigenValue[j-1] < 100.0/NNN:
                break
            
            if (newNames == 0):
@@ -554,7 +573,13 @@ class CorrelationMatrixPage(templatePage):
         
            k = 0    
            for StrainId in StrainIds:
-               self.cursor.execute('insert into TempData(Id, StrainId, value) values(%s,%s,%s)' % (DataId, StrainId, item[k]*(-1.0)))
+               if type(item[k]).__name__ == 'complex':
+                   itemkvalue = item[k].real
+               else :
+                   itemkvalue = item[k]
+               itemkvalue = itemkvalue*(-1.0)
+				
+               self.cursor.execute('insert into TempData(Id, StrainId, value) values(%s,%s,%s)' % (DataId, StrainId, itemkvalue))
                k += 1
            setDescription = HT.Div(id="pcaTrait%s" % j)
            descriptionLink = HT.Href(text=description, url="javascript:showDatabase2('Temp','%s','')" % newProbeSetID, Class="fwn")

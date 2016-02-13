@@ -570,12 +570,20 @@ class CorrelationPage(templatePage):
         reset_img = HT.Image("/images/select_none2_final.jpg", alt="Select None", title="Select None", style="border:none;")
         reset.append(reset_img)
         selecttraits = HT.Input(type='button' ,name='selecttraits',value='Select Traits', onClick="checkTraits(this.form);",Class="button")
-        selectgt = HT.Input(type='text' ,name='selectgt',value='-1.0', size=6,maxlength=10,onChange="checkNumeric(this,1.0,'-1.0','gthan','greater than filed')")
-        selectlt = HT.Input(type='text' ,name='selectlt',value='1.0', size=6,maxlength=10,onChange="checkNumeric(this,-1.0,'1.0','lthan','less than field')")
-        selectandor = HT.Select(name='selectandor')
-        selectandor.append(('AND','and'))
-        selectandor.append(('OR','or'))
-        selectandor.selected.append('AND')
+		#
+        rselectgt = HT.Input(type='text' ,name='rselectgt',value='-1.0', size=6,maxlength=10,onChange="")
+        rselectlt = HT.Input(type='text' ,name='rselectlt',value='1.0',  size=6,maxlength=10,onChange="")
+        rselectandor = HT.Select(name='rselectandor')
+        rselectandor.append(('AND','and'))
+        rselectandor.append(('OR','or'))
+        rselectandor.selected.append('AND')
+		#
+        mselectgt = HT.Input(type='text' ,name='mselectgt',value='0',  size=6,maxlength=10,onChange="")
+        mselectlt = HT.Input(type='text' ,name='mselectlt',value='10', size=6,maxlength=10,onChange="")
+        mselectandor = HT.Select(name='mselectandor')
+        mselectandor.append(('AND','and'))
+        mselectandor.append(('OR','or'))
+        mselectandor.selected.append('AND')
         #outside analysis part
         gcat = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('%s')[0], 'GCAT');" % mainfmName)
         gcat_img = HT.Image("/images/GCAT_logo_final.jpg", name="GCAT", alt="GCAT", title="GCAT", style="border:none")
@@ -673,7 +681,10 @@ class CorrelationPage(templatePage):
         containerTable.append(HT.TR(HT.TD(otherOptionsTable)))
         containerTable.append(HT.TR(HT.TD("&nbsp;")))
 
-        containerTable.append(HT.TR(HT.TD(HT.Span(selecttraits,' with r > ', selectgt, ' ', selectandor, ' r < ', selectlt, Class="bd1 cbddf fs11"), HT.BR()), style="display:none;", Class="extra_options"))
+        containerTable.append(HT.TR(HT.TD(HT.Span(selecttraits,
+			' with r > ', rselectgt, ' ', rselectandor, ' r < ', rselectlt,
+			', with mean > ', mselectgt, ' ', mselectandor, ' mean < ', mselectlt,
+			Class="bd1 cbddf fs11"), HT.BR()), style="display:none;", Class="extra_options"))
         containerTable.append(HT.TR(HT.TD("&nbsp;")))
 
         chrMenu = HT.Input(type='hidden',name='chromosomes',value='all')
@@ -1784,7 +1795,7 @@ Resorting this table <br>
 
             trId = str(thisTrait)
 
-            corrScript.append('corrArray["%s"] = {corr:%1.4f};' % (trId, thisTrait.corr))
+            corrScript.append('corrArray["%s"] = {corr:%1.4f, mean:%1.4f};' % (trId, thisTrait.corr, thisTrait.mean))
 
             #XZ, 12/08/2008: checkbox
             tr.append(TDCell(HT.TD(HT.Input(type="checkbox", Class="checkbox", name="searchResult",value=trId, onClick="highlight(this)"), nowrap="on", Class="fs12 fwn ffl b1 c222"), text=trId))

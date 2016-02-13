@@ -767,35 +767,32 @@ function checkNumeric(field,limit,resetvalue,compares,fdname)
 		}
 	}
 
-function checkTraits(thisForm){ 
+function checkTraits(thisForm){
 	var length = thisForm.searchResult.length;
-	var andor = thisForm.selectandor.value;
-	var gthan = parseFloat(thisForm.selectgt.value);
-	var lthan = parseFloat(thisForm.selectlt.value);
-	//alert(length + ' / ' + andor  + ' / ' + gthan + ' / ' + lthan);
-	for(var i = 0; i < length; i++)
-	{
+	var randor = thisForm.rselectandor.value;
+	var rgthan = parseFloat(thisForm.rselectgt.value);
+	var rlthan = parseFloat(thisForm.rselectlt.value);
+	var mandor = thisForm.mselectandor.value;
+	var mgthan = parseFloat(thisForm.mselectgt.value);
+	var mlthan = parseFloat(thisForm.mselectlt.value);
+	for(var i = 0; i < length; i++)	{
 		var p = corrArray[thisForm.searchResult[i].value];
-		if (andor == 'and')
-		{
-			if ((p.corr > gthan) && ( p.corr < lthan))
-				{thisForm.searchResult[i].checked = true;}
-			else
-				{thisForm.searchResult[i].checked = false;}
-		}
-		else if (andor == 'or')
-		{
-			if ((p.corr > gthan) || ( p.corr < lthan))
-				{thisForm.searchResult[i].checked = true;}
-			else
-				{thisForm.searchResult[i].checked = false;}
-		}
-		else
-			{}
+		var corr = p.corr;
+		var mean = p.mean;
+		thisForm.searchResult[i].checked = checkTraits_hit(corr, randor, rgthan, rlthan) && checkTraits_hit(mean, mandor, mgthan, mlthan);
 		highlight(thisForm.searchResult[i]);
 	}
+}
 
-
+function checkTraits_hit(value, andor, gthan, lthan) {
+	if (typeof value == "undefined") {
+		return true;
+	}
+	if (andor == "and") {
+		return ((value > gthan) && (value < lthan));
+	} else {
+		return ((value > gthan) || (value < lthan));
+	}
 }
 
 
