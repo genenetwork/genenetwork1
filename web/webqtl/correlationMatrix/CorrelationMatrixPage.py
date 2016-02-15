@@ -42,7 +42,7 @@ from utility import Plot
 
 #import logging
 #logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
-#_log = logging.getLogger("gn\web\webqtl\correlationMatrix\CorrelationMatrixPage.py")
+#_log = logging.getLogger("\gn\web\webqtl\correlationMatrix\CorrelationMatrixPage.py")
 
 # XZ, 09/09/2008: After adding several traits to collection, click "Correlation Matrix" button,
 # XZ, 09/09/2008: This class will generate what you see.
@@ -447,7 +447,7 @@ class CorrelationMatrixPage(templatePage):
         return img
 		
     def removeimag_unit(self, value):
-        return value.real
+        return abs(value)
 		
     def removeimag_array(self, values):
         newvalues = []
@@ -506,7 +506,6 @@ class CorrelationMatrixPage(templatePage):
                for j in range(NNN): 
                    dataArray[j].append(traitDataList[j][i])
 
-    
        self.cursor.execute('delete Temp, TempData FROM Temp, TempData WHERE Temp.DataId = TempData.Id and UNIX_TIMESTAMP()-UNIX_TIMESTAMP(CreateTime)>%d;' % webqtlConfig.MAXLIFE)
 
        StrainIds = []
@@ -534,7 +533,7 @@ class CorrelationMatrixPage(templatePage):
        dataArray = self.zScore(dataArray)
        dataArray = numarray.array(dataArray)
        dataArray2 = numarray.dot(pearsonEigenVectors,dataArray)
-    
+	   
        tbl2 = HT.TableLite(cellSpacing=2,cellPadding=0,border=0, width="100%")
     
        ct0 = time.localtime(time.time())
@@ -555,7 +554,7 @@ class CorrelationMatrixPage(templatePage):
        	   newNames = 0
        
        for item in dataArray2:
-           if type(pearsonEigenValue[0]).__name__ != 'complex' and pearsonEigenValue[j-1] < 100.0/NNN:
+           if (type(pearsonEigenValue[0]).__name__ == 'complex' and removeimag_unit(pearsonEigenValue[j-1]) < 100.0/NNN) or (type(pearsonEigenValue[0]).__name__ != 'complex' and pearsonEigenValue[j-1] < 100.0/NNN):
                break
            
            if (newNames == 0):
