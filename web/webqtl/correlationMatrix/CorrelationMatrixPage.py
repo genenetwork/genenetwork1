@@ -573,7 +573,7 @@ class CorrelationMatrixPage(templatePage):
            k = 0    
            for StrainId in StrainIds:
                if type(item[k]).__name__ == 'complex':
-                   itemkvalue = item[k].real
+                   itemkvalue = self.removeimag_unit(item[k])
                else :
                    itemkvalue = item[k]
                itemkvalue = itemkvalue*(-1.0)
