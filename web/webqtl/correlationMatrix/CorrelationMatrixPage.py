@@ -554,7 +554,7 @@ class CorrelationMatrixPage(templatePage):
        	   newNames = 0
        
        for item in dataArray2:
-           if (type(pearsonEigenValue[0]).__name__ == 'complex' and removeimag_unit(pearsonEigenValue[j-1]) < 100.0/NNN) or (type(pearsonEigenValue[0]).__name__ != 'complex' and pearsonEigenValue[j-1] < 100.0/NNN):
+           if (type(pearsonEigenValue[0]).__name__ == 'complex' and self.removeimag_unit(pearsonEigenValue[j-1]) < 100.0/NNN) or (type(pearsonEigenValue[0]).__name__ != 'complex' and pearsonEigenValue[j-1] < 100.0/NNN):
                break
            
            if (newNames == 0):
