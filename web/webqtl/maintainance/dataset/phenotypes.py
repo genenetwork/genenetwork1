@@ -42,6 +42,28 @@ def get_publishdata(publishdataid):
     cursor.execute(sql, (publishdataid))
     return cursor.fetchall()
 
+def get_publishdatan(publishdataid):
+    cursor, con = utilities.get_cursor()
+    sql = """
+        SELECT Strain.`Id`, Strain.`Name`, NStrain.`count`
+        FROM NStrain, Strain
+        WHERE NStrain.`DataId`=%s
+        AND NStrain.`StrainId`=Strain.`Id`
+        """
+    cursor.execute(sql, (publishdataid))
+    return cursor.fetchall()
+
+def get_publishdatase(publishdataid):
+    cursor, con = utilities.get_cursor()
+    sql = """
+        SELECT Strain.`Id`, Strain.`Name`, PublishSE.`error`
+        FROM PublishSE, Strain
+        WHERE PublishSE.`DataId`=%s
+        AND PublishSE.`StrainId`=Strain.`Id`
+        """
+    cursor.execute(sql, (publishdataid))
+    return cursor.fetchall()
+
 def fetch(inbredsetid, filename):
     # parameters
     phenotypesfile = open(filename, 'w+')
