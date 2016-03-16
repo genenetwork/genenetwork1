@@ -578,8 +578,8 @@ class CorrelationPage(templatePage):
         rselectandor.append(('OR','or'))
         rselectandor.selected.append('AND')
 		#
-        mselectgt = HT.Input(type='text' ,name='mselectgt',value='0',  size=6,maxlength=10,onChange="")
-        mselectlt = HT.Input(type='text' ,name='mselectlt',value='10', size=6,maxlength=10,onChange="")
+        mselectgt = HT.Input(type='text' ,name='mselectgt', value='0',   size=6, maxlength=10, onChange="")
+        mselectlt = HT.Input(type='text' ,name='mselectlt', value='100', size=6, maxlength=10, onChange="")
         mselectandor = HT.Select(name='mselectandor')
         mselectandor.append(('AND','and'))
         mselectandor.append(('OR','or'))

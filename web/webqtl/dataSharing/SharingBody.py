@@ -167,7 +167,7 @@ sharinginfo_body_string = """<td>
     %s, %s %s %s<br> <!--info[25] Investigators.City--><!--info[26] Investigators.State--><!--info[27] Investigators.ZipCode--><!--info[28] Investigators.Country-->
     Tel. %s<br> <!--info[29] Investigators.Phone-->
     %s<br> <!--info[30] Investigators.Email-->
-    <a href="%s" target="_blank">%s</a> <!--info[31] Investigators.Url--><!--info[31] Investigators.Url-->
+    <a href="%s" target="_blank">Website</a> <!--info[31] Investigators.Url--><!--info[31] Investigators.Url-->
     </span><!--Code above to Show hide Contact information --></TD></TR>
 <!--START HERE-->
 <tr>

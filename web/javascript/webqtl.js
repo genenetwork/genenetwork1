@@ -789,9 +789,25 @@ function checkTraits_hit(value, andor, gthan, lthan) {
 		return true;
 	}
 	if (andor == "and") {
-		return ((value > gthan) && (value < lthan));
+		return checkTraits_hit_g(value, gthan) && checkTraits_hit_l(value, lthan);
 	} else {
-		return ((value > gthan) || (value < lthan));
+		return checkTraits_hit_g(value, gthan) || checkTraits_hit_l(value, lthan);
+	}
+}
+
+function checkTraits_hit_g(value, gthan) {
+	if (gthan !== gthan) {
+		return true;
+	} else {
+		return (value > gthan);
+	}
+}
+
+function checkTraits_hit_l(value, lthan) {
+	if (lthan !== lthan) {
+		return true;
+	} else {
+		return (value < lthan);
 	}
 }
 
