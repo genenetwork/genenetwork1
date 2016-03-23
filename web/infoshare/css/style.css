@@ -1,0 +1,239 @@
+/* Makeshift CSS Reset */
+{
+	margin: 0;
+	padding: 0;
+}
+
+/* Tell the browser to render HTML 5 elements as block */
+header, footer, aside, nav, article {
+	display: block;
+}
+
+body {
+	margin: 0 auto;
+	width: 940px;
+	font: 13px/22px Helvetica, Arial, sans-serif;
+	background: #fff;
+}
+
+h2 {
+	font-size: 28px;
+	line-height: 44px;
+	padding: 22px 0;
+}
+
+h3 {
+	font-size: 18px;
+	line-height: 22px;
+	padding: 11px 0;
+}
+
+p {
+	padding-bottom: 22px;
+}
+
+nav {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background: url("nav_background");
+}
+
+nav ul {
+	margin: 0 auto;
+	width: 940px;
+	list-style: none;
+}
+
+nav ul li {
+	float: left;
+}
+
+	nav ul li a {
+		display: block;
+		margin-right: 20px;
+		width: 140px;
+		font-size: 14px;
+		line-height: 44px;
+		text-align: center;
+		text-decoration: none;
+		color: #777;
+	}
+
+		nav ul li a:hover {
+			color: #fff;
+		}
+
+		nav ul li.selected a {
+			color: #fff;
+		}
+
+		nav ul li.subscribe a {
+			margin-left: 22px;
+			padding-left: 33px;
+			text-align: left;
+			background: url("rss.png") left center no-repeat;
+		}
+
+#intro {
+	margin-top: 66px;
+	padding: 44px;
+	background: #250e3d url("intro_background.png") repeat-x;
+	background-size: 100%;
+	border-radius: 22px;
+	color: #ffffff
+}
+
+#intro {
+	...
+	/* Background-size not implemented yet */
+	-webkit-background-size: 100%;
+	-o-background-size: 100%;
+	-khtml-background-size: 100%;
+
+	/* Border-radius not implemented yet */
+ 	-moz-border-radius: 22px;
+	-webkit-border-radius: 22px;
+}
+
+#intro h2, #intro p¬†{
+	width: 336px;
+}
+
+#intro h2 {
+	padding: 0 0 22px 0;
+	font-weight: normal
+	color: #fff;
+}
+
+#intro p {
+	padding: 0;
+	color: #fff;
+}
+
+#intro {
+	...
+	background: #467612 url("intro_background.png") top left (287px 100%) repeat-x,
+			url("intro_flower.png") top right (653px 100%) no-repeat;
+	...
+}
+
+#result { 
+	margin-left: 5px;
+
+#content {
+	display: table;
+}
+
+	#mainContent {
+		display: table-cell;
+		width: 620px;
+		padding-right: 22px;
+	}
+
+	aside {
+		display: table-cell;
+		width: 300px;
+	}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+.input-xlarge{width:600px}
+
+.contact-input {
+  overflow: hidden;
+  margin-bottom: 20px;
+  padding: 5px;
+  background: #eef7f9;
+  border-radius: 2px;
+}
+.contact-input > input, .contact-input > textarea {
+  display: block;
+  width: 100%;
+  height: 29px;
+  padding: 0 9px;
+  color: #4d5a5e;
+  background: white;
+  border: 1px solid #cfdfe3;
+  border-bottom-color: #d2e2e7;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px rgba(255, 255, 255, 0.2);
+}
+.contact-input > input:focus, .contact-input > textarea:focus {
+  border-color: #93c2ec;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 8px #e1ecf5;
+  box-shadow: 0 0 0 8px #e1ecf5;
+}
+.lt-ie9 .contact-input > input, .lt-ie9 .contact-input > textarea {
+  line-height: 27px;
+}
+.contact-input > textarea {
+  padding: 4px 8px;
+  height: 90px;
+  line-height: 20px;
+  resize: none;
+}
+
+.select {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background: white;
+  border: 1px solid #d2e2e7;
+  border-bottom-color: #c5d4d9;
+  border-radius: 2px;
+  background-image: -webkit-linear-gradient(top, #fcfdff, #f2f7f7);
+  background-image: -moz-linear-gradient(top, #fcfdff, #f2f7f7);
+  background-image: -o-linear-gradient(top, #fcfdff, #f2f7f7);
+  background-image: linear-gradient(to bottom, #fcfdff, #f2f7f7);
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+.select:before, .select:after {
+  content: '';
+  position: absolute;
+  right: 11px;
+  width: 0;
+  height: 0;
+  border-left: 3px outset transparent;
+  border-right: 3px outset transparent;
+}
+.select:before {
+  top: 10px;
+  border-bottom: 3px solid #7f9298;
+}
+.select:after {
+  top: 16px;
+  border-top: 3px solid #7f9298;
+}
+.select > select {
+  position: relative;
+  z-index: 2;
+  width: 112%;
+  height: 29px;
+  line-height: 17px;
+  padding: 5px 9px;
+  padding-right: 0;
+  color: #80989f;
+  background: transparent;
+  background: rgba(0, 0, 0, 0);
+  border: 0;
+  -webkit-appearance: none;
+}
+.select > select:focus {
+  color: #4d5a5e;
+  outline: 0;
+}
+/* Dirty fix for Firefox adding padding where it shouldn't. */
+@-moz-document url-prefix() {
+  .dropdown-select {
+    padding-left: 6px;
+  }
+}

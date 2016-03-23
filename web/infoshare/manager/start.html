@@ -1,0 +1,134 @@
+<!--POLICIES HEADER STARTS HERE-->
+             <?php
+        //turn off error reporting
+        $old_level = error_reporting(5);
+        //POLICIES NAVIGATION MENU GOES HERE
+        //require_once("../includes/data_header.html");
+        //require_once("global_inc.inc");
+             ?>       
+<!--POLICIES HEADER ENDS HERE-->
+<TABLE id=portal-columns>
+  <TBODY>
+  <TR>
+    <TD id=portal-column-content>
+      <DIV class="">
+      <DIV class=documentContent id=region-content><SPAN 
+      id=contentTopLeft></SPAN><SPAN id=contentTopRight></SPAN><A 
+      name=documentContent></A>
+      <DL class="portalMessage info" id=kssPortalMessage 
+        style="DISPLAY: none"><DT>Info 
+        <DD></DD></DL>
+      <DIV id=viewlet-above-content></DIV>
+      <DIV id=content>
+      <H1 class=documentFirstHeading><SPAN class="" 
+      id=parent-fieldname-title>Succesfully login</SPAN></H1>
+
+      <P><STRONG></STRONG></P>
+    <P><BODY  bottommargin="0" leftmargin="0" rightmargin="0" topmargin="0"  bgColor=#ffffff onLoad="JavaScript:xmlhttpPost('../../webqtl/AJAX_menu.py')">
+
+    <center>  
+    <P>
+   <?php
+require "../includes/authentication.inc"; 
+//require_once "HTML/Template/ITX.php";
+
+session_start();
+
+// Connect to an authenticated session or relocate to logout.php
+sessionAuthenticate();
+echo "Welcome ".$_SESSION['loginUsername'];
+
+echo "
+		<p>
+<table>
+<tr><td><a href=http://www.genenetwork.org/share/data/logout.php>Logout</a></td></tr>
+</table>
+</p>
+";
+
+//$template = new HTML_Template_ITX("./templates");
+//$template->loadTemplatefile("home.tpl", true, true);
+
+//$template->setVariable("USERNAME", $_SESSION["loginUsername"]);
+//$template->parseCurrentBlock();
+//$template->show();
+
+?>
+
+
+</p>
+      <!--
+      <UL>
+        <LI>Something could be here.
+        <LI>Something could be here.
+        <LI>Something could be here. 
+        <LI>Something could be here. 
+        <LI>Something could be here.<BR></LI></UL>-->
+        
+        </DIV></DIV></BODY>
+      <DIV class=relatedItems></DIV>
+      <DIV class=visualClear><!-- --></DIV>
+      <DIV class=documentActions>
+      <H5 class=hiddenStructure>Document Actions</H5>
+      <UL> 
+        <LI id=document-action-print><A title="" 
+        href="javascript:this.print();">Print this</A> </LI></UL></DIV>
+      <DIV class=reviewHistory id=review-history></DIV></DIV><SPAN 
+      id=contentBottomLeft></SPAN><SPAN 
+    id=contentBottomRight></SPAN></DIV></DIV></TD>
+    <TD id=portal-column-two>
+    
+          <!--POLICIES NAVIGATION MENU GOES HERE -->
+           <?php
+        //turn off error reporting
+        $old_level = error_reporting(5);
+        //POLICIES NAVIGATION MENU GOES HERE
+        //require_once("../includes/pol_nav_1.html");
+        //require_once("global_inc.inc");
+             ?>
+          
+          <!--POLICIES NAVIGATION MENU ENDS HERE -->
+          </LI></UL><SPAN class=portletBottomLeft></SPAN><SPAN 
+        class=portletBottomRight></SPAN></DD></DL></DIV>
+        
+      <!-- NEWS BLOCK STARTS HERE -->
+            <?php
+        //turn off error reporting
+        $old_level = error_reporting(5);
+        //This file contains title and updated news.
+        //require_once("../includes/news.html");
+        //require_once("global_inc.inc");
+             ?>
+      <!-- NEWS BLOCK ENDS HERE -->
+      
+      <!-- NEWSLETTER BLOCK STARTS HERE -->
+            <?php
+        //turn off error reporting
+        $old_level = error_reporting(5);
+        //This file contains title and updated news.
+        //require_once("../includes/newsletter.html");
+        //require_once("global_inc.inc");
+             ?>
+      <!-- NEWSLETTER BLOCK ENDS HERE -->
+      
+ 
+</DIV></TD></TR></TBODY></TABLE>
+<!--<DIV class=visualClear id=clear-space-before-footer></DIV>-->
+<!-- FOOTER1 START HERE -->
+            <?php
+        //turn off error reporting
+        $old_level = error_reporting(5);
+        //This file contains title and updated news.
+        //require_once("../includes/footer1.html");
+        //require_once("global_inc.inc");
+             ?>
+<!-- FOOTER1 ENDS HERE -->
+
+<!-- FOOTER GOES HERE -->
+
+<!-- FOOTER ENDS HERE -->
+<DIV class=visualClear><!-- --></DIV></DIV>
+<DIV id=kss-spinner><IMG alt="" 
+src="../source/gnsftp/spinner.gif"></DIV>
+
+</BODY></HTML>

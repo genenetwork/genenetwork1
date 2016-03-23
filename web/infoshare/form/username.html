@@ -1,0 +1,53 @@
+<?php
+// Ajax calls this NAME CHECK code to execute
+if(isset($_POST["CheckUserName"])){
+	//include_once("../includes/db_conx.inc");
+	require "db_conx.inc";
+	$UserNameEntry = preg_replace('#[^a-z0-9]#i', '', $_POST['CheckUserName']);
+	$sql = "SELECT InvestigatorId FROM Investigators WHERE UserName='$UserNameEntry' LIMIT 1";
+    $query = mysqli_query($db_conx, $sql); 
+    $UserName_results = mysqli_num_rows($query);
+    if (strlen($UserNameEntry) < 3 || strlen($UserNameEntry) > 16) {
+	    echo '<strong style="color:#F00;">3 - 16 characters please</strong>';
+	    exit();
+    }
+	if (is_numeric($UserNameEntry[0])) {
+	    echo '<strong style="color:#F00;">Usernames must begin with a letter</strong>';
+	    exit();
+    }
+    if ($UserName_results < 1) {
+	    echo '<strong style="color:#009900;">' . $UserNameEntry . ' is OK</strong>';
+	    exit();
+    } else {
+	    echo '<strong style="color:#F00;">' . $UserNameEntry . ' is taken</strong>';
+	    exit();
+    }
+}
+?>
+<html>
+<head>
+<script type="text/javascript" language="javascript">
+function CheckUserName(){
+	var status = document.getElementById("usernamestatus");
+	var u = document.getElementById("UserName").value;
+	if(u != ""){
+		status.innerHTML = 'checking...';
+		var hr = new XMLHttpRequest();
+		hr.open("POST", "username.html", true);
+		hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		hr.onreadystatechange = function() {
+			if(hr.readyState == 4 && hr.status == 200) {
+				status.innerHTML = hr.responseText;
+			}
+		}
+    var v = "CheckUserName="+u;
+    hr.send(v);
+	}
+}
+</script>
+</head>
+<body>
+<input type="text" name="UserName" id="UserName" onBlur="CheckUserName()" maxlength="15" />
+<span id="usernamestatus"></span>
+</body>
+</html>

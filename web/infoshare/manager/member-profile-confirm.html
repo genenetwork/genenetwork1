@@ -1,0 +1,86 @@
+<?php
+	require_once('auth.html');
+?>
+<?php 
+include '../includes/header-v2.inc'; 
+?>
+
+<?php
+require "../includes/db.inc";
+
+//Function to sanitize values received from the form. Prevents SQL injection
+	function clean($str) {
+		$str = @trim($str);
+		if(get_magic_quotes_gpc()) {
+			$str = stripslashes($str);
+		}
+		return mysql_real_escape_string($str);
+	}
+	
+//-- update data in mysql database 
+$InvestigatorId = $_SESSION['SESS_MEMBER_ID'];
+//$InvestigatorId = clean($_POST['InvestigatorId']);
+$FirstName = clean($_POST['FirstName']);
+$LastName = clean($_POST['LastName']);
+$Address = clean($_POST['Address']);
+$City = clean($_POST['City']);
+$State = clean($_POST['State']);
+$ZipCode = clean($_POST['ZipCode']);
+$Phone = clean($_POST['Phone']);
+$Email = clean($_POST['Email']);
+$Country = clean($_POST['Country']);
+$Url = clean($_POST['Url']);
+$UserName = clean($_POST['UserName']);
+$UserPass = clean($_POST['UserPass']);
+//$UserPass = clean($_POST['UserPass']);
+//$UserDate = clean($_POST['UserDate']);
+//$UserLevel = clean($_POST['UserLevel']);
+$OrganizationId = clean($_POST['OrganizationId']);
+
+if (mysqli_connect_errno())
+  {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  }
+
+
+$sql = "UPDATE Investigators SET InvestigatorId = '$InvestigatorId', FirstName = '$FirstName', LastName = '$LastName',
+        Address = '$Address', City = '$City', State = '$State', ZipCode = '$ZipCode', Phone = '$Phone', Email = '$Email',
+        Country = '$Country', Url = '$Url', UserName = '$UserName', UserPass = MD5('$UserPass'), OrganizationId = '$OrganizationId' WHERE InvestigatorId = '$InvestigatorId'" ;
+
+		
+	
+if (!mysqli_query($con,$sql))
+  {
+  die('Error: ' . mysqli_error($con));
+  }
+//echo "Dataset successfully submitted";
+echo("<h4>Investigator: "  . $_POST["InvestigatorId"]. " successfully edited!</h4>");
+
+mysqli_close($con);
+
+?>
+
+
+  
+                <section id="dataset">
+                    <div class="page-header">
+                        <h1>Edit Investigator</h1>
+                    </div>
+
+                </section>
+                
+
+            </div>
+        </div>
+    </div>
+
+<!-- ===== End of content ===== -->
+		</TD>
+		</TR>
+		</TABLE>
+		</TD>
+	</TR>
+	<!-- End of body -->
+<?php 
+include '../includes/footer.inc'; 
+?>

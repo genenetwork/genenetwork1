@@ -1,0 +1,187 @@
+           <?php
+        //turn off error reporting
+        //$old_level = error_reporting(5);
+		//require "../includes/authentication.inc";
+		require "../includes/db.inc";
+		//session_start();
+		//sessionAuthenticateEdit();
+        //require_once("global_inc.inc");
+             ?>
+<!--POLICIES HEADER STARTS HERE-->
+             <?php
+        //turn off error reporting
+        //$old_level = error_reporting(5);
+        //POLICIES NAVIGATION MENU GOES HERE
+        //require_once("../includes/data_header.html");
+             ?>       
+<!--POLICIES HEADER ENDS HERE-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Administrator Interface</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" type="text/css" href="../css/flat-ui-master/css/flat-ui.css">
+<link href="../css/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+
+</head>
+
+<body>
+
+<header>
+    Administrator Interface
+</header>
+
+<nav>
+
+	<ul>
+		<li><a href="#">Blog</a></li>
+		<li><a href="#">About</a></li>
+		<li><a href="#">Archives</a></li>
+		<li><a href="#">Contact</a></li>
+		<li class="subscribe"><a href="#">Subscribe via. RSS</a></li>
+	</ul>
+	
+</nav>
+
+<section id="intro">
+
+	<header>
+		 <h2>GeneNetwork</h2>
+	</header>
+	
+	     <p>Open source bioinformatics for systems genetics
+	
+</section>
+
+<section id="form">
+<!-- Main content area -->  
+<TABLE>
+  <TR>
+    <TD
+      
+      <?php
+       mysqli
+$_GET[InfoPageName];
+$res = mysqli_query($mysqli, "SELECT InfoPageName, InfoFileId, GN_AccesionId, TissueId, InbredSetId, GeneChipId, AvgMethodId, AuthorizedUsers, InfoFiles.SpeciesId, Species.SpeciesName, Species.TaxonomyId, Tissue.TissueName, InbredSet.InbredSetName, GeneChip.GeneChipName, GeneChip.GeoPlatform, AvgMethod.Normalization, Datasets.DatasetName, Datasets.GeoSeries, Datasets.PublicationTitle, DatasetStatus.DatasetStatusName, Datasets.Summary, Datasets.AboutCases, Datasets.AboutTissue, Datasets.AboutDataProcessing, Datasets.Acknowledgment, Datasets.ExperimentDesign, Datasets.Contributors, Datasets.Citation, Investigators.FirstName, Investigators.LastName, Investigators.Address, Investigators.City, Investigators.State, Investigators.ZipCode, Investigators.Country, Investigators.Phone, Investigators.Email, Investigators.Url, Investigators.Url, Organizations.OrganizationName, InvestigatorId, DatasetId, DatasetStatusId FROM InfoFiles LEFT JOIN Species USING (SpeciesId) LEFT JOIN Tissue USING (TissueId) LEFT JOIN InbredSet USING (InbredSetId) LEFT JOIN GeneChip USING (GeneChipId) LEFT JOIN AvgMethod USING (AvgMethodId) LEFT JOIN Datasets USING (DatasetId) LEFT JOIN Investigators USING (InvestigatorId) LEFT JOIN Organizations USING (OrganizationId) LEFT JOIN DatasetStatus USING (DatasetStatusId) where GN_AccesionId = '".$_GET['GN_AccesionId']."'");
+$row = mysqli_fetch_assoc($res);
+echo $row['_msg'];
+      ?>
+		      <H1><?php echo $row[InfoPageTitle]; ?></H1>
+      <P>GEO Series Data: This section to be used for GEO submission of the whole series of arrays</P>
+
+      <p>
+ <div class="container">
+ <table>
+  <form method="post" action="update.html">
+  <div class="login-form">
+  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'> InfoFiletest.GN_AccesionId Hidden:</h3></td><td><input type='hidden' name='GN_AccesionId' size='90' value='" . $row[GN_AccesionId] . "'>");?>
+  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFile.GN_AccesionId Read Only:</h3></td><td><input type='text' readonly name='GN_AccesionId' size='5' value='" . $row[GN_AccesionId] . "'>");?>
+  <p></p>
+  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.InfoFileId:</h3></td><td><input type='text' name='InfoFileId' size='5' value='" . $row[InfoFileId] . "'>");?>
+  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.DatasetId:</h3></td><td><input type='text' name='DatasetId' size='5' value='" . $row[DatasetId] . "'>");?>
+  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.TissueId:</h3></td><td><input type='text' name='TissueId' size='5' value='" . $row[TissueId] . "'>");?>
+  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.SpeciesId:</h3></td><td><input type='text' name='SpeciesId' size='5' value='" . $row[SpeciesId] . "'>");?>
+  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.InbredSetId:</h3></td><td><input type='text' name='InbredSetId' size='5' value='" . $row[InbredSetId] . "'>");?>
+  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.GeneChipId:</h3></td><td><input type='text' name='GeneChipId' size='5' value='" . $row[GeneChipId] . "'>");?>
+  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.AvgMethodId:</h3></td><td><input type='text' name='AvgMethodId' size='5' value='" . $row[AvgMethodId] . "'>");?>
+  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.InfoPageName:</h3></td><td><input type='text' name='InfoPageName' size='90' value='" . $row[InfoPageName] . "'>");?>
+
+  <p></p>
+  <?php echo("<tr><td valign=top>Tissue.TissueName:</td><td><input type='text' name='TissueName' size='90' value='" . $row[TissueName] . "'>");?>
+  <?php echo("<tr><td valign=top>GeneChip.GeneChipName:</td><td><input type='text' name='GeneChipName' size='90' value='" . $row[GeneChipName] . "'>");?>
+  <?php echo("<tr><td valign=top>GeneChip.GeoPlatform:</td><td><input type='text' name='GeoPlatform' size='90' value='" . $row[GeoPlatform] . "'>");?>
+  <?php echo("<tr><td valign=top>AvgMethod.Normalization:</td><td><input type='text' name='Normalization' size='5' value='" . $row[Normalization] . "'>");?>
+  <?php echo("<tr><td valign=top>Species.SpeciesName:</td><td><input type='text' name='SpeciesName' size='90' value='" . $row[SpeciesName] . "'>");?>
+  <?php echo("<tr><td valign=top>Species.TaxonomyId:</td><td><input type='text' name='TaxonomyId' size='90' value='" . $row[TaxonomyId] . "'>");?>
+  <?php echo("<tr><td valign=top>InbredSet.InbredSetName:</td><td><input type='text' name='InbredSetName' size='90' value='" . $row[InbredSetName] . "'>");?>
+  
+  <p></p>
+  <?php echo("<tr><td valign=top>AuthorizedUsers:</td><td><input type='text' name='AuthorizedUsers' size='90' value='" . $row[AuthorizedUsers] . "'>");?>
+  <p></p>
+  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>Investigators.InvestigatorId:</h3></td><td><input type='text' placeholder='Investigator' class='login-field' id='InvestigatorId' size='90' value='" . $row[InvestigatorId] . "'>");?>
+  <?php echo("<tr><td valign=top>Investigators.FirstName:</td><td><input type='text' name='FirstName' size='90' value='" . $row[FirstName] . "'>");?>
+  <?php echo("<tr><td valign=top>Investigators.LastName:</td><td><input type='text' name='LastName' size='90' value='" . $row[LastName] . "'>");?>
+  <?php echo("<tr><td valign=top>Investigators.Address:</td><td><input type='text' name='Address' size='90' value='" . $row[Address] . "'>");?>
+  <?php echo("<tr><td valign=top>Investigators.City:</td><td><input type='text' name='City' size='90' value='" . $row[City] . "'>");?>
+  <?php echo("<tr><td valign=top>Investigators.State:</td><td><input type='text' name='State' size='90' value='" . $row[State] . "'>");?>
+  <?php echo("<tr><td valign=top>Investigators.ZipCode:</td><td><input type='text' name='ZipCode' size='90' value='" . $row[ZipCode] . "'>");?>
+  <?php echo("<tr><td valign=top>Investigators.Country:</td><td><input type='text' name='Country' size='90' value='" . $row[Country] . "'>");?>
+  <?php echo("<tr><td valign=top>Investigators.Phone:</td><td><input type='text' name='Phone' size='90' value='" . $row[Phone] . "'>");?>
+  <?php echo("<tr><td valign=top>Investigators.Email:</td><td><input type='text' name='Email' size='90' value='" . $row[Email] . "'>");?>
+  <?php echo("<tr><td valign=top>Investigators.Url:</td><td><input type='text' name='Url' size='90' value='" . $row[Url] . "'>");?>
+  <?php echo("<tr><td valign=top>Organizations.OrganizationName:</td><td><input type='text' name='OrganizationName' size='90' value='" . $row[OrganizationName] . "'>");?>
+<p></p>
+  <?php echo("<tr><td valign=top>Datasets.DatasetName:</td><td><input type='text' name='DatasetName' size='90' value='" . $row[DatasetName] . "'>");?>
+  <?php echo("<tr><td valign=top>Datasets.GeoSeries:</td><td><input type='text' name='GeoSeries' size='90' value='" . $row[GeoSeries] . "'>");?>
+  <?php echo("<tr><td valign=top>Datasets.PublicationTitle:</td><td><input type='text' name='PublicationTitle' size='90' value='" . $row[PublicationTitle] . "'>");?>
+  <?php echo("<tr><td valign=top>DatasetStatus.DatasetStatusName:</td><td><input type='text' name='DatasetStatusName' size='90' value='" . $row[DatasetStatusName] . "'>");?>
+  <tr><td valign=top>Datasets.Summary:</td><td><textarea NAME="Summary" cols="45" rows="5"><?php echo htmlspecialchars($row[Summary]);?></textarea></td></tr>
+  
+  <tr><td valign=top>Datasets.ExperimentDesign:</td><td><TEXTAREA NAME="ExperimentDesign" cols="45" rows="5"><?php echo htmlspecialchars($row[ExperimentDesign]);?></textarea></td></tr>
+
+  <tr><td valign=top>Datasets.AboutCases:</td><td><TEXTAREA NAME="AboutCases" cols="45" rows="5"><?php echo htmlspecialchars($row[AboutCases]);?></textarea></td></tr>
+  <tr><td valign=top>Datasets.AboutTissue:</td><td><TEXTAREA NAME="AboutTissue" cols="45" rows="5"><?php echo htmlspecialchars($row[AboutTissue]);?></textarea></td></tr>
+  <tr><td valign=top>Datasets.AboutDataProcessing:</td><td><TEXTAREA NAME="AboutDataProcessing" cols="45" rows="5"><?php echo htmlspecialchars($row[AboutDataProcessing]);?></textarea></td></tr>
+  <tr><td valign=top>Datasets.Acknowledgment:</td><td><TEXTAREA NAME="Acknowledgment" cols="45" rows="5"><?php echo htmlspecialchars($row[Acknowledgment]);?></textarea></td></tr>
+  <tr><td valign=top>Datasets.Contributors:</td><td><TEXTAREA NAME="Contributors" cols="45" rows="5"><?php echo htmlspecialchars($row[Contributors]);?></textarea></td></tr>
+  <tr><td valign=top>Datasets.Citation:</td><td><TEXTAREA NAME="Citation" cols="45" rows="5"><?php echo htmlspecialchars($row[Citation]);?></textarea></td></tr>
+  <?php echo("<tr><td valign=top>DatasetStatus.DatasetStatusName:</td><td><input type='text' name='DatasetStatusName' size='90' value='" . $row[DatasetStatusName] . "'>");?>
+   
+ <tr><td>
+<!--<input type="Submit" name="submit" value="Update">-->
+<!--<input type="image" src="../includes/submit.gif" alt="submit"> use this-->
+<a class="btn btn-primary btn-large btn-block" href="#">Submit Update</a>
+</td></tr>
+
+</form>
+</div>
+</table>
+</section>
+</div>
+
+<h3 class="demo-panel-title">Input</h3>
+      <div class="row">
+        <div class="span3">
+          <input type="text" value="" placeholder="Inactive" class="span3" />
+        </div>
+        <div class="span3">
+          <div class="control-group error">
+            <input type="text" value="Error" class="span3" />
+          </div>
+        </div>
+        <div class="span3">
+          <div class="control-group success">
+            <input type="text" value="Success" class="span3" />
+            <i class="input-icon fui-check-inverted"></i>
+          </div>
+        </div>
+        <div class="span3">
+          <input type="text" value="Disabled" disabled="disabled" class="span3" />
+        </div>
+      </div> <!-- /row -->
+
+<aside>
+Aside
+</aside>
+<footer>
+Footer here
+</footer>
+
+ <!-- Load JS here for greater good =============================-->
+    <script src="../css/flat-ui-master/js/jquery-1.8.3.min.js"></script>
+    <script src="../css/flat-ui-master/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="../css/flat-ui-master/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="../css/flat-ui-master/js/bootstrap.min.js"></script>
+    <script src="../css/flat-ui-master/js/bootstrap-select.js"></script>
+    <script src="../css/flat-ui-master/js/bootstrap-switch.js"></script>
+    <script src="../css/flat-ui-master/js/flatui-checkbox.js"></script>
+    <script src="../css/flat-ui-master/js/flatui-radio.js"></script>
+    <script src="../css/flat-ui-master/js/jquery.tagsinput.js"></script>
+    <script src="../css/flat-ui-master/js/jquery.placeholder.js"></script>
+    <script src="../css/flat-ui-master/js/jquery.stacktable.js"></script>
+    <script src="http://vjs.zencdn.net/c/video.js"></script>
+    <script src="../css/flat-ui-master/js/application.js"></script>
+</body></html>

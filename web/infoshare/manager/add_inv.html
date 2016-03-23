@@ -1,0 +1,173 @@
+
+<!--POLICIES HEADER STARTS HERE-->
+             <?php
+        //turn off error reporting
+        $old_level = error_reporting(5);
+        //POLICIES NAVIGATION MENU GOES HERE
+        //require_once("../includes/data_header.html");
+             ?>       
+<!--POLICIES HEADER ENDS HERE-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Administrator Interface</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" type="text/css" href="../css/flat-ui-master/css/flat-ui.css">
+<link href="../css/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+
+</head>
+
+<body>
+
+<nav>
+
+	<ul>
+		<li><a href="#">Blog</a></li>
+		<li><a href="#">About</a></li>
+		<li><a href="#">Archives</a></li>
+		<li><a href="#">Contact</a></li>
+		<li class="subscribe"><a href="#">Subscribe via. RSS</a></li>
+	</ul>
+	
+</nav>
+
+<section id="intro">
+
+	<header>
+		 <h2>GeneNetwork</h2>
+	</header>
+	
+	     <p>Open source bioinformatics for systems genetics
+	
+</section>
+
+<section id="investigator">
+<div>
+<h4 class='demo-panel-title demo-headings'>Investigator</h4>
+<input type="text" name="FirstName" placeholder="First Name">
+<input type="text" name="LastName" placeholder='Last Name'>
+</div>
+</section>
+
+<section id="investigator">
+<h4 class='demo-panel-title demo-headings'>Address:</h4>
+<div>
+<input class="input-xlarge" type="text" name="Address" placeholder='Address' size="90"></div>
+<div><input type="text" name="City" placeholder='City'></div>
+<div><input type="text" name="State" placeholder='State'></div>
+</section>
+<section>
+<div><input type="text" name="City" placeholder='City'>
+<input type="text" name="State" placeholder='State'></div>
+<div><input type="text" name="ZipCode" placeholder='Zip Code'>
+<input type="text" name="Phone" placeholder='Phone'></div>
+<div><input type="text" name="Email" placeholder='Email'>
+<!--<div class="dropdown">-->
+<!--<p class="contact-input">-->
+<label for="select" class="select">
+<select name="Country" value="USA" class="select">
+            <option value="0">United States</option>
+            <option value="1">Mexico</option>
+            <option value="2">China</option>
+            <option value="3">UK</option>
+            <option value="0" selected="selected">United States</option>
+          </select></label></div>
+</section>
+
+
+<section id="form">
+<!-- Main content area -->  
+      
+      <?php
+      // mysqli
+//$_GET[InfoPageName];
+$res = mysqli_query($mysqli, "SELECT InfoPageName, InfoFileId, GN_AccesionId, TissueId, InbredSetId, GeneChipId, AvgMethodId, AuthorizedUsers, InfoFiles.SpeciesId, Species.SpeciesName, Species.TaxonomyId, Tissue.TissueName, InbredSet.InbredSetName, GeneChip.GeneChipName, GeneChip.GeoPlatform, AvgMethod.Normalization, Datasets.DatasetName, Datasets.GeoSeries, Datasets.PublicationTitle, DatasetStatus.DatasetStatusName, Datasets.Summary, Datasets.AboutCases, Datasets.AboutTissue, Datasets.AboutDataProcessing, Datasets.Acknowledgment, Datasets.ExperimentDesign, Datasets.Contributors, Datasets.Citation, Investigators.FirstName, Investigators.LastName, Investigators.Address, Investigators.City, Investigators.State, Investigators.ZipCode, Investigators.Country, Investigators.Phone, Investigators.Email, Investigators.Url, Investigators.Url, Organizations.OrganizationName, InvestigatorId, DatasetId, DatasetStatusId FROM InfoFiles LEFT JOIN Species USING (SpeciesId) LEFT JOIN Tissue USING (TissueId) LEFT JOIN InbredSet USING (InbredSetId) LEFT JOIN GeneChip USING (GeneChipId) LEFT JOIN AvgMethod USING (AvgMethodId) LEFT JOIN Datasets USING (DatasetId) LEFT JOIN Investigators USING (InvestigatorId) LEFT JOIN Organizations USING (OrganizationId) LEFT JOIN DatasetStatus USING (DatasetStatusId) where GN_AccesionId = '".$_GET['GN_AccesionId']."'");
+$row = mysqli_fetch_assoc($res);
+echo $row['_msg'];
+      ?>
+
+      <p>
+ <div class="container">
+  <div class="login-form">
+      <h3 class="demo-panel-title">Add New Investigator</h3></td></tr>
+      <TABLE>
+<form action="insert.php" method="post">
+<tr><td><h4 class='demo-panel-title demo-headings'>Investigator</h4></td><td></td></tr> 
+<tr><td><input type="text" name="FirstName" placeholder="First Name"></td><td><input type="text" name="LastName" placeholder='Last Name'></td></tr> 
+<tr><td><h4 class='demo-panel-title demo-headings'>Address:</h4></td><td></td></tr>
+<tr><td><input class="input-xlarge" type="text" name="Address" placeholder='Address' size="90"></td><td></td></tr> 
+<tr><td><input type="text" name="City" placeholder='City'></td><td></td></tr> 
+<tr><td><input type="text" name="State" placeholder='State'></td><td></td></tr> 
+<tr><td><input type="text" name="ZipCode" placeholder='Zip Code'></td><td></td></tr> 
+<tr><td><input type="text" name="Phone" placeholder='Phone'></td><td></td></tr> 
+<tr><td><input type="text" name="Email" placeholder='Email'></td><td></td></tr> 
+
+<tr><td><div class="span3">
+          <select name="Country" value="USA" class="dropdown-select">
+            <option value="0">United States</option>
+            <option value="1">Mexico</option>
+            <option value="2">China</option>
+            <option value="3">UK</option>
+            <option value="0" selected="selected">United States</option>
+          </select>
+</div></td><td></td></tr> 
+        
+<tr><td><input type="text" name="Url" placeholder='Url'></td><td></td></tr> 
+<tr><td><input type="text" name="OrganizationId" placeholder='OrganizationId'>
+<a class="btn btn-primary btn-large btn-block" href="#">Submit Update</a></td><td></td></tr> 
+</form>
+</table>
+</body>
+</html>
+
+
+</div>
+</section>
+</div>
+
+<h3 class="demo-panel-title">Input</h3>
+      <div class="row">
+        <div class="span3">
+          <input type="text" value="" placeholder="Inactive" class="span3" />
+        </div>
+        <div class="span3">
+          <div class="control-group error">
+            <input type="text" value="Error" class="span3" />
+          </div>
+        </div>
+        <div class="span3">
+          <div class="control-group success">
+            <input type="text" value="Success" class="span3" />
+            <i class="input-icon fui-check-inverted"></i>
+          </div>
+        </div>
+        <div class="span3">
+          <input type="text" value="Disabled" disabled="disabled" class="span3" />
+        </div>
+      </div> <!-- /row -->
+
+
+<aside>
+Aside
+</aside>
+<footer>
+Footer here
+</footer>
+ <!-- Load JS here for greater good =============================-->
+    <script src="../css/flat-ui-master/js/jquery-1.8.3.min.js"></script>
+    <script src="../css/flat-ui-master/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="../css/flat-ui-master/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="../css/flat-ui-master/js/bootstrap.min.js"></script>
+    <script src="../css/flat-ui-master/js/bootstrap-select.js"></script>
+    <script src="../css/flat-ui-master/js/bootstrap-switch.js"></script>
+    <script src="../css/flat-ui-master/js/flatui-checkbox.js"></script>
+    <script src="../css/flat-ui-master/js/flatui-radio.js"></script>
+    <script src="../css/flat-ui-master/js/jquery.tagsinput.js"></script>
+    <script src="../css/flat-ui-master/js/jquery.placeholder.js"></script>
+    <script src="../css/flat-ui-master/js/jquery.stacktable.js"></script>
+    <script src="http://vjs.zencdn.net/c/video.js"></script>
+    <script src="../css/flat-ui-master/js/application.js"></script>
+</body></html>

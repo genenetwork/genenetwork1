@@ -1,0 +1,293 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <title>GeneNetwork GeneNetwork</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link REL="stylesheet" TYPE="text/css" href="../css/gn2css/bootstrap.min.css" />
+    <link REL="stylesheet" TYPE="text/css" href="../css/gn2css/bootstrap-responsive.min.css" />
+    <link REL="stylesheet" TYPE="text/css" href="../css/gn2css/docs.css" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="../css/gn2css/colorbox.css"  />
+    <link rel="stylesheet" type="text/css" href="../css/gn2css/main.css"  />
+
+    
+    
+
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+    <!-- Navbar
+    ================================================== -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="brand" href="/">GeneNetwork</a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li class="active">
+                            <a href="/">Home</a>
+                        </li>
+                        <li class="dropdown">
+                        <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                            Search <b class="caret"></b>
+                        </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                                <li><a tabindex="-1" href="/webqtl/main.py?FormID=tissueCorrelation">Tissue Corrleation</a></li>
+                                <li><a tabindex="-1" href="/webqtl/main.py?FormID=snpBrowser">SNP Browser</a></li>
+                                <li class="divider"></li>
+                                <li><a tabindex="-1" href="/webqtl/main.py?FormID=geneWiki">Gene Wiki</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#">Help</a>
+                        </li>
+                        <li class="">
+                            <a href="/whats_new">News</a>
+                        </li>
+                        <li class="">
+                            <a href="/reference">References</a>
+                        </li>
+                        <li class="">
+                            <a href="/policies">Policies</a>
+                        </li>
+                        <li class="">
+                            <a href="/links">Links</a>
+                        </li>
+                        <li class="">
+                            
+                            <a id="login_out" class="modalize" href="/login">Sign in</a>
+                            
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+<!-- Start of body -->
+
+
+
+    <header class="jumbotron subhead" id="overview">
+        <div class="container">
+            <h1>GeneNetwork</h1>
+            <p class="lead">Open source bioinformatics for systems genetics</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="span3 bs-docs-sidebar">
+              <ul class="nav nav-list bs-docs-sidenav">
+                <li><a href="#quick-search"><i class="icon-chevron-right"></i> Quick Search</a></li>
+                <li><a href="#institution"><i class="icon-chevron-right"></i> Add new Institution</a></li>
+                <li><a href="#investigator"><i class="icon-chevron-right"></i> Add new Investigator</a></li>
+                <li><a href="#dataset"><i class="icon-chevron-right"></i> Add new Dataset</a></li>
+                <li><a href="#infofile"><i class="icon-chevron-right"></i> Create an Info File</a></li>
+                <li><a href="#logout"><i class="icon-chevron-right"></i> Logout</a></li>
+              </ul>
+            </div>
+             <div class="span9">
+                <section id="quick-search">
+                    <div class="page-header">
+                        <h1>Report</h1>
+                    
+<?php
+
+//Investigator form
+require "../includes/db.inc"; //fine using $con
+$p = $_POST[username];
+$p2 = SHA1($p);
+if (mysqli_connect_errno())
+  {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  }
+
+$sql="INSERT INTO Investigators (FirstName, LastName, Address, City, State, ZipCode, Phone, Email, Country, Url, OrganizationId, UserName, UserPass, UserDate) VALUES ('$_POST[FirstName]', '$_POST[LastName]', '$_POST[Address]', '$_POST[City]', '$_POST[State]', '$_POST[ZipCode]', '$_POST[Phone]', '$_POST[Email]', '$_POST[Country]', '$_POST[Url]', '$_POST[OrganizationId]', '$_POST[username]', '$p2',now())";
+
+if (!mysqli_query($con,$sql))
+  {
+  die('Error: ' . mysqli_error($con));
+  }
+//echo "Organization successfully submitted";
+echo("<h4>Investigator: "  . $_POST["FirstName"]. " successfully submitted!</h4>");
+
+mysqli_close($con);
+
+
+/*
+//Organization-Institution Form
+Currently not in use because results shown same page (institution.html), but this code works fine when uses insert.html
+require "../includes/db.inc"; //fine using $con
+if (mysqli_connect_errno())
+  {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  }
+
+$sql="INSERT INTO Organizations (OrganizationName) VALUES ('$_POST[OrganizationName]')";
+
+if (!mysqli_query($con,$sql))
+  {
+  die('Error: ' . mysqli_error($con));
+  }
+//echo "Organization successfully submitted";
+echo("<h4>Organization: "  . $_POST["OrganizationName"]. " successfully submitted!</h4>");
+
+mysqli_close($con);
+*/
+?>
+
+
+<?php
+
+//Dataset form
+require "../includes/db.inc"; //fine using $con
+
+if (mysqli_connect_errno())
+  {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  }
+
+$sql="INSERT INTO Datasets (DatasetName, GeoSeries, PublicationTitle, Summary, ExperimentDesign, InvestigatorId, DatasetStatusId) VALUES ('$_POST[DatasetName]', '$_POST[GeoSeries]', '$_POST[PublicationTitle]', '$_POST[editor1]', '$_POST[ExperimentDesign]', '$_POST[InvestigatorId]', '$_POST[DatasetStatusId]')";
+
+if (!mysqli_query($con,$sql))
+  {
+  die('Error: ' . mysqli_error($con));
+  }
+//echo "Organization successfully submitted";
+echo("<h4>Dataset Name: "  . $_POST["DatasetName"]. " successfully submitted!</h4>");
+
+mysqli_close($con);
+?>
+
+</div>
+</section>
+            </div>
+        </div>
+    </div>
+
+
+
+            <!-- Footer
+    ================================================== -->
+    <footer class="footer">
+      <div class="container">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+
+        <p>Launched in 1994 as
+        <A HREF="http://www.ncbi.nlm.nih.gov/pubmed?term=8043953">
+            The Portable Dictionary of the Mouse Genome</A> and in 2001 as WebQTL.
+        </p>
+        <p>Operated by
+            <A HREF="mailto:rwilliams@uthsc.edu">Rob Williams</A>,
+            <A HREF="mailto:lyan6@uthsc.edu">Lei Yan</A>,
+            <A HREF="mailto:zachary.a.sloan@gmail.com">Zachary Sloan</A>, and
+            <A HREF="mailto:acenteno@uthsc.edu" target="_blank">Arthur Centeno</A>.
+        </p>
+        <p>
+            Designed and coded by <a href="http://penguinpython.com">Sam Ockman</a>, Xiaodong Zhou,
+            Christian Fernandez,
+            Ning Liu, Rudi Alberts, Elissa Chesler, Jintao Wang, Kenneth Manly, Robert W. Williams,
+            and <A HREF="/credit.html">colleagues</A>.
+        </p>
+
+        <p>Built with <a href="http://twitter.github.com/bootstrap/">bootstrap</a>,
+            <a href="http://coffeescript.org/">coffeescript</a>,
+            <a href="http://flask.pocoo.org/">flask</a>,
+            <a href="http://en.wikipedia.org/wiki/Linux">linux</a>,
+            <a href="http://www.python.org/">python</a> and good intentions.
+        </p>
+        <p>Special thanks to CYP1A2 and AHR.</p>
+        <br />
+        <p>GeneNetwork is supported by:</p>
+        <UL>
+            <LI>
+                <a target="_blank" href="http://citg.uthsc.edu">
+                    The UT Center for Integrative and Translational Genomics
+                </A>
+            </li>
+            <LI><a target="_blank" href="http://www.iniastress.org">NIAAA</A>
+                Integrative Neuroscience Initiative on Alcoholism
+                (U01 AA016662, U01 AA013499, U24 AA013513, U01 AA014425)
+            </li>
+            <LI>
+                <a target="_blank"
+                   href="http://www.drugabuse.gov/about/organization/Genetics/geneexpression/index.html">NIDA</A>, <a class="smallsize" target="_blank" href="http://www.nimh.nih.gov/">NIMH</A>
+                   , and <a class="smallsize" target="_blank" href="http://www.niaaa.nih.gov/">
+                   NIAAA</A> (P20-DA 21131)
+            </li>
+            <LI>NCI <a target="_blank" href="http://emice.nci.nih.gov/">MMHCC</A> (U01CA105417) and
+                <a target="_blank" href="http://www.ncrr.nih.gov/">NCRR</A>
+                <a target="_blank" href="http://www.nbirn.net/TestBeds/Mouse/index.htm">BIRN</A>
+                (U24 RR021760)
+            </li>
+        </UL>
+        <!--</p>-->
+
+        <ul class="footer-links">
+          <li><a href="http://atlas.uthsc.edu/mailman/listinfo/genenetwork" target="_blank">Join the mailing list</a></li>
+          <!--<li><a href="#">Friend us on facebook</a></li>-->
+          <!--<li><a href="#">Follow us on twitter</a></li>-->
+        </ul>
+      </div>
+    </footer>
+
+    <!--http://stackoverflow.com/questions/14045515/how-can-i-reuse-one-bootstrap-modal-div-->
+    <!-- Modal -->
+    <div id="utility" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <!--<div class="modal-header">-->
+      <!--  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+      <!--  <h3 id="myModalLabel">Register</h3>-->
+      <!--</div>-->
+      <div class="modal-body">
+        <p>.</p>
+      </div>
+      <!--<div class="modal-footer">-->
+      <!--  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>-->
+      <!--  <button class="btn btn-primary">Save changes</button>-->
+      <!--</div>-->
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="/static/packages/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+            //http://stackoverflow.com/questions/11521763/bootstrap-scrollspy-not-working
+            var $window = $(window)
+            $('.bs-docs-sidenav').affix({
+              offset: {
+                top: function () { return $window.width() <= 980 ? 290 : 210 }
+              , bottom: 270
+              }
+            })
+    </script>
+    <script src="/static/new/js_external/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/static/new/js_external/json2.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js" type="text/javascript"></script>
+
+    <script language="javascript" type="text/javascript" src="/static/packages/colorbox/jquery.colorbox.js"></script>
+    <script type="text/javascript" src="/static/new/javascript/login.js"></script>
+    
+    <script src="/static/new/javascript/dataset_select_menu.js"></script>
+
+
+
+
+
+</body>
+</html>

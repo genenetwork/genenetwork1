@@ -1,0 +1,122 @@
+<script src="sorttable.js"></script>
+<?php
+	require_once('auth.html');
+?>
+<?php 
+include '../includes/member-header.inc'; 
+?>
+<?php
+	//Include the PS_Pagination class
+	include('ps_pagination.html');
+	
+	//Connect to mysql db
+	require "../includes/db.inc"; //fine using $conn
+	 // w $InvestigatorId = $_SESSION['SESS_MEMBER_ID'];
+	//$sql = 'SELECT * FROM Investigators ORDER BY LastName';
+	//$result = mysql_query("SELECT * from Investigators where InvestigatorId = '".$_SESSION['SESS_MEMBER_ID']."'");
+	//$sql = "SELECT * from Investigators where InvestigatorId ='".($_SESSION['SESS_MEMBER_ID'])"'";
+	// w $sql = "SELECT * from Investigators where InvestigatorId ='$InvestigatorId'";
+	
+	//$sql = ('SELECT * FROM Datasets WHERE InvestigatorId = "'. mysql_real_escape_string($_SESSION['SESS_MEMBER_ID']) . '"')
+	//$sql = ('select Datasets.DatasetName, Datasets.DatasetId, DatasetMapInvestigator.InvestigatorId, Datasets.DatasetStatusId FROM Datasets JOIN DatasetMapInvestigator on Datasets.DatasetId = DatasetMapInvestigator.DatasetId WHERE DatasetMapInvestigator.InvestigatorId = "'. mysql_real_escape_string($_SESSION['SESS_MEMBER_ID']) . '"')
+	
+	//$sql = ('select Datasets.DatasetName, Datasets.DatasetId, Datasets.InvestigatorId, Datasets.DatasetStatusId FROM Datasets JOIN DatasetMapInvestigator on Datasets.DatasetId = DatasetMapInvestigator.DatasetId WHERE DatasetMapInvestigator.InvestigatorId = "'. mysql_real_escape_string($_SESSION['SESS_MEMBER_ID']) . '"')
+	//$sql = ('select Investigators.LastName, Datasets.DatasetName, Datasets.DatasetId, Datasets.InvestigatorId, Datasets.DatasetStatusId FROM Datasets JOIN DatasetMapInvestigator on Datasets.DatasetId = DatasetMapInvestigator.DatasetId LEFT JOIN Investigators on Datasets.InvestigatorId = Investigators.InvestigatorId WHERE DatasetMapInvestigator.InvestigatorId = "'. mysql_real_escape_string($_SESSION['SESS_MEMBER_ID']) . '"')
+	$sql = ('select DatasetStatus.DatasetStatusName, Investigators.LastName, Investigators.FirstName, Datasets.DatasetName, Datasets.DatasetId, Datasets.InvestigatorId, Datasets.DatasetStatusId FROM Datasets JOIN DatasetMapInvestigator on Datasets.DatasetId = DatasetMapInvestigator.DatasetId LEFT JOIN Investigators on Datasets.InvestigatorId = Investigators.InvestigatorId LEFT JOIN DatasetStatus on Datasets.DatasetStatusId = DatasetStatus.DatasetStatusId WHERE DatasetMapInvestigator.InvestigatorId = "'. mysql_real_escape_string($_SESSION['SESS_MEMBER_ID']) . '"')
+	//$sql = ('select InfoFiles.GN_AccesionId, DatasetStatus.DatasetStatusName, Investigators.LastName, Investigators.FirstName, Datasets.DatasetName, Datasets.DatasetId, Datasets.InvestigatorId, Datasets.DatasetStatusId FROM Datasets JOIN DatasetMapInvestigator on Datasets.DatasetId = DatasetMapInvestigator.DatasetId LEFT JOIN Investigators on Datasets.InvestigatorId = Investigators.InvestigatorId LEFT JOIN DatasetStatus on Datasets.DatasetStatusId = DatasetStatus.DatasetStatusId LEFT JOIN InfoFiles on Datasets.DatasetId = InfoFiles.DatasetId WHERE DatasetMapInvestigator.InvestigatorId = "'. mysql_real_escape_string($_SESSION['SESS_MEMBER_ID']) . '"')
+	
+
+	or trigger_error(mysql_error());
+	
+	/*
+	 * Create a PS_Pagination object
+	 * 
+	 * $conn = MySQL connection object
+	 * $sql = SQl Query to paginate
+	 * 10 = Number of rows per page
+	 * 5 = Number of links
+	 * "param1=valu1&param2=value2" = You can append your own parameters to paginations links
+	 */
+	$pager = new PS_Pagination($conn, $sql, 30, 5, "param1=valu1&param2=value2");
+	//$pager = new PS_Pagination($conn, $result, 30, 5, "param1=valu1&param2=value2");
+	
+	/*
+	 * Enable debugging if you want o view query errors
+	*/
+	$pager->setDebug(true);
+	
+	/*
+	 * The paginate() function returns a mysql result set
+	 * or false if no rows are returned by the query
+	*/
+	$rs = $pager->paginate();
+	
+	
+	//Display the full navigation in one go
+	echo $pager->renderFullNav();
+	echo "<p>\n";
+					echo "<div align='left'>";
+    echo "<table border='1' CELLPADDING='4' CELLSPACING='3' class='sortable'>";
+    //echo "<TR><TH COLSPAN='4'>My Studies [Click on title to sort table]</TH></TR>";
+    echo "<tr>";
+echo "<td valign='top'><p align='left'><b>Study Id</b></td>";
+echo "<td valign='top'><p align='left'><b>Study Name</b></td>";
+echo "<td valign='top'><p align='left'><b>Principal Investigator</b></td>";
+echo "<td valign='top'><p align='left'><b>Dataset Status</b></td>";
+//echo "<td valign='top'><p align='left'><b>Datasets Related</b></td>";
+echo "<tr>";
+
+	$rs = $pager->paginate();
+	if(!$rs) die(mysql_error());
+	while($row = mysql_fetch_assoc($rs)) {
+		//echo $row['DatasetId'],"<br />\n";
+		//Both Links:  echo "<tr><td><a href=member-studies-edit.html?DatasetId=". $row['DatasetId'] ." target='_blank' '>" . $row['DatasetId'] ."</a></td><td><a href=member-studies-edit.html?DatasetId=". $row['DatasetId'] ." target='_blank' '>" . $row['DatasetName'] . "</td><td>" . $row['LastName'] . "</td><td>" . $row['DatasetStatusName'] . "</td></tr>";
+
+		//echo "<tr><td><a href=member-studies-edit.html?DatasetId=". $row['DatasetId'] ." target='_blank' '>" . $row['DatasetId'] ."</a></td><td>" . $row['DatasetName'] . "</td><td>" . $row['LastName'] . "</td><td>" . $row['DatasetStatusName'] . "</td></tr>";
+		echo "<tr><td><a href=member-studies-edit.html?DatasetId=". $row['DatasetId'] ." target='_blank' '>" . $row['DatasetId'] ."</a></td><td>" . $row['DatasetName'] . "</td><td>" . $row['FirstName'] . "&nbsp;" .$row['LastName'] ."</td><td>" . $row['DatasetStatusName'] . "</td></tr>";
+		//echo "<tr><td><a href=member-studies-edit.html?DatasetId=". $row['DatasetId'] ." target='_blank' '>" . $row['DatasetId'] ."</a></td><td>" . $row['DatasetName'] . "</td><td>" . $row['FirstName'] . "&nbsp;" .$row['LastName'] ."</td><td>" . $row['DatasetStatusName'] . "</td><td>" . $row['GN_AccesionId'] ."</td></tr>";
+		
+			}
+		echo "</table>"; //Close the table in HTML
+	/*
+	 * Or you can display the individual links for more
+	 * control over HTML rendering.
+	 * 
+	*/
+	
+	//Display the link to first page: First
+	echo $pager->renderFirst();
+	
+	//Display the link to previous page: <<
+	echo $pager->renderPrev();
+	
+	/*
+	 * Display page links: 1 2 3
+	 * $prefix = Will be prepended to the page link (optional)
+	 * $suffix = Will be appended to the page link (optional)
+	 * 
+	*/
+	echo $pager->renderNav('<span>', '</span>');
+	
+	//Display the link to next page: >>
+	echo $pager->renderNext();
+	
+	//Display the link to last page: Last
+	echo $pager->renderLast();
+
+?>
+
+ </section>
+            </div>
+        </div>
+    </div>
+<!-- ===== End of content ===== -->
+		</TD>
+		</TR>
+		</TABLE>
+		</TD>
+	</TR>
+	<!-- End of body -->
+<?php 
+include '../includes/footer.inc'; 
+?>

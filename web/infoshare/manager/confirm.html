@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<body>
+
+<?php
+
+if (isset($_POST['submit']))
+{    
+    
+    //mysql_connect("host", username", "password") or die("could not connect to the database");
+    require "../includes/db.inc";
+    mysql_select_db("db_webqtl") or die("could not select database");
+
+    
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+
+    
+    $sql = mysql_query("SELECT * FROM `Investigators` WHERE `UserName` = '$username' AND `Email` = '$email'");
+    $result = mysql_num_rows($sql);
+
+    
+    if (!$result)
+    {
+        die (mysql_error());
+    }
+
+    
+    if ($result == 1)
+    {
+        $rows = mysql_fetch_array($sql);
+        $password = $rows['UserPass'];
+        $email = $rows['Email'];
+        $subject ="Password request";
+        $header = "from: ctc@atlas.uthsc.edu";
+        $body = "Your password is " . $password; 
+
+        mail ($email, $subject, $header, $body); 
+        print("an email containning the password has been sent to you");
+    }else
+    {
+        echo ("No such user exists in the system. Please try again");
+    }
+
+}
+
+?>
+
+<html>
+<head>
+    <title>
+        forgot password form
+    </title>
+</head>
+    <body>
+        <form action = "<?php $_SERVER['PHP_SELF'];?>" method = "POST">
+            <p>
+                <label for = "username">Username:</label>
+                <input type = "text" name = "username" />
+            </p>
+            <p>
+                <label for = "email">Email:</label>
+                <input type = "text" name = "email" />
+            </p>
+            <p>
+                <input type = "submit" name="submit" />
+                <input type = "reset" name = "reset" />
+            </p>
+        </form
+
+</body>
+</html>

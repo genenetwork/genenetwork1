@@ -1,0 +1,73 @@
+<?php
+	require_once('auth.html');
+	include '../includes/member-header.inc'; 
+	require "../includes/db.inc";
+	
+//-- update data in mysql database 
+$DatasetId = $_POST['DatasetId'];
+$DatasetName = $_POST['DatasetName'];
+$GeoSeries = $_POST['GeoSeries'];
+$PublicationTitle = $_POST['PublicationTitle'];
+$Summary = $_POST['editor1'];
+$ExperimentDesign = $_POST['editor2'];
+$AboutCases = $_POST['editor3'];
+$AboutTissue = $_POST['editor4'];
+$AboutPlatform = $_POST['editor5'];
+$AboutDataProcessing = $_POST['editor6'];
+$Contributors = $_POST['editor7'];
+$Citation = $_POST['editor8'];
+$Acknowledgment = $_POST['editor9'];
+$Notes = $_POST['editor10'];
+//$InvestigatorId = $_POST['InvestigatorId'];
+$DatasetStatusId = $_POST['DatasetStatusId'];
+
+if (mysqli_connect_errno())
+  {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  }
+
+/*$sql = "UPDATE Datasets SET DatasetName = '$DatasetName', GeoSeries = '$GeoSeries',
+        PublicationTitle = '$PublicationTitle', Summary = '$Summary', ExperimentDesign = '$ExperimentDesign',
+        AboutCases = '$AboutCases', AboutTissue = '$AboutTissue', AboutPlatform = '$AboutPlatform', AboutDataProcessing = '$AboutDataProcessing',
+        Contributors = '$Contributors', Citation = '$Citation', Acknowledgment = '$Acknowledgment', Notes = '$Notes',
+        InvestigatorId = '$InvestigatorId', DatasetStatusId = '$DatasetStatusId' WHERE DatasetId = '$DatasetId'" ;*/
+        
+$sql = "UPDATE Datasets SET DatasetName = '$DatasetName', GeoSeries = '$GeoSeries',
+        PublicationTitle = '$PublicationTitle', Summary = '$Summary', ExperimentDesign = '$ExperimentDesign',
+        AboutCases = '$AboutCases', AboutTissue = '$AboutTissue', AboutPlatform = '$AboutPlatform', AboutDataProcessing = '$AboutDataProcessing',
+        Contributors = '$Contributors', Citation = '$Citation', Acknowledgment = '$Acknowledgment', Notes = '$Notes', DatasetStatusId = '$DatasetStatusId' WHERE DatasetId = '$DatasetId'" ;
+
+if (!mysqli_query($con,$sql))
+  {
+  die('Error: ' . mysqli_error($con));
+  }
+//echo "Dataset successfully submitted";
+echo("<h4>Dataset: "  . $_POST["DatasetName"]. " successfully edited!</h4>");
+
+mysqli_close($con);
+?>
+
+
+  
+                <section id="dataset">
+                    <div class="page-header">
+                        <h1>Edit Dataset</h1>
+                    </div>
+
+                </section>
+                
+
+            </div>
+        </div>
+    </div>
+
+<!-- ===== End of content ===== -->
+		</TD>
+		</TR>
+		</TABLE>
+		</TD>
+	</TR>
+	<!-- End of body -->
+<?php 
+include '../includes/footer.inc'; 
+?>

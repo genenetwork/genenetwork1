@@ -1,0 +1,162 @@
+<?php
+	require_once('auth.html');
+	include '../includes/header-v2.inc'; 
+?>
+
+
+<?php
+require "../includes/db.inc";
+//Alternate code with same results
+//$_GET[DatasetId];
+//$result = mysql_query("SELECT * FROM InfoFiles WHERE id = $Id");
+	
+	$result = mysql_query('SELECT * FROM Investigators WHERE InvestigatorId = "'. mysql_real_escape_string($_SESSION['SESS_MEMBER_ID']) . '"')
+	or trigger_error(mysql_error());
+   
+//$result = mysql_query("SELECT * from Investigators where InvestigatorId = '".$_GET['InvestigatorId']."'");
+/**
+
+if (!$result) {
+    echo 'Could not run query: ' . mysql_error();
+    exit;
+}
+**/
+$row = mysql_fetch_array($result);
+?>
+
+
+  
+<!--<form method="post" action="<?php $_PHP_SELF ?>">   -->     
+<form method="post" autocomplete="off" autocorrect="off" action="member-profile-confirm.html">
+		<fieldset>
+                            
+                        <label for="species">InvestigatorId:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="InvestigatorId" name="InvestigatorId" value="<? echo "$row[InvestigatorId]"?>"
+                                    type="text" readonly maxlength="900" required>
+                            </div>
+                        
+                        <label for="species">FirstName:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="FirstName" name="FirstName" value="<? echo "$row[FirstName]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                        
+                        <label for="species">LastName:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="LastName" name="LastName" value="<? echo "$row[LastName]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                        
+                        <label for="species">Address:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="Address" name="Address" value="<? echo "$row[Address]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                        
+                        <label for="species">City:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="City" name="City" value="<? echo "$row[City]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                            
+                        <label for="species">State:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="State" name="State" value="<? echo "$row[State]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                        
+                        <label for="species">ZipCode:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="ZipCode" name="ZipCode" value="<? echo "$row[ZipCode]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                        
+                        <label for="species">Phone:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="Phone" name="Phone" value="<? echo "$row[Phone]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                        
+                        <label for="species">Email:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="Email" name="Email" value="<? echo "$row[Email]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                        
+                        <label for="species">Country:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="Country" name="Country" value="<? echo "$row[Country]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                            
+                        <label for="species">Url:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="Url" name="Url" value="<? echo "$row[Url]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                        
+                        <label for="species">UserName:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="UserName" name="UserName" value="<? echo "$row[UserName]"?>"
+                                    type="text" autocomplete="off" maxlength="900" >
+                            </div>
+                            
+                        <label for="species">UserPass:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="UserPass" name="UserPass" value="<? echo "$row[UserPass]"?>"
+                                    type="password"  autocomplete="off" maxlength="500">
+                            </div>
+                        
+                        <!--<label for="species">UserDate:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="UserDate" name="UserDate" value="<? echo "$row[UserDate]"?>"
+                                    type="text" maxlength="900">
+                            </div>
+                        
+                        <label for="species">UserLevel:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="UserLevel" name="UserLevel" value="<? echo "$row[UserLevel]"?>"
+                                    type="text" maxlength="900">
+                            </div>-->
+                        
+                        <label for="species">OrganizationId:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="OrganizationId" name="OrganizationId" value="<? echo "$row[OrganizationId]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                            
+                        
+                            
+            <input id="btsearch" type="submit"
+            class="btn btn-primary" value="Edit Investigator">
+		</fieldset>
+</form>
+
+
+<!-- ===== End of content ===== -->
+		</TD>
+		</TR>
+		</TABLE>
+		</TD>
+	</TR>
+	<!-- End of body -->
+<?php 
+include '../includes/footer.inc'; 
+?>

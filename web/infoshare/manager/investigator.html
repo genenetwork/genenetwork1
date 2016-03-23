@@ -1,0 +1,356 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <title>GeneNetwork GeneNetwork</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link REL="stylesheet" TYPE="text/css" href="../css/gn2css/bootstrap.min.css" />
+    <script type="text/javascript" src="jquery.min.js"></script>
+		<style type="text/css">
+    		input:required:invalid, input:focus:invalid {
+  			background-image: url(invalid.png);
+  			background-position: right;
+  			background-repeat: no-repeat;
+			}
+			input:required:valid {
+  			background-image: url(valid.png);
+  			background-position: right;
+  			background-repeat: no-repeat;
+			}
+		</style>
+</head>
+
+<body>
+<?php
+	require_once("../includes/header.html");
+?> 
+
+<div class="container">
+	<div class="row">
+        
+<?php
+	require_once("../includes/leftMenu.html");
+?> 
+<div class="span9">       
+<!--USERNAME AVAILABILITY STARTS HERE-->
+<script src="jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function()//When the dom is ready 
+{
+$("#username").change(function() 
+{ //if theres a change in the username textbox
+
+var username = $("#username").val();//Get the value in the username textbox
+if(username.length > 3)//if the lenght greater than 3 characters
+{
+$("#availability_status").html('<img src="loader.gif" align="absmiddle">&nbsp;Checking availability...');
+//Add a loading image in the span id="availability_status"
+
+$.ajax({  //Make the Ajax Request
+    type: "POST",  
+    url: "ajax_check_username.html",  //file name
+    data: "username="+ username,  //data
+    success: function(server_response){  
+   
+   $("#availability_status").ajaxComplete(function(event, request){ 
+
+	if(server_response == '0')//if ajax_check_username.php return value "0"
+	{ 
+	$("#availability_status").html('<img src="available.png" align="absmiddle"> <font color="Green"> Available </font>  ');
+	//add this image to the span with id "availability_status"
+	}  
+	else  if(server_response == '1')//if it returns "1"
+	{  
+	 $("#availability_status").html('<img src="not_available.png" align="absmiddle"> <font color="red">Not Available </font>');
+	}  
+   
+   });
+   } 
+   
+  }); 
+
+}
+else
+{
+
+$("#availability_status").html('<font color="#cc0000">Username too short</font>');
+//if in case the username is less than or equal 3 characters only 
+}
+
+return false;
+});
+
+});
+</script>
+<!--USERNAME AVAILABILITY ENDS HERE-->
+
+<!--javascript password check-->
+<script type="text/javascript">
+function checkPasswordMatch() {
+    var password = $("#UserPass").val();
+    var confirmPassword = $("#UserPass_confirm").val();
+
+    if (password != confirmPassword)
+        $("#divCheckPasswordMatch").html('<font color="red"> Passwords do not match! </font> ');
+    else
+        $("#divCheckPasswordMatch").html('<font color="green"> Passwords match. </font> ');
+}
+
+$(document).ready(function () {
+   $("#UserPass_confirm").keyup(checkPasswordMatch);
+});
+</script>
+<!--ends-->
+
+<!--######## ADD NEW INVESTIGATOR ##########-->   
+                
+                 <section id="investigator">
+                    <div class="page-header">
+                        <h1>Add new Investigator</h1>
+                    
+<form method="post" action=" " autocomplete="on" class="validatedForm">
+     <label for="Investigator">Investigator:</label>
+                            
+                           <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="quick" name="FirstName"
+                                    type="text" maxlength="500" placeholder="First Name" required>
+                            </div>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="quick" name="LastName"
+                                    type="text" maxlength="500" placeholder="Last Name" required>
+                            </div>
+                            
+                            <label for="Address">Address:</label>
+                           <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="quick" name="Address"
+                                    type="text" maxlength="500" placeholder="Address" required>
+                            </div>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="quick" name="City"
+                                    type="text" maxlength="500" placeholder="City" required>
+                            </div>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="quick" name="State"
+                                    type="text" maxlength="500" placeholder="State" required>
+                            </div>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="quick" name="ZipCode"
+                                    type="text" maxlength="500" placeholder="Zip Code" required>
+                            </div>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="quick" name="Phone"
+                                    type="text" maxlength="500" placeholder="Phone">
+                            </div>
+                            <div class="input-prepend">
+                                <select id="trait_type" name="Country" class="span2">
+                                    <option value="0">Select Country</option>
+                                    <option value="USA">United States</option>
+                                    <option value="China">China</option>
+                                    <option value="Mexico">Mexico</option>
+                                    <option value="Canada">Canada</option>
+                                    <option value="UK">UK</option>
+                                </select>
+                            </div>
+                            
+                            <label for="species">URL:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="quick" name="Url"
+                                    type="text" maxlength="500" placeholder="http://">
+                            </div>
+                            <label for="species">Organization:</label>
+                            <div class="input-prepend">
+
+<?php
+
+require "../includes/db.inc"; //fine using $conn
+
+$sql="SELECT DISTINCT OrganizationId, OrganizationName FROM Organizations ORDER BY OrganizationName ASC";
+
+$result = mysql_query($sql, $conn) or die(mysql_error());
+
+echo "<select name='OrganizationId'>";
+while ($row = mysql_fetch_array($result)) {
+    echo "<option value='" . $row['OrganizationId'] . "'>" . $row['OrganizationName'] . "</option>";
+}
+echo "</select>";
+
+?>
+
+                            </div>
+
+                        
+			<label for="Investigator">Create a UserName:</label>
+                <div>
+                	<input class="input-xlarge"       
+						type="text" name="username" id="username" maxlength="500" placeholder="Username"> <span id="availability_status"></span> 
+                </div>  
+                        
+             <label for="Investigator">Create a Password:</label>
+			<div class="input-append">
+				<input class="input-xlarge"
+                    id="UserPass" name="UserPass"
+                        type="password" maxlength="500" placeholder="Password">
+                            </div>
+            <div class="input-append">
+                <input class="input-xlarge"
+                    id="UserPass_confirm" name="User_Pass_Check"
+                        type="password" maxlength="500" placeholder="Retype Password" onChange="checkPasswordMatch();">
+                         </div>
+            <div class="registrationFormAlert" id="divCheckPasswordMatch"></div>
+                                                
+                         
+		<label for="species">Email:</label>
+            <div class="input-append">
+                <input class="input-xlarge"
+                    id="email" name="Email"
+                        type="email" maxlength="500" placeholder="Email address" required>
+                            </div>
+                            
+
+		<input id="btsearch" type="submit"
+        class="btn btn-primary" value="Create new Investigator">
+ 	 </form>
+ 	 
+ 	 <?php
+
+//Investigator form
+if( isset( $_POST['FirstName'] ) && strlen( trim( $_POST['FirstName'] ) ) > 0  )
+{
+$p = $_POST[username];
+$p2 = SHA1($p);
+require "../includes/db.inc"; //fine using $con
+
+$sql="INSERT INTO Investigators (FirstName, LastName, Address, City, State, ZipCode, Phone, Email, Country, Url, OrganizationId, UserName, UserPass, UserDate) VALUES ('$_POST[FirstName]', '$_POST[LastName]', '$_POST[Address]', '$_POST[City]', '$_POST[State]', '$_POST[ZipCode]', '$_POST[Phone]', '$_POST[Email]', '$_POST[Country]', '$_POST[Url]', '$_POST[OrganizationId]', '$_POST[username]', '$p2',now())";
+
+if (mysqli_query($con,$sql))
+  	{
+  //echo "Organization successfully submitted";
+			echo("<div class=\"alert alert-success\"><h5>Investigator: " . $_POST["FirstName"] . $_POST["LastName"] . " successfully submitted!</h5></div>");
+//echo("<h4>Investigator: "  . $_POST["FirstName"]. " successfully submitted!</h4>");
+
+  	}
+else
+	{
+			echo ('Error: ' . mysqli_error($con));
+	}
+
+mysqli_close($con);
+}
+?>
+</section>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+      <div class="container">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+
+        <p>Launched in 1994 as
+        <A HREF="http://www.ncbi.nlm.nih.gov/pubmed?term=8043953">
+            The Portable Dictionary of the Mouse Genome</A> and in 2001 as WebQTL.
+        </p>
+        <p>Operated by
+            <A HREF="mailto:rwilliams@uthsc.edu">Rob Williams</A>,
+            <A HREF="mailto:lyan6@uthsc.edu">Lei Yan</A>,
+            <A HREF="mailto:zachary.a.sloan@gmail.com">Zachary Sloan</A>, and
+            <A HREF="mailto:acenteno@uthsc.edu" target="_blank">Arthur Centeno</A>.
+        </p>
+        <p>
+            Designed and coded by <a href="http://penguinpython.com">Sam Ockman</a>, Xiaodong Zhou,
+            Christian Fernandez,
+            Ning Liu, Rudi Alberts, Elissa Chesler, Jintao Wang, Kenneth Manly, Robert W. Williams,
+            and <A HREF="/credit.html">colleagues</A>.
+        </p>
+
+        <p>Built with <a href="http://twitter.github.com/bootstrap/">bootstrap</a>,
+            <a href="http://coffeescript.org/">coffeescript</a>,
+            <a href="http://flask.pocoo.org/">flask</a>,
+            <a href="http://en.wikipedia.org/wiki/Linux">linux</a>,
+            <a href="http://www.python.org/">python</a> and good intentions.
+        </p>
+        <p>Special thanks to CYP1A2 and AHR.</p>
+        <br />
+        <p>GeneNetwork is supported by:</p>
+        <UL>
+            <LI>
+                <a target="_blank" href="http://citg.uthsc.edu">
+                    The UT Center for Integrative and Translational Genomics
+                </A>
+            </li>
+            <LI><a target="_blank" href="http://www.iniastress.org">NIAAA</A>
+                Integrative Neuroscience Initiative on Alcoholism
+                (U01 AA016662, U01 AA013499, U24 AA013513, U01 AA014425)
+            </li>
+            <LI>
+                <a target="_blank"
+                   href="http://www.drugabuse.gov/about/organization/Genetics/geneexpression/index.html">NIDA</A>, <a class="smallsize" target="_blank" href="http://www.nimh.nih.gov/">NIMH</A>
+                   , and <a class="smallsize" target="_blank" href="http://www.niaaa.nih.gov/">
+                   NIAAA</A> (P20-DA 21131)
+            </li>
+            <LI>NCI <a target="_blank" href="http://emice.nci.nih.gov/">MMHCC</A> (U01CA105417) and
+                <a target="_blank" href="http://www.ncrr.nih.gov/">NCRR</A>
+                <a target="_blank" href="http://www.nbirn.net/TestBeds/Mouse/index.htm">BIRN</A>
+                (U24 RR021760)
+            </li>
+        </UL>
+        <!--</p>-->
+
+        <ul class="footer-links">
+          <li><a href="http://atlas.uthsc.edu/mailman/listinfo/genenetwork" target="_blank">Join the mailing list</a></li>
+          <!--<li><a href="#">Friend us on facebook</a></li>-->
+          <!--<li><a href="#">Follow us on twitter</a></li>-->
+        </ul>
+      </div>
+    </footer>
+
+    <!--http://stackoverflow.com/questions/14045515/how-can-i-reuse-one-bootstrap-modal-div-->
+    <!-- Modal -->
+    <div id="utility" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <!--<div class="modal-header">-->
+      <!--  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+      <!--  <h3 id="myModalLabel">Register</h3>-->
+      <!--</div>-->
+      <div class="modal-body">
+        <p>.</p>
+      </div>
+      <!--<div class="modal-footer">-->
+      <!--  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>-->
+      <!--  <button class="btn btn-primary">Save changes</button>-->
+      <!--</div>-->
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="/static/packages/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+            //http://stackoverflow.com/questions/11521763/bootstrap-scrollspy-not-working
+            var $window = $(window)
+            $('.bs-docs-sidenav').affix({
+              offset: {
+                top: function () { return $window.width() <= 980 ? 290 : 210 }
+              , bottom: 270
+              }
+            })
+    </script>
+    <script src="/static/new/js_external/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/static/new/js_external/json2.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js" type="text/javascript"></script>
+
+    <script language="javascript" type="text/javascript" src="/static/packages/colorbox/jquery.colorbox.js"></script>
+    <script type="text/javascript" src="/static/new/javascript/login.js"></script>
+    
+    <script src="/static/new/javascript/dataset_select_menu.js"></script>
+
+</body>
+</html>
+	

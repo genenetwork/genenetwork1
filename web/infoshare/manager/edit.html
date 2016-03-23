@@ -1,0 +1,516 @@
+<?php
+	require_once("auth.html");
+	require_once("../includes/authentication.inc");
+?>
+<!DOCTYPE HTML>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <title>GeneNetwork GeneNetwork</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link REL="stylesheet" TYPE="text/css" href="../css/gn2css/bootstrap.min.css" />
+    <script type="text/javascript" src="jquery.min.js"></script>
+	<style type="text/css">
+    		input:required:invalid, input:focus:invalid {
+  			background-image: url(invalid.png);
+  			background-position: right;
+  			background-repeat: no-repeat;
+			}
+			input:required:valid {
+  			background-image: url(valid.png);
+  			background-position: right;
+  			background-repeat: no-repeat;
+			}
+	</style>
+<script src="../ckeditor/ckeditor.js"></script>
+    <!--<link REL="stylesheet" TYPE="text/css" href="../ckeditor/samples/sample.css" />-->
+<link href="../ckeditor/samples/sample.css" rel="stylesheet">
+	<style>
+
+		/* Style the CKEditor element to look like a textfield */
+		.cke_textarea_inline
+		{
+			padding: 10px;
+			height: 200px;
+			overflow: auto;
+
+			border: 1px solid gray;
+			-webkit-appearance: textfield;
+		}
+
+	</style>
+	<style>
+
+		#editable
+		{
+			padding: 10px;
+			float: left;
+		}
+
+	</style>
+</head>
+
+<body>
+<?php
+	require_once("../includes/header.html");
+?> 
+
+<div class="container">
+	<div class="row">
+        
+<?php
+	require_once("../includes/leftMenu.html");
+?> 
+        
+<div class="span9">
+
+<?php
+require "../includes/db.inc";
+//Alternate code with same results
+//$_GET[DatasetId];
+//$result = mysql_query("SELECT * FROM InfoFiles WHERE id = $Id");
+    
+$result = mysql_query("SELECT * from Datasets where DatasetId = '".$_GET['DatasetId']."'");
+
+if (!$result) {
+    echo 'Could not run query: ' . mysql_error();
+    exit;
+}
+$row = mysql_fetch_array($result);
+?>
+
+  
+                <section id="dataset">
+                    <div class="page-header">
+                        <h1>Edit Dataset</h1>
+                    </div>
+  
+<!--<form method="post" action="<?php $_PHP_SELF ?>">   -->     
+<form method="post" action="edit_data.html">
+		<fieldset>
+                            
+                        <label for="species">DatasetId:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="DatasetId" name="DatasetId" value="<? echo "$row[DatasetId]"?>"
+                                    type="text" readonly maxlength="900" required>
+                            </div>
+                        
+                        <label for="species">DatasetName:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="DatasetName" name="DatasetName" value="<? echo "$row[DatasetName]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                        
+                        <label for="species">GeoSeries:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="GeoSeries" name="GeoSeries" value="<? echo "$row[GeoSeries]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                        
+                        <label for="species">PublicationTitle:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="PublicationTitle" name="PublicationTitle" value="<? echo "$row[PublicationTitle]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                        
+                        <label for="species">DatasetStatusId:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="DatasetStatusId" name="DatasetStatusId" value="<? echo "$row[DatasetStatusId]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                            
+                            
+                        <label for="species">InvestigatorId:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="InvestigatorId" name="InvestigatorId" value="<? echo "$row[InvestigatorId]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
+                            
+                            
+                        <label for="Summary">Summary:</label>
+
+	<br>
+	<div>
+
+        <TEXTAREA id="editor1" NAME="editor1" cols="45" rows="5"><?php echo($row[Summary]);?></textarea>
+		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
+		
+		 <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'editor1' );
+            </script>
+	</div>
+	
+	<label for="Summary">ExperimentDesign:</label>
+
+	<br>
+	<div>
+
+        <TEXTAREA id="editor1" NAME="editor2" cols="45" rows="5"><?php echo($row[ExperimentDesign]);?></textarea>
+		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
+		
+		 <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'editor2' );
+            </script>
+	</div>
+	
+	<label for="Summary">AboutCases:</label>
+
+	<br>
+	<div>
+
+        <TEXTAREA id="editor1" NAME="editor3" cols="45" rows="5"><?php echo($row[AboutCases]);?></textarea>
+		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
+		
+		 <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'editor3' );
+            </script>
+	</div>
+	
+	<label for="Summary">AboutTissue:</label>
+
+	<br>
+	<div>
+
+        <TEXTAREA id="editor1" NAME="editor4" cols="45" rows="5"><?php echo($row[AboutTissue]);?></textarea>
+		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
+		
+		 <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'editor4' );
+            </script>
+	</div>
+	
+	<label for="Summary">AboutPlatform:</label>
+
+	<br>
+	<div>
+
+        <TEXTAREA id="editor1" NAME="editor5" cols="45" rows="5"><?php echo($row[AboutPlatform]);?></textarea>
+		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
+		
+		 <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'editor5' );
+            </script>
+	</div>
+	
+	<label for="Summary">AboutDataProcessing:</label>
+
+	<br>
+	<div>
+
+        <TEXTAREA id="editor1" NAME="editor6" cols="45" rows="5"><?php echo($row[AboutDataProcessing]);?></textarea>
+		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
+		
+		 <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'editor6' );
+            </script>
+	</div>
+	
+	<label for="Summary">Contributors:</label>
+
+	<br>
+	<div>
+
+        <TEXTAREA id="editor1" NAME="editor7" cols="45" rows="5"><?php echo($row[Contributors]);?></textarea>
+		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
+		
+		 <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'editor7' );
+            </script>
+	</div>
+	
+	<label for="Summary">Citation:</label>
+
+	<br>
+	<div>
+
+        <TEXTAREA id="editor1" NAME="editor8" cols="45" rows="5"><?php echo($row[Citation]);?></textarea>
+		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
+		
+		 <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'editor8' );
+            </script>
+	</div>
+	
+	<label for="Summary">Acknowledgment:</label>
+
+	<br>
+	<div>
+
+        <TEXTAREA id="editor1" NAME="editor9" cols="45" rows="5"><?php echo($row[Acknowledgment]);?></textarea>
+		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
+		
+		 <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'editor9' );
+            </script>
+	</div>
+	
+	<label for="Summary">Notes:</label>
+
+	<br>
+	<div>
+
+        <TEXTAREA id="editor1" NAME="editor10" cols="45" rows="5"><?php echo($row[Notes]);?></textarea>
+		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
+		
+		 <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'editor10' );
+            </script>
+	</div>
+
+        
+            <!--<textarea id="editor1" name="editor1" rows="10" cols="80">
+                This is my textarea to be replaced with CKEditor.
+            </textarea>-->
+           
+      <label for="species">Investigator:</label>
+                            <div class="input-prepend">
+
+<?php
+
+require "../includes/db.inc"; //fine using $conn
+
+$sql="SELECT DISTINCT InvestigatorId, FirstName, LastName FROM Investigators WHERE InvestigatorId= '".$row['InvestigatorId']."' ORDER BY LastName ASC";
+//$sql="SELECT DISTINCT InvestigatorId, FirstName, LastName FROM Investigators ORDER BY LastName ASC";
+
+$result = mysql_query($sql, $conn) or die(mysql_error());
+
+echo "<select name='test'>";
+while ($row = mysql_fetch_array($result)) {
+	
+    echo "<option value='" . $row['InvestigatorId'] . "'>" . $row['FirstName'] . " " . $row['LastName'] . "</option>";
+}
+echo "</select>";
+
+?>                   
+                       
+                            
+
+<?php
+
+//require "../includes/db.inc"; //fine using $conn
+
+//$sql="SELECT DISTINCT InvestigatorId, FirstName, LastName FROM Investigators WHERE InvestigatorId= '".$row['InvestigatorId']."' ORDER BY LastName ASC";
+// //$sql="SELECT DISTINCT InvestigatorId, FirstName, LastName FROM Investigators ORDER BY LastName ASC";
+
+//$result = mysql_query($sql, $conn) or die(mysql_error());
+
+//echo "<select name='InvestigatorId'>";
+//while ($row = mysql_fetch_array($result)) {
+    //echo "<option value='" . $row['InvestigatorId'] . "'>" . $row['FirstName'] . " " . $row['LastName'] . "</option>";
+//}
+//echo "</select>";
+
+?>                      
+             </div>               
+            <input id="btsearch" type="submit"
+            class="btn btn-primary" value="Edit Dataset">
+		</fieldset>
+</form>
+             
+
+             
+               
+    <!-- ######################## This temporarily hidden while above is completed
+      <input type="hidden" name="Id" value="<? echo "$row[Id]"?>">
+        <tr>        
+          <td>DatasetId</td>
+          <td>
+            <input type="text" readonly name="DatasetId" 
+        size="80" value="<? echo "$row[DatasetId]"?>">
+          </td>
+        </tr>
+        <tr>
+          <td>DatasetName</td>
+          <td>
+            <input type="text" name="DatasetName" size="80" 
+          value="<? echo "$row[DatasetName]"?>">
+          </td>
+        </tr>
+        <tr>
+          <td>GeoSeries</td>
+          <td>
+            <input type="text" name="GeoSeries" size="80" 
+          value="<? echo "$row[GeoSeries]"?>">
+          </td>
+        </tr>
+        <tr>
+          <td>PublicationTitle</td>
+          <td>
+            <input type="text" name="PublicationTitle" size="80" 
+          value="<? echo "$row[PublicationTitle]"?>">
+          </td>
+        </tr>
+        <tr><td valign=top><b>Summary:</b></td><td><TEXTAREA NAME="Summary" cols="45" rows="5"><?php echo($row[Summary]);?></textarea></td></tr>
+        <tr><td valign=top><b>ExperimentDesign:</b></td><td><TEXTAREA NAME="ExperimentDesign" cols="45" rows="5"><?php echo($row[ExperimentDesign]);?></textarea></td></tr>
+        <tr><td valign=top><b>AboutCases:</b></td><td><TEXTAREA NAME="AboutCases" cols="45" rows="5"><?php echo($row[AboutCases]);?></textarea></td></tr>
+        <tr><td valign=top><b>AboutTissue:</b></td><td><TEXTAREA NAME="AboutTissue" cols="45" rows="5"><?php echo($row[AboutTissue]);?></textarea></td></tr>
+        <tr><td valign=top><b>AboutPlatform:</b></td><td><TEXTAREA NAME="AboutPlatform" cols="45" rows="5"><?php echo($row[AboutPlatform]);?></textarea></td></tr>
+        <tr><td valign=top><b>AboutDataProcessing:</b></td><td><TEXTAREA NAME="AboutDataProcessing" cols="45" rows="5"><?php echo($row[AboutDataProcessing]);?></textarea></td></tr>
+        <tr><td valign=top><b>Contributors:</b></td><td><TEXTAREA NAME="Contributors" cols="45" rows="5"><?php echo($row[Contributors]);?></textarea></td></tr>
+        <tr><td valign=top><b>Citation:</b></td><td><TEXTAREA NAME="Citation" cols="45" rows="5"><?php echo($row[Citation]);?></textarea></td></tr>
+        <tr><td valign=top><b>Acknowledgment:</b></td><td><TEXTAREA NAME="Acknowledgment" cols="45" rows="5"><?php echo($row[Acknowledgment]);?></textarea></td></tr>
+        <tr><td valign=top><b>Notes:</b></td><td><TEXTAREA NAME="Notes" cols="45" rows="5"><?php echo($row[Notes]);?></textarea></td></tr>
+        
+
+        <tr>
+          <td>InvestigatorId</td>
+          <td>
+            <input type="text" name="InvestigatorId" size="80" 
+          value="<? echo "$row[InvestigatorId]"?>">
+          </td>
+        </tr>
+        <tr>
+          <td>DatasetStatusId</td>
+          <td>
+            <input type="text" name="DatasetStatusId" size="80" 
+          value="<? echo "$row[DatasetStatusId]"?>">
+          </td>
+        </tr>
+        <tr>
+                  <td align="right">
+            <input type="submit" 
+          name="update" id="update" value="Update">
+          </td>
+        </tr>
+      </form>
+      </table>
+     ########################-->
+     
+
+                </section>
+                
+
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+      <div class="container">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+
+        <p>Launched in 1994 as
+        <A HREF="http://www.ncbi.nlm.nih.gov/pubmed?term=8043953">
+            The Portable Dictionary of the Mouse Genome</A> and in 2001 as WebQTL.
+        </p>
+        <p>Operated by
+            <A HREF="mailto:rwilliams@uthsc.edu">Rob Williams</A>,
+            <A HREF="mailto:lyan6@uthsc.edu">Lei Yan</A>,
+            <A HREF="mailto:zachary.a.sloan@gmail.com">Zachary Sloan</A>, and
+            <A HREF="mailto:acenteno@uthsc.edu" target="_blank">Arthur Centeno</A>.
+        </p>
+        <p>
+            Designed and coded by <a href="http://penguinpython.com">Sam Ockman</a>, Xiaodong Zhou,
+            Christian Fernandez,
+            Ning Liu, Rudi Alberts, Elissa Chesler, Jintao Wang, Kenneth Manly, Robert W. Williams,
+            and <A HREF="/credit.html">colleagues</A>.
+        </p>
+
+        <p>Built with <a href="http://twitter.github.com/bootstrap/">bootstrap</a>,
+            <a href="http://coffeescript.org/">coffeescript</a>,
+            <a href="http://flask.pocoo.org/">flask</a>,
+            <a href="http://en.wikipedia.org/wiki/Linux">linux</a>,
+            <a href="http://www.python.org/">python</a> and good intentions.
+        </p>
+        <p>Special thanks to CYP1A2 and AHR.</p>
+        <br />
+        <p>GeneNetwork is supported by:</p>
+        <UL>
+            <LI>
+                <a target="_blank" href="http://citg.uthsc.edu">
+                    The UT Center for Integrative and Translational Genomics
+                </A>
+            </li>
+            <LI><a target="_blank" href="http://www.iniastress.org">NIAAA</A>
+                Integrative Neuroscience Initiative on Alcoholism
+                (U01 AA016662, U01 AA013499, U24 AA013513, U01 AA014425)
+            </li>
+            <LI>
+                <a target="_blank"
+                   href="http://www.drugabuse.gov/about/organization/Genetics/geneexpression/index.html">NIDA</A>, <a class="smallsize" target="_blank" href="http://www.nimh.nih.gov/">NIMH</A>
+                   , and <a class="smallsize" target="_blank" href="http://www.niaaa.nih.gov/">
+                   NIAAA</A> (P20-DA 21131)
+            </li>
+            <LI>NCI <a target="_blank" href="http://emice.nci.nih.gov/">MMHCC</A> (U01CA105417) and
+                <a target="_blank" href="http://www.ncrr.nih.gov/">NCRR</A>
+                <a target="_blank" href="http://www.nbirn.net/TestBeds/Mouse/index.htm">BIRN</A>
+                (U24 RR021760)
+            </li>
+        </UL>
+        <!--</p>-->
+
+        <ul class="footer-links">
+          <li><a href="http://atlas.uthsc.edu/mailman/listinfo/genenetwork" target="_blank">Join the mailing list</a></li>
+          <!--<li><a href="#">Friend us on facebook</a></li>-->
+          <!--<li><a href="#">Follow us on twitter</a></li>-->
+        </ul>
+      </div>
+    </footer>
+
+    <!--http://stackoverflow.com/questions/14045515/how-can-i-reuse-one-bootstrap-modal-div-->
+    <!-- Modal -->
+    <div id="utility" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <!--<div class="modal-header">-->
+      <!--  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+      <!--  <h3 id="myModalLabel">Register</h3>-->
+      <!--</div>-->
+      <div class="modal-body">
+        <p>.</p>
+      </div>
+      <!--<div class="modal-footer">-->
+      <!--  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>-->
+      <!--  <button class="btn btn-primary">Save changes</button>-->
+      <!--</div>-->
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="/static/packages/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+            //http://stackoverflow.com/questions/11521763/bootstrap-scrollspy-not-working
+            var $window = $(window)
+            $('.bs-docs-sidenav').affix({
+              offset: {
+                top: function () { return $window.width() <= 980 ? 290 : 210 }
+              , bottom: 270
+              }
+            })
+    </script>
+    <script src="/static/new/js_external/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/static/new/js_external/json2.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js" type="text/javascript"></script>
+
+    <script language="javascript" type="text/javascript" src="/static/packages/colorbox/jquery.colorbox.js"></script>
+    <script type="text/javascript" src="/static/new/javascript/login.js"></script>
+    
+    <script src="/static/new/javascript/dataset_select_menu.js"></script>
+
+</body>
+</html>
+	

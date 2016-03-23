@@ -1,0 +1,90 @@
+<script src="sorttable.js"></script>
+<?php
+	require_once('auth.html');
+?>
+<?php 
+include '../includes/member-header.inc'; 
+?>
+        
+<div class="span9">
+	<section id="quick-search">
+		<div class="page-header">
+			<h1>Quick Search</h1>
+<?php
+require "../includes/db.inc";
+?>
+
+<!--SEARCH ORGANIZATION-->
+ <form action=" " method="post">
+	<div class="input-append">
+         <input class="input-xlarge"
+                id="quick" name="dataset"
+                type="text" maxlength="500" placeholder="Search for Dataset">
+
+         <input id="btsearch" type="submit"
+                class="btn btn-primary" value="Search">
+    </div>
+
+
+</form>
+
+
+<?php
+
+if( isset( $_POST['dataset'] ) && strlen( trim( $_POST['dataset'] ) ) > 0  )
+{
+        $DatasetName = $_POST['dataset'];
+        
+        //require "../includes/db.inc"; //fine using $conn
+
+        $sql = "select DatasetName, DatasetId from Datasets where DatasetName like '%$DatasetName%'";
+        //$sql = ('select DatasetStatus.DatasetStatusName, Investigators.LastName, Investigators.FirstName, Datasets.DatasetName, Datasets.DatasetId, Datasets.InvestigatorId, Datasets.DatasetStatusId FROM Datasets JOIN DatasetMapInvestigator on Datasets.DatasetId = DatasetMapInvestigator.DatasetId LEFT JOIN Investigators on Datasets.InvestigatorId = Investigators.InvestigatorId LEFT JOIN DatasetStatus on Datasets.DatasetStatusId = DatasetStatus.DatasetStatusId WHERE DatasetMapInvestigator.InvestigatorId = "'. mysql_real_escape_string($_SESSION['SESS_MEMBER_ID']) . '"')
+
+        
+        	echo "<table BORDER CELLPADDING=5>";
+    echo "<tr>";
+    echo "<td><p align='center'>DatasetId</td>";
+    echo "<td><p align='center'>DatasetName</td>";
+    //echo "<td valign='top'><p align='left'><b>Principal Investigator</b></td>";
+	//echo "<td valign='top'><p align='left'><b>Dataset Status</b></td>";
+	echo "<tr>";
+
+        $result = mysql_query($sql, $conn) or die(mysql_error());
+
+        if ( mysql_num_rows($result) >0)
+        {
+            while ($newArray = mysql_fetch_array($result))
+            {
+                $DatasetName  = $newArray['DatasetName'];
+                $DatasetId = $newArray['DatasetId'];
+
+                //echo $DatasetName . ", " . $DatasetId ."<br />" ;
+
+    echo "<tr><td align='right'><a href=member-studies-edit.html?DatasetId=". $newArray['DatasetId'] ." target='_blank' '>" . $newArray['DatasetId'] ."</a></td><td>" . $newArray['DatasetName'] . "</td></tr>";
+                
+            }
+            echo "</table>"; //Close the table in HTML
+        }
+        else 
+        {
+            echo "Record not found";
+        }
+
+
+        mysql_close($conn);
+}
+?>
+ </section>
+            </div>
+        </div>
+    </div>
+<!-- ===== End of content ===== -->
+		</TD>
+		</TR>
+		</TABLE>
+		</TD>
+	</TR>
+	<!-- End of body -->
+<?php 
+include '../includes/footer.inc'; 
+?>
