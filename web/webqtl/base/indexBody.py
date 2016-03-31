@@ -194,11 +194,11 @@ Quick HELP Examples and </B>
 <LI><B><I>MEAN=(15 16) LRS=(23 46)</I></B> in the <B>Combined</B> field finds highly expressed genes (15 to 16 log2 units) AND with peak <A HREF="http://www.genenetwork.org/glossary.html#L" target="_blank"  class="fs14"><small>LRS</small></A> linkage between 23 and 46.
 
 
-<LI><B><I>RIF=mitochondrial</I></B> searches RNA databases for <A HREF="http://www.ncbi.nlm.nih.gov/projects/GeneRIF/GeneRIFhelp.html" target="_blank"  class="fs14"><small>GeneRIF</small></A> links.
+<LI><B><I>RIF=mitochondrial</I></B> searches RNA databases for <A HREF="https://www.ncbi.nlm.nih.gov/gene/generif-stats" target="_blank" class="fs14"><small>GeneRIF</small></A> links.
 
 <LI><B><I>WIKI=nicotine</I></B> searches <A HREF="http://www.genenetwork.org/webqtl/main.py?FormID=geneWiki" target="_blank"  class="fs14"><small>GeneWiki</small></A> for genes that you or other users have annotated with the word <I>nicotine</I>.
 
-<LI><B><I>GO:0045202</I></B> searches for synapse-associated genes listed in the <A HREF="http://www.godatabase.org/cgi-bin/amigo/go.cgi" target="_blank"  class="fs14"><small>Gene Ontology</small></A>.
+<LI><B><I>GO:0045202</I></B> searches for synapse-associated genes listed in the <A HREF="http://amigo.geneontology.org/amigo" target="_blank" class="fs14"><small>Gene Ontology</small></A>.
 
 <LI><B><I>NAME=(watson jd)</I></B> searches for all genes associated in PubMed with the author J D Watson.</LI>
 
