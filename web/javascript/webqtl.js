@@ -572,7 +572,7 @@ function databaseinfo(){
     var select = document.SEARCHFORM.database;
     var database = select.options[select.selectedIndex].value;
     var page = '/webqtl/main.py?FormID=sharinginfo&InfoPageName=' + database;
-    newWindow = open(page,windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+    newWindow = open(page);
     newWindow.focus();
 }
 
@@ -583,7 +583,7 @@ function crossinfo(){
     var specie = select0.options[select0.selectedIndex].value;
     var database = select1.options[select1.selectedIndex].value;
     var page = '/' + specie + 'Cross.html#' + database;
-    newWindow = open(page,windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+    newWindow = open(page);
     newWindow.focus();
 }
 
@@ -592,7 +592,7 @@ function crossinfo2(){
     var select = document.crossChoice.RISet;
     var database = select.options[select.selectedIndex].value;
     var page = '/cross.html#' + database;
-    newWindow = open(page,windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+    newWindow = open(page);
     newWindow.focus()
 }
 
