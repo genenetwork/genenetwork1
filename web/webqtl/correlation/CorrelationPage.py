@@ -47,6 +47,9 @@ from dbFunction import webqtlDatabaseFunction
 import utility.webqtlUtil #this is for parallel computing only.
 from correlation import correlationFunction
 
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("gn\web\webqtl\correlation\CorrelationPage.py")
 
 class CorrelationPage(templatePage):
 
@@ -1133,7 +1136,10 @@ Resorting this table <br>
                     translated_species_geneid = record[0]
 
             if translated_species_geneid:
-                self.cursor.execute( 'INSERT INTO %s (GeneId1, GeneId2, value) VALUES (%d,%d,%f)' % (tmpTableName_2, int(input_species_geneid),int(translated_species_geneid), float(lit_corr_alue)) )              
+                try:
+                    self.cursor.execute('INSERT INTO %s (GeneId1, GeneId2, value) VALUES (%d,%d,%f)' % (tmpTableName_2, int(input_species_geneid), int(translated_species_geneid), float(lit_corr_alue)))
+                except Exception, e:
+                    pass
                 counter = counter + 1
 
             #pay attention to the number
