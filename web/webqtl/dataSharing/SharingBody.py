@@ -132,7 +132,7 @@ sharinginfo_body_string = """<td>
 
 <!--<a href="/webqtl/main.py?FormID=sharingListDataset">List of DataSets</a><br>-->
 
-<H1 class="title" id="parent-fieldname-title">%s <!--info[9] Datasets.DatasetName-->
+<H1 class="title" id="parent-fieldname-title">This dataset is a subset of study: %s <!--info[9] Datasets.DatasetName-->
 <!--
 <a href="/webqtl/main.py?FormID=sharinginfoedit&InfoPageName=%s"><img src="/images/modify.gif" alt="modify this page" border="0" valign="middle"></a>
 -->
@@ -143,6 +143,7 @@ sharinginfo_body_string = """<td>
 <tr>
 <td valign="top" width="50%%">
 <TABLE name="infoTable" cellSpacing=0 cellPadding=5 width=100%% border=0>
+                      <TR><td><b>Dataset:</b>  %s</TD></tr> <!--info[38] InfoFileTitle-->
                       <TR><td><b>GN Accession:</b> GN%s</TD></tr> <!--info[1] GN_AccesionId-->
                       <!--<TR><TD><b>GEO Series:</b> %s</TD></TR>--> <!--info[10] Datasets.GeoSeries-->
                       <TR><TD><b>GEO Series:</b> <a href="http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=%s" target="_blank">%s</a></TD></tr> <!--info[10] Datasets.GeoSeries-->

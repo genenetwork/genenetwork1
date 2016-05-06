@@ -72,7 +72,7 @@ if (mysqli_connect_errno())
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
 
-$sql = "INSERT INTO InfoFiles (DatasetId, SpeciesId, TissueId, InbredSetId, GeneChipId, AvgMethodId, InfoPageName, GN_AccesionId, AuthorizedUsers) VALUES ('$_POST[subcat]', '$_POST[SpeciesId]', '$_POST[TissueId]', '$_POST[InbredSetId]', '$_POST[GeneChipId]', '$_POST[AvgMethodId]', '$_POST[InfoPageName]', '$_POST[GN_AccesionId]', '$_POST[AuthorizedUsers]')";
+$sql = "INSERT INTO InfoFiles (DatasetId, InfoFileTitle, SpeciesId, TissueId, InbredSetId, GeneChipId, AvgMethodId, InfoPageName, GN_AccesionId, AuthorizedUsers) VALUES ('$_POST[subcat]', '$_POST[InfoFileTitle]', '$_POST[SpeciesId]', '$_POST[TissueId]', '$_POST[InbredSetId]', '$_POST[GeneChipId]', '$_POST[AvgMethodId]', '$_POST[InfoPageName]', '$_POST[GN_AccesionId]', '$_POST[AuthorizedUsers]')";
 
 if (!mysqli_query($con,$sql))
   {

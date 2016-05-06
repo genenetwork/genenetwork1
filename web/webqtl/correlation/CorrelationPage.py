@@ -634,7 +634,7 @@ class CorrelationPage(templatePage):
 
                 hddnWebGestalt['ref_type'] = hddnWebGestalt['id_type']
                 hddnWebGestalt['cat_type'] = 'GO'
-                hddnWebGestalt['significancelevel'] = 'Top10'
+                hddnWebGestalt['significancelevel'] = '.05'
 
                 if species == 'rat':
                     hddnWebGestalt['org'] = 'Rattus norvegicus'

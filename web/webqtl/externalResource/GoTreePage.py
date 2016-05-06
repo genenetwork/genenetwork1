@@ -64,7 +64,7 @@ class GoTreePage(templatePage):
 		
 		hddnWebGestalt['ref_type'] = hddnWebGestalt['id_type']
 		hddnWebGestalt['analysis_type'] = 'GO'
-		hddnWebGestalt['significancelevel'] = 'Top10'
+		hddnWebGestalt['significancelevel'] = '.05'
 		hddnWebGestalt['stat'] = 'Hypergeometric'
 		hddnWebGestalt['mtc'] = 'BH'
 		hddnWebGestalt['min'] = '2'

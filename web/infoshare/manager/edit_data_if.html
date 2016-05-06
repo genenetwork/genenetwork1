@@ -73,6 +73,7 @@ if (mysqli_connect_errno())
 //-- update data in mysql database 
 $InfoFileId = $_POST['InfoFileId'];
 $DatasetId = $_POST['DatasetId'];
+$InfoFileTitle = $_POST['InfoFileTitle'];
 $SpeciesId = $_POST['SpeciesId'];
 $TissueId = $_POST['TissueId'];
 $InbredSetId = $_POST['InbredSetId'];
@@ -83,7 +84,7 @@ $GN_AccesionId = $_POST['GN_AccesionId'];
 $AuthorizedUsers = $_POST['AuthorizedUsers'];
 $InvestigatorId = $_POST['InvestigatorId'];
 
-$sql = "UPDATE InfoFiles SET InfoFileId = '$InfoFileId', DatasetId = '$DatasetId', SpeciesId = '$SpeciesId',
+$sql = "UPDATE InfoFiles SET InfoFileId = '$InfoFileId', DatasetId = '$DatasetId', InfoFileTitle = '$InfoFileTitle', SpeciesId = '$SpeciesId',
         TissueId = '$TissueId', InbredSetId = '$InbredSetId', GeneChipId = '$GeneChipId',
         AvgMethodId = '$AvgMethodId', InfoPageName = '$InfoPageName', GN_AccesionId = '$GN_AccesionId', AuthorizedUsers = '$AuthorizedUsers'
         WHERE InfoFileId = '$InfoFileId'" ;

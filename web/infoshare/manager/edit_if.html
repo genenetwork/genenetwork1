@@ -71,7 +71,7 @@ require "../includes/db.inc";
 //$_GET[DatasetId];
 //$result = mysql_query("SELECT * FROM InfoFiles WHERE id = $Id");
 
-$result_infofiles = mysql_query("SELECT InfoFiles.InfoFileId, InfoFiles.DatasetId, InfoFiles.SpeciesId, InfoFiles.TissueId, InfoFiles.InbredSetId, InfoFiles.GeneChipId, InfoFiles.AvgMethodId, InfoFiles.InfoPageName, InfoFiles.GN_AccesionId, InfoFiles.AuthorizedUsers, Datasets.DatasetId, Datasets.InvestigatorId from InfoFiles LEFT JOIN Datasets USING (DatasetId) where GN_AccesionId = '".$_GET['GN_AccesionId']."'");
+$result_infofiles = mysql_query("SELECT InfoFiles.InfoFileId, InfoFiles.DatasetId, InfoFiles.InfoFileTitle, InfoFiles.SpeciesId, InfoFiles.TissueId, InfoFiles.InbredSetId, InfoFiles.GeneChipId, InfoFiles.AvgMethodId, InfoFiles.InfoPageName, InfoFiles.GN_AccesionId, InfoFiles.AuthorizedUsers, Datasets.DatasetId, Datasets.InvestigatorId from InfoFiles LEFT JOIN Datasets USING (DatasetId) where GN_AccesionId = '".$_GET['GN_AccesionId']."'");
 if (!$result_infofiles) {
     echo 'Could not run query: ' . mysql_error();
     exit;
@@ -117,6 +117,13 @@ $row = mysql_fetch_array($result_infofiles);
                                     id="DatasetId" name="DatasetId" value="<? echo "$row[DatasetId]"?>"
                                     type="text" readonly maxlength="900" required>
                             </div>-->
+                            
+                        <label for="species">InfoFileTitle:</label>
+                            <div class="input-append">
+                                <input class="input-xlarge"
+                                    id="InfoFileTitle" name="InfoFileTitle" value="<? echo "$row[InfoFileTitle]"?>"
+                                    type="text" maxlength="900" required>
+                            </div>
                         
                         
                         <label for="species">SpeciesId:</label>
