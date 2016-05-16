@@ -60,9 +60,10 @@ else:
 	PublishFreezeIds = []
 	for item in results:
 		PublishFreezeIds.append(item[0])
-print("PublishFreezeIds: %s\n" % PublishFreezeIds)
+print("PublishFreezeIds: %s" % PublishFreezeIds)
 #####update 
 for PublishFreezeId in PublishFreezeIds:
+	print("")
 	cursor.execute("""
 		select InbredSetId 
 		from PublishFreeze 
@@ -82,6 +83,10 @@ for PublishFreezeId in PublishFreezeIds:
 	for geno in genotype_1:
 		for locus in geno:
 			locuses.append(locus.name)
+	print("locuses: %s" % len(locuses))
+
+	if len(locuses) == 0:
+		continue
 
 	cursor.execute('select PhenotypeId, Locus, DataId, Phenotype.Post_publication_description from PublishXRef, Phenotype where PublishXRef.PhenotypeId = Phenotype.Id and InbredSetId=%s' % InbredSetId)
 	PublishXRefInfos = cursor.fetchall()
@@ -126,4 +131,4 @@ for PublishFreezeId in PublishFreezeIds:
 			print("[%s]" % kj)
 		kj += 1
 
-	print("finish\n")
+	print("finish")
