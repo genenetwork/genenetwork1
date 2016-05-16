@@ -80,13 +80,14 @@ $InbredSetId = $_POST['InbredSetId'];
 $GeneChipId = $_POST['GeneChipId'];
 $AvgMethodId = $_POST['AvgMethodId'];
 $InfoPageName = $_POST['InfoPageName'];
+$Specifics = $_POST['Specifics'];
 $GN_AccesionId = $_POST['GN_AccesionId'];
 $AuthorizedUsers = $_POST['AuthorizedUsers'];
 $InvestigatorId = $_POST['InvestigatorId'];
 
 $sql = "UPDATE InfoFiles SET InfoFileId = '$InfoFileId', DatasetId = '$DatasetId', InfoFileTitle = '$InfoFileTitle', SpeciesId = '$SpeciesId',
         TissueId = '$TissueId', InbredSetId = '$InbredSetId', GeneChipId = '$GeneChipId',
-        AvgMethodId = '$AvgMethodId', InfoPageName = '$InfoPageName', GN_AccesionId = '$GN_AccesionId', AuthorizedUsers = '$AuthorizedUsers'
+        AvgMethodId = '$AvgMethodId', InfoPageName = '$InfoPageName', Specifics = '$Specifics', GN_AccesionId = '$GN_AccesionId', AuthorizedUsers = '$AuthorizedUsers'
         WHERE InfoFileId = '$InfoFileId'" ;
 
 if (!mysqli_query($con,$sql))

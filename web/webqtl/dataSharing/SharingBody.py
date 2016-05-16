@@ -210,6 +210,8 @@ sharinginfo_body_string = """<td>
 <HR>
 <p>
 <table name="infoTable" width="100%%" border="0" cellpadding="5" cellspacing="0">
+<tr><td><span style="font-size:115%%;font-weight:bold;">Specifics of this Data Set:</span></td></tr>
+	<tr><td> %s<br><br></td></tr> <!--info[39] InfoFiles.Specifics-->
 <tr><td><span style="font-size:115%%;font-weight:bold;">Summary:</span></td></tr>
 	<tr><td> %s<br><br></td></tr> <!--info[13] Datasets.Summary-->
 <tr><td><span style="font-size:115%%;font-weight:bold;">About the cases used to generate this set of data:</span></td></tr>
@@ -277,7 +279,8 @@ function CheckInfoPageName(){
    <tr><td align="right"><b>State:</b></td><td><input type='text' name='State' size='90' value='%s' readonly></td></tr>
    <tr><td align="right"><b>ZIP:</b></td><td><input type='text' name='ZIP' size='90' value='%s' readonly></td></tr>
    <tr><td align="right"><b>Country:</b></td><td><input type='text' name='Country' size='90' value='%s' readonly></td></tr>
-   
+   <tr><TH COLSPAN=2><h2 class="title">Specifics of this Data Set</h2></TH></tr>
+  <tr><td align="right"><b>Specifics: </b></td><td><TEXTAREA NAME="Specifics" cols="77" rows="15">%s</textarea></td></tr>
   <tr><TH COLSPAN=2><h2 class="title">Summary</h2></TH></tr>
   <tr><td align="right"><b>Summary: </b></td><td><TEXTAREA NAME="Summary" cols="77" rows="15">%s</textarea></td></tr>
    
