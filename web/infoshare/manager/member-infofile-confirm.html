@@ -1,0 +1,72 @@
+<?php
+	require_once('auth.html');
+	include '../includes/member-header.inc'; 
+	require "../includes/db.inc";
+	
+//-- update data in mysql database 
+$GN_AccesionId = $_POST['GN_AccesionId'];
+$DatasetId = $_POST['DatasetId'];
+$SpeciesId = $_POST['SpeciesId'];
+$TissueId = $_POST['TissueId'];
+$InbredSetId = $_POST['InbredSetId'];
+$Specifics = $_POST['editor11'];
+//$AboutCases = $_POST['editor3'];
+//$AboutTissue = $_POST['editor4'];
+//$AboutPlatform = $_POST['editor5'];
+//$AboutDataProcessing = $_POST['editor6'];
+//$Contributors = $_POST['editor7'];
+//$Citation = $_POST['editor8'];
+//$Acknowledgment = $_POST['editor9'];
+//$Notes = $_POST['editor10'];
+//$InvestigatorId = $_POST['InvestigatorId'];
+//$DatasetStatusId = $_POST['DatasetStatusId'];
+
+if (mysqli_connect_errno())
+  {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  }
+
+/*$sql = "UPDATE Datasets SET DatasetName = '$DatasetName', GeoSeries = '$GeoSeries',
+        PublicationTitle = '$PublicationTitle', Summary = '$Summary', ExperimentDesign = '$ExperimentDesign',
+        AboutCases = '$AboutCases', AboutTissue = '$AboutTissue', AboutPlatform = '$AboutPlatform', AboutDataProcessing = '$AboutDataProcessing',
+        Contributors = '$Contributors', Citation = '$Citation', Acknowledgment = '$Acknowledgment', Notes = '$Notes',
+        InvestigatorId = '$InvestigatorId', DatasetStatusId = '$DatasetStatusId' WHERE DatasetId = '$DatasetId'" ;*/
+        
+$sql = "UPDATE InfoFiles SET GN_AccesionId = '$GN_AccesionId', DatasetId = '$DatasetId',
+        SpeciesId = '$SpeciesId', TissueId = '$TissueId', InbredSetId = '$InbredSetId',
+        Specifics = '$Specifics' WHERE GN_AccesionId = '$GN_AccesionId'" ;
+
+if (!mysqli_query($con,$sql))
+  {
+  die('Error: ' . mysqli_error($con));
+  }
+//echo "Dataset successfully submitted";
+echo("<h4>GN_AccesionId: "  . $_POST["GN_AccesionId"]. " successfully edited!</h4>");
+
+mysqli_close($con);
+?>
+
+
+  
+                <section id="dataset">
+                    <div class="page-header">
+                        <h1>Edit InfoFiles</h1>
+                    </div>
+
+                </section>
+                
+
+            </div>
+        </div>
+    </div>
+
+<!-- ===== End of content ===== -->
+		</TD>
+		</TR>
+		</TABLE>
+		</TD>
+	</TR>
+	<!-- End of body -->
+<?php 
+include '../includes/footer.inc'; 
+?>
