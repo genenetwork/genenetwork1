@@ -73,3 +73,6 @@ TRUNCATE TABLE TissueProbeSetXRef;
 TRUNCATE TABLE user_collection;
 TRUNCATE TABLE user_openids;
 TRUNCATE TABLE Vlookup;
+
+# Optimize the tables, for releasing disk space after deleting data
+# >mysqlcheck -uroot -p -o db_webqtl
