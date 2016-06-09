@@ -1,0 +1,16 @@
+<?php
+
+	$servername	= "lily";
+	$username	= "webqtlout";
+	$password	= "webqtlout";
+	$database	= "db_webqtl";
+
+	$conn = new mysqli($servername, $username, $password, $database);
+	if (mysqli_connect_error()) {
+		die("GN DB connection failed: ".mysqli_connect_error());
+	} else {
+		echo "GN DB connection success.";
+		$conn->close();
+	}
+
+?>
