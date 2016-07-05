@@ -199,7 +199,6 @@ if speciesResultsTotalNum >0:
 						tIndex = getIndex(searchArray=typeTotalResults, targetValue=typeVal)+1					
 						# retrieve database(dataset) info based on group(InbredSet) and type(Tissue)
 						tissue = typeVal
-						
 						cursor.execute("select ProbeSetFreeze.Name, ProbeSetFreeze.FullName from ProbeSetFreeze, ProbeFreeze, InbredSet, Tissue where ProbeSetFreeze.ProbeFreezeId = ProbeFreeze.Id and ProbeFreeze.TissueId = Tissue.Id and ProbeFreeze.InbredSetId = InbredSet.Id and InbredSet.Name in ('%s') and Tissue.name = '%s' and ProbeSetFreeze.public > %d order by ProbeSetFreeze.CreateTime desc" % (cross2, tissue, webqtlConfig.PUBLICTHRESH))
 						datasetResults = cursor.fetchall()
 						datasetResultsNum = cursor.rowcount
