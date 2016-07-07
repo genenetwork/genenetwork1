@@ -104,6 +104,8 @@ groupTotalResults.append(('all groups','All Groups'))
 							
 # built type array in js file for select menu in the main search page http://www.genenetwork.org/			
 cross = groupVal
+#Public 1 means the Dataset is listed in the dropdown menu and available in the MySQL database.
+#Public 0 means the Dataset is hidden (doesn't appear in the dropdown menu, so you can't do any analysis) but is available in the MySQL database. This parameter exists so you can hide a dataset without having to delete it.
 cursor.execute("select distinct Tissue.Name, Tissue.Name from ProbeFreeze, ProbeSetFreeze, InbredSet, Tissue where ProbeFreeze.TissueId = Tissue.Id and ProbeFreeze.InbredSetId = InbredSet.Id and ProbeSetFreeze.ProbeFreezeId = ProbeFreeze.Id and ProbeSetFreeze.public > %d order by Tissue.Name" % (webqtlConfig.PUBLICTHRESH))
 typeResults = cursor.fetchall()
 typeTotalResults = list(typeResults)
