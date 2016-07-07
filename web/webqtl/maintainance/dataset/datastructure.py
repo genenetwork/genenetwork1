@@ -94,7 +94,24 @@ def get_nextdataid_phenotype():
     dataid += 1
     return dataid
 
-def insert_strain(inbredsetid, strainname, updatestrainxref=None):
+def get_nextorderid_strainxref(inbredsetid):
+    cursor, con = utilities.get_cursor()
+    sql = """
+        SELECT StrainXRef.`OrderId`
+        FROM StrainXRef
+        WHERE StrainXRef.`InbredSetId`=%s
+        ORDER BY StrainXRef.`OrderId` DESC
+        LIMIT 1
+        """
+    cursor.execute(sql, (inbredsetid))
+    re = cursor.fetchone()
+    if re:
+        orderid = re[0] + 1
+    else:
+        orderid = 1
+    return orderid
+
+def insert_strain(inbredsetid, strainname):
     speciesid = get_species(inbredsetid)[0]
     cursor, con = utilities.get_cursor()
     sql = """
@@ -105,32 +122,20 @@ def insert_strain(inbredsetid, strainname, updatestrainxref=None):
         Strain.`SpeciesId`=%s
         """
     cursor.execute(sql, (strainname, strainname, speciesid))
-    strainid = con.insert_id()
-    if updatestrainxref:
-        sql = """
-            SELECT StrainXRef.`OrderId`
-            FROM StrainXRef
-            where StrainXRef.`InbredSetId`=%s
-            ORDER BY StrainXRef.`OrderId` DESC
-            LIMIT 1
-            """
-        cursor.execute(sql, (inbredsetid))
-        re = cursor.fetchone()
-        if re:
-            orderid = re[0] + 1
-        else:
-            orderid = 0
-        #
-        sql = """
-            INSERT INTO StrainXRef
-            SET
-            StrainXRef.`InbredSetId`=%s,
-            StrainXRef.`StrainId`=%s,
-            StrainXRef.`OrderId`=%s,
-            StrainXRef.`Used_for_mapping`=%s,
-            StrainXRef.`PedigreeStatus`=%s
-            """
-        cursor.execute(sql, (inbredsetid, strainid, orderid, "N", None))
+
+def insert_strainxref(inbredsetid, strainid):
+    orderid = get_nextorderid_strainxref(inbredsetid)
+    cursor, con = utilities.get_cursor()
+    sql = """
+        INSERT INTO StrainXRef
+        SET
+        StrainXRef.`InbredSetId`=%s,
+        StrainXRef.`StrainId`=%s,
+        StrainXRef.`OrderId`=%s,
+        StrainXRef.`Used_for_mapping`=%s,
+        StrainXRef.`PedigreeStatus`=%s
+        """
+    cursor.execute(sql, (inbredsetid, strainid, orderid, "N", None))
 
 def get_strain(inbredsetid, strainname):
     speciesid = get_species(inbredsetid)[0]
@@ -144,11 +149,25 @@ def get_strain(inbredsetid, strainname):
     cursor.execute(sql, (speciesid, strainname))
     return cursor.fetchone()
 
+def get_strainxref(inbredsetid, strainid):
+    cursor, con = utilities.get_cursor()
+    sql = """
+        SELECT StrainXRef.`StrainId`
+        FROM StrainXRef
+        WHERE StrainXRef.`InbredSetId`=%s
+        AND StrainXRef.`StrainId`=%s
+        """
+    cursor.execute(sql, (inbredsetid, strainid))
+    return cursor.fetchone()
+
 def get_strain_sure(inbredsetid, strainname, updatestrainxref=None):
     strain = get_strain(inbredsetid, strainname)
     if not strain:
-        insert_strain(inbredsetid, strainname, updatestrainxref)
+        insert_strain(inbredsetid, strainname)
         strain = get_strain(inbredsetid, strainname)
+    strainxref = get_strainxref(inbredsetid, strain[0])
+    if not strainxref and updatestrainxref:
+        insert_strainxref(inbredsetid, strain[0])
     return strain
 
 def get_strains_bynames(inbredsetid, strainnames, updatestrainxref=None):
