@@ -2536,8 +2536,8 @@ class IntervalMappingPage(templatePage):
                         humanStartString = humanChr = humanChrSort = humanStartDisplay = humanStartValue = "--"
 
                     geneDescription = theGO["GeneDescription"]
-                    if len(geneDescription) > 26:
-                        geneDescription = geneDescription[:26]+"..."
+                    # if len(geneDescription) > 26:
+                    #    geneDescription = geneDescription[:26]+"..."
                     probeSetSearch = HT.Href(allProbeString, HT.Image("/images/webqtl_search.gif", border=0), target="_blank")
 
                     if theGO["snpDensity"] < 0.000001:
