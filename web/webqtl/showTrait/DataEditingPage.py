@@ -1352,6 +1352,11 @@ class DataEditingPage(templatePage):
 				chrMenu2.append(tuple([fd.genotype[i].name,i]))	
 		numPerm2 = HT.Input(name='num_perm2', value="2000")
 		
+		genofiletext = HT.Span("Genofile:", Class="ffl fwb fs12")
+		genofile = HT.Select(name='genofile')
+		genofile.append(("Genofile 1 3000 markers", '1'))
+		genofile.append(("Genofile 2 17000 markers", '2'))
+		
 		if fd.genotype.Mbmap:
 			scaleText = HT.Span("Mapping Scale:", Class="ffl fwb fs12") 
 			scaleMenu1 = HT.Select(name='scale1', onChange="checkUncheck(window.document.dataInput.scale1.value, window.document.dataInput.bootCheck1)")
@@ -1372,6 +1377,7 @@ class DataEditingPage(templatePage):
 				HT.TR(HT.TD(chrText), HT.TD(chrMenu, colspan="3")),
 				HT.TR(HT.TD(scaleText), HT.TD(scaleMenu1)),
 				HT.TR(HT.TD(permText), HT.TD(numPerm, colspan="3")),
+				HT.TR(HT.TD(genofiletext), HT.TD(genofile, colspan="3")),
 			    cellspacing=0, width="325px", cellpadding=2)		
 			compMappingMenu = HT.TableLite( 
 				HT.TR(HT.TD(chrText), HT.TD(chrMenu2, colspan="3")),

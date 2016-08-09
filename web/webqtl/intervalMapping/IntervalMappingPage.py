@@ -2575,7 +2575,7 @@ class IntervalMappingPage(templatePage):
                         this_row.append(TDCell(HT.TD(humanChr, align='right', Class=className), humanChr, humanChrSort))
                         this_row.append(TDCell(HT.TD(HT.Href(humanStartString, humanStartDisplay, target="_blank"), align='right', Class=className), humanStartDisplay, humanStartValue))
                         this_row.append(TDCell(HT.TD(literatureCorrelationString, align='right', Class=className), literatureCorrelationString, literatureCorrelation))
-                        this_row.append(TDCell(HT.TD(geneDescription, align='right', Class=className), geneDescription, geneDescription))
+                        this_row.append(TDCell(HT.TD(geneDescription, align='left', Class=className), geneDescription, geneDescription))
                         this_row.append(TDCell(HT.TD(polymiRTS, align='right', Class=className), "", ""))
                         this_row.append(TDCell(HT.TD("", align='right', Class=className), "", ""))
 
@@ -2589,7 +2589,7 @@ class IntervalMappingPage(templatePage):
                         this_row.append(TDCell(HT.TD(avgExpr, align='right', Class=className), "--", "--"))
                         this_row.append(TDCell(HT.TD(humanChr, align='right', Class=className), humanChr, humanChrSort))
                         this_row.append(TDCell(HT.TD(HT.Href(humanStartString, humanStartDisplay, target="_blank"), align='right', Class=className), humanStartDisplay, humanStartValue))
-                        this_row.append(TDCell(HT.TD(geneDescription, align='right', Class=className), geneDescription, geneDescription))
+                        this_row.append(TDCell(HT.TD(geneDescription, align='left', Class=className), geneDescription, geneDescription))
                         this_row.append(TDCell(HT.TD(polymiRTS, align='right', Class=className), "", ""))
                         this_row.append(TDCell(HT.TD("", align='right', Class=className), "", ""))
 
