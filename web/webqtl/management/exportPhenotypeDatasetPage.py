@@ -37,7 +37,9 @@ from utility import webqtlUtil
 from base import webqtlConfig
 from base.webqtlTrait import webqtlTrait
 
-
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("\gn\web\webqtl\management\exportPhenotypeDatasetPage.py")
 
 #XZ, 11/06/2009: Xiaodong created this class
 class exportPhenotypeDatasetPage(templatePage):
@@ -128,9 +130,13 @@ class exportPhenotypeDatasetPage(templatePage):
                 
                 #return self.searchResult
 
-
-                fields = ["ID", "Species", "Cross", "Database", "ProbeSetID / RecordID", "Symbol", "Description", "ProbeTarget", "PubMed_ID", "Phenotype", "Chr", "Mb", "Alias", "Gene_ID", "UniGene_ID", "Strand_Probe ", "Strand_Gene ", 
-"Probe_set_specificity", "Probe_set_BLAT_score", "Probe_set_BLAT_Mb_start", "Probe_set_BLAT_Mb_end ", "QTL_Chr", "Locus_at_Peak", "Max_LRS", "P_value_of_MAX", "Mean_Expression"] + strainlist
+                strainlisthead = []
+                for strain in strainlist:
+                    strainlisthead += [strain + "_Value"]
+                    strainlisthead += [strain + "_SE"]
+                    strainlisthead += [strain + "_N"]
+                fields = ["Index", "Species", "Cross", "Database", "ProbeSetID / RecordID", "Symbol", "Description", "ProbeTarget", "PubMed_ID", "Phenotype", "Chr", "Mb", "Alias", "Gene_ID", "UniGene_ID", "Strand_Probe ", "Strand_Gene ", 
+"Probe_set_specificity", "Probe_set_BLAT_score", "Probe_set_BLAT_Mb_start", "Probe_set_BLAT_Mb_end ", "QTL_Chr", "Locus_at_Peak", "Max_LRS", "P_value_of_MAX", "Mean_Expression"] + strainlisthead
 
 
                 if self.searchResult:
@@ -170,12 +176,14 @@ class exportPhenotypeDatasetPage(templatePage):
                                 except:
                                     mean = 'N/A'
                                 text[-1].append(mean)
-                                text[-1] += testval
-                        if len(text[0]) < 255 or len(text) < 255:
-                                transpose = 0
-                                if len(text[0]) >= 255:
-                                        text = webqtlUtil.transpose(text)
-                                        transpose = 1
+                                testvar = thisTrait.exportData(strainlist, type="var")
+                                testn = thisTrait.exportData(strainlist, type="N")
+                                testdata = zip(testval, testvar, testn)
+                                testdatalist = []
+                                for data in testdata:
+                                        testdatalist += list(data)
+                                text[-1] += testdatalist
+                        if len(text[0]) < 25 or len(text) < 25:
                                 filename = os.path.join(webqtlConfig.TMPDIR, webqtlUtil.generate_session() +'.xls')
 
                                 # Create a new Excel workbook
@@ -218,7 +226,7 @@ class exportPhenotypeDatasetPage(templatePage):
                                 self.content_type = 'application/xls'
                                 self.content_disposition = 'attachment; filename=%s' % ('export-%s.txt' % time.strftime("%y-%m-%d-%H-%M"))
                                 for item in text:
-                                        self.attachment += string.join(map(str, item), '\t')+ "\n"
+                                        self.attachment += string.join(map(lambda cell : str(cell).replace("\r\n", " "), item), '\t') + "\n"
                         self.cursor.close()
                 else:
                         fd.req.content_type = 'text/html'

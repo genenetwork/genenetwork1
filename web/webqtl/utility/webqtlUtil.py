@@ -34,8 +34,9 @@ from htmlgen import HTMLgen2 as HT
 
 from base import webqtlConfig
 
-
-
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("\gn\web\webqtl\utility\webqtlUtil.py")
 
 # NL, 07/27/2010. moved from webqtlForm.py
 #Dict of Parents and F1 information, In the order of [F1, Mat, Pat]
