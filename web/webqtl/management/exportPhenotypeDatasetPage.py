@@ -183,7 +183,7 @@ class exportPhenotypeDatasetPage(templatePage):
                                 for data in testdata:
                                         testdatalist += list(data)
                                 text[-1] += testdatalist
-                        if len(text[0]) < 25 or len(text) < 25:
+                        if len(text[0]) < 25 and len(text) < 25:
                                 filename = os.path.join(webqtlConfig.TMPDIR, webqtlUtil.generate_session() +'.xls')
 
                                 # Create a new Excel workbook
@@ -225,6 +225,17 @@ class exportPhenotypeDatasetPage(templatePage):
                         else:
                                 self.content_type = 'application/xls'
                                 self.content_disposition = 'attachment; filename=%s' % ('export-%s.txt' % time.strftime("%y-%m-%d-%H-%M"))
+								
+                                self.attachment += ("Data source: The GeneNetwork at %s\n" % webqtlConfig.PORTADDR)
+                                self.attachment += ("Citations: Please see %s/reference.html\n" % webqtlConfig.PORTADDR)
+                                self.attachment += ("Date: %s\n" % time.strftime("%B %d, %Y", time.gmtime()))
+                                self.attachment += ("Time: %s GMT\n" % time.strftime("%H:%M", time.gmtime()))
+                                self.attachment += ("Status of data ownership: Possibly unpublished data; please see %s/statusandContact.html for details on sources, ownership, and usage of these data.\n" % webqtlConfig.PORTADDR)
+                                self.attachment += ("This output file contains data from %d GeneNetwork databases listed below.\n" % len(traitList))
+                                self.attachment += ("\n")
+                                self.attachment += ("Funding for The GeneNetwork: NIAAA (U01AA13499, U24AA13513), NIDA, NIMH, and NIAAA (P20-DA 21131), NCI MMHCC (U01CA105417), and NCRR (U24 RR021760)\n")
+                                self.attachment += ("PLEASE RETAIN DATA SOURCE INFORMATION WHENEVER POSSIBLE\n")
+                                self.attachment += ("\n")
                                 for item in text:
                                         self.attachment += string.join(map(lambda cell : str(cell).replace("\r\n", " "), item), '\t') + "\n"
                         self.cursor.close()
@@ -233,4 +244,3 @@ class exportPhenotypeDatasetPage(templatePage):
                         heading = 'Export Collection'
                         detail = [HT.Font('Error : ',color='red'),HT.Font('Error occurs while retrieving data from database.',color='black')]
                         self.error(heading=heading,detail=detail)
-
