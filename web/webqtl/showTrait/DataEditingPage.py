@@ -1379,7 +1379,6 @@ class DataEditingPage(templatePage):
 				HT.TR(HT.TD(chrText), HT.TD(chrMenu, colspan="3")),
 				HT.TR(HT.TD(scaleText), HT.TD(scaleMenu1)),
 				HT.TR(HT.TD(permText), HT.TD(numPerm, colspan="3")),
-				HT.TR(HT.TD(genofiletext), HT.TD(genofile, colspan="3")),
 			    cellspacing=0, width="325px", cellpadding=2)		
 			compMappingMenu = HT.TableLite( 
 				HT.TR(HT.TD(chrText), HT.TD(chrMenu2, colspan="3")),
