@@ -1505,7 +1505,7 @@ Resorting this table <br>
                 gn2link = HT.Href(url="http://gn2.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s" %
                 (myTrait.db.name, self.db.name, myTrait.name, thisTrait.name), Class="fs12 fwn", target="_blank")
                 gn2link.append(HT.Image("/images/link.gif"))
-                td = HT.TD(Class="fs12 fwn b1 c222", align='right',nowrap="on")
+                td = HT.TD(Class="fs12 fwn b1 c222", align='right', nowrap="on")
                 td.append(gn2link)
                 tr.append(TDCell(td, "", 0))
 
@@ -1793,9 +1793,9 @@ Resorting this table <br>
                 thisTrait.symbol = "--"
 
             if thisTrait.geneid:
-                symbolurl = HT.Href(text=thisTrait.symbol,target='_blank',url="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=%s" % thisTrait.geneid, Class="fs12 fwn")
+                symbolurl = HT.Href(text=thisTrait.symbol, url="javascript:opennewwindow('http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=%s');" % thisTrait.geneid, Class="fs12 fwn")
             else:
-                symbolurl = HT.Href(text=thisTrait.symbol,target='_blank',url="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?CMD=search&DB=gene&term=%s" % thisTrait.symbol, Class="fs12 fwn")
+                symbolurl = HT.Href(text=thisTrait.symbol, url="javascript:opennewwindow('http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?CMD=search&DB=gene&term=%s');" % thisTrait.symbol, Class="fs12 fwn")
 
             tr = []
 
@@ -1981,8 +1981,8 @@ Resorting this table <br>
             tr.append(TDCell(HT.TD(TPValueStr, Class="fs12 fwn b1 c222", align='right'), TPValueStr, TPValue))
 			
             try:
-                gn2link = HT.Href(url="http://gn2.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s" %
-                (primaryTrait.db.name, self.db.name, primaryTrait.name, thisTrait.name), Class="fs12 fwn", target="_blank")
+                gn2link = HT.Href(url="javascript:opennewwindow('http://gn2.genenetwork.org/corr_scatter_plot?dataset_1=%s&dataset_2=%s&trait_1=%s&trait_2=%s');" %
+                (primaryTrait.db.name, self.db.name, primaryTrait.name, thisTrait.name), Class="fs12 fwn")
                 gn2link.append(HT.Image("/images/link.gif"))
             except:
                 gn2link = ""
