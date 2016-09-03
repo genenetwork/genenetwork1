@@ -1,13 +1,18 @@
 // var NS4 = (document.layers) ? 1 : 0;
 // var IE4 = (document.all) ? 1 : 0;
 
+function opennewwindow(url){
+	newwindow = open(url);
+	newwindow.focus();
+}
+
 function openNewWin(myURL){
 	windowName = 'formTarget' + (new Date().getTime());
 	if (openNewWin.arguments.length == 2){
   		newWindow = open(myURL,windowName,openNewWin.arguments[1]);
 	}
 	else{
-		newWindow = open(myURL,windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+		newWindow = open(myURL,windowName);
 	}
 }
 
@@ -15,7 +20,7 @@ function openNewWin(myURL){
 /*submit form to new window*/
 function submitToNewWindow(thisForm){
         var windowName = genNewWin();
-        newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+        newWindow = open("",windowName);
         newWindow.focus();
         thisForm.target = windowName;
         thisForm.submit();
@@ -40,7 +45,7 @@ function makeTree(thisForm, nnn){
 	}
 	
 	var windowName = 'formTarget' + (new Date().getTime());
-	var newWindow = open("", windowName,"width=900,menubar=0,toolbar=1,resizable=1,status=1,scrollbars=1");
+	var newWindow = open("", windowName);
 	var html = "";
 	if (j > 0)
 	{	
@@ -67,7 +72,7 @@ function makeTree(thisForm, nnn){
 
 function showCorrelationPlot(ProbeSetID,CellID){
 	windowName = 'formTarget' + (new Date().getTime());
-	newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	newWindow = open("",windowName);
 	document.showDatabase.target = windowName;
 	document.showDatabase.FormID.value = "showCorrelationPlot";
 	document.showDatabase.ProbeSetID.value = ProbeSetID;
@@ -78,7 +83,7 @@ function showCorrelationPlot(ProbeSetID,CellID){
 
 function showPairPlot(ChrA,ChrB){
 	windowName = 'formTarget' + (new Date().getTime());
-	newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	newWindow = open("",windowName);
 	document.showPairPlot.target = windowName;
 	document.showPairPlot.Chr_A.value = ChrA;
 	document.showPairPlot.Chr_B.value = ChrB;
@@ -87,7 +92,7 @@ function showPairPlot(ChrA,ChrB){
 
 function showCorrelationPlot2(db, ProbeSetID, CellID, db2, ProbeSetID2, CellID2, rank){
 	windowName = 'formTarget' + (new Date().getTime());
-	newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	newWindow = open("",windowName);
 	document.showDatabase.target = windowName;
 	document.showDatabase.FormID.value = "showCorrelationPlot";
 	document.showDatabase.database.value = db;
@@ -109,7 +114,7 @@ function showCorrelationPlot2(db, ProbeSetID, CellID, db2, ProbeSetID2, CellID2,
 
 function showCorrelationComparisonPlot(db, ProbeSetID, CellID, db2, ProbeSetID2, CellID2, rank){
 	windowName = 'formTarget' + (new Date().getTime());
-	newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	newWindow = open("",windowName);
 	document.showDatabase.target = windowName;
 	document.showDatabase.FormID.value = "showCorrelationComparisonPlot";
 	document.showDatabase.database.value = db;
@@ -129,7 +134,7 @@ function showCorrelationComparisonPlot(db, ProbeSetID, CellID, db2, ProbeSetID2,
 
 function showProbeInfo(Database,ProbeSetID,CellID){
 	windowName = 'formTarget' + (new Date().getTime());
-	newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	newWindow = open("",windowName);
 	document.showDatabase.target = windowName;
 	document.showDatabase.FormID.value = "showProbeInfo";
 	document.showDatabase.database.value = Database;
@@ -141,7 +146,7 @@ function showProbeInfo(Database,ProbeSetID,CellID){
 
 function showDatabase(ProbeSetID,CellID){
 	windowName = 'formTarget' + (new Date().getTime());
-	newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	newWindow = open("",windowName);
 	document.showDatabase.target = windowName;
 	document.showDatabase.FormID.value = "showDatabase";
 	document.showDatabase.ProbeSetID.value = ProbeSetID;
@@ -153,7 +158,7 @@ function showDatabase(ProbeSetID,CellID){
 
 function showDatabase2(Database,ProbeSetID,CellID){
 	windowName = 'formTarget' + (new Date().getTime());
-	newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	newWindow = open("",windowName);
 	document.showDatabase.target = windowName;
 	document.showDatabase.FormID.value = "showDatabase";
 	document.showDatabase.database.value = Database;
@@ -165,7 +170,7 @@ function showDatabase2(Database,ProbeSetID,CellID){
 
 function showDatabase3(formName, Database,ProbeSetID,CellID){
 	windowName = 'formTarget' + (new Date().getTime());
-	newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	newWindow = open("",windowName);
 	document[formName].target = windowName;
 	document[formName].FormID.value = "showDatabase";
 	document[formName].database.value = Database;
@@ -177,7 +182,7 @@ function showDatabase3(formName, Database,ProbeSetID,CellID){
 
 function showTextResult(){
 	windowName = 'formTarget' + (new Date().getTime());
-	newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	newWindow = open("",windowName);
 	document.SEARCHFORM.target = windowName;
 	document.SEARCHFORM.submit();
 	newWindow.focus()
@@ -199,7 +204,7 @@ function getForm(fmName){
 
 function genNewWin(){
 	windowName = 'formTarget' + (new Date().getTime());
-	newWindow = open("",windowName, "menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	newWindow = open("",windowName);
 	return windowName;
 }
 
@@ -301,7 +306,7 @@ function ODE(thisForm, script){
 		llid_list_all = llid_list_all.concat(p.geneid);
 	}
 	var windowName = 'formTarget' + (new Date().getTime());
-	var newWindow = open("", windowName, "width=900,menubar=0,toolbar=1,resizable=1,status=1,scrollbars=1");
+	var newWindow = open("", windowName);
 	var html = "";
 	if (j == 0){	
 		j = length;
@@ -369,7 +374,7 @@ function dataEditingFunc(thisForm,submitIdValue){
 	else{
 	}
 
-	newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	newWindow = open("",windowName);
 	thisForm.target = windowName;
 	newWindow.focus();		
 	thisForm.submitID.value = submitIdValue;
@@ -383,7 +388,7 @@ function databaseFunc(thisForm,formIdValue){
         }
 
 	windowName = 'formTarget' + (new Date().getTime());
-	newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	newWindow = open("",windowName);
 	if (databaseFunc.arguments.length > 2){
   		newWindow.document.write("<center><H3><font color='black' face='verdana'>" + databaseFunc.arguments[2]+ "</font></h3></center>");
   		newWindow.document.close();
@@ -409,7 +414,7 @@ function makeListCorrelation(thisForm){
 /*add/remove selection*/
 
 function addRmvSelection(windowName, thisForm, addORrmv){
-	var newWindow = window.open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	var newWindow = window.open("",windowName);
 	thisForm.target = windowName;
 	thisForm.FormID.value = addORrmv;
 	thisForm.submit();
@@ -419,7 +424,7 @@ function addRmvSelection(windowName, thisForm, addORrmv){
 function batchSelection(thisForm){
   	var select = thisForm.RISet;
   	var windowName = select.options[select.selectedIndex].value;
-	var newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	var newWindow = open("",windowName);
 	newWindow.focus();
 	thisForm.target = windowName;
 	thisForm.submit();
@@ -462,7 +467,7 @@ function showIndividualChromosome(formName, submitIdValue, ii){
 		return;
 		
 	windowName = 'formTarget' + (new Date().getTime());
-	newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+	newWindow = open("",windowName);
 	newWindow.focus();
 	thisForm.target = windowName;
 	
@@ -499,7 +504,7 @@ function changeStatusSubmit(thisForm, status) {
 function editHTML(thisForm, execCommand){
 	if (execCommand == "preview"){
 		windowName = 'formTarget' + (new Date().getTime());
-		newWindow = open("",windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+		newWindow = open("",windowName);
 		newWindow.focus();
 		thisForm.target = windowName;
 		thisForm.preview.value = "newWindow";
@@ -516,7 +521,7 @@ function editHTML(thisForm, execCommand){
 
 function dataWindow(form){
   var SaveAs = (document.execCommand) ? 1 : 0;
-  newWindow = open("", "thankYouWin","width=600,menubar=1,toolbar=1,height=300,resizable=0,status=1,scrollbars=1");
+  newWindow = open("", "thankYouWin");
   var html = "";
   for (var i=0; i < form.length; i++)
    {
@@ -563,7 +568,7 @@ function datasetinfo(){
     var select = document.SEARCHFORM.database;
     var database = select.options[select.selectedIndex].value;
 	var page = '/webqtl/main.py?FormID=sharinginfo&InfoPageName=' + database;
-    newWindow = open(page,windowName,"menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900");
+    newWindow = open(page,windowName);
     newWindow.focus();
 }
 
@@ -847,7 +852,7 @@ function directPermuAlert(thisForm){
 
 function cliqueDatabase(pid){
 	var windowName = 'clique';
-	var newWindow = open("", windowName,"width=900,menubar=0,toolbar=1,resizable=1,status=1,scrollbars=1");
+	var newWindow = open("", windowName);
 	var html = '<form name=info action=http://compbio1.uthsc.edu/clique_go/results.php method=post><center><table cellspacing=0 cellpadding=0 border=0 width=50%><tr><td><font size=+1> ProbsetId </font><input type=text name=pid value=';
 	html += pid;
   	html += ' size=20 maxlength=30 ></td><tr><td><font size=+1> p-value range: between </font><input type=text name=pval_1 value=0 size=8 maxlength=20 > and <input type=text name=pval_2 value=0.01 size=8 maxlength=20></td><td><input type=submit value=Search Clique onclick=return check();></td></tr></table></center></form>';
@@ -1073,7 +1078,7 @@ function changeView(i, Chr_Mb_list){
 	var oldstart= document.changeViewForm.startMb.value;
 	var oldend= document.changeViewForm.startMb.value;
 	windowName = 'formTarget' + (new Date().getTime());
-	newWindow = open('',windowName,'menubar=1,toolbar=1,location=1,resizable=1,status=1,scrollbars=1,directories=1,width=900');
+	newWindow = open('',windowName);
 	document.changeViewForm.target = windowName;
 	document.changeViewForm.chromosomes.selectedIndex = i+1;
 	document.changeViewForm.startMb.value = '0.000000'; 
