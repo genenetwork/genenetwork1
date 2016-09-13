@@ -1356,7 +1356,7 @@ class DataEditingPage(templatePage):
 		
 		genofiles = self.get_genofiles(thisTrait.db.risetid)
 		if genofiles and 0 < len(genofiles):
-			genofiletext = HT.Span("Genofile:", Class="ffl fwb fs12")
+			genofiletext = HT.Span("Genotypes:", Class="ffl fwb fs12")
 			genofileselect = HT.Select(name='genofileid')
 			for genofile in genofiles:
 				genofileselect.append((genofile[1], genofile[0]))
