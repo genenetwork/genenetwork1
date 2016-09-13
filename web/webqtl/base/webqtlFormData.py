@@ -37,13 +37,15 @@ from cgiData import cgiData
 from webqtlCaseData import webqtlCaseData
 from utility import webqtlUtil
 
-
+#import logging
+#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#_log = logging.getLogger("gn\web\webqtl\base\webqtlFormData.py")
 
 class webqtlFormData:
 	'Represents data from a WebQTL form page, needed to generate the next page'
 	attrs = ('formID','RISet','genotype','strainlist','allstrainlist',
 	'suggestive','significance','submitID','identification', 'enablevariance',
-	'nperm','nboot','email','incparentsf1','genotype_1','genotype_2','traitInfo')
+	'nperm','nboot','email','incparentsf1','genotype_1','genotype_2','traitInfo','genofile')
 
 	#XZ: Attention! All attribute values must be picklable!
 
@@ -125,14 +127,18 @@ class webqtlFormData:
 		#genotype_1 is Dataset Object without parents and f1
 		#genotype_2 is Dataset Object with parents and f1 (not for intercross)
 		self.genotype_1 = reaper.Dataset()
-		self.genotype_1.read(os.path.join(webqtlConfig.GENODIR, self.RISet + '.geno'))
+		if self.genofile and 0 < len(self.genofile):
+			genofilelocation = self.genofile
+		else:
+			genofilelocation = os.path.join(webqtlConfig.GENODIR, self.RISet + '.geno')
+		self.genotype_1.read(genofilelocation)
 		try:
 			# NL, 07/27/2010. ParInfo has been moved from webqtlForm.py to webqtlUtil.py; 
 			_f1, _f12, _mat, _pat = webqtlUtil.ParInfo[self.RISet]
 		except:
 			_f1 = _f12 = _mat = _pat = None
 		
-		self.genotype_2 =self.genotype_1
+		self.genotype_2 = self.genotype_1
 		if self.genotype_1.type == "riset" and _mat and _pat:
 			self.genotype_2 = self.genotype_1.add(Mat=_mat, Pat=_pat)	#, F1=_f1)
 			
@@ -148,7 +154,20 @@ class webqtlFormData:
 			self.f1list = [_f1, _f12]
 		if _mat and _pat:
 			self.parlist = [_mat, _pat]
-		
+	
+	def fetch_genofile(self, cursor):
+		genofileid = self.formdata.getfirst('genofileid')
+		if cursor and genofileid and 0 < len(genofileid):
+			sql = """
+				SELECT GenoFile.`location`
+				FROM GenoFile
+				WHERE GenoFile.`id`=%s
+				"""
+			cursor.execute(sql, (genofileid))
+			self.genofile = cursor.fetchone()[0]
+		else:
+			self.genofile = None
+
 	def readData(self, strainlst=[], incf1=[]):
 		'read user input data or from trait data and analysis form'
 

@@ -167,6 +167,7 @@ class IntervalMappingPage(templatePage):
 
         #RISet and Species
         if not fd.genotype:
+            fd.fetch_genofile(cursor=self.cursor)
             fd.readGenotype()
 
         fd.parentsf14regression = fd.formdata.getvalue('parentsf14regression')

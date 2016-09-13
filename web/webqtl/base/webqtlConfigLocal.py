@@ -2,6 +2,8 @@
 #      Environment Variables - private
 #########################################
 
+SERVERNAME = 'lily.uthsc.edu'
+
 MYSQL_SERVER = 'localhost'
 DB_NAME = 'db_webqtl'
 DB_USER = 'webqtl'
