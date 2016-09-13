@@ -13,8 +13,8 @@ def handle(input, output):
 	#
 	line = input.readline()
 	line = line.strip()
-	cells = line.split()
-	strains = cells[8:]
+	cells = line.split("\t")
+	strains = cells[11:]
 	output.write("Chr\tLocus\tcM\tMb\t")
 	output.write("\t".join(strains))
 	output.write("\n")
@@ -23,15 +23,16 @@ def handle(input, output):
 	for line in input:
 		#
 		line = line.strip()
-		cells = line.split()
+		cells = line.split("\t")
+		print(len(cells))
 		chr = cells[1]
 		locus = cells[0]
 		cm = cells[7]
 		mb = cells[3]
 		mapping = cells[2]
-		values = cells[8:]
+		values = cells[11:]
 		#
-		if int(mapping) == 1:
+		if mapping and int(mapping) == 1:
 			output.write("%s\t%s\t%s\t%s\t" % (chr, locus, cm, mb))
 			output.write("\t".join(values))
 			output.write("\n")
