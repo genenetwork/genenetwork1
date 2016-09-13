@@ -1354,10 +1354,12 @@ class DataEditingPage(templatePage):
 				chrMenu2.append(tuple([fd.genotype[i].name,i]))	
 		numPerm2 = HT.Input(name='num_perm2', value="2000")
 		
-		genofiletext = HT.Span("Genofile:", Class="ffl fwb fs12")
-		genofile = HT.Select(name='genofile')
-		genofile.append(("Genofile 1 3000 markers", '1'))
-		genofile.append(("Genofile 2 17000 markers", '2'))
+		genofiles = self.get_genofiles(thisTrait.db.risetid)
+		if genofiles and 0 < len(genofiles):
+			genofiletext = HT.Span("Genofile:", Class="ffl fwb fs12")
+			genofileselect = HT.Select(name='genofileid')
+			for genofile in genofiles:
+				genofileselect.append((genofile[1], genofile[0]))
 		
 		if fd.genotype.Mbmap:
 			scaleText = HT.Span("Mapping Scale:", Class="ffl fwb fs12") 
@@ -1379,8 +1381,10 @@ class DataEditingPage(templatePage):
 				HT.TR(HT.TD(chrText), HT.TD(chrMenu, colspan="3")),
 				HT.TR(HT.TD(scaleText), HT.TD(scaleMenu1)),
 				HT.TR(HT.TD(permText), HT.TD(numPerm, colspan="3")),
-			    cellspacing=0, width="325px", cellpadding=2)		
-			compMappingMenu = HT.TableLite( 
+			    cellspacing=0, width="325px", cellpadding=2)
+			if genofiles and 0 < len(genofiles):
+				intMappingMenu.append(HT.TR(HT.TD(genofiletext), HT.TD(genofileselect)))
+			compMappingMenu = HT.TableLite(
 				HT.TR(HT.TD(chrText), HT.TD(chrMenu2, colspan="3")),
 				HT.TR(HT.TD(scaleText), HT.TD(scaleMenu2)),
 				HT.TR(HT.TD(controlText), HT.TD(controlMenu)),
@@ -2014,14 +2018,19 @@ class DataEditingPage(templatePage):
 				cell_width = char_count * 14
 				table_header.append(HT.TH(attribute, align='right', width=cell_width, Class="attribute_name " + col_class))
 				i+=1
-
 		return table_header
 
-
 	def getSortByValue(self):
-	
 		sortby = ("", "")
-
-		return sortby	
-
-
+		return sortby
+		
+	def get_genofiles(self, inbredsetid):
+		sql = """
+			SELECT GenoFile.`id`, GenoFile.`title`
+			FROM GenoFile
+			WHERE GenoFile.`server`=%s
+			AND GenoFile.`InbredSetID`=%s
+			ORDER BY GenoFile.`sort`
+			"""
+		self.cursor.execute(sql, (webqtlConfig.SERVERNAME, inbredsetid))
+		return self.cursor.fetchall()
