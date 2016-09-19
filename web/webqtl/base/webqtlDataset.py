@@ -28,7 +28,9 @@ from htmlgen import HTMLgen2 as HT
 
 import webqtlConfig
 
-
+#import logging
+#logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
+#_log = logging.getLogger("\gn\web\webqtl\base\webqtlDataset.py")
 
 class webqtlDataset:
 	"""

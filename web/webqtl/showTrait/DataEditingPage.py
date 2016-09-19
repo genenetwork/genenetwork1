@@ -15,7 +15,7 @@ from basicStatistics import BasicStatisticsFunctions
 from pprint import pformat as pf
 
 #import logging
-#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
 #_log = logging.getLogger("\gn\web\webqtl\showTrait\DataEditingPage.py")
 
 #########################################
@@ -1353,7 +1353,7 @@ class DataEditingPage(templatePage):
 			if  len(fd.genotype[i]) > 1:
 				chrMenu2.append(tuple([fd.genotype[i].name,i]))	
 		numPerm2 = HT.Input(name='num_perm2', value="2000")
-		
+        
 		genofiles = self.get_genofiles(thisTrait.db.risetid)
 		if genofiles and 0 < len(genofiles):
 			genofiletext = HT.Span("Genotypes:", Class="ffl fwb fs12")

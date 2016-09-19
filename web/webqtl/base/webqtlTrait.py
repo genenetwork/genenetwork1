@@ -9,7 +9,7 @@ from dbFunction import webqtlDatabaseFunction
 from utility import webqtlUtil
 
 #import logging
-#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
 #_log = logging.getLogger("\gn\web\webqtl\base\webqtlTrait.py")
 
 class webqtlTrait:
@@ -51,14 +51,17 @@ class webqtlTrait:
 			if self.db.type == "Temp":
 				self.cursor.execute('''
 					SELECT 
-						InbredSet.Name 
+						InbredSet.Name, InbredSet.Id
 					FROM 
 						InbredSet, Temp 
 					WHERE 
 						Temp.InbredSetId = InbredSet.Id AND 
 						Temp.Name = "%s"
 				''' % self.name)
-				self.riset = self.cursor.fetchone()[0]
+				re = self.cursor.fetchone()
+				self.riset = re[0]
+				self.db.risetid = re[1]
+
 				self.cursor.execute('''
 					SELECT 
 						Temp.dbdisplayname
