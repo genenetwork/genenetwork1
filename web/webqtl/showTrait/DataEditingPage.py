@@ -1354,7 +1354,7 @@ class DataEditingPage(templatePage):
 				chrMenu2.append(tuple([fd.genotype[i].name,i]))	
 		numPerm2 = HT.Input(name='num_perm2', value="2000")
         
-		genofiles = self.get_genofiles(thisTrait.db.risetid)
+		genofiles = self.get_genofiles(thisTrait=thisTrait, inbredsetname=RISetgp)
 		if genofiles and 0 < len(genofiles):
 			genofiletext = HT.Span("Genotypes:", Class="ffl fwb fs12")
 			genofileselect = HT.Select(name='genofileid')
@@ -2024,7 +2024,9 @@ class DataEditingPage(templatePage):
 		sortby = ("", "")
 		return sortby
 		
-	def get_genofiles(self, inbredsetid):
+	def get_genofiles_inbredsetid(self, inbredsetid):
+		if inbredsetid is None:
+			return None
 		sql = """
 			SELECT GenoFile.`id`, GenoFile.`title`
 			FROM GenoFile
@@ -2034,3 +2036,27 @@ class DataEditingPage(templatePage):
 			"""
 		self.cursor.execute(sql, (webqtlConfig.SERVERNAME, inbredsetid))
 		return self.cursor.fetchall()
+		
+	def get_inbredsetid(self, inbredsetname):
+		if inbredsetname is None:
+			return None
+		if len(inbredsetname) <= 0:
+			return None
+		sql = """
+			SELECT InbredSet.`Id`
+			FROM InbredSet
+			WHERE InbredSet.`Name` LIKE %s
+			"""
+		self.cursor.execute(sql, (inbredsetname))
+		re = self.cursor.fetchone()
+		if re:
+			return re[0]
+		else:
+			return None
+	
+	def get_genofiles(self, thisTrait, inbredsetname):
+		if hasattr(thisTrait, 'db') and hasattr(thisTrait.db, 'risetid') and (thisTrait.db.risetid is not None):
+			return self.get_genofiles_inbredsetid(thisTrait.db.risetid)
+		else:
+			inbredsetid = self.get_inbredsetid(inbredsetname)
+			return self.get_genofiles_inbredsetid(inbredsetid)
