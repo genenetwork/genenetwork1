@@ -1046,7 +1046,12 @@ class IntervalMappingPage(templatePage):
 
         canvas.drawString(string1,canvas.size[0] - xRightOffset-d,35*fontZoom,font=labelFont,color=labelColor)
         canvas.drawString(string2,canvas.size[0] - xRightOffset-d,50*fontZoom,font=labelFont,color=labelColor)
-
+		
+        if fd.genofiletitle and 0<len(fd.genofiletitle):
+            string3 = 'Using Genotype file: %s' % fd.genofiletitle
+        else:
+            string3 = 'Using Genotype file: %s.geno' % fd.RISet
+        canvas.drawString(string3, canvas.size[0] - xRightOffset-d, 65*fontZoom, font=labelFont, color=labelColor)
 
     def drawGeneBand(self, canvas, gifmap, plotXScale, offset= (40, 120, 80, 10), zoom = 1, startMb = None, endMb = None):
         if self.plotScale != 'physic' or self.selectedChr == -1 or not self.geneCol:
