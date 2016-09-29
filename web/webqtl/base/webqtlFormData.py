@@ -45,7 +45,7 @@ class webqtlFormData:
 	'Represents data from a WebQTL form page, needed to generate the next page'
 	attrs = ('formID','RISet','genotype','strainlist','allstrainlist',
 	'suggestive','significance','submitID','identification', 'enablevariance',
-	'nperm','nboot','email','incparentsf1','genotype_1','genotype_2','traitInfo','genofile')
+	'nperm','nboot','email','incparentsf1','genotype_1','genotype_2','traitInfo','genofile','genofiletitle')
 
 	#XZ: Attention! All attribute values must be picklable!
 
@@ -159,14 +159,17 @@ class webqtlFormData:
 		genofileid = self.formdata.getfirst('genofileid')
 		if cursor and genofileid and 0 < len(genofileid):
 			sql = """
-				SELECT GenoFile.`location`
+				SELECT GenoFile.`location`, GenoFile.`title`
 				FROM GenoFile
 				WHERE GenoFile.`id`=%s
 				"""
 			cursor.execute(sql, (genofileid))
-			self.genofile = cursor.fetchone()[0]
+			re = cursor.fetchone()
+			self.genofile = re[0]
+			self.genofiletitle = re[1]
 		else:
 			self.genofile = None
+			self.genofiletitle = None
 
 	def readData(self, strainlst=[], incf1=[]):
 		'read user input data or from trait data and analysis form'
