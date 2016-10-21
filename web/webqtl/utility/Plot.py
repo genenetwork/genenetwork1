@@ -338,7 +338,7 @@ def findOutliers(vals):
 	return upperBound, lowerBound
 
 def gnlog10(x):
-	if x == 0:
+	if x <= 0:
 		x = 0.0000000000000000000001
 	return log10(x)
 
