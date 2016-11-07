@@ -335,7 +335,7 @@ class AddToSelectionPage(templatePage):
                 THCell(HT.TD('Dataset', HT.BR(), HT.BR(), valign="top", Class=className, nowrap="on"), text="dataset", idx=1),
                 THCell(HT.TD('Trait', HT.BR(), 'ID', HT.BR(), valign="top", Class=className, nowrap="on"), text="name", idx=2),
                 THCell(HT.TD('Symbol', HT.BR(), HT.BR(), valign="top", Class=className, nowrap="on"), text="symbol", idx=3),
-                THCell(HT.TD('Description', HT.BR(), HT.BR(), valign="top", Class=className, nowrap="on"), text="desc", idx=4),
+                THCell(HT.TD('Description', HT.BR(), HT.BR(), valign="top", Class=className, style="min-width: 400px;", nowrap="on"), text="desc", idx=4),
                 THCell(HT.TD('Location', HT.BR(), HT.BR(), valign="top", Class=className, nowrap="on"), text="location", idx=5),
                 THCell(HT.TD('Mean', HT.BR(), HT.BR(), valign="top", Class=className, nowrap="on"), text="mean", idx=6),
                 THCell(HT.TD('N', HT.BR(), 'Cases', HT.BR(), valign="top", Class=className, nowrap="on"), text="samples", idx=7),
