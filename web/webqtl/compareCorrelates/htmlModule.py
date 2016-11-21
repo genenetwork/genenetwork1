@@ -141,7 +141,7 @@ def genDatabaseMenu(db = None, public =1, RISetgp = 'BXD', selectname = 'databas
 		nmenu += 1
 	
 	#Microarray Database
-	db.execute('SelecT Id, Name from Tissue')
+	db.execute('SelecT Id, Name from Tissue ORDER BY Name')
 	for item in db.fetchall():
 		TId, TName = item
 		databaseMenuSub = HT.Optgroup(label = '%s ------' % TName)
