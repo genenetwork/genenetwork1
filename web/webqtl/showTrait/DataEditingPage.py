@@ -1156,6 +1156,8 @@ class DataEditingPage(templatePage):
 				criteriaText = HT.Span("Return:", Class="ffl fwb fs12") 
 
 				criteriaMenu1 = HT.Select(name='criteria1', selected='500', onMouseOver="if (NS4 || IE4) activateEl('criterias', event);")
+				criteriaMenu1.append(('top 25','25'))
+				criteriaMenu1.append(('top 50','50'))
 				criteriaMenu1.append(('top 100','100'))
 				criteriaMenu1.append(('top 200','200'))
 				criteriaMenu1.append(('top 500','500'))
@@ -1170,6 +1172,8 @@ class DataEditingPage(templatePage):
 				criteriaMenu1.append(('top 60000','60000'))
 
 				criteriaMenu2 = HT.Select(name='criteria2', selected='500', onMouseOver="if (NS4 || IE4) activateEl('criterias', event);")
+				criteriaMenu1.append(('top 25','25'))
+				criteriaMenu1.append(('top 50','50'))
 				criteriaMenu2.append(('top 100','100'))
 				criteriaMenu2.append(('top 200','200'))
 				criteriaMenu2.append(('top 500','500'))
@@ -1184,6 +1188,8 @@ class DataEditingPage(templatePage):
 				criteriaMenu2.append(('top 60000','60000'))
 
 				criteriaMenu3 = HT.Select(name='criteria3', selected='500', onMouseOver="if (NS4 || IE4) activateEl('criterias', event);")
+				criteriaMenu1.append(('top 25','25'))
+				criteriaMenu1.append(('top 50','50'))
 				criteriaMenu3.append(('top 100','100'))
 				criteriaMenu3.append(('top 200','200'))
 				criteriaMenu3.append(('top 500','500'))
