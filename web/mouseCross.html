@@ -141,11 +141,17 @@ Our DBA/2J sequence data (from Wang et al. 2016) have been used to generate a vi
 
 <P>BXD31 and BXD32 are exceptional BXD strains. They were created by the Mouse Mutant Resource at The Jackson Laboratory in the propagation of different visible mutations.  Mutations arose in C57BL/6J or DBA/2 and then outcrossed to the other strain and subsequently inbred while maintaining the mutation. In the case of BXD31, inbreeding was followed after the F2 generation. In BXD32, there was a backcross to DBA/2 before sib mating. BXD32 is therefore approximately 75% DBA/2 and 25% B6. When Taylor learned about these strains he decided that they would be a useful addition to the BXD RI set. He eliminated the visible mutations, continued inbreeding, and added them to the BXDs set. The first publication using these two strains was in 1980. Both are usually lumped together with BXD1 through BXD30 as a "single" first cohort, but obviously, they should perhaps be excluded from all cohorts or BXD "epochs." BXD32 is also exceptional because it has a <I>D</I> mitochondrial genome and a <I>B</I>-type Y chromosome. (Information in this paragraph mainly from BA Taylor, email of Aug 17, 2014 to RWW).
 
-<P>BXD33 through BXD42 were also produced by Benjamin Taylor (Taylor et al., <A HREF="http://www.ncbi.nlm.nih.gov/pubmed/10087289>1999</A>), but from a third set of crosses initiated in the early 1990s.
+<P>BXD33 through BXD42 were also produced by Benjamin Taylor (Taylor et al. <A HREF="http://www.ncbi.nlm.nih.gov/pubmed/10087289">1999</A>), but from a new set of F2 crosses initiated in the early 1990s.
 
-<P>BXD43 through BXD100 were produced by Lu Lu, Jeremy Peirce, Lee M. Silver, and Robert W. Williams in the late 1990s and early 2000s using advanced intercross progeny (Peirce et al. <a href="http://www.biomedcentral.com/1471-2156/5/7"  target="_blank" class="fs14">2004</a>). These new strains have roughly twice the number of recombinations of conventional F2-derived RI strains. 
+<P>BXD43 through BXD102 were produced by Lu Lu, Jeremy Peirce, Lee M. Silver, and Robert W. Williams in the late 1990s and early 2000s using advanced intercross progeny (Peirce et al. <A href="http://www.biomedcentral.com/1471-2156/5/7" target="_blank" class="fs14">2004</A>). These strains have roughly twice the number of recombinations as conventional F2-derived RI strains.
 
-<P>Recent genotyping of the new BXD strains (Oct 2011) using the MUGA platform (and even earlier genotyping in 2008 using the Affymetrix Mouse Diversity platform) demonstrates conclusively serious unintended cross-breeding among partially inbred BXD strains. This "contamination" or cross-breeding has resulted in sets of very closely related sister substrains that are almost genetically identical. In collaboration with the Jackson Laboratory (JAX), we have made the following changes in strain names to clarify the strong genetic relations among the newer BXD strains. 
+<P>BXD104 through BXD157 were produced by Lu Lu and Robert W. Williams starting in 2008 using standard F2 stock. 
+
+<P>BXD160 through BXD186 were produced by Lu Lu and Robert W. Williams starting in 2010 using G8 and G9 advanced intercross stock donated by Abraham Palmer. 
+
+<P>BXD187 through BXD220 were produced by Lu Lu and Robert W. Williams starting in 2014 using F2 stock. 
+
+<P> Initial genotypes in 2008 highlighted breeding errors that resulted in sets of very closely related sister substrains that are almost genetically identical. In collaboration with the Jackson Laboratory, we have made the following changes in strain names to clarify the strong genetic relations among the newer BXD strains. 
 
 <P>In general, data for the following sister substrains needs to be handled with special care prior to or during statistical analysis or gene mapping for the simple reason that the substrains are not genetically independent. However, if investigators do discover significant phenotype differences among strains, then data can be treated independently.  (The latest version of GeneNetwork (GN 2) includes a mapping method called Python Linear Mixed Model (pyLMM) that corrects for the effects of shared pedigrees and corrects mapping results (code written by Nick Furlotte in 2011-2013). )
 
@@ -178,9 +184,15 @@ Our DBA/2J sequence data (from Wang et al. 2016) have been used to generate a vi
 
 <LI>BXD43 to BXD103. This is a complex cohort of strains generated at UTHSC from advanced intercross progeny (Peirce et al., <A HREF="http://www.biomedcentral.com/1471-2156/5/7">2004</A>). 
 
+<LI>BXD104 to BXD157. This is a single cohort of strains generated at UTHSC from F2 intercross stock. 
+
+<LI>BXD160 to BXD186. This is a single cohort of strains generated at UTHSC from G8 and G9 advanced intercross progeny donated to RW Williams by Abraham Palmer in 2008. 
+
+<LI>BXD187 to BXD220. This is a single cohort of strains generated at UTHSC from F2 intercross stock. 
+
 </OL>
 
-Users of the expanded BXD panel should take this epoch substructure into account. This is easy to do using the "Epoch" traits that are included in the BXD Phenotype database. For example, BXD Phenotype 12688 (BXD epoch batch trait 1) provides a simple code for the three major subfamilies using the code of -1 for the first set through to BXD32, 0 for the second set (33 to 42), and +1 for the newer UTHSC set (43 to 103). 
+Users of the expanded BXD panel should take this epoch substructure into account. This is easy to do using the "Epoch" traits that are included in the BXD Phenotype database. For example, BXD Phenotype 12688 (BXD epoch batch trait 1) provides a simple code for the major phases of BXD production using the code of -1 for the first set through to BXD32, 0 for the second set (33 to 42), and +1 for the newer UTHSC set (43 to 103). 
 
 <OL>
 <LI> Determine whether your trait covaries well with any one of the three Epoch traits in GeneNetwork. Also check the status of BXD31 and BXD32. They may not belong to any group.
@@ -189,7 +201,7 @@ Users of the expanded BXD panel should take this epoch substructure into account
 
 </OL> 
 
-<P>Strain nomenclature:  Some of the BXD strains have accumulated new mutations that have recently been characterized. When these mutations are known, the full nomenclature of the strain is now being modified. For example, BXD24/TyJ (aka BXD24 in most GeneNetwork databases), suffered a mutation in the <I>Cep290</I> gene in the late 1980s. The mutant allele (<I>rd16</I> is associated with autosomal recessive retinal degeneration. The original BXD strain was briefly referred to as BXD24a/TyJ, while the blind co-isogenic mutant was referred to as BXD24b/TyJ. The great majority of phenotype, expression, and genotype data in GeneNetwork was generated using these blind BXD24b/TyJ animals. However, in 2010, the nomenclature was changed again and the blind variant (JAX stock 000031) is now known as  BXD24/TyJ-Cep290rd16/J. The original BXD was rederived from frozen stock and is now known once again as BXD24/TyJ, although the stock number has now been changed to 005243.
+<P>Strain nomenclature:  Some of the BXD strains have accumulated new mutations that have recently been characterized. When these mutations are known, the full nomenclature of the strain is now being modified. For example, BXD24/TyJ (aka BXD24 in most GeneNetwork databases), suffered a mutation in the <I>Cep290</I> gene in the late 1980s. The mutant allele (<I>rd16</I> is associated with autosomal recessive retinal degeneration. The original BXD strain was briefly referred to as BXD24a/TyJ, while the blind co-isogenic mutant was referred to as BXD24b/TyJ. The great majority of phenotype, expression, and genotype data in GeneNetwork was generated using these blind BXD24b/TyJ animals. However, in 2010, the nomenclature was changed again and the blind variant (JAX stock 000031) is now known as  BXD24/TyJ-Cep290rd16/J. The original BXD with normal vision was rederived from frozen stock and is now known once again as BXD24/TyJ, although the stock number has now been changed to 005243.
 
 <P>BXD29/TyJ was also known as BXD29/TyJ-Tlr4, but is now formally BXD29-Tlr4lps-2J/J (JAX stock 000029). The original non-mutant stock is currently known as BXD29/TyJ again but the stock number of these rederived non-mutants has been changed to 010981.
 
@@ -203,11 +215,16 @@ Users of the expanded BXD panel should take this epoch substructure into account
 
 <P>There are a total of 1848 known recombinations in the 36 older (JAX) BXD set; an average of 48.1 recombinations per strain. </P>
 
-<P>There are a total of 4366 known recombinations in the 53 new (UTHSC) BXD set; an average of 82.4 recombinations per strain (Shifman et al., 2006). These RI strains were generated from an advanced intercross, and this accounts for the higher recombination load (Peirce et al., 2005).</P>
+<P>There are a total of 4366 known recombinations in the 53 of the first set of UTHSC BXD strains (BXD43 to BXD102); an average of 82.4 recombinations per strain (Shifman et al., 2006). These RI strains were generated from an advanced intercross, and this accounts for the higher recombination load (Peirce et al., 2005).</P>
 
-<P>Approximately 4300 phenotypes are currently included in the BXD Phenotype database in GeneNetwork as of July 2014. You can get an update on this number by typing in an asterisk (*) in the search box. </P>
+<P>The "classic" genotypes of the BXD strains (used through Dec 2016 in GeneNetwork) rely mainly on the Mouse Universal Genotyping Array (MUGA) genotyping platform. They also rely to some extent and earlier genotyping in 2008 using the Affymetrix Mouse Diversity array and even earlier work by Williams et al (2001) using microsatellite markers.
 
-<P>How to obtain these strains: Please see <a href="http://jaxmice.jax.org/strain/000105.html"  target="_blank" class="fs14">http://jaxmice.jax.org/strain/000105.html</a>. Cost of the JAX BXD strains was approximately $65.40 each (2008) and is now $135.00 each (2014). To obtain strains BXD43 and higher please contact <A HREF="mailto:lulu@nb.uthsc.edu" class="fs14">Lu Lu</A>. All strains through BXD102 are now fully inbred. Lu, Williams and colleagues hope to generate as many as 160 viable BXDs strains by 2020.
+<P>In January 2017, the genotypes of most extant BXD strains were updated. The new data also include initial genotypes for the newest cohort of BXDs (BXD104 to BXD220). This January 2017 genotype file provides consensus genotypes for 198 BXD strains. Of the 198 BXD strains, 191 are independent, whereas 7 are substrains (e.g., BXD48 and BXD48a). This file provides approximate locations of 10300 recombinations, an average of 52 per strain. Genotypes were generated using Affymetrix, MUGA, MegaMUGA, and GigaMUGA Illumina platforms. Microsatellites and eQTL genotypes were generated by the Williams and Lu laboratory. Unknown genotypes were imputed as B or D, or were called as H (heterozygous) if the genotype was uncertain. Genotypes were manually curated by RW Williams. Genotypes were smoothed to remove unlikely recombination events. Almost all recombinations are supported by multiple markers, although only one or two representative markers may be provided in this file. The original parent file (BXD_El_Grande_Master_Used_to_Proof_Final_Genotypes_2016.xlxs) contains data for approximately 37000 markers. A subset of the most informative 7300 markers are included in the 2017 genotype file. Genotypes for Chr Y and  Chr M are provisional and will be verified in 2017. As of 2016, many strains with higher numbers (BXD100 and above) are not fully inbred.
+
+
+<P>Approximately 5100 phenotypes are currently included in the BXD Phenotype database in GeneNetwork as of Jan 2017. You can get an update on this number by typing in an asterisk (*) in the search box. </P>
+
+<P>How to obtain these strains: Please see <a href="http://jaxmice.jax.org/strain/000105.html"  target="_blank" class="fs14">http://jaxmice.jax.org/strain/000105.html</a>. Cost of the JAX BXD strains was approximately $65.40 each in 2008, $135.00 each in 2014, and $139.90 in 2017. To obtain strains BXD43 and higher please contact <A HREF="mailto:rwilliams@uthsc.edu" class="fs14">Rob Williams</A>. All strains through BXD102 are now fully inbred. We expect to generate as many as 160 viable BXDs strains by 2020. All extant BXD strains are being sequenced in early 2017 at 30X using 10X Chromium libraries at Hudson Alpha (supported by the UTHSC CITG, Williams, Lu, and colleagues at UTHSC, Abraham Palmer and colleagues at UCSD, and by Jonathan Pritchard at Stanford).
 </P>
 
 <P>For more details on the history, generation, and use of RI strains as genetic reference populations for systems genetics please see Silver <A HREF="http://www.complextrait.org/archive/2001/HTML/silverbook/frame1.1.shtml" target="_blank" class="fs14">(1995)</A>. Additional useful literature links are provided in the <B>References</B> link at the top center of this page.
