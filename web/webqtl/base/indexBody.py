@@ -218,6 +218,7 @@ Quick HELP Examples and </B>
 							<p style="font-size:15px;font-family:verdana;color:black"><B>Websites Affiliated with GeneNetwork</B></p>
 		<p style="font-size:12px;font-family:verdana;color:black">
 			<ul>
+				<li>GeneNetwork <A HREF="http://artemis.uthsc.edu" target="_blank" class="fs14">Time Machine</A>: Full versions from 2009 to 2016 (mm9)
 				<li>UTHSC Genome Browser
 					<a target="_blank" href="http://ucscbrowser.genenetwork.org/">Classic</a>
 					and
@@ -266,14 +267,5 @@ Quick HELP Examples and </B>
 
 							</BLOCKQUOTE>
 
-							<p style="font-size:14px;font-family:verdana;color:black"><B>History and Archive</B>
-
-							<BLOCKQUOTE>
-								<p style="font-size:12px;font-family:verdana;color:black">GeneNetwork's <A HREF="http://artemis.uthsc.edu" target="_blank" class="fs14"><small>Time Machine</small></A> links to earlier versions that correspond to specific publication dates.</P>
-
-							</BLOCKQUOTE> 
-
-
-</P>
 						</TD>
 """

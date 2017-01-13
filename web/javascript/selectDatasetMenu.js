@@ -1,9 +1,9 @@
 var sArr = [
 {txt:'',val:''},
-{txt:'Human',val:'human'},
+{txt:'Human (hg19)',val:'human'},
 {txt:'Macaque monkey',val:'macaque monkey'},
-{txt:'Mouse',val:'mouse'},
-{txt:'Rat',val:'rat'},
+{txt:'Mouse (mm10)',val:'mouse'},
+{txt:'Rat (rn3)',val:'rat'},
 {txt:'Drosophila',val:'drosophila'},
 {txt:'Arabidopsis thaliana',val:'arabidopsis'},
 {txt:'Barley',val:'barley'},
