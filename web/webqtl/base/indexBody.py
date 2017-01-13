@@ -261,43 +261,10 @@ Quick HELP Examples and </B>
 
 													
 														
-<p style="font-size:12px;font-family:verdana;color:black">Try the <A HREF="http://alexandria.uthsc.edu/" target="_blank" class="fs14"><small>Workstation</small></A> site to explore data and features that are being implemented.</P>
-
-
 <p style="font-size:12px;font-family:verdana;color:black">Review the <A HREF="/conditionsofUse.html" target="_blank" class="fs14"><small>Conditions</small></A> and <A HREF="/statusandContact.html" target="_blank" class="fs14"><small>Contacts</small></A> pages for information on the status of data sets and advice on their use and citation.</P> 
 
 
 							</BLOCKQUOTE>
-
-							
-
-							<p style="font-size:14px;font-family:verdana;color:black"><B>Mirror and Development Sites</B></P>
-
-							<UL>
-								<LI><A HREF="http://www.genenetwork.org/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Main GN site at UTHSC</A> (main site)
-							<!--	<LI><A HREF="http://www.genenetwork.waimr.uwa.edu.au/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Australia at the UWA</A> -->
-							<!--	<LI><A HREF="http://gn.genetics.ucla.edu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">California at UCLA</A> -->
-								<LI><A HREF="http://genenetwork.helmholtz-hzi.de/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Germany at the HZI</A>
-							<!--	<LI><A HREF="https://genenetwork.hubrecht.eu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Netherlands at the Hubrecht</A> (Development) -->
-								<LI><A HREF="http://genenetwork.memphis.edu/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Memphis at the U of M</A>
-							<!--	<LI><A HREF="http://webqtl.bic.nus.edu.sg/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Singapore at the NUS</A> -->
- 							<!--	<LI><A HREF="http://genenetwork.epfl.ch/" target="_blank" style="font-size:12px;font-family:verdana;color:blue">Switzerland at the EPFL</A> -->
-							</UL>
-							
-							<!--
-							<ul>
-								<li>
-									<a target="_blank" style="font-size:12px;font-family:verdana;color:blue" href="http://54.221.199.53/">GN instance on Amazon Cloud</a>
-									for
-									<a target="_blank" style="font-size:12px;font-family:verdana;color:blue" href="http://www.genome-explorations.com/">Genome Explorations</a>
-								</li>
-								<li>
-									<a target="_blank" style="font-size:12px;font-family:verdana;color:blue" href="http://ec2-54-90-172-25.compute-1.amazonaws.com/">GN instance on Amazon Cloud</a>
-									for
-									<a target="_blank" style="font-size:12px;font-family:verdana;color:blue" href="http://www.rti.org/">RTI International</a>
-								</li>
-							</ul>
-							-->
 
 							<p style="font-size:14px;font-family:verdana;color:black"><B>History and Archive</B>
 

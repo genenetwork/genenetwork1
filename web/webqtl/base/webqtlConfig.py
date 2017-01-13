@@ -53,7 +53,7 @@ UCSC_GENOME = "http://genome.ucsc.edu/cgi-bin/hgTracks?db=%s&position=chr%s:%d-%
 ENSEMBLE_BLAT = 'http://www.ensembl.org/Mus_musculus/featureview?type=AffyProbe&id=%s'
 DBSNP = 'http://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?type=rs&rs=%s'
 UCSC_RUDI_TRACK_URL = " http://genome.cse.ucsc.edu/cgi-bin/hgTracks?org=%s&db=%s&hgt.customText=http://gbic.biol.rug.nl/~ralberts/tracks/%s/%s"
-GENOMEBROWSER_URL="http://ucscbrowser.genenetwork.org/cgi-bin/hgTracks?clade=mammal&org=Mouse&db=mm9&position=%s&hgt.suggest=&pix=800&Submit=submit"
+GENOMEBROWSER_URL="http://ucscbrowser.genenetwork.org/cgi-bin/hgTracks?clade=mammal&org=Mouse&db=mm10&position=%s&hgt.suggest=&pix=800&Submit=submit"
 ENSEMBLETRANSCRIPT_URL="http://useast.ensembl.org/Mus_musculus/Lucene/Details?species=Mus_musculus;idx=Transcript;end=1;q=%s"
 WikiPi = "http://severus.dbmi.pitt.edu/wiki-pi/index.php/search?q=%s"
 

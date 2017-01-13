@@ -237,7 +237,7 @@ class ShowProbeInfoPage(templatePage):
 			Start=''
 			End=''
 			if (len(LocationFields)>=1):
-				Chr,Start,End,Strand,MisMatch,ProbeId = map(self.nullRecord,LocationFields[0])
+				Chr,Start,Start_2016,End,End_2016,Strand,MisMatch,ProbeId = map(self.nullRecord,LocationFields[0])
 				Start /= 1000000.0
 				End /= 1000000.0
 			if (len(LocationFields)>1):
@@ -256,7 +256,7 @@ class ShowProbeInfoPage(templatePage):
 						,(ProbeSetMb, CellID, EnsemblProbeSetID, ProbeSetChr, self.probeDatabase))
 				NewLocationFields = self.cursor.fetchall()
 				if (len(NewLocationFields)>0):
-					Chr,Start,End,Strand,MisMatch,ProbeId,Mb = map(self.nullRecord,NewLocationFields[0])
+					Chr,Start,Start_2016,End,End_2016,Strand,MisMatch,ProbeId,Mb = map(self.nullRecord,NewLocationFields[0])
 					Start /= 1000000.0
 					End /= 1000000.0
 					
