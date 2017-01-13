@@ -106,7 +106,7 @@ class snpBrowserPage(templatePage):
 					
 				# This writes the info at top above the search criteria.
 				strainText = " - among all available strains in the group"			
-				info_line = HT.Paragraph("%d %s(s) on Chr %s: %0.6f - %0.6f (Mb, mm9" % (snpMatches, opt.variant,opt.chromosome, opt.startMb, opt.endMb), 
+				info_line = HT.Paragraph("%d %s(s) on Chr %s: %0.6f - %0.6f (Mb, mm10" % (snpMatches, opt.variant,opt.chromosome, opt.startMb, opt.endMb), 
 						 Class="fs14 fwb ffl black")
 				if self.snp_list:
 				   info_line.contents[0]+= ", SNP: %s)" % opt.geneName
@@ -784,15 +784,15 @@ class snpBrowserPage(templatePage):
 			if opt.variant == "SNP":
 				displayStains=[]
 				# The order of variables here is the order they are selected from in genSnpTable				
-				SnpId,SpeciesId,SnpName, Rs, Chromosome, Mb, Alleles, SnpSource,ConservationScore = result[:9]
+				SnpId,SpeciesId,SnpName, Rs, Chromosome, Mb, Mb_2016, Alleles, SnpSource,ConservationScore = result[:10]
 
-				effct =result[9:25]
+				effct =result[10:26]
 				#result[25] is SnpId; 
-				opt.alleleValueList =result[26:]
+				opt.alleleValueList =result[27:]
 
 				if opt.customStrain and opt.chosenStrains:
 					for index in strainIdexList:
-						displayStains.append(result[26+index])
+						displayStains.append(result[27+index])
 					opt.alleleValueList =displayStains
 					
 				effectInfoDict=self.getEffectInfo(effct)

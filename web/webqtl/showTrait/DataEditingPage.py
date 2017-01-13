@@ -451,8 +451,8 @@ class DataEditingPage(templatePage):
 					UCSC_BLAT_URL = webqtlConfig.UCSC_BLAT % ('rat', 'rn3', blatsequence)
 					UTHSC_BLAT_URL = ""
 				elif _Species == "mouse":
-					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('mouse', 'mm9', blatsequence)
-					UTHSC_BLAT_URL = webqtlConfig.UTHSC_BLAT % ('mouse', 'mm9', blatsequence)
+					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('mouse', 'mm10', blatsequence)
+					UTHSC_BLAT_URL = webqtlConfig.UTHSC_BLAT % ('mouse', 'mm10', blatsequence)
 				elif _Species == "human":
 					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('human', 'hg19', blatsequence)
 					UTHSC_BLAT_URL = ""
@@ -615,7 +615,7 @@ class DataEditingPage(templatePage):
 							txst = int(txst*1000000)
 							txen = int(txen*1000000)
 							tSpan.append(HT.Span(HT.Href(text= 'UCSC',target="mainFrame",\
-								title= 'Info from UCSC Genome Browser', url = webqtlConfig.UCSC_REFSEQ % ('mm9',thisTrait.refseq_transcriptid,chr,txst,txen),
+								title= 'Info from UCSC Genome Browser', url = webqtlConfig.UCSC_REFSEQ % ('mm10',thisTrait.refseq_transcriptid,chr,txst,txen),
 								Class="fs14 fwn"), style=linkStyle)
 								, "&nbsp;"*2)
 					except:
@@ -681,8 +681,8 @@ class DataEditingPage(templatePage):
 					HT.TD(tSpan, valign="top")))                                                                     
                                                 
 			menuTable = HT.TableLite(cellpadding=2, Class="collap", width="620", id="target1")
-			menuTable.append(HT.TR(HT.TD(addSelectionButton, align="center"),HT.TD(similarButton, align="center"),HT.TD(verifyButton, align="center"),HT.TD(geneWikiButton, align="center"),HT.TD(snpBrowserButton, align="center"),HT.TD(rnaseqButton, align="center"),HT.TD(probeButton, align="center"),HT.TD(updateButton, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))     
-			menuTable.append(HT.TR(HT.TD(addSelectionText, align="center"),HT.TD(similarText, align="center"),HT.TD(verifyText, align="center"),HT.TD(geneWikiText, align="center"),HT.TD(snpBrowserText, align="center"),HT.TD(rnaseqText, align="center"),HT.TD(probeText, align="center"),HT.TD(updateText, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))                         
+			menuTable.append(HT.TR(HT.TD(addSelectionButton, align="center"),HT.TD(similarButton, align="center"),HT.TD(verifyButton, align="center"),HT.TD(geneWikiButton, align="center"),HT.TD(snpBrowserButton, align="center"),HT.TD(probeButton, align="center"),HT.TD(updateButton, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))     
+			menuTable.append(HT.TR(HT.TD(addSelectionText, align="center"),HT.TD(similarText, align="center"),HT.TD(verifyText, align="center"),HT.TD(geneWikiText, align="center"),HT.TD(snpBrowserText, align="center"),HT.TD(probeText, align="center"),HT.TD(updateText, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))                         
 				
 			
 			#for zhou mi's cliques, need to be removed
@@ -792,8 +792,8 @@ class DataEditingPage(templatePage):
 					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('rat', 'rn3', thisTrait.sequence)
 					UTHSC_BLAT_URL = webqtlConfig.UTHSC_BLAT % ('rat', 'rn3', thisTrait.sequence)
 				elif _Species == "mouse":
-					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('mouse', 'mm9', thisTrait.sequence)
-					UTHSC_BLAT_URL = webqtlConfig.UTHSC_BLAT % ('mouse', 'mm9', thisTrait.sequence)
+					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('mouse', 'mm10', thisTrait.sequence)
+					UTHSC_BLAT_URL = webqtlConfig.UTHSC_BLAT % ('mouse', 'mm10', thisTrait.sequence)
 				elif _Species == "human":
 					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('human', 'hg19', blatsequence)
 					UTHSC_BLAT_URL = webqtlConfig.UTHSC_BLAT % ('human', 'hg19', thisTrait.sequence)
@@ -825,8 +825,8 @@ class DataEditingPage(templatePage):
 					))
 			
     			menuTable = HT.TableLite(cellpadding=2, Class="collap", width="275", id="target1")
-    			menuTable.append(HT.TR(HT.TD(addSelectionButton, align="center"),HT.TD(verifyButton, align="center"),HT.TD(rnaseqButton, align="center"), HT.TD(updateButton, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))     
-    			menuTable.append(HT.TR(HT.TD(addSelectionText, align="center"),HT.TD(verifyText, align="center"),HT.TD(rnaseqText, align="center"), HT.TD(updateText, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))          					
+    			menuTable.append(HT.TR(HT.TD(addSelectionButton, align="center"),HT.TD(verifyButton, align="center"),HT.TD(updateButton, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))     
+    			menuTable.append(HT.TR(HT.TD(addSelectionText, align="center"),HT.TD(verifyText, align="center"),HT.TD(updateText, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))          					
 					
 			title1Body.append(tbl, HT.BR(), menuTable)
 			
