@@ -24,7 +24,8 @@ def handle(input):
 	rowindex = 0
 	for row in input:
 		#
-		print("row: %s" % rowindex)
+		if rowindex % 100 == 0:
+			print("rowindex: %s" % rowindex)
 		#
 		cells = row.split()
 		rowheader = cells[0]
@@ -33,7 +34,7 @@ def handle(input):
 		#
 		for colindex in range(rowindex+1):
 			#
-			# print("col: %s" % colindex)
+			# print("colindex: %s" % colindex)
 			#
 			colid = colids[colindex]
 			v = cells[colindex]
