@@ -33,12 +33,11 @@ def handle(input):
 		#
 		for colindex in range(rowindex+1):
 			#
-			print("col: %s" % colindex)
+			# print("col: %s" % colindex)
 			#
 			colid = colids[colindex]
 			v = cells[colindex]
-			print("[%s\t%s] %s" % (rowid, colid, v))
-			continue
+			# print("[%s\t%s] %s" % (rowid, colid, v))
 			sql = """
 				INSERT INTO LCorrRamin3
 				SET LCorrRamin3.`GeneId1`=%s,
