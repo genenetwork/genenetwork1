@@ -52,21 +52,21 @@ putative QTLs.
 <B>1.</B> Download QTL Reaper from <A href="http://sourceforge.net/projects/qtlreaper/" target="_blank" class="fs14">SourceForge</A>.
 			  <br><BR>
 			  
-<B>2.</B> Building and installing QTL Reaper
+<B>2.</B> Building and installing QTL Reaper in Mac, Linux, or Windows (using cygwin with Python installed):
 			  <br>
 &nbsp;&nbsp;&nbsp;&nbsp;<b>a)</B> Open a terminal or command prompt.
 
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;<b>b)</B> Gunzip and untar the package file, then enter the qtlreaper directory. If you are using the Macintosh OS, you may need to comment out lines 29 and 30 in <B>setup.py</B> using a text editor before building.
+&nbsp;&nbsp;&nbsp;&nbsp;<b>b)</B> Gunzip and untar the package file, then change directories into the qtlreaper directory in your terminal.
 
 <br> 
-&nbsp;&nbsp;&nbsp;&nbsp;<B>c)</B> To compile qtlreaper module, execute:<font size="-1"><b> python setup.py build</b></font>. Administrator privileges are needed to install qtlreaper, as it is a global module for python. To compile qtlreaper on a PC, Visual Studio 7.1+ (or its Python-component libraries) is required. The setup.py script may be modified if you wish to use your own blas and lapack libraries. To install the qtlreaper module, execute: <b>python setup.py install</B>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>c)</B> To compile qtlreaper module, execute:<font size="-1"><b>python setup.py build</b></font>. Administrator privileges are needed to install qtlreaper, as it is a global module for python. To compile qtlreaper on a PC, Visual Studio 7.1+ (or its Python-component libraries) is required. The setup.py script may be modified if you wish to use your own blas and lapack libraries. To install the qtlreaper module, execute: <b>sudo python setup.py install</B> (followed by entering your administrator password).
 
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;<B>d)</B> Check that the library <font size="-1"><B>reaper.so</B></font> has been installed in a location that is included in the Python path. You can check the Python path when Python is running by executing the Python commands <font size="-1"><B>import sys</B></font> and <font size="-1"><B>sys.path</B></font>. Under Mac OS X 10.4, the standard location would be <font size="-1"><B>/System/Library/Frameworks/Python.framework/Versions/2.3/lib/python2.3/site-packages</B></font>. 
+&nbsp;&nbsp;&nbsp;&nbsp;<B>d)</B> Check that the library <font size="-1"><B>reaper.so</B></font> has been installed in a location that is included in the Python path. You can check the Python path when Python is running by first starting Python (simply type <B>python</B> in your command prompt and hit enter). Once in Python, which you can tell by a >>> prompt, enter the Python commands <font size="-1"><B>import sys</B></font> and <font size="-1"><B>sys.path</B></font>. Under Mac OS X 10.12, the standard location will be something like <font size="-1"><B>/Library/Python/2.7/site-packages</B></font>. QTLreaper should be installed in that directory (i.e. it should be located at /Library/Python/2.7/site-packages/qtlreaper/).
 
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;<B>e)</B> Run Python, if you have not already, by typing <font size="-1"><B>python</B></font> at the terminal prompt. If <font size="-1"><B>reaper.so</B></font> is installed properly, it is not necesary to change to a specific directory before running Python. Alternately, the user may navigate to the directory with reaper.so, then start python, then type 'import reaper' for the same functionality, without requiring the module be installed.
+&nbsp;&nbsp;&nbsp;&nbsp;<B>e)</B> Run Python, if you have not already, by typing <font size="-1"><B>python</B></font> at the terminal prompt. If <font size="-1"><B>reaper.so</B></font> is installed properly, it is not necessary to change to a specific directory before running Python. Alternately, the user may navigate to the directory with reaper.so, then start python, then type 'import reaper' for the same functionality, without requiring the module be installed with administrator privileges.
 
 <!-- FIND OUT WHAT THIS IS CALLED ON LINUX OR WINTEL -->
 <p>
@@ -75,7 +75,7 @@ putative QTLs.
 <B>3.</B> Instructions for Using QTL Reaper
 
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;<b>a)</B> Now that Python is running, import qtlreaper by typing <font size="-1"<b>import reaper</B></font> in the terminal.
+&nbsp;&nbsp;&nbsp;&nbsp;<b>a)</B> Once your terminal is running Python (denoted by >>> at the command prompt), import qtlreaper by typing <font size="-1"<b>import reaper</B></font> in the terminal.
 
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From here, the user can create a data set into which data can be placed by executing the following command. This command creates a Dataset object which, in this example, we call <font size="-1"><B>mydataset</B></font>. In place of <font size="-1"><B>mydataset</B></font>, you can use any name that begins with a letter.
