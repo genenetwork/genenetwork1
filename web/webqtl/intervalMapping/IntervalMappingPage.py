@@ -46,7 +46,7 @@ from dbFunction import webqtlDatabaseFunction
 from base.GeneralObject import GeneralObject
 
 #import logging
-#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
 #_log = logging.getLogger("gn\web\webqtl\intervalMapping\IntervalMappingPage.py")
 
 #########################################
@@ -167,7 +167,14 @@ class IntervalMappingPage(templatePage):
 
         #RISet and Species
         if not fd.genotype:
-            fd.fetch_genofile(cursor=self.cursor)
+            intervalmappingtype = fd.formdata.getfirst('IntervalMappingType')
+            if intervalmappingtype == "interval":
+                genofileid = fd.formdata.getfirst('genofileid_int')
+            elif intervalmappingtype == "composite":
+                genofileid = fd.formdata.getfirst('genofileid_com')
+            else:
+                genofileid = None
+            fd.fetch_genofile(cursor=self.cursor, genofileid=genofileid)
             fd.readGenotype()
 
         fd.parentsf14regression = fd.formdata.getvalue('parentsf14regression')

@@ -86,6 +86,8 @@ class DataEditingPage(templatePage):
 		'parentsf14regression':'OFF', 'stats_method':'1', 'chromosomes':'-1', 'topten':'', 'viewLegend':'ON', 'intervalAnalystCheck':'ON', 'valsHidden':'OFF',\
 		'database':'', 'criteria':None, 'MDPChoice':None, 'bootCheck':None, 'num_perm':2000, 'applyVarianceSE':None, 'strainNames':'_', 'strainVals':'_',\
 		'strainVars':'_', 'otherStrainNames':'_', 'otherStrainVals':'_', 'otherStrainVars':'_', 'extra_attributes':'_', 'other_extra_attributes':'_'}
+
+		hddn['IntervalMappingType']=''
 		
 		if fd.enablevariance:
 			hddn['enablevariance']='ON'
@@ -1363,9 +1365,15 @@ class DataEditingPage(templatePage):
 		genofiles = self.get_genofiles(thisTrait=thisTrait, inbredsetname=RISetgp)
 		if genofiles and 0 < len(genofiles):
 			genofiletext = HT.Span("Genotypes:", Class="ffl fwb fs12")
-			genofileselect = HT.Select(name='genofileid')
+			genofileselect_int = HT.Select(name='genofileid_int')
+			genofileselect_mar = HT.Select(name='genofileid_mar')
+			genofileselect_com = HT.Select(name='genofileid_com')
+			genofileselect_pai = HT.Select(name='genofileid_pai')
 			for genofile in genofiles:
-				genofileselect.append((genofile[1], genofile[0]))
+				genofileselect_int.append((genofile[1], genofile[0]))
+				genofileselect_mar.append((genofile[1], genofile[0]))
+				genofileselect_com.append((genofile[1], genofile[0]))
+				genofileselect_pai.append((genofile[1], genofile[0]))
 		
 		if fd.genotype.Mbmap:
 			scaleText = HT.Span("Mapping Scale:", Class="ffl fwb fs12") 
@@ -1387,25 +1395,27 @@ class DataEditingPage(templatePage):
 				HT.TR(HT.TD(chrText), HT.TD(chrMenu, colspan="3")),
 				HT.TR(HT.TD(scaleText), HT.TD(scaleMenu1)),
 				HT.TR(HT.TD(permText), HT.TD(numPerm, colspan="3")),
-			    cellspacing=0, width="325px", cellpadding=2)
+			    cellspacing=2, width="auto", cellpadding=2)
 			if genofiles and 0 < len(genofiles):
-				intMappingMenu.append(HT.TR(HT.TD(genofiletext), HT.TD(genofileselect)))
+				intMappingMenu.append(HT.TR(HT.TD(genofiletext), HT.TD(genofileselect_int)))
 			compMappingMenu = HT.TableLite(
 				HT.TR(HT.TD(chrText), HT.TD(chrMenu2, colspan="3")),
 				HT.TR(HT.TD(scaleText), HT.TD(scaleMenu2)),
 				HT.TR(HT.TD(controlText), HT.TD(controlMenu)),
 				HT.TR(HT.TD(permText), HT.TD(numPerm2, colspan="3")),
-			    cellspacing=0, width="325px", cellpadding=2)
+			    cellspacing=0, width="auto", cellpadding=2)
+			if genofiles and 0 < len(genofiles):
+				compMappingMenu.append(HT.TR(HT.TD(genofiletext), HT.TD(genofileselect_com)))
 		else:
 			intMappingMenu = HT.TableLite( 
 				HT.TR(HT.TD(chrText), HT.TD(chrMenu, colspan="3")),
 				HT.TR(HT.TD(permText), HT.TD(numPerm, colspan="3")),
-			    cellspacing=0, width="325px", cellpadding=2)		
+			    cellspacing=0, width="auto", cellpadding=2)		
 			compMappingMenu = HT.TableLite( 
 				HT.TR(HT.TD(chrText), HT.TD(chrMenu2, colspan="3")),
 				HT.TR(HT.TD(permText), HT.TD(numPerm2, colspan="3")),
 				HT.TR(HT.TD(controlText), HT.TD(controlMenu)),
-			    cellspacing=0, width="325px", cellpadding=2)		
+			    cellspacing=0, width="auto", cellpadding=2)		
 		
 		directPlotButton = ""
 		directPlotButton = HT.Input(type='button',name='', value=' Compute ',\
@@ -1426,7 +1436,9 @@ class DataEditingPage(templatePage):
 		pairScanMenus = HT.TableLite(
 			HT.TR(HT.TD(directPlotSortText), HT.TD(directPlotSortMenu)),
 			HT.TR(HT.TD(pairScanReturnText), HT.TD(pairScanReturnMenu)),
-			cellspacing=0, width="232px", cellpadding=2)		
+			cellspacing=0, width="auto", cellpadding=2)
+		if genofiles and 0 < len(genofiles):
+			pairScanMenus.append(HT.TR(HT.TD(genofiletext), HT.TD(genofileselect_pai)))
 		
 		markerSuggestiveText = HT.Span(HT.Bold("Display LRS above:"), Class="ffl fwb fs12")
 		markerSuggestive = HT.Input(name='suggestive', size=5, maxlength=8)
@@ -1440,11 +1452,9 @@ class DataEditingPage(templatePage):
 		markerMenu = HT.TableLite(
 			HT.TR(HT.TD(markerSuggestiveText), HT.TD(markerSuggestive)),
 			HT.TR(HT.TD(permText), HT.TD(markerNumPerm)),
-			HT.TR(HT.TD(displayAll,displayAllText)),
-			HT.TR(HT.TD(useParents,useParentsText)),
-			HT.TR(HT.TD(applyVariance2,applyVarianceText)),
-			cellspacing=0, width="200px", cellpadding=2)				
-							
+			cellspacing=0, width="auto", cellpadding=2)				
+		if genofiles and 0 < len(genofiles):
+			markerMenu.append(HT.TR(HT.TD(genofiletext), HT.TD(genofileselect_mar)))
 		
 		mapping_row = HT.TR()
 		mapping_container = HT.Div(id="mapping_tabs", Class="ui-tabs")
@@ -1480,8 +1490,11 @@ class DataEditingPage(templatePage):
 		markerTable = HT.TableLite(cellspacing=0, cellpadding=0, width="100%")		
 		markerTD = HT.TD(valign="top",NOWRAP='ON', Class="fs12 fwn")
 		markerTD.append(markerMenu,HT.BR())
-		
-		markerTD.append(MarkerRegressionButton,HT.BR(),HT.BR())
+		markerTD.append(
+			displayAll, displayAllText, HT.BR(),
+			useParents, useParentsText, HT.BR(),
+			applyVariance2, applyVarianceText, HT.BR(), HT.BR())
+		markerTD.append(MarkerRegressionButton, HT.BR(), HT.BR())
 		
 		markerTable.append(HT.TR(markerTD),HT.TR(HT.TD(HT.Span(HT.Href(url='/glossary.html#',target='_blank',text='Marker regression'),
 			' computes and displays LRS values for individual markers.',HT.BR(),

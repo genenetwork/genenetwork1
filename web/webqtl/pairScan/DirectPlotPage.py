@@ -38,17 +38,20 @@ from base.templatePage import templatePage
 from utility import webqtlUtil
 from base import webqtlConfig
 
-
+#import logging
+#logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
+#_log = logging.getLogger("\gn\web\webqtl\pairScan\DirectPlotPage.py")
 
 class DirectPlotPage(templatePage):
 	def __init__(self, fd):
-
 		LRSFullThresh = 30
 		LRSInteractThresh = 25
 
 		templatePage.__init__(self, fd)
 
 		if not fd.genotype:
+			genofileid = fd.formdata.getfirst('genofileid_pai')
+			fd.fetch_genofile(cursor=self.cursor, genofileid=genofileid)
 			fd.readData()
 
 		incVars = 0

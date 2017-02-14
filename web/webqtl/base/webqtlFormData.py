@@ -38,7 +38,7 @@ from webqtlCaseData import webqtlCaseData
 from utility import webqtlUtil
 
 #import logging
-#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
 #_log = logging.getLogger("gn\web\webqtl\base\webqtlFormData.py")
 
 class webqtlFormData:
@@ -155,8 +155,7 @@ class webqtlFormData:
 		if _mat and _pat:
 			self.parlist = [_mat, _pat]
 	
-	def fetch_genofile(self, cursor):
-		genofileid = self.formdata.getfirst('genofileid')
+	def fetch_genofile(self, cursor, genofileid):
 		if cursor and genofileid and 0 < len(genofileid):
 			sql = """
 				SELECT GenoFile.`location`, GenoFile.`title`
