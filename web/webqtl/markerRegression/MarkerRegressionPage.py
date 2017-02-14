@@ -46,7 +46,7 @@ from utility.THCell import THCell
 from utility.TDCell import TDCell
 
 #import logging
-#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
 #_log = logging.getLogger("\gn\web\webqtl\markerRegression\MarkerRegressionPage.py")
 
 class MarkerRegressionPage(templatePage):
@@ -161,6 +161,8 @@ class MarkerRegressionPage(templatePage):
 				
 		elif self.mappingMethodId == '1': # QTLreaper result	
 			if not fd.genotype:
+				genofileid = fd.formdata.getfirst('genofileid_mar')
+				fd.fetch_genofile(cursor=self.cursor, genofileid=genofileid)
 				fd.readData()			
 		
 			fd.parentsf14regression = fd.formdata.getvalue('parentsf14regression')

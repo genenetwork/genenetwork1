@@ -524,6 +524,7 @@ $(window).load(function () {
     ///////////////////////////////
     
     $('#sectionbody4').find('input[name=interval]').click(function () {
+        $('input[name=IntervalMappingType]').val("interval");
         chrValue = $('select[name=chromosomes1] option:selected').val();
         $('input[name=chromosomes]').val(chrValue);
         scaleValue = $('select[name=scale1] option:selected').val();
@@ -588,6 +589,7 @@ $(window).load(function () {
     });
 
     $('#sectionbody4').find('input[name=composite]').click(function () {
+        $('input[name=IntervalMappingType]').val("composite");
         chrValue = $('select[name=chromosomes2] option:selected').val();
         $('input[name=chromosomes]').val(chrValue);
         scaleValue = $('select[name=scale2] option:selected').val();
