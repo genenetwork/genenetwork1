@@ -716,7 +716,7 @@ class SearchResultPage(templatePage):
 			if self.dbType == "Publish" and \
 				((_2Cmds and reduce(lambda x, y: (y not in ["LRS"]) or x, _2Cmds, False))\
 				or (_5Cmds and reduce(lambda x, y: (y not in ["LRS"]) or x, _5Cmds, False))\
-				or (_1Cmds and reduce(lambda x, y: (y in ["RIF"]) or x, _1Cmds, False))):
+				or (_1Cmds and reduce(lambda x, y: (y in ["RIF", "WIKI"]) or x, _1Cmds, False))):
 				heading = "Search Result"
 				detail = ["Pattern search is not available for phenotype databases at this time."]
 				self.error(heading=heading,detail=detail,error="Error")
