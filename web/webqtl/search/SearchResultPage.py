@@ -24,7 +24,7 @@ import PubmedSearch
 import GOSearch
 
 #import logging
-#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
 #_log = logging.getLogger("\gn\web\webqtl\search\SearchResultPage.py")
 
 class SearchResultPage(templatePage):
@@ -714,8 +714,9 @@ class SearchResultPage(templatePage):
 			self.nkeywords += len(_1Cmds) + len(_2Cmds) + len(_3Cmds)
 
 			if self.dbType == "Publish" and \
-				( (_2Cmds and reduce(lambda x, y: (y not in ["LRS"]) or x, _2Cmds, False))\
-				or (_5Cmds and reduce(lambda x, y: (y not in ["LRS"]) or x, _5Cmds, False)) ):
+				((_2Cmds and reduce(lambda x, y: (y not in ["LRS"]) or x, _2Cmds, False))\
+				or (_5Cmds and reduce(lambda x, y: (y not in ["LRS"]) or x, _5Cmds, False))\
+				or (_1Cmds and reduce(lambda x, y: (y in ["RIF"]) or x, _1Cmds, False))):
 				heading = "Search Result"
 				detail = ["Pattern search is not available for phenotype databases at this time."]
 				self.error(heading=heading,detail=detail,error="Error")
