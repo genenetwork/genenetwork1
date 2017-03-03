@@ -34,7 +34,6 @@ from base import webqtlConfig
 from utility import webqtlUtil
 from base.webqtlDataset import webqtlDataset
 from base.templatePage import templatePage
-			
 
 ######################################### 
 #      Genome Scan PAGE
@@ -238,50 +237,34 @@ class genAllDbResultPage(templatePage):
 						result2 += [_mean]
 						text.append(map(str, result2))
 
+				self.gentextfile(db, text)
 				
-				import pyXLWriter as xl
-				# Create a new Excel workbook
-				workbook = xl.Writer(filename)
-				worksheet = workbook.add_worksheet()
-				heading = workbook.add_format(align = 'center', bold = 1, size=13, color = 'red')
-				titleStyle = workbook.add_format(align = 'left', bold = 0, size=14, border = 1, border_color="gray")
-
-				worksheet.write([0, 0], "Data source: The GeneNetwork at http://www.genenetwork.org", titleStyle)
-				worksheet.write([1, 0], "Citations: Please see %s/reference.html" % webqtlConfig.PORTADDR, titleStyle)
-				worksheet.write([2, 0], "Database : %s" % db.fullname, titleStyle)
-				worksheet.write([3, 0], "Date : %s" % time.strftime("%B %d, %Y", time.gmtime()), titleStyle)
-				worksheet.write([4, 0], "Time : %s GMT" % time.strftime("%H:%M ", time.gmtime()), titleStyle)
-				worksheet.write([5, 0], "Status of data ownership: Possibly unpublished data; please see %s/statusandContact.html for details on sources, ownership, and usage of these data." % webqtlConfig.PORTADDR, titleStyle)
-
-				table_row_start_index = 7
-				nrow = table_row_start_index
-				for row in text:
-				    for ncol, cell in enumerate(row):
-				    	if nrow == table_row_start_index:
-				        	worksheet.write([nrow, ncol], cell.strip(), heading)
-				        	worksheet.set_column([ncol, ncol], 20)
-				    	else:
-				        	worksheet.write([nrow, ncol], cell.strip())
-				    nrow += 1
-
-				worksheet.write([1+nrow, 0], "Funding for The GeneNetwork: NIAAA (U01AA13499, U24AA13513), NIDA, NIMH, and NIAAA (P20-DA21131), NCI MMHCC (U01CA105417), and NCRR (U01NR 105417)", titleStyle)
-				worksheet.write([2+nrow, 0], "PLEASE RETAIN DATA SOURCE INFORMATION WHENEVER POSSIBLE", titleStyle)
-
-				workbook.close()
-								
-				fp = open(filename, 'rb')
-				text = fp.read()
-				fp.close()
 			else:
 				heading = "Download Results"
 				detail = ["Database calculation is not finished."]
 				self.error(heading=heading,detail=detail)
 				return
 				
-		self.content_type = 'application/xls'
-		self.content_disposition = 'attachment; filename=%s' % ('export-%s.xls' % time.strftime("%y-%m-%d-%H-%M"))
-		self.attachment = text
-			
+	def gentextfile(self, db, text):
+		attachment = ""
+		attachment += ("Data source: The GeneNetwork at http://www.genenetwork.org/\n")
+		attachment += ("Citations: Please see http://www.genenetwork.org/reference.html\n")
+		attachment += ("Database : %s\n" % db.fullname)
+		attachment += ("Date : %s\n" % time.strftime("%B %d, %Y", time.gmtime()))
+		attachment += ("Time : %s GMT\n" % time.strftime("%H:%M ", time.gmtime()))
+		attachment += ("Status of data ownership: Possibly unpublished data; please see http://www.genenetwork.org/statusandContact.html for details on sources, ownership, and usage of these data.\n")
+		attachment += "\n"
+		attachment += ("Funding for The GeneNetwork: NIAAA (U01AA13499, U24AA13513), NIDA, NIMH, and NIAAA (P20-DA21131), NCI MMHCC (U01CA105417), and NCRR (U01NR 105417)\n")
+		attachment += ("PLEASE RETAIN DATA SOURCE INFORMATION WHENEVER POSSIBLE\n")
+		attachment += "\n"
+		
+		for row in text:
+			attachment += string.join(map(lambda cell : str(cell).replace("\r\n", " ").strip(), row), '\t') + "\n"
+		
+		self.content_type = 'text/plain'
+		self.content_disposition = 'attachment; filename=%s' % ('export-%s.txt' % time.strftime("%y-%m-%d-%H-%M"))
+		self.attachment = attachment
+		
 	def readMouseGenome(self, RISet):
 		ldict = {}
 		lengths = []
