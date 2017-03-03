@@ -258,7 +258,13 @@ class genAllDbResultPage(templatePage):
 		attachment += ("PLEASE RETAIN DATA SOURCE INFORMATION WHENEVER POSSIBLE\n")
 		attachment += "\n"
 		
+		rowindex = 0
 		for row in text:
+			if rowindex == 0:
+				row.insert(0, 'Index')
+			else:
+				row.insert(0, rowindex)
+			rowindex += 1
 			attachment += string.join(map(lambda cell : str(cell).replace("\r\n", " ").strip(), row), '\t') + "\n"
 		
 		self.content_type = 'text/plain'
