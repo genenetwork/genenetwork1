@@ -29,7 +29,7 @@ import GOSearch
 
 class SearchResultPage(templatePage):
 
-	maxReturn = 6000
+	maxReturn = 50000
 #	NPerPage = 100
 	nkeywords = 0
 
