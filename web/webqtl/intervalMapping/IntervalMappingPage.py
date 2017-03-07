@@ -2419,7 +2419,7 @@ class IntervalMappingPage(templatePage):
             if refGene:
                 gene_tblobj_header = [[THCell(HT.TD('Index', HT.BR(), HT.BR(), align='left', width=50, Class=col_class), text="index", idx=0),
                         THCell(HT.TD('Symbol', HT.BR(), HT.BR(), align='left', width=100, Class=col_class), text="symbol", idx=1),
-                        THCell(HT.TD('Mb Start',HT.BR(),'(mm9)', align='left', width=100, Class=col_class), text="mb_start_mm9", idx=2),
+                        THCell(HT.TD('Mb Start', align='left', width=100, Class=col_class), text="mb_start_mm9", idx=2),
                         THCell(HT.TD('Length (Kb)', HT.BR(), HT.BR(), align='left', width=100, Class=col_class), text="length", idx=3),
                         THCell(HT.TD('SNP',HT.BR(),'Count', align='left', width=47, Class=col_class), text="snp_count", idx=4),
                         THCell(HT.TD('SNP',HT.BR(),'Density', align='left', width=78, Class=col_class), text="snp_density", idx=5),
@@ -2436,7 +2436,7 @@ class IntervalMappingPage(templatePage):
             else:
                 gene_tblobj_header = [[THCell(HT.TD('Index', HT.BR(), HT.BR(), align='left', width=50, Class=col_class), text="index", idx=0),
                         THCell(HT.TD('Symbol', HT.BR(), HT.BR(), align='left', width=100, Class=col_class), text="symbol", idx=1),
-                        THCell(HT.TD('Mb Start',HT.BR(),'(mm9)', align='left', width=100, Class=col_class), text="mb_start_mm9", idx=2),
+                        THCell(HT.TD('Mb Start', align='left', width=100, Class=col_class), text="mb_start_mm9", idx=2),
                         THCell(HT.TD('Length (Kb)', HT.BR(), HT.BR(), align='left', width=100, Class=col_class), text="length", idx=3),
                         THCell(HT.TD('SNP',HT.BR(),'Count', align='left', width=47, Class=col_class), text="snp_count", idx=4),
                         THCell(HT.TD('SNP',HT.BR(),'Density', align='left', width=78, Class=col_class), text="snp_density", idx=5),
