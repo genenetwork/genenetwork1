@@ -34,6 +34,7 @@ from base import webqtlConfig
 from utility import webqtlUtil
 from base.webqtlDataset import webqtlDataset
 from base.templatePage import templatePage
+from dbFunction import webqtlDatabaseFunction
 
 ######################################### 
 #      Genome Scan PAGE
@@ -246,13 +247,35 @@ class genAllDbResultPage(templatePage):
 				return
 				
 	def gentextfile(self, db, text):
+		#
+		db.getRISet()
+		info = self.getinfo(db.name)
+		#
+		group = db.riset
+		species = webqtlDatabaseFunction.retrieveSpecies(self.cursor, group)
+		type = info[4]
+		database = db.fullname
+		#
+		metadatainfofile = "http://www.genenetwork.org/webqtl/main.py?FormID=sharinginfo&GN_AccessionId=%s" % info[1]
+		originaldata = "http://datafiles.genenetwork.org/download/GN%s/" % info[1]
+		contactinformation = "%s %s, %s, %s, %s, %s %s %s, Tel. %s, %s" % (info[22], info[23], info[33], info[24], info[25], info[26], info[27], info[28], info[29], info[30])
+		#
 		attachment = ""
-		attachment += ("Data source: The GeneNetwork at http://www.genenetwork.org/\n")
-		attachment += ("Citations: Please see http://www.genenetwork.org/reference.html\n")
-		attachment += ("Database : %s\n" % db.fullname)
-		attachment += ("Date : %s\n" % time.strftime("%B %d, %Y", time.gmtime()))
-		attachment += ("Time : %s GMT\n" % time.strftime("%H:%M ", time.gmtime()))
-		attachment += ("Status of data ownership: Possibly unpublished data; please see http://www.genenetwork.org/statusandContact.html for details on sources, ownership, and usage of these data.\n")
+		attachment += ("Data source: GeneNetwork http://www.genenetwork.org/\n")
+		attachment += ("Citations: http://www.genenetwork.org/reference.html\n")
+		
+		attachment += ("Species: %s\n" % species)
+		attachment += ("Group: %s\n" % group)
+		attachment += ("Type: %s\n" % type)
+		attachment += ("Database: %s\n" % database)
+		
+		attachment += ("Metadata info file: %s\n" % metadatainfofile)
+		attachment += ("Original data: %s\n" % originaldata)
+		attachment += ("Contact Information: %s\n" % contactinformation)
+		
+		attachment += ("Date: %s\n" % time.strftime("%B %d, %Y", time.gmtime()))
+		attachment += ("Time: %s\n" % time.strftime("%H:%M", time.gmtime()))
+		
 		attachment += "\n"
 		attachment += ("Funding for The GeneNetwork: NIAAA (U01AA13499, U24AA13513), NIDA, NIMH, and NIAAA (P20-DA21131), NCI MMHCC (U01CA105417), and NCRR (U01NR 105417)\n")
 		attachment += ("PLEASE RETAIN DATA SOURCE INFORMATION WHENEVER POSSIBLE\n")
@@ -270,6 +293,28 @@ class genAllDbResultPage(templatePage):
 		self.content_type = 'text/plain'
 		self.content_disposition = 'attachment; filename=%s' % ('export-%s.txt' % time.strftime("%y-%m-%d-%H-%M"))
 		self.attachment = attachment
+		
+	def getinfo(self, infopagename):
+		sql = """SELECT InfoPageName, GN_AccesionId, Species.MenuName, Species.TaxonomyId, Tissue.Name, InbredSet.Name, GeneChip.GeneChipName, GeneChip.GeoPlatform,
+			AvgMethod.Name, Datasets.DatasetName, Datasets.GeoSeries, Datasets.PublicationTitle, DatasetStatus.DatasetStatusName, Datasets.Summary, Datasets.AboutCases,
+			Datasets.AboutTissue, Datasets.AboutDataProcessing, Datasets.Acknowledgment, Datasets.ExperimentDesign, Datasets.Contributors, Datasets.Citation, Datasets.Notes,
+			Investigators.FirstName, Investigators.LastName, Investigators.Address, Investigators.City, Investigators.State, Investigators.ZipCode, Investigators.Country,
+			Investigators.Phone, Investigators.Email, Investigators.Url, Investigators.Url, Organizations.OrganizationName, InvestigatorId, DatasetId, DatasetStatusId,
+			Datasets.AboutPlatform, InfoFileTitle, Specifics
+			FROM InfoFiles
+			LEFT JOIN Species USING (SpeciesId)
+			LEFT JOIN Tissue USING (TissueId)
+			LEFT JOIN InbredSet USING (InbredSetId)
+			LEFT JOIN GeneChip USING (GeneChipId)
+			LEFT JOIN AvgMethod USING (AvgMethodId)
+			LEFT JOIN Datasets USING (DatasetId)
+			LEFT JOIN Investigators USING (InvestigatorId)
+			LEFT JOIN Organizations USING (OrganizationId)
+			LEFT JOIN DatasetStatus USING (DatasetStatusId)
+			WHERE InfoPageName=%s
+			"""
+		self.cursor.execute(sql, infopagename)
+		return self.cursor.fetchone()
 		
 	def readMouseGenome(self, RISet):
 		ldict = {}
