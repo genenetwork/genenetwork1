@@ -465,7 +465,7 @@ class AddToSelectionPage(templatePage):
                     Start=''
                     End=''
                     if (len(LocationFields)>=1):
-                        Chr,Start,End,Strand,MisMatch,ProbeId = map(self.nullRecord,LocationFields[0])
+                        Chr,Start,Start_2016,End,End_2016,Strand,MisMatch,ProbeId = map(self.nullRecord,LocationFields[0])
                         Start /= 1000000.0
                         End /= 1000000.0
                         Mb = Start
@@ -486,7 +486,7 @@ class AddToSelectionPage(templatePage):
                                         ,(ProbeSetMb, thisTrait.cellid, EnsemblProbeSetID, ProbeSetChr, thisTrait.db.id))
                         NewLocationFields = self.cursor.fetchall()
                         if (len(NewLocationFields)>0):
-                            Chr,Start,End,Strand,MisMatch,ProbeId,Mb = map(self.nullRecord,NewLocationFields[0])
+                            Chr,Start,Start_2016,End,End_2016,Strand,MisMatch,ProbeId,Mb = map(self.nullRecord,NewLocationFields[0])
                             Start /= 1000000.0
                             End /= 1000000.0
                             Mb = Start
