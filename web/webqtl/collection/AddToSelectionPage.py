@@ -479,10 +479,10 @@ class AddToSelectionPage(templatePage):
 
                         self.cursor.execute('''
                                         SELECT EnsemblProbeLocation.*, ABS(EnsemblProbeLocation.Start/1000000-%s) as Mb
-                                        FROM EnsemblProbeLocation, EnsemblProbe, EnsemblChip, GeneChipEnsemblXRef, ProbeFreeze
+                                        FROM EnsemblProbeLocation, EnsemblProbe, EnsemblChip, GeneChipEnsemblXRef, ProbeFreeze, ProbeSetFreeze
                                         WHERE EnsemblProbeLocation.ProbeId=EnsemblProbe.Id and EnsemblProbe.ChipId=GeneChipEnsemblXRef.EnsemblChipId and
                                                 GeneChipEnsemblXRef.GeneChipId=ProbeFreeze.ChipId and EnsemblProbe.Name=%s and EnsemblProbe.ProbeSet=%s and
-                                                EnsemblProbeLocation.Chr=%s and ProbeSetFreezeId=%s and ProbeSetFreeze.ProbeFreezeId = ProbeFreeze.Id order by Mb limit 1'''
+                                                EnsemblProbeLocation.Chr=%s and ProbeSetFreeze.Id=%s and ProbeSetFreeze.ProbeFreezeId = ProbeFreeze.Id order by Mb limit 1'''
                                         ,(ProbeSetMb, thisTrait.cellid, EnsemblProbeSetID, ProbeSetChr, thisTrait.db.id))
                         NewLocationFields = self.cursor.fetchall()
                         if (len(NewLocationFields)>0):
