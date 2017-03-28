@@ -6,17 +6,19 @@ import datastructure
 import phenotypes
 
 """
-Date:   2014-08-18
+Ini Date:			2014-08-18
+Last update Date:	2017-03-28
+
 Function:
     fetch pheno info with data
 """
-def bxd_pheno(file):
+def output_pheno(inbredsetid, file):
     #
     file = open(file, 'w')
-    inbredsetid = 1
     #
     strains = datastructure.get_strains(inbredsetid)
     print("get %d strains" % (len(strains)))
+    print("strains: %s" % (strains))
     #
     publishxrefs = phenotypes.get_publishxrefs(inbredsetid)
     print("get %d publishxrefs" % (len(publishxrefs)))
@@ -45,6 +47,7 @@ def bxd_pheno(file):
         file.write("%s\t" % publishxrefid)
         phenotypename = "%s;%s;%s" % (phenotype[0], phenotype[1], phenotype[2])
         phenotypename = re.sub('\s+', ' ', phenotypename)
+        phenotypename = phenotypename.strip()
         file.write("%s\t" % phenotypename)
         #
         for strain in strains:
@@ -59,11 +62,12 @@ def bxd_pheno(file):
         file.write("\n")
         file.flush()
     #
+    file.flush()
     file.close()
 
-# python specials6.py /home/leiyan/datadir/20140818_Ash_pheno/bxd_pheno.txt
+# python specials6.py 1 /home/leiyan/datadir/20140818_Ash_pheno/bxd_pheno.txt
 
 if __name__ == "__main__":
     print("command line arguments:\n\t%s" % sys.argv)
-    bxd_pheno(sys.argv[1])
+    output_pheno(sys.argv[1], sys.argv[1])
     print("exit successfully")
