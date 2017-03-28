@@ -18,7 +18,7 @@ def output_pheno(inbredsetid, file):
     #
     strains = datastructure.get_strains(inbredsetid)
     print("get %d strains" % (len(strains)))
-    print("strains: %s" % (strains))
+    print("strains: %s" % str(strains))
     #
     publishxrefs = phenotypes.get_publishxrefs(inbredsetid)
     print("get %d publishxrefs" % (len(publishxrefs)))
