@@ -69,5 +69,5 @@ def output_pheno(inbredsetid, file):
 
 if __name__ == "__main__":
     print("command line arguments:\n\t%s" % sys.argv)
-    output_pheno(sys.argv[1], sys.argv[1])
+    output_pheno(sys.argv[1], sys.argv[2])
     print("exit successfully")
