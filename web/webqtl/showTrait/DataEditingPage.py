@@ -1725,7 +1725,7 @@ class DataEditingPage(templatePage):
 
 		container.append(dispintro, traitTableOptions, HT.BR())
 		
-		try:		
+		try:
 			self.cursor.execute("""
 							SELECT COUNT(Strain.Id)
 							FROM PublishFreeze,PublishXRef,Strain,NStrain
@@ -1738,8 +1738,8 @@ class DataEditingPage(templatePage):
 							""" % (thisTrait.db.id, thisTrait.name))
 			ncount = self.cursor.fetchone()[0]
 			hasN = 0 < ncount
-		except:
-			hasN = False
+		except Exception, e:
+			hasN = True
 
 		primary_table = HT.TableLite(cellspacing=0, cellpadding=0, Id="sortable1", Class="tablesorter")
 		primary_header = self.getTableHeader(fd=fd, thisTrait=thisTrait, nCols=nCols, attribute_names=attribute_names, hasN=hasN) #Generate header for primary table object
