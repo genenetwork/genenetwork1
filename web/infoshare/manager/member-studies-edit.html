@@ -4,29 +4,13 @@
 <?php 
 include '../includes/header-v2.inc'; 
 ?>
-
-        
+       
 <div class="span9">
 
 <?php
 require "../includes/db.inc";
-//Alternate code with same results
-//$_GET[DatasetId];
-//$result = mysql_query("SELECT * FROM InfoFiles WHERE id = $Id");
-//$DatasetId = $_POST['DatasetId'];
 $InvestigatorId = $_SESSION['SESS_MEMBER_ID'];
-    
-//$result = mysql_query("SELECT * from Datasets WHERE DatasetId = '".$_GET['DatasetId']."'");
-//$result = mysql_query("SELECT * from Datasets WHERE InvestigatorId='$InvestigatorId' AND DatasetId = '".$_GET['DatasetId']."'");
 $result = mysql_query("select * FROM Datasets JOIN DatasetMapInvestigator on Datasets.DatasetId = DatasetMapInvestigator.DatasetId WHERE DatasetMapInvestigator.InvestigatorId = '$InvestigatorId' AND DatasetMapInvestigator.DatasetId = '".$_GET['DatasetId']."'");
-
-//$selected = $InvestigatorId
-//$get = mysql_query("select InvestigatorId, FirstName FROM Investigators WHERE InvestigatorId=$FirstName ORDER BY InvestigatorId ASC");
-//$option = '';
-// while($linea = mysql_fetch_assoc($get))
-//{
-//  $option .= '<option value = "'.$linea['InvestigatorId'].'">'.$linea['InvestigatorId'].'</option>';
-//}
 //Check whether the query was successful or not
 if (mysql_num_rows($result)==0) {
 include ('study-access-denied.html');
@@ -39,266 +23,154 @@ include ('study-access-denied.html');
 ?>
                 <section id="dataset">
                     <div>
-                        Use this form to update your dataset
+                        <p><h3>Use this form to update your dataset</h3></p>
                     </div>
-  
 <!--<form method="post" action="<?php $_PHP_SELF ?>">   -->     
 <form method="post" action="member-study-confirm.html">
 		<fieldset><input id="btsearch" type="submit"
             class="btn btn-primary" value="Update Dataset">
+              <br><hr>
                             
-                        <label for="species">StudyId:</label>
+                        <label for="species"><b>Study ID:</b></label>
                             <div class="input-append">
                                 <input class="input-xlarge"
                                     id="DatasetId" name="DatasetId" value="<? echo "$row[DatasetId]"?>"
                                     type="text" readonly maxlength="900" required>
                             </div>
                         
-                        <label for="species">Main Study Name [DatasetName]:</label>
+                        <label for="species"><b>Main Study Name [DatasetName]:</b></label>
                             <div class="input-append">
                                 <input class="input-xlarge"
                                     id="DatasetName" name="DatasetName" value="<? echo "$row[DatasetName]"?>"
                                     type="text" maxlength="900" required>
                             </div>
                         
-                        <label for="species">GeoSeries:</label>
+                        <label for="species"><b>GeoSeries:</b></label>
                             <div class="input-append">
                                 <input class="input-xlarge"
                                     id="GeoSeries" name="GeoSeries" value="<? echo "$row[GeoSeries]"?>"
-                                    type="text" maxlength="900" required>
+                                    type="text" maxlength="900">
                             </div>
                         
-                        <label for="species">PublicationTitle:</label>
+                        <label for="species"><b>Publication Title:</b></label>
                             <div class="input-append">
                                 <input class="input-xlarge"
                                     id="PublicationTitle" name="PublicationTitle" value="<? echo "$row[PublicationTitle]"?>"
-                                    type="text" maxlength="900" required>
+                                    type="text" maxlength="900">
                             </div>
                         
-                        <label for="species">DatasetStatusId:</label>
+                        <label for="species"><b>Dataset Status ID (0=Public, 1=Private):</b></label>
                             <div class="input-append">
                                 <input class="input-xlarge"
                                     id="DatasetStatusId" name="DatasetStatusId" value="<? echo "$row[DatasetStatusId]"?>"
                                     type="text" maxlength="900" required>
                             </div>
                             
-                            <!--<label for="species">InvestigatorId:</label>
-                           <select name='InvestigatorId'>";
+                       
 
-                            <?php echo $option; ?>
-                           </select> -->
-                            
-                        <!--This only show the Investigaror ID <label for="species">InvestigatorId:</label>
-                                <select name="select1">
-                             
-                                  <option value="<?php echo $row['InvestigatorId'];?>"> <?php echo $row['InvestigatorId'];?> </option>
-                            
-                            </select>-->
-                            
-                            
-                        <!--<label for="species">InvestigatorId:</label>
-                            <div class="input-append">
-                                <input class="input-xlarge"
-                                    id="InvestigatorId" name="InvestigatorId" value="<? echo "$row[InvestigatorId]"?>"
-                                    type="text" maxlength="900" required>
-                            </div>-->
-                            
-                            
-                        <label for="Summary">Summary:</label>
-
-	<br>
+	<br><hr>
 	<div>
-
+        <label for="Summary"><b>Summary:</b></label>
         <TEXTAREA id="editor1" NAME="editor1" cols="45" rows="5"><?php echo($row[Summary]);?></textarea>
-		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
 		
 		 <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
                 CKEDITOR.replace( 'editor1' );
             </script>
 	</div>
 	
-	<label for="Summary">ExperimentDesign:</label>
 
-	<br>
+	<br><hr>
 	<div>
-
+	    <label for="Summary"><b>Experiment Design:</b></label>
         <TEXTAREA id="editor1" NAME="editor2" cols="45" rows="5"><?php echo($row[ExperimentDesign]);?></textarea>
-		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
 		
 		 <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
                 CKEDITOR.replace( 'editor2' );
             </script>
 	</div>
 	
-	<label for="Summary">AboutCases:</label>
 
-	<br>
+	<br><hr>
 	<div>
-
+        <label for="Summary"><b>About Cases:</b></label>
         <TEXTAREA id="editor1" NAME="editor3" cols="45" rows="5"><?php echo($row[AboutCases]);?></textarea>
-		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
 		
 		 <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
                 CKEDITOR.replace( 'editor3' );
             </script>
 	</div>
 	
-	<label for="Summary">AboutTissue:</label>
 
-	<br>
+	<br><hr>
 	<div>
-
+	    <label for="Summary"><b>About Tissue:</b></label>
         <TEXTAREA id="editor1" NAME="editor4" cols="45" rows="5"><?php echo($row[AboutTissue]);?></textarea>
-		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
 		
 		 <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
                 CKEDITOR.replace( 'editor4' );
             </script>
 	</div>
-	
-	<label for="Summary">AboutPlatform:</label>
 
-	<br>
+	<br><hr>
 	<div>
-
+	    <label for="Summary"><b>About Platform:</b></label>
         <TEXTAREA id="editor1" NAME="editor5" cols="45" rows="5"><?php echo($row[AboutPlatform]);?></textarea>
-		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
 		
 		 <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
                 CKEDITOR.replace( 'editor5' );
             </script>
 	</div>
-	
-	<label for="Summary">AboutDataProcessing:</label>
 
-	<br>
+	<br><hr>
 	<div>
-
+	    <label for="Summary"><b>About Data Processing:</b></label>
         <TEXTAREA id="editor1" NAME="editor6" cols="45" rows="5"><?php echo($row[AboutDataProcessing]);?></textarea>
-		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
 		
 		 <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
                 CKEDITOR.replace( 'editor6' );
             </script>
 	</div>
-	
-	<label for="Summary">Contributors:</label>
 
-	<br>
+	<br><hr>
 	<div>
-
+	    <label for="Summary"><b>Contributors:</b></label>
         <TEXTAREA id="editor1" NAME="editor7" cols="45" rows="5"><?php echo($row[Contributors]);?></textarea>
-		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
 		
 		 <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
                 CKEDITOR.replace( 'editor7' );
             </script>
 	</div>
-	
-	<label for="Summary">Citation:</label>
 
-	<br>
+	<br><hr>
 	<div>
-
+	    <label for="Summary"><b>Citation:</b></label>
         <TEXTAREA id="editor1" NAME="editor8" cols="45" rows="5"><?php echo($row[Citation]);?></textarea>
-		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
 		
 		 <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
                 CKEDITOR.replace( 'editor8' );
             </script>
 	</div>
-	
-	<label for="Summary">Acknowledgment:</label>
 
-	<br>
+	<br><hr>
 	<div>
-
+	    <label for="Summary"><b>Acknowledgment:</b></label>
         <TEXTAREA id="editor1" NAME="editor9" cols="45" rows="5"><?php echo($row[Acknowledgment]);?></textarea>
-		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
 		
 		 <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
                 CKEDITOR.replace( 'editor9' );
             </script>
 	</div>
-	
-	<label for="Summary">Notes:</label>
 
-	<br>
+	<br><hr>
 	<div>
-
+	    <label for="Summary"><b>Notes:</b></label>
         <TEXTAREA id="editor1" NAME="editor10" cols="45" rows="5"><?php echo($row[Notes]);?></textarea>
-		<!--<textarea cols="80" name="editor2" rows="10" id="<? echo "$row[DatasetName]"?>"></textarea>-->
 		
 		 <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
                 CKEDITOR.replace( 'editor10' );
             </script>
 	</div>
-
-        
-            <!--<textarea id="editor1" name="editor1" rows="10" cols="80">
-                This is my textarea to be replaced with CKEditor.
-            </textarea>
-           
-      <label for="species">Investigator:</label>-->
-                            <div class="input-prepend">
-
-<?php
-
-/*
-require "../includes/db.inc"; //fine using $conn
-
-$sql="SELECT DISTINCT InvestigatorId, FirstName, LastName FROM Investigators WHERE InvestigatorId= '".$row['InvestigatorId']."' ORDER BY LastName ASC";
-//$sql="SELECT DISTINCT InvestigatorId, FirstName, LastName FROM Investigators ORDER BY LastName ASC";
-
-$result = mysql_query($sql, $conn) or die(mysql_error());
-
-echo "<select name='test'>";
-while ($row = mysql_fetch_array($result)) {
-	
-    echo "<option value='" . $row['InvestigatorId'] . "'>" . $row['FirstName'] . " " . $row['LastName'] . "</option>";
-}
-echo "</select>";
-*/
-?>                   
-                       
-                            
-
-<?php
-
-//require "../includes/db.inc"; //fine using $conn
-
-//$sql="SELECT DISTINCT InvestigatorId, FirstName, LastName FROM Investigators WHERE InvestigatorId= '".$row['InvestigatorId']."' ORDER BY LastName ASC";
-// //$sql="SELECT DISTINCT InvestigatorId, FirstName, LastName FROM Investigators ORDER BY LastName ASC";
-
-//$result = mysql_query($sql, $conn) or die(mysql_error());
-
-//echo "<select name='InvestigatorId'>";
-//while ($row = mysql_fetch_array($result)) {
-    //echo "<option value='" . $row['InvestigatorId'] . "'>" . $row['FirstName'] . " " . $row['LastName'] . "</option>";
-//}
-//echo "</select>";
-
-?>                      
+                            <div class="input-prepend">                 
              </div>               
             <input id="btsearch" type="submit"
             class="btn btn-primary" value="Update Dataset">

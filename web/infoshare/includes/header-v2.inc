@@ -217,5 +217,5 @@
 		<TR><TD>
 		
 		<!-- ===== Start of content ===== -->
-<H3>Hi, <?php echo $_SESSION['SESS_FIRST_NAME'];?>! <a href="logout.html">Logout</a></H3>
+<p>Hi, <?php echo $_SESSION['SESS_FIRST_NAME'];?>! <a href="logout.html">Logout</a></p>
 <p><a href="member-profile.html">My Profile</a> | <a href="member-studies.html">My Datasets</a></p>
