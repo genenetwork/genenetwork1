@@ -308,3 +308,21 @@ class webqtlFormData:
 		'BXD1': webqtlCaseData(1), 'C57BL/6J': webqtlCaseData(4), 'B6D2F1': webqtlCaseData(4), 
 		'BXD42': webqtlCaseData(4), 'BXD40': webqtlCaseData(3)}
 
+def fetch_genofile(cursor, genofileid):
+	try:
+		sql = """
+			SELECT GenoFile.`location`, GenoFile.`title`
+			FROM GenoFile
+			WHERE GenoFile.`id`=%s
+			"""
+		cursor.execute(sql, (genofileid))
+		re = cursor.fetchone()
+		return re
+	except:
+		return None
+		
+def genofilename(location):
+	try:
+		return location[len(webqtlConfig.GENODIR):-5]
+	except:
+		return None
