@@ -35,6 +35,7 @@ from htmlgen import HTMLgen2 as HT
 from utility import Plot
 from base.webqtlTrait import webqtlTrait
 from base.templatePage import templatePage
+from base import webqtlFormData
 from utility import webqtlUtil
 from base import webqtlConfig
 
@@ -76,6 +77,12 @@ class DirectPlotPage(templatePage):
 			returnIntervalPairNum = int(fd.formdata.getvalue('pairScanReturn'))
 		except:
 			returnIntervalPairNum = 50
+			
+		try:
+			genofile = webqtlFormData.fetch_genofile(self.cursor, fd.formdata.getvalue('genofileid_pai'))[0]
+			genofile = webqtlFormData.genofilename(genofile)
+		except Exception, e:
+			genofile = fd.RISet
 
 		pairIntro = HT.Blockquote("The graph below displays pair-scan results for the trait ",HT.Strong(" %s" % fd.identification))
 		if not graphsort:
@@ -127,7 +134,7 @@ class DirectPlotPage(templatePage):
 
 					prtmuTblIntro1 = HT.Paragraph("The following table gives threshold values for Suggestive (P=0.63) and Significant associations (P=0.05) defined by Lander & Kruglyak and for the slightly more stringent P=0.01 level. (The Highly Significant level of Lander & Kruglyak corresponds to P=0.001 and cannot be estimated with 500 permutations.)")
 					prtmuTblIntro2 = HT.Paragraph("If the full model exceeds the permutation-based Significant threshold, then different models for those locations can be tested by conventional chi-square tests at P<0.01. Interaction is significant if LRS Interact exceeds 6.64 for RI strains or 13.28 for an F2. If interaction is not significant, the two-QTL model is better than a one-QTL model if LRS Additive exceeds LRS 1 or LRS 2 by 6.64 for RI strains or 9.21 for an F2.")
-					ResultFull, ResultInteract, ResultAdd = direct.permu(webqtlConfig.GENODIR, _vals, _strains, fd.RISet, 500) #XZ, 08/14/2008: add module name webqtlConfig
+					ResultFull, ResultInteract, ResultAdd = direct.permu(webqtlConfig.GENODIR, _vals, _strains, genofile, 500) #XZ, 08/14/2008: add module name webqtlConfig
 					ResultFull.sort()
 					ResultInteract.sort()
 					ResultAdd.sort()
