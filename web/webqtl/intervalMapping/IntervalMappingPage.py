@@ -189,7 +189,7 @@ class IntervalMappingPage(templatePage):
         if self.species == "rat":
             self._ucscDb = "rn3"
         elif self.species == "mouse":
-            self._ucscDb = "mm9"
+            self._ucscDb = "mm10"
         else:
             self._ucscDb = ""
 
