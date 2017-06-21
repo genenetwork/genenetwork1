@@ -71,8 +71,8 @@ CMDLINEDIR = HTMLPATH + 'webqtl/cmdLine/'
 ChangableHtmlPath = GNROOT + 'web/'
 
 SITENAME = 'GN'
-PORTADDR = "http://132.192.47.32"
-BASEHREF = '<base href="http://132.192.47.32/">'
+PORTADDR = "http://www.genenetwork.org"
+BASEHREF = '<base href="http://www.genenetwork.org/">'
 INFOPAGEHREF = '/webqtl/main.py?FormID=sharinginfo&InfoPageName=%s'
 GLOSSARYFILE = "/glossary.html"
 CGIDIR = '/webqtl/' #XZ: The variable name 'CGIDIR' should be changed to 'PYTHONDIR'
