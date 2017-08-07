@@ -2419,7 +2419,7 @@ class IntervalMappingPage(templatePage):
             if refGene:
                 gene_tblobj_header = [[THCell(HT.TD('Index', HT.BR(), HT.BR(), align='left', width=50, Class=col_class), text="index", idx=0),
                         THCell(HT.TD('Symbol', HT.BR(), HT.BR(), align='left', width=100, Class=col_class), text="symbol", idx=1),
-                        THCell(HT.TD('Mb Start', align='left', width=100, Class=col_class), text="mb_start_mm9", idx=2),
+                        THCell(HT.TD('Mb Start', align='left', width=100, Class=col_class), text="mb_start", idx=2),
                         THCell(HT.TD('Length (Kb)', HT.BR(), HT.BR(), align='left', width=100, Class=col_class), text="length", idx=3),
                         THCell(HT.TD('SNP',HT.BR(),'Count', align='left', width=47, Class=col_class), text="snp_count", idx=4),
                         THCell(HT.TD('SNP',HT.BR(),'Density', align='left', width=78, Class=col_class), text="snp_density", idx=5),
@@ -2436,7 +2436,7 @@ class IntervalMappingPage(templatePage):
             else:
                 gene_tblobj_header = [[THCell(HT.TD('Index', HT.BR(), HT.BR(), align='left', width=50, Class=col_class), text="index", idx=0),
                         THCell(HT.TD('Symbol', HT.BR(), HT.BR(), align='left', width=100, Class=col_class), text="symbol", idx=1),
-                        THCell(HT.TD('Mb Start', align='left', width=100, Class=col_class), text="mb_start_mm9", idx=2),
+                        THCell(HT.TD('Mb Start', align='left', width=100, Class=col_class), text="mb_start", idx=2),
                         THCell(HT.TD('Length (Kb)', HT.BR(), HT.BR(), align='left', width=100, Class=col_class), text="length", idx=3),
                         THCell(HT.TD('SNP',HT.BR(),'Count', align='left', width=47, Class=col_class), text="snp_count", idx=4),
                         THCell(HT.TD('SNP',HT.BR(),'Density', align='left', width=78, Class=col_class), text="snp_density", idx=5),
@@ -2458,7 +2458,7 @@ class IntervalMappingPage(templatePage):
                     THCell(HT.TD('Length (Kb)', HT.BR(), HT.BR(), align='left', width=100, Class=col_class), text="length", idx=3),
                     THCell(HT.TD('Avg',HT.BR(),'Expr', HT.BR(), HT.BR(), align='left', width=44, Class=col_class), sort=0, idx=4),
                     THCell(HT.TD('Mouse',HT.BR(),'Chr', align='left', width=60, Class=col_class), text="mouse_chr", idx=5),
-                    THCell(HT.TD('Mb Start',HT.BR(),'(mm9)', align='left', width=100, Class=col_class), text="mb_start_mm9", idx=6),
+                    THCell(HT.TD('Mb Start', align='left', width=100, Class=col_class), text="mb_start", idx=6),
                     THCell(HT.TD('Human',HT.BR(),'Chr', align='left', width=60, Class=col_class), text="human_chr", idx=7),
                     THCell(HT.TD('Mb Start',HT.BR(),'(hg19)', align='left', width=100, Class=col_class), text="mb_start_hg19", idx=8),
                     THCell(HT.TD('Gene Description', HT.BR(), HT.BR(), align='left', Class=col_class), text="description", idx=9)]]
@@ -2519,7 +2519,7 @@ class IntervalMappingPage(templatePage):
                     else:
                         snpString = 0
 
-                    mouseStartString = "http://genome.ucsc.edu/cgi-bin/hgTracks?clade=vertebrate&org=Mouse&db=mm9&position=chr" + theGO["Chromosome"] + "%3A" + str(int(theGO["TxStart"] * 1000000.0))  + "-" + str(int(theGO["TxEnd"]*1000000.0)) +"&pix=620&Submit=submit"
+                    mouseStartString = "http://genome.ucsc.edu/cgi-bin/hgTracks?clade=vertebrate&org=Mouse&db=mm10&position=chr" + theGO["Chromosome"] + "%3A" + str(int(theGO["TxStart"] * 1000000.0))  + "-" + str(int(theGO["TxEnd"]*1000000.0)) +"&pix=620&Submit=submit"
 
                     #Used for sorting
                     mouseStartValue = int(theGO["TxStart"])
