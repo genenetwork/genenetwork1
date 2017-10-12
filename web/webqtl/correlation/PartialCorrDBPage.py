@@ -22,6 +22,9 @@ from dbFunction import webqtlDatabaseFunction
 #      Partial Correlation Dataset Page
 #########################################
 
+#import logging
+#logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
+#_log = logging.getLogger("gn\web\webqtl\correlation\PartialCorrDBPage.py")
 
 class PartialCorrDBPage(CorrelationPage):
 
@@ -49,7 +52,6 @@ class PartialCorrDBPage(CorrelationPage):
         RISet = fd.RISet
         #XZ, 12/12/2008: get species infomation
         species = webqtlDatabaseFunction.retrieveSpecies(cursor=self.cursor, RISet=RISet)
-
         #XZ, 09/18/2008: get all information about the user selected database.
         self.target_db_name = fd.formdata.getvalue('database2')
 
@@ -353,6 +355,7 @@ class PartialCorrDBPage(CorrelationPage):
         addselect = HT.Href(url="#redirect", onClick="addRmvSelection('%s', document.getElementsByName('%s')[0], 'addToSelection');" % (RISet, mainfmName))
         addselect_img = HT.Image("/images/add_collection1_final.jpg", name="addselect", alt="Add To Collection", title="Add To Collection", style="border:none;")
         addselect.append(addselect_img)
+        
         selectall = HT.Href(url="#redirect", onClick="checkAll(document.getElementsByName('%s')[0]);" % mainfmName)
         selectall_img = HT.Image("/images/select_all2_final.jpg", name="selectall", alt="Select All", title="Select All", style="border:none;")
         selectall.append(selectall_img)
