@@ -205,9 +205,17 @@ class PartialCorrTraitPage(CorrelationPage):
         addselect_img = HT.Image("/images/add_collection1_final.jpg", name="addselect", alt="Add To Collection", title="Add To Collection", style="border:none;")
         addselect.append(addselect_img)
         
+        geneweaver = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('%s')[0], 'ODE');" % mainfmName)
+        geneweaver_img = HT.Image("/images/ODE_logo_final.jpg", name="GeneWeaver", alt="Gene Weaver", title="Gene Weaver", style="border:none")
+        geneweaver.append(geneweaver_img)
+        
+        gcat = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('%s')[0], 'GCAT');" % mainfmName)
+        gcat_img = HT.Image("/images/GCAT_logo_final.jpg", name="GCAT", alt="GCAT", title="GCAT", style="border:none")
+        gcat.append(gcat_img)
+        
         optionsTable = HT.TableLite(cellSpacing=2, cellPadding=0, height="80", border=0, align="Left")
-        optionsTable.append(HT.TR(HT.TD(selectall, width="77"), HT.TD(reset, width="77"),   HT.TD(selectinvert, width="77"),    HT.TD(addselect, width="77"), align="left"))
-        optionsTable.append(HT.TR(HT.TD("&nbsp;"*1,"Select"),   HT.TD("Deselect"),          HT.TD("&nbsp;"*1,"Invert"),         HT.TD("&nbsp;"*3,"Add")))
+        optionsTable.append(HT.TR(HT.TD(selectall, width="77"), HT.TD(reset, width="77"),   HT.TD(selectinvert, width="77"),    HT.TD(addselect, width="77"),   HT.TD(geneweaver, width="77"),  HT.TD(gcat, width="77"), align="left"))
+        optionsTable.append(HT.TR(HT.TD("&nbsp;"*1,"Select"),   HT.TD("Deselect"),          HT.TD("&nbsp;"*1,"Invert"),         HT.TD("&nbsp;"*3,"Add"),        HT.TD("Gene Weaver"),           HT.TD("&nbsp;"*2, "GCAT")))
 
         # functionTable
         networkGraph = HT.Href(url="#redirect", onClick="databaseFunc(document.getElementsByName('%s')[0], 'networkGraph');" % mainfmName)
