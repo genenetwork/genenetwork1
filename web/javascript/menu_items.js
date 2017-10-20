@@ -65,6 +65,7 @@ var MENU_ITEMS = [
 	['BXD-Bone', '/webqtl/main.py?FormID=dispSelection&RISet=BXD-Bone'], 
 	['CFW', '/webqtl/main.py?FormID=dispSelection&RISet=CFW'], 
 	['EMSR', '/webqtl/main.py?FormID=dispSelection&RISet=EMSR'], 
+	['CIE-RMA', '/webqtl/main.py?FormID=dispSelection&RISet=CIE-RMA'], 
 ],
 ['Rat (rn3)', null, null, 
 	['HXBBXH', '/webqtl/main.py?FormID=dispSelection&RISet=HXBBXH'], 
