@@ -1,0 +1,23 @@
+body{background: #ecf0f1;}
+
+.container{
+  background: white;
+  width: 400px;
+  padding: 40px;
+  margin:40px auto;
+}
+
+ul{
+  padding: 0px;
+  margin: 0px;
+}
+
+li{
+  list-style-type: none;
+  padding: 10px;
+  background: #1abc9c;
+  margin: 5px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
