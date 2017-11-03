@@ -1,0 +1,62 @@
+<?php
+$mysqli = new mysqli("localhost", "acenteno", "", "db_webqtl");
+
+if(isset($_POST["submit"])) {
+    $id_ary = explode(",",$_POST["InfoFileId"]);
+    for($i=0;$i<count($id_ary);$i++) {
+        $mysqli->query("UPDATE Vlookup SET InfoFileId='" . $i . "' WHERE Id=". $id_ary[$i]);
+    }
+}
+//$result = $mysqli->query("SELECT * FROM ProbeSetFreeze ORDER BY OrderList");
+//$result = $mysqli->query("SELECT ProbeSetFreeze.Id, ProbeSetFreeze.ProbeFreezeId, ProbeSetFreeze.public, ProbeSetFreeze.FullName, ProbeSetFreeze.OrderList, ProbeFreeze.Id, ProbeFreeze.InbredSetId, ProbeFreeze.TissueId FROM (ProbeSetFreeze, ProbeFreeze) WHERE ProbeSetFreeze.ProbeFreezeId = ProbeFreeze.Id AND ProbeSetFreeze.public > 0 ORDER BY ProbeFreeze.InbredSetId ASC, ProbeFreeze.TissueId ASC, ProbeSetFreeze.OrderList ASC limit 40");
+$result = $mysqli->query("SELECT Id, InfoFileId, Name FROM Vlookup ORDER BY InfoFileId ASC")
+?>
+<html lang="en">
+<head>
+    <title>Sorting MySQL Row Order using jQuery</title>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+    <style>
+        body{width:610px;}
+        #sortable-row { list-style: none; }
+        #sortable-row li { margin-bottom:4px; padding:10px; background-color:#BBF4A8;cursor:move;}
+        .btnSave{padding: 10px 20px;background-color: #09F;border: 0;color: #FFF;cursor: pointer;margin-left:40px;}
+        #sortable-row li.ui-state-highlight { height: 1.0em; background-color:#F0F0F0;border:#ccc 2px dotted;}
+    </style>
+    <script>
+        $(function() {
+            $( "#sortable-row" ).sortable({
+                placeholder: "ui-state-highlight"
+            });
+        });
+
+        function saveOrder() {
+            var selectedLanguage = new Array();
+            $('ul#sortable-row li').each(function() {
+                selectedLanguage.push($(this).attr("id"));
+            });
+            document.getElementById("InfoFileId").value = selectedLanguage;
+        }
+    </script>
+</head>
+<body>
+
+<form name="frmQA" method="POST">
+<input type = "hidden" name="InfoFileId" id="InfoFileId" />
+<ul id="sortable-row">
+    <?php
+    while($row = $result->fetch_assoc()) {
+        ?>
+        <li id=<?php echo $row["InfoFileId"]; ?>><?php echo $row["Name"]; ?></li>
+
+        <?php
+    }
+    $result->free();
+    $mysqli->close();
+    ?>
+</ul>
+<input type="submit" class="btnSave" name="submit" value="Save Order" onClick="saveOrder();" />
+</form>
+</body>
+</html>
