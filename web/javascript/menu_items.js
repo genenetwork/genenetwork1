@@ -67,7 +67,7 @@ var MENU_ITEMS = [
 	['EMSR', '/webqtl/main.py?FormID=dispSelection&RISet=EMSR'], 
 	['CIE-RMA', '/webqtl/main.py?FormID=dispSelection&RISet=CIE-RMA'], 
 ],
-['Rat (rn3)', null, null, 
+['Rat (rn6)', null, null, 
 	['HXBBXH', '/webqtl/main.py?FormID=dispSelection&RISet=HXBBXH'], 
 	['SRxSHRSPF2', '/webqtl/main.py?FormID=dispSelection&RISet=SRxSHRSPF2'], 
 	['HSNIH-RGSMC', '/webqtl/main.py?FormID=dispSelection&RISet=HSNIH-RGSMC'], 
