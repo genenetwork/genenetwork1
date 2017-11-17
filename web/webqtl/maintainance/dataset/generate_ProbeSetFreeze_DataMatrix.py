@@ -19,7 +19,7 @@ def probesetfreeze_item(strains, dir, probesetfreeze):
     probesetfreezefullname = probesetfreeze[2]
     file = open("%s/ProbeSetFreezeId_%d_FullName_%s.txt" % (dir, probesetfreezeid, probesetfreezename), "w+")
     file.write('"ID",')
-    file.write(','.join(['"%s"' % strain[1].upper() for strain in strains]))
+    file.write(','.join(['"%s"' % strain[1] for strain in strains]))
     file.write("\n")
     file.flush()
     probesetxrefs = probesets.get_probesetxref(probesetfreezeid)
@@ -31,19 +31,17 @@ def probesetfreeze_item(strains, dir, probesetfreeze):
         probesetname = probeset[1]
         probesetdata = probesets.get_probesetdata(probesetdataid)
         probesetdata = zip(*probesetdata)
-        probesetdata = utilities.to_dic([strain.upper() for strain in probesetdata[1]], probesetdata[2])
+        probesetdata = utilities.to_dic(probesetdata[1], probesetdata[2])
         #
-        file.write('"%s",' % probesetname)
+        file.write('"%s"' % probesetname)
         #
         for strain in strains:
-            file.write(',')
             strainname = strain[1]
-            strainname = strainname.upper()
             if strainname in probesetdata:
                 value = probesetdata[strainname]
             else:
                 value = ''
-            file.write('"%s"' % value)
+            file.write(',"%s"' % value)
         file.write('\n')
         file.flush()
     #
