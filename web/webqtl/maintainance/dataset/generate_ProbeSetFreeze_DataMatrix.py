@@ -49,6 +49,8 @@ def probesetfreeze_item(strains, dir, probesetfreeze):
     #
     file.close()
 
+# python generate_ProbeSetFreeze_DataMatrix.py 1 generate_ProbeSetFreeze_DataMatrix
+
 if __name__ == "__main__":
     print("command line arguments:\n\t%s" % sys.argv)
     probesetfreeze_list(sys.argv[1], sys.argv[2])
