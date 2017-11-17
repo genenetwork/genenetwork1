@@ -48,7 +48,7 @@ import utility.webqtlUtil #this is for parallel computing only.
 from correlation import correlationFunction
 
 #import logging
-#logging.basicConfig(filename="/tmp/gn_leiyan.log", level=logging.INFO)
+#logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
 #_log = logging.getLogger("gn\web\webqtl\correlation\CorrelationPage.py")
 
 class CorrelationPage(templatePage):
@@ -248,8 +248,9 @@ class CorrelationPage(templatePage):
 
         if self.db.type == "ProbeSet":
 
-            DatabaseFileName = self.getFileName( target_db_name=self.target_db_name )
             DirectoryList = os.listdir(webqtlConfig.TEXTDIR)  ### List of existing text files.  Used to check if a text file already exists
+            # DatabaseFileName = self.getFileName(target_db_name=self.target_db_name)
+            DatabaseFileName = self.getFileName_autoscan(target_db_name=self.target_db_name, filenamelist=DirectoryList)
 
             if DatabaseFileName in DirectoryList:
                 useFastMethod = True
@@ -928,7 +929,16 @@ Resorting this table <br>
         FileName = 'ProbeSetFreezeId_' + str(Id) + '_FullName_' + FullName + '.txt'
 
         return FileName
-
+        
+    def getFileName_autoscan(self, target_db_name, filenamelist):
+        query = 'SELECT Id, FullName FROM ProbeSetFreeze WHERE Name = "%s"' %  target_db_name
+        self.cursor.execute(query)
+        result = self.cursor.fetchone()
+        Id = result[0]
+        for filename in filenamelist:
+            if filename.startswith("ProbeSetFreezeId_%d_" % Id):
+                return filename
+        return None
 
     #XZ, 01/29/2009: I modified this function.
     #XZ: Note that the type of StrainIds must be number, not string.
