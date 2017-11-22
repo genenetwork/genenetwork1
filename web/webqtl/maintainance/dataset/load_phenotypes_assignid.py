@@ -19,6 +19,8 @@ def main(argv):
     dataid = datastructure.get_nextdataid_phenotype()
     print "next data id: %s" % dataid
     cursor, con = utilities.get_cursor()
+    # publishxrefidfrom
+    publishxrefidfrom = int(config.get('config', 'publishxrefidfrom'))
     # datafile
     datafile = open(config.get('config', 'datafile'), 'r')
     phenotypedata = csv.reader(datafile, delimiter='\t', quotechar='"')
@@ -149,18 +151,20 @@ def main(argv):
         sql = """
             INSERT INTO PublishXRef
             SET
+            PublishXRef.`Id`=%s,
             PublishXRef.`InbredSetId`=%s,
             PublishXRef.`PhenotypeId`=%s,
             PublishXRef.`PublicationId`=%s,
             PublishXRef.`DataId`=%s,
             PublishXRef.`comments`=%s
             """
-        cursor.execute(sql, (inbredsetid, phenotypeid, publicationid, dataid, ""))
+        cursor.execute(sql, (publishxrefidfrom, inbredsetid, phenotypeid, publicationid, dataid, ""))
         rowcount = cursor.rowcount
         publishxrefid = con.insert_id()
         print "INSERT INTO PublishXRef: %d record: %d" % (rowcount, publishxrefid)
         # for loop next
         dataid += 1
+        publishxrefidfrom += 1
         print
     # release
     con.close()
