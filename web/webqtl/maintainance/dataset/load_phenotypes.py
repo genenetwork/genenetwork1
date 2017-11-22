@@ -23,14 +23,14 @@ def main(argv):
     datafile = open(config.get('config', 'datafile'), 'r')
     phenotypedata = csv.reader(datafile, delimiter='\t', quotechar='"')
     phenotypedata_head = phenotypedata.next()
-    print "phenotypedata head:\n\t%s" % phenotypedata_head
+    print("phenotypedata head [%d]:\n\t%s" % (len(phenotypedata_head), phenotypedata_head))
     strainnames = phenotypedata_head[1:]
     strains = datastructure.get_strains_bynames(inbredsetid=inbredsetid, strainnames=strainnames, updatestrainxref="yes")
     # metafile
     metafile = open(config.get('config', 'metafile'), 'r')
     phenotypemeta = csv.reader(metafile, delimiter='\t', quotechar='"')
     phenotypemeta_head = phenotypemeta.next()
-    print "phenotypemeta head:\n\t%s" % phenotypemeta_head
+    print("phenotypemeta head [%d]:\n\t%s" % (len(phenotypemeta_head), phenotypemeta_head))
     print
     # load
     for metarow in phenotypemeta:
