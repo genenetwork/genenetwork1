@@ -24,9 +24,10 @@ def main(argv):
             continue
         try:
             publishxrefid = int(row[0])
+            delrowcount += phenotypes.delete(publishxrefid=publishxrefid, inbredsetid=inbredsetid)
+            print("deleted: %s" % publishxrefid)
         except:
             continue
-        delrowcount += phenotypes.delete(publishxrefid=publishxrefid, inbredsetid=inbredsetid)
     print "deleted %d phenotypes" % (delrowcount)
 
 if __name__ == "__main__":
