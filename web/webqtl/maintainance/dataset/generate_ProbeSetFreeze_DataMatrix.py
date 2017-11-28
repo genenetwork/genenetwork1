@@ -30,6 +30,8 @@ def probesetfreeze_item(strains, dir, probesetfreeze):
         probeset = probesets.get_probeset(probesetid)
         probesetname = probeset[1]
         probesetdata = probesets.get_probesetdata(probesetdataid)
+        if len(probesetdata) == 0:
+            continue
         probesetdata = zip(*probesetdata)
         probesetdata = utilities.to_dic(probesetdata[1], probesetdata[2])
         #
