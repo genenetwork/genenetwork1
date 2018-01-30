@@ -27,7 +27,7 @@ def handle(genelist, matrix):
     recordcount = 0
     for line in matrix:
         #
-        if rowindex % 10000 == 0:
+        if rowindex % 1000 == 0:
             print("rowindex: %s" % rowindex)
         #
         cells = line.split()
