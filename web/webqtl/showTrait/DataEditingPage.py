@@ -1096,7 +1096,8 @@ class DataEditingPage(templatePage):
 	
 		RISetgp = fd.RISet
 		if RISetgp[:3] == 'BXD':
-			RISetgp = 'BXD'
+			pass
+            #RISetgp = 'BXD'
 		
 		if RISetgp:
 			sample_correlation = HT.Input(type='button',name='sample_corr', value=' Compute ', Class="button sample_corr")
