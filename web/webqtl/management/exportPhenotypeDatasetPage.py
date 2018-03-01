@@ -135,9 +135,10 @@ class exportPhenotypeDatasetPage(templatePage):
                     strainlisthead += [strain + "_Value"]
                     strainlisthead += [strain + "_SE"]
                     strainlisthead += [strain + "_N"]
-                fields = ["Index", "Species", "Cross", "Database", "ProbeSetID / RecordID", "Symbol", "Description", "ProbeTarget", "PubMed_ID", "Phenotype", "Chr", "Mb", "Alias", "Gene_ID", "UniGene_ID", "Strand_Probe ", "Strand_Gene ", 
-"Probe_set_specificity", "Probe_set_BLAT_score", "Probe_set_BLAT_Mb_start", "Probe_set_BLAT_Mb_end ", "QTL_Chr", "Locus_at_Peak", "Max_LRS", "P_value_of_MAX", "Mean_Expression"] + strainlisthead
 
+                fields = ["Index", "Species", "Cross", "Database", "ProbeSetID/RecordID", "PubMed_ID",
+                    "Pre Publication Description", "Post Publication Description", "Original Description", "Pre Publication Abbreviation", "Post Publication Abbreviation",
+                    "Mean_Expression"] + strainlisthead
 
                 if self.searchResult:
                         traitList = []
@@ -149,26 +150,10 @@ class exportPhenotypeDatasetPage(templatePage):
 
                         text = [fields]
                         for i, thisTrait in enumerate(traitList):
-                                if thisTrait.db.type == 'ProbeSet':
-                                        if not thisTrait.cellid: #ProbeSet
-                                                text.append([str(i+1), self.Species, self.RISet, thisTrait.db.fullname, thisTrait.name, thisTrait.symbol, thisTrait.description, thisTrait.probe_target_description,"", "", thisTrait.chr, thisTrait.mb, thisTrait.alias, thisTrait.geneid, thisTrait.unigeneid, thisTrait.strand_probe, thisTrait.strand_gene, thisTrait.probe_set_specificity, thisTrait.probe_set_blat_score, thisTrait.probe_set_blat_mb_start, thisTrait.probe_set_blat_mb_end, locusChr[thisTrait.locus], thisTrait.locus, thisTrait.lrs, thisTrait.pvalue])
-                                        else: #Probe
-                                                text.append([str(i+1), self.Species, self.RISet, thisTrait.db.fullname, thisTrait.name + " : " + thisTrait.cellid, thisTrait.symbol, thisTrait.description, thisTrait.probe_target_description,"", "", thisTrait.chr, thisTrait.mb, thisTrait.alias, thisTrait.geneid, thisTrait.unigeneid, "", "", "", "", "", "", "", "", "", ""])
-                                elif thisTrait.db.type == 'Publish':
-                                    if thisTrait.pre_publication_description:
-                                        if thisTrait.pubmed_id:
-                                            text.append([str(i+1), self.Species, self.RISet, thisTrait.db.fullname, thisTrait.name, "", "", "", thisTrait.pubmed_id, thisTrait.post_publication_description, "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""])
-                                        else:
-                                            text.append([str(i+1), self.Species, self.RISet, thisTrait.db.fullname, thisTrait.name, "", "", "", "", thisTrait.pre_publication_description, "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""])
-                                    else:
-                                            text.append([str(i+1), self.Species, self.RISet, thisTrait.db.fullname, thisTrait.name, "", "", "", thisTrait.pubmed_id, thisTrait.post_publication_description, "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""])  
-
-                                elif thisTrait.db.type == 'Temp':
-                                        text.append([str(i+1), self.Species, self.RISet, thisTrait.db.fullname, thisTrait.name, "", thisTrait.description, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""])
-                                elif thisTrait.db.type == 'Geno':
-                                        text.append([str(i+1), self.Species, self.RISet, thisTrait.db.fullname, thisTrait.name, "", thisTrait.name,"", "", "", thisTrait.chr, thisTrait.mb, "", "", "", "", "", "", "", "", "", "", "", "", ""])
-                                else:
-                                        continue
+                                text.append([str(i+1), self.Species, self.RISet, thisTrait.db.fullname, thisTrait.name, thisTrait.pubmed_id,
+                                    thisTrait.pre_publication_description, thisTrait.post_publication_description,
+                                    thisTrait.original_description,
+                                    thisTrait.pre_publication_abbreviation, thisTrait.post_publication_abbreviation])
 
                                 testval = thisTrait.exportData(strainlist)
                                 try:
@@ -183,64 +168,37 @@ class exportPhenotypeDatasetPage(templatePage):
                                 for data in testdata:
                                         testdatalist += list(data)
                                 text[-1] += testdatalist
-                        if len(text[0]) < 25 and len(text) < 25:
-                                filename = os.path.join(webqtlConfig.TMPDIR, webqtlUtil.generate_session() +'.xls')
 
-                                # Create a new Excel workbook
-                                workbook = xl.Writer(filename)
-                                worksheet = workbook.add_worksheet()
-                                headingStyle = workbook.add_format(align = 'center', bold = 1, size=13, color = 'green')
-                                titleStyle = workbook.add_format(align = 'left', bold = 0, size=13, border = 1, border_color="gray")
-
-                                ##Write title Info
-                                worksheet.write([0, 0], "Data source: The GeneNetwork at %s" % webqtlConfig.PORTADDR, titleStyle)
-                                worksheet.write([1, 0], "Citations: Please see %s/reference.html" % webqtlConfig.PORTADDR, titleStyle)
-                                worksheet.write([2, 0], "Date : %s" % time.strftime("%B %d, %Y", time.gmtime()), titleStyle)
-                                worksheet.write([3, 0], "Time : %s GMT" % time.strftime("%H:%M ", time.gmtime()), titleStyle)
-                                worksheet.write([4, 0], "Status of data ownership: Possibly unpublished data; please see %s/statusandContact.html for details on sources, ownership, and usage of these data." % webqtlConfig.PORTADDR, titleStyle)
-                                worksheet.write([6, 0], "This output file contains data from %d GeneNetwork databases listed below" % len(traitList), titleStyle)
-
-                                # Row and column are zero indexed
-                                nrow = startRow = 8
-                                for row in text:
-                                    for ncol, cell in enumerate(row):
-                                        if nrow == startRow:
-                                                worksheet.write([nrow, ncol], cell.strip(), headingStyle)
-                                                worksheet.set_column([ncol, ncol], 2*len(cell))
-                                        else:
-                                                worksheet.write([nrow, ncol], cell)
-                                    nrow += 1
-
-                                worksheet.write([nrow+1, 0], "Funding for The GeneNetwork: NIAAA (U01AA13499, U24AA13513), NIDA, NIMH, and NIAAA (P20-DA 21131), NCI MMHCC (U01CA105417), and NCRR (U24 RR021760)", titleStyle)
-                                worksheet.write([nrow+2, 0], "PLEASE RETAIN DATA SOURCE INFORMATION WHENEVER POSSIBLE", titleStyle)
-                                workbook.close()
-
-                                fp = open(filename, 'rb')
-                                text = fp.read()
-                                fp.close()
-
-                                self.content_type = 'application/xls'
-                                self.content_disposition = 'attachment; filename=%s' % ('export-%s.xls' % time.strftime("%y-%m-%d-%H-%M"))
-                                self.attachment = text
-                        else:
-                                self.content_type = 'application/xls'
-                                self.content_disposition = 'attachment; filename=%s' % ('export-%s.txt' % time.strftime("%y-%m-%d-%H-%M"))
-								
-                                self.attachment += ("Data source: The GeneNetwork at %s\n" % webqtlConfig.PORTADDR)
-                                self.attachment += ("Citations: Please see %s/reference.html\n" % webqtlConfig.PORTADDR)
-                                self.attachment += ("Date: %s\n" % time.strftime("%B %d, %Y", time.gmtime()))
-                                self.attachment += ("Time: %s GMT\n" % time.strftime("%H:%M", time.gmtime()))
-                                self.attachment += ("Status of data ownership: Possibly unpublished data; please see %s/statusandContact.html for details on sources, ownership, and usage of these data.\n" % webqtlConfig.PORTADDR)
-                                self.attachment += ("This output file contains data from %d GeneNetwork databases listed below.\n" % len(traitList))
-                                self.attachment += ("\n")
-                                self.attachment += ("Funding for The GeneNetwork: NIAAA (U01AA13499, U24AA13513), NIDA, NIMH, and NIAAA (P20-DA 21131), NCI MMHCC (U01CA105417), and NCRR (U24 RR021760)\n")
-                                self.attachment += ("PLEASE RETAIN DATA SOURCE INFORMATION WHENEVER POSSIBLE\n")
-                                self.attachment += ("\n")
-                                for item in text:
-                                        self.attachment += string.join(map(lambda cell : str(cell).replace("\r\n", " "), item), '\t') + "\n"
+                        self.content_type = 'application/xls'
+                        self.content_disposition = 'attachment; filename=%s' % ('export-%s.txt' % time.strftime("%y-%m-%d-%H-%M"))
+                        self.attachment += ("Data source: The GeneNetwork at %s\n" % webqtlConfig.PORTADDR)
+                        self.attachment += ("Citations: Please see %s/reference.html\n" % webqtlConfig.PORTADDR)
+                        self.attachment += ("Date: %s\n" % time.strftime("%B %d, %Y", time.gmtime()))
+                        self.attachment += ("Time: %s GMT\n" % time.strftime("%H:%M", time.gmtime()))
+                        self.attachment += ("Status of data ownership: Possibly unpublished data; please see %s/statusandContact.html for details on sources, ownership, and usage of these data.\n" % webqtlConfig.PORTADDR)
+                        self.attachment += ("This output file contains data from %d GeneNetwork databases listed below.\n" % len(traitList))
+                        self.attachment += ("\n")
+                        self.attachment += ("Funding for The GeneNetwork:\n")
+                        self.attachment += ("NIGMS Systems Genetics and Precision Medicine project (R01 GM123489, 2017-2021)\n")
+                        self.attachment += ("NIDA NIDA Core Center of Excellence in Transcriptomics, Systems Genetics, and the Addictome (P30 DA044223, 2017-2022)\n")
+                        self.attachment += ("NIA Translational Systems Genetics of Mitochondria, Metabolism, and Aging (R01AG043930, 2013-2018)\n")
+                        self.attachment += ("NIAAA Integrative Neuroscience Initiative on Alcoholism (U01 AA016662, U01 AA013499, U24 AA013513, U01 AA014425, 2006-2017)\n")
+                        self.attachment += ("NIDA, NIMH, and NIAAA (P20-DA 21131, 2001-2012)\n")
+                        self.attachment += ("NCI MMHCC (U01CA105417), NCRR, BIRN, (U24 RR021760)\n")
+                        self.attachment += ("PLEASE RETAIN DATA SOURCE INFORMATION WHENEVER POSSIBLE\n")
+                        self.attachment += ("\n")
+                        for item in text:
+                                self.attachment += string.join(map(lambda cell : self.trim(str(cell)), item), '\t') + "\n"
                         self.cursor.close()
                 else:
                         fd.req.content_type = 'text/html'
                         heading = 'Export Collection'
                         detail = [HT.Font('Error : ',color='red'),HT.Font('Error occurs while retrieving data from database.',color='black')]
                         self.error(heading=heading,detail=detail)
+
+    def trim(self, s):
+        s = s.replace("\r\n", " ")
+        s = s.replace("\r", " ")
+        s = s.replace("\n", " ")
+        s = s.replace("\t", " ")
+        return s
