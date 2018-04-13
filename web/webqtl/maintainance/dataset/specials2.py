@@ -4,7 +4,7 @@ import utilities
 import datastructure
 import genotypes
 import probesets
-import calculate
+# import calculate
 
 """
 For:    Ash
@@ -12,10 +12,9 @@ Date:   2014-02-07
 Function:
     For BXD group, get a probesetfreeze name list.
 """
-def probesetfreeze_list():
+def probesetfreeze_list(outputdir):
     #
     inbredsetid = 1
-    outputdir = "/home/leiyan/gn2/wqflask/maintenance/dataset/datadir/20140205_Ash_correlations/output"
     #
     probesetfreezes = datastructure.get_probesetfreezes(inbredsetid)
     print "From DB, get %d probesetfreezes" % (len(probesetfreezes))
@@ -158,5 +157,6 @@ def bxd_givenprobesetfreezes(probesetfreezesfile):
 
 if __name__ == "__main__":
     print("command line arguments:\n\t%s" % sys.argv)
-    bxd_correlations_givenprobesetfreezes(sys.argv[1], sys.argv[2])
+    # bxd_correlations_givenprobesetfreezes(sys.argv[1], sys.argv[2])
+    probesetfreeze_list(sys.argv[1])
     print("exit successfully")

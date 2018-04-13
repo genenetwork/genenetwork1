@@ -299,13 +299,13 @@ All of these sets of lines are GRPs since each line is genetically defined and b
 
 &nbsp;&nbsp;&nbsp;&nbsp;<A NAME="Heritability">Heritability, <I>h<sup>2</sup></I>:</A>
 <Blockquote>
-Heritability is a rough measure of the ability to use genetic information to predict the level of variation in phenotypes among progeny based on variation in phenotypes of progenitors. Values range from 0 to 1 (or 0 to 100%). A value of 1 or 100% means that a trait is entirely predictable based on paternal/materinal and genetic data (in other words, a Mendelian trait0, whereas a value of 0 means that a trait is not at all predictable from information on gene variants. Estimates of heritability are critically dependent on the environment, stage and age. 
+Heritability is a rough measure of the ability to use genetic information to predict the level of variation in phenotypes among progeny. Values range from 0 to 1 (or 0 to 100%). A value of 1 or 100% means that a trait is entirely predictable based on paternal/materinal and genetic data (in other words, a Mendelian trait), whereas a value of 0 means that a trait is not at all predictable from information on gene variants. Estimates of heritability are critically dependent on the environment, stage, and age. 
 
-<P>Important traits that affect fitness often have low heritabilities because stabilizing selection reduces the frequency of gene variants that produce suboptimal phenotypes. Conversely, less critical traits for which substantial phenotypic variation is well tolerated may have high heritability. The environment of laboratory mice is unnatural, and this allows the continuous accumulation of somewhat deleterious mutations. This leads to an upward bias in the mean heritability of most traits in laboratory mouse populations--a highly desirable feature from the point of view of the biomedical analysis of trait variance. Heritability is a useful parameter to measure because it provides a rough gauge of the likelihood of successfully understanding the allelic sources of variation in a phenotypes. Highly heritable traits are more ammenable to mapping studies. There are numerous ways to estimate heritability, a few of which are described below. [Williams RW, Dec 23, 2004]
+<P>Important traits that affect fitness often have low heritabilities because stabilizing selection reduces the frequency of DNA variants that produce suboptimal phenotypes. Conversely, less critical traits for which substantial phenotypic variation is well tolerated, may have high heritability. The environment of laboratory rodents is unnatural, and this allows the accumulation of somewhat deleterious mutations (for example, mutations that lead to albinism). This leads to an upward trend in heritability of unselected traits in laboratory populations--a desirable feature from the point of view of the biomedical analysis of the genetic basis of trait variance. Heritability is a useful parameter to measure at an early stage of a genetic analysis, because it provides a rough gauge of the likelihood of successfully understanding the allelic sources of variation. Highly heritable traits are more amenable to mapping studies. There are numerous ways to estimate heritability, a few of which are described below. [Williams RW, Dec 23, 2004]
 </Blockquote>
 
 &nbsp;&nbsp;&nbsp;&nbsp;<A NAME="ICH2"><I>h<sup>2</sup></I> Estimated by Intraclass Correlation:</A>
-<Blockquote>Heritability can be estimated using the intraclass correlation coefficient. This is essentially a one-way repeated measures analysis of variance (ANOVA) of the reliability of trait data. Difference among strains are considered due to a random effect, whereas the variation among samples within a single strain are considered due to measurement error. One can use the method implemented by SAS (PROC VARCOMP) that exploits a restricted maximum likelihood (REML) approach to estimate the intraclass correlation coefficient instead of an ordinary least squares method. The general equation for the intraclass correlation is:
+<Blockquote>Heritability can be estimated using the intraclass correlation coefficient. This is essentially a one-way repeated measures analysis of variance (ANOVA) of the reliability of trait data. Difference among strains are considered due to a random effect, whereas variation among samples within a single strain are considered due to measurement error. One can use the method implemented by SAS (PROC VARCOMP) that exploits a restricted maximum likelihood (REML) approach to estimate the intraclass correlation coefficient instead of an ordinary least squares method. The general equation for the intraclass correlation is:
 
 <BR><DIR>r = (Between-strain MS - Within-strain MS)/(Between-strain MS + (n-1)x Within-strain MS)</DIR> 
 
@@ -321,26 +321,31 @@ For example, if we study 10 cases of each of 20 strains, we have a total varianc
 
 <BR><DIR>h<SUP>2</SUP> = Va / Vt</DIR> 
 
-<P>This estimate of heritability will be an <B>overestimate</B> and the severity of this overestimate will be a function of the within-strain standard error of the mean. Even a random data set of 200 cases from 20 strains that should have an h<SUP>2</SUP> of 0, will often give h<SUP>2</SUP> values of 0.10 to 0.20. (Try this in a spreadsheet program using random numbers.)  
+<P>This estimate of heritability will be an <B>overestimate</B>, and the severity of this bias will be a function of the within-strain standard error of the mean. Even a random data set of 10 each of 20 strains that should have an h<SUP>2</SUP> of 0, will often give h<SUP>2</SUP> values of 0.10 to 0.20. (Try this in a spreadsheet program using random numbers.)  
 
 <P>However, this estimate of h<SUP>2</SUP> cannot be compared directly to those calculated using standard intercrosses and backcrosses. The reason is that all cases above are fully inbred and no genotypes are heterozygous. As a result the estimate of Va will be inflated two-fold. Hegmann and Possidente (<A HREF= "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=pubmed&dopt=Abstract&list_uids=7271677" TARGET= "_empty" class="fs14">1981</A> suggested a simple solution; adjust the equation as follows:
 
 <BR><DIR>h<SUP>2</SUP> = 0.5Va / (0.5Va+Ve)</DIR> 
 
-<P>The factor 0.5 is applied to Va to adjust for the overestimation of additive genetic variance among inbred strains. This estimate of heritability also does not make any allowances for the within-strain error term. The estimate of h<SUP>2</SUP> is severely <B>underestimated</B> by the 0.5 adjustment factor. This adjustment is really only needed if the goal is to compare h<SUP>2</SUP> between intercrosses and those generated using panels of inbred strains. 
+<P>The factor 0.5 is applied to Va to adjust for the overestimation of additive genetic variance among inbred strains. This estimate of heritability also does not make allowances for the within-strain error term. The 0.5 adjustment factor is not recommended any more because h<SUP>2</SUP> is severely <B>underestimated</B>. This adjustment is really only needed if the goal is to compare h<SUP>2</SUP> between intercrosses and those generated using panels of inbred strains. 
 </Blockquote>
+
 <A NAME="H2RIX"><I>h<SUP>2</SUP><SUB>RIx̅</SUB></I></A>
+
 <Blockquote>
-<P>Finally, heritability calculations using strain means, such as those listed above, do not provide estimates of the effective heritability achieved by resampling a given line, strain, or genometype. Belknap (<A HREF="/images/upload/Belknap_Heritability_1998.pdf" target="empty" class="fs14">1998</A>) provides corrected estimates of the effective heritability. Figure 1 from his paper (reproduced below) illustrates how resampling helps, and also why it often does not make sense to resample much beyond 4 to 8, depending on heritability. Belknap used the term h<SUP>2</SUP><SUB>RIx̅</SUB> in this figure and paper, since he was focused on data generated using recombinant inbred (RI) strains, but the logic applies equally well to any panel of genomes for which replication of individual genometypes is practical.
+<P>Finally, heritability calculations using strain means, such as those listed above, do not provide estimates of the effective heritability achieved by resampling a given line, strain, or genometype many times. Belknap (<A HREF="/images/upload/Belknap_Heritability_1998.pdf" target="empty" class="fs14">1998</A>) provides corrected estimates of the effective heritability. Figure 1 from his paper (reproduced below) illustrates how resampling helps a great deal. Simply resampling each strain 8 times can boost the effective heritability from 0.2 to 0.8. The graph also illustrates why it often does not make sense to resample much beyond 4 to 8, depending on heritability. Belknap used the term h<SUP>2</SUP><SUB>RIx̅</SUB> in this figure and paper, since he was focused on data generated using recombinant inbred (RI) strains, but the logic applies equally well to any panel of genomes for which replication of individual genometypes is practical.
+
 This h<SUP>2</SUP><SUB>RIx̅</SUB> can be calculated simply by:
-<BR>h<SUP>2</SUP><SUB>RIx̅</SUB> = V<SUB>a</SUB> / (V<SUB>a</SUB>+(V<SUB>e</SUB>/n))</DIR> 
-where V<SUB>a</SUB> is the genetic variability (variability between strains), V<SUB>e</SUB> is the environmental variability (variability within strains), and n is the number of within strain replicates. Of course, with many studies the number of within strain replicates will vary between strains, and this needs to be dealt with. A conservative approach is to use the minimum n, whereas a more general approach may be to use the harmonic mean. 
+
+<BR>h<SUP>2</SUP><SUB>RIx̅</SUB> = V<SUB>a</SUB> / (V<SUB>a</SUB>+(V<SUB>e</SUB>/n))</DIR>
+ 
+where V<SUB>a</SUB> is the genetic variability (variability between strains), V<SUB>e</SUB> is the environmental variability (variability within strains), and <I>n</I> is the number of within strain replicates. Of course, with many studies the number of within strain replicates will vary between strains, and this needs to be dealt with. A reasonable approach is to use the harmonic mean of <I>n</I> across all strains. 
 
 <P>
 <DIR><IMG src="/images/upload/Belknap_Fig1_1998.png" height="615" width="449">
 </DIR>
 
- [Chesler EJ, Dec 20, 2004; RWW updated Feb 3, 2018; Ashbrook DG, updated Feb 16, 2018]
+ [Chesler EJ, Dec 20, 2004; RWW updated March 7, 2018; Ashbrook DG, updated Feb 16, 2018]
 </Blockquote>
 
 <P>
@@ -585,6 +590,20 @@ d-separation</A>) and constructing causal models see Richard Scheines' site.
 
 &nbsp;&nbsp;&nbsp;&nbsp;<A NAME="Permutation">Permutation Test:</A>
 <Blockquote>A permutation test is a computationally intensive but conceptually simple method used to evaluate the statisical significance of findings. Permutation tests are often used to evaluate QTL significance. <U>Some background</U>: In order to detect parts of chromosomes that apparently harbor genes that contribute to differences in a trait's value, it is common to search for associations (linkage) across the entire genome. This is referred to as a "whole genome" scan, and it usually involves testing hundreds of independently segregating regions of the genome using hundreds, or even thousands of genetic markers (SNPs and microsatellites). A parametric test such as a conventional t test of F test can be used to estimate the probability of the null hypothesis at any single location in the genome (the null hypothesis is that there is no QTL at this particular location). But a parametric test of this type makes assumptions about the distribution of the trait (its normality), and also does not provide a way to correct for the large number of independent tests that are performed while scanning the whole genome. We need protection against many false discoveries as well as some assurance that we are not neglecting truly interesting locations. A permutation test is an elegant solution to both problems. The procedure involves randomly reassigning (permuting) traits values and genotypes of all cases used in the analysis. The permuted data sets have the same set of phenotypes and genotypes (in other words, distributions are the same), but obviously the permutation procedure almost invariably obliterates genuine gene-to-phenotype relation in large data sets. We typically generate several thousand permutations of the data. Each of these is analyzed using precisely the same method that was used to analyze the correctly ordered data set. We then compare statistical results of the original data set with the collection of values generated by the many permuted data sets. The hope is that the correctly ordered data are associated with larger LRS and LOD values than more than 95% of the permuted data sets. This is how we define the p = .05 whole genome significance threshold for a QTL. Please see the related Glossary terms "Significant threshold" and "Suggestive threshold". [RWW, July 15, 2005]</Blockquote>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;<A NAME="Power">Power to detect QTLs:</A>
+
+
+<Blockquote>An analysis of statistical power is useful to estimate numbers of replicates and strains needed to detect and resolve major sources of trait variance and covariance. A versatile method has been developed by Sen and colleagues (Sen et al., 2007) and implemented in the R program. qtlDesign. 
+We have implemented a version of this within Shiney, specifically for the BXD population (https://dashbrook1.shinyapps.io/update_shiny_app/). We can see that in all situations power is increased more by increasing the number of lines than by increasing the number of biological replicates. Dependent upon the heritability of the trait, there is little gain in power when going above 4-6 biological replicates. [DGA, Mar 3, 2018]
+
+
+
+
+</Blockquote>
+
+
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;<A NAME="Probes">Probes and Probe Sets:</A>

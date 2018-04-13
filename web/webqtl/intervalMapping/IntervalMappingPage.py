@@ -2479,6 +2479,7 @@ class IntervalMappingPage(templatePage):
             # polymiRTS
             # http://lily.uthsc.edu:8080/20090422_UTHSC_cuiyan/PolymiRTS_CLS?chrom=2&chrom_from=115&chrom_to=125
             #XZ: We can NOT assume their web service is always on. We must put this block of code in try except.
+            '''
             try:
                 conn = httplib.HTTPConnection("lily.uthsc.edu:8080")
                 conn.request("GET", "/20090422_UTHSC_cuiyan/PolymiRTS_CLS?chrom=%s&chrom_from=%s&chrom_to=%s" % (self.genotype[0].name, self.startMb, self.endMb))
@@ -2494,7 +2495,8 @@ class IntervalMappingPage(templatePage):
                     index = index+1
             except Exception:
                 dic={}
-
+            '''
+            dic={}
             for gIndex, theGO in enumerate(geneCol):
 
                 tableIterationsCnt = tableIterationsCnt + 1

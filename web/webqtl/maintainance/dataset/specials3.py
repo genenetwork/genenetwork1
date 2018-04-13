@@ -115,9 +115,13 @@ def generate_probesets_2(probesetfreezesfile, outputdir):
             probesetchr = probeset[5]
             probesetmb = probeset[6]
             #
-            geno = genotypes.get_geno(inbredsetid=inbredsetid, name=locus)
-            genochr = geno[2]
-            genomb = geno[3]
+            if locus is None or not locus:
+                genochr = ""
+                genomb = ""
+            else:
+		geno = genotypes.get_geno(inbredsetid=inbredsetid, name=locus)
+                genochr = geno[2]
+                genomb = geno[3]
             #
             outputfile.write("%s\t" % probesetname)
             outputfile.write("%s\t" % probesetsymbol)
@@ -137,7 +141,6 @@ def generate_probesets_2(probesetfreezesfile, outputdir):
     file.close()
 
 # python specials3.py /home/leiyan/datadir/20140429_Ash_probesets/probesetfreezes1.txt /home/leiyan/datadir/20140429_Ash_probesets
-# python specials3.py /home/leiyan/datadir/20140429_Ash_probesets/probesetfreezes2.txt /home/leiyan/datadir/20140429_Ash_probesets
 
 if __name__ == "__main__":
     print("command line arguments:\n\t%s" % sys.argv)
