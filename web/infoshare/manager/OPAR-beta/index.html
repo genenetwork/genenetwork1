@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Omics Portal For Addiction Research</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Content here -->
+
+<nav class="navbar navbar-expand-lg navbar-dark unique-color">
+    <a class="navbar-brand" href="#">OPAR beta</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Tools</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="http://www.genenetwork.org/infoshare/manager/OPAR-beta/search.html" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                Dropdown link
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="http://opar.io/">OPAR</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<?php
+	//require_once("../includes/header.html");
+?>
+
+<!--///////////////////////////////////////////////-->
+<!--Jumbotron-->
+<div class="jumbotron text-center">
+
+    <!--Title-->
+    <h1 class="card-title h2-responsive mt-2"><strong>Omics Portal For Addiction Research</strong></h1>
+    <!--Subtitle-->
+    <!--<p class="blue-text mb-4 font-bold">Powerful and free Material Design UI KIT</p>-->
+
+    <!--Text-->
+    <div class="d-flex justify-content-center">
+       <!-- <p class="card-text mb-3" style="max-width: 43rem;">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium,
+            totam rem aperiam. Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium
+            doloremque laudantium, totam rem aperiam.
+        </p>-->
+                                <form action=" " method="get">
+                    
+            <div class="input-group md-form form-sm form-2 pl-0">
+              <input class="form-control my-0 py-1 grey-border" type="text" name="gene" placeholder="Search for Gene" aria-label="Search">
+    		<div class="input-group-append">
+        	  <span class="input-group-text grey lighten-3" id="basic-text1"><i class="fa fa-search text-grey" aria-hidden="true"></i></span>
+        	</div>
+        	
+	        </div>
+	        <p>Examples: <a href="http://genenetwork.org/infoshare/manager/OPAR-beta/search.html?gene=PECR&choose_species=Species.Id">PECR</a>, 
+	        <a href="http://genenetwork.org/infoshare/manager/OPAR-beta/search.html?gene=CDH22&choose_species=Species.Id">CDH22</a>, 
+	        <a href="http://genenetwork.org/infoshare/manager/OPAR-beta/search.html?gene=THY1&choose_species=Species.Id">THY1</a></p>
+	        <div>
+               <label class="radio-inline">
+               <input type="radio" name="choose_species" id="Species.Id" value="Species.Id" checked> ANY
+               <input type="radio" name="choose_species" id="4" value="4" > Human
+               <input type="radio" name="choose_species" id="1" value="1" > Mouse
+               <input type="radio" name="choose_species" id="2" value="2" > Rat
+ 			   </label>
+             </div>
+                         </form>
+    </div>
+
+    <hr class="my-4">
+
+    <!--<button type="button" class="btn btn-blue waves-effect">Buy now <span class="fa fa-diamond ml-1"></span></button>
+    <button type="button" class="btn btn-outline-primary waves-effect">Download <i class="fa fa-download ml-1"></i></button>-->
+    
+
+    
+    <!-&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&-->
+    <div class="container">
+
+    <div class="row">
+
+        <?php
+	//require_once("../includes/leftMenu.html");
+
+    	//Include the PS_Pagination class
+	include('../ps_pagination.html');
+
+	    //Connect to mysql db
+    require "../../includes/db.inc";
+
+?>
+ <?php
+
+                    //Records found starts here
+
+                     if(!$num = mysql_num_rows($result)):
+                      endif;
+                      //echo($num . " Entries found for Gene: <strong>" .$row['Symbol']. "</strong><p>");
+
+                    //Records found ends here
+
+                    if( isset( $_GET['gene'] ) && strlen( trim( $_GET['gene'] ) ) > 0  )
+                    {
+                    $Symbol = $_GET['gene'];
+                    $choose_species = $_GET['choose_species'];
+                    //$laopo = ${'gene='.$Symbol'&choose_species=Species.Id'};
+                    $laopo = "gene=$Symbol&choose_species=$choose_species";
+                    //$question = ${'question'.$var}[0];
+                    //$my_variables = 'gene=shh&choose_species=Species.Id'
+
+                    //require "../includes/db.inc"; //fine using $conn
+
+                    //$sql = "select * from Organizations where OrganizationName like '%$OrganizationName%'";
+
+                    $sql = "SELECT
+                    Species.SpeciesName AS Species,
+                    InbredSet.Name AS InbredSet,
+                    Tissue.Name AS Tissue,
+                    ProbeSetFreeze.Name AS ProbeSetFreeze,
+                    ProbeSet.Name AS ProbeSet,
+                    ProbeSet.Symbol,
+                    ProbeSet.description,
+                    ProbeSet.Chr,
+                    ProbeSet.Mb,
+                    ProbeSetXRef.Mean,
+                    ProbeSetXRef.LRS,
+                    ProbeSetXRef.Locus,
+                    ProbeSetXRef.pValue,
+                    ProbeSetXRef.additive
+                    FROM Species, InbredSet, ProbeSetXRef, ProbeSet, ProbeFreeze, ProbeSetFreeze, Tissue
+                    WHERE InbredSet.SpeciesId=Species.Id
+                    AND Species.Id=$choose_species
+                    AND ProbeFreeze.InbredSetId=InbredSet.Id
+                    AND ProbeFreeze.TissueId=Tissue.Id
+                    AND ProbeSetFreeze.ProbeFreezeId=ProbeFreeze.Id
+                    AND ( MATCH (ProbeSet.Name,ProbeSet.description,ProbeSet.symbol,alias,GenbankId, UniGeneId, Probe_Target_Description) AGAINST ('%$Symbol%' IN BOOLEAN MODE) )
+                    AND ProbeSet.Id = ProbeSetXRef.ProbeSetId
+                    AND ProbeSetXRef.ProbeSetFreezeId=ProbeSetFreeze.Id
+                    AND ProbeSetFreeze.confidentiality < 1
+                    AND ProbeSetFreeze.public > 0
+                    ORDER BY Species.SpeciesName, InbredSet.Name, Tissue.Name, ProbeSetFreeze.Name, ProbeSet.Name
+                    ";
+                    //LIMIT 50";
+                    
+                    //string $mean = number_format ($mean, 2);
+
+                    //------------PAGINATION MODULE START
+
+                    /*
+                    * Create a PS_Pagination object
+                    *
+                    * $conn = MySQL connection object
+                    * $sql = SQl Query to paginate
+                    * 10 = Number of rows per page
+                    * 5 = Number of links
+                    * "param1=valu1&param2=value2" = You can append your own parameters to paginations links
+                    */
+                    //$pager = new PS_Pagination($conn, $sql, 30, 5, "param1=valu1&param2=value2");
+                    //$pager = new PS_Pagination($conn, $sql, 10, 5, "param1=valu1&param2=value2", $result);
+                    //$pager = new PS_Pagination($conn, $sql, 10, 5, $result);
+                    $pager = new PS_Pagination($conn, $sql, 50, 10, $laopo);
+
+                    /*
+                    * Enable debugging if you want o view query errors
+                    */
+                    $pager->setDebug(true);
+
+                    /*
+                    * The paginate() function returns a mysql result set
+                    * or false if no rows are returned by the query
+                    */
+                    $rs = $pager->paginate();
+
+
+                    //Display the full navigation in one go
+                    echo $pager->renderFullNav();
+                    echo "<p>\n";
+                    echo "<div>";
+                    //---echo "<div align='left'>";
+
+                    //------------PAGINATION MODULE ENDS
+
+                    $result = mysql_query($sql, $conn) or die(mysql_error());
+                    //$rs = mysql_query($sql, $conn) or die(mysql_error());
+
+                    $num = mysql_num_rows($result);
+                    //$num = mysql_num_rows($rs);
+
+                    if ( mysql_num_rows($result) >0)
+                    //if ( mysql_num_rows($rs) >0)
+                    {
+                    //echo "<table class='table table-striped'>";
+                    //echo "<table class='table table-condensed'>";
+                    echo "<table id='dtBasicExample' class='table table-striped table-bordered table-sm' cellspacing='0' width='100%'>";
+                    echo "<thead>";
+                    echo "<tr>";
+                    echo "<th class='th-sm'>Top Related Gene<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>ProbeSet<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Species<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Tissue<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>InbredSet<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Symbol<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Description<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Location<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>LRS<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Mean<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "</tr>";
+                    echo "</thead>";
+                    //echo "<table>";
+                    echo($num . " Entries found for Gene: <strong>" .$Symbol. "</strong><p>");
+                    
+                    //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    $lines = file('gwas_results.txt');
+// Store true when the text is found
+$found = false;
+foreach($lines as $line)
+{
+  if(strpos($line, $Symbol) !== false)
+  {
+    $found = true;
+    echo "<div class='alert alert-success' role='alert'>";
+    echo $line;
+    echo "</div>";
+  }
+}
+// If the text was not found, show a message
+if(!$found)
+{
+  echo "No related results found from GWAS <i>all addictions</i> with search term: $Symbol";
+  
+}
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+echo "<div>";
+echo "Available in: ";
+echo "<a href=https://rgd.mcw.edu/rgdweb/elasticResults.html?term=$Symbol&category=Gene&species=Human&cat1=General&sp1=&postCount=1&redirect=true class='badge badge-default' target='_blank'>rgd (Human)</a> ";
+echo "<a href=https://rgd.mcw.edu/rgdweb/elasticResults.html?term=$Symbol&category=Gene&species=Mouse&cat1=General&sp1=&postCount=1&redirect=true class='badge badge-default' target='_blank'>rgd (Mouse)</a> ";
+echo "<a href=https://rgd.mcw.edu/rgdweb/elasticResults.html?term=$Symbol&category=Gene&species=Rat&cat1=General&sp1=&postCount=1&redirect=true class='badge badge-default' target='_blank'>rgd (Rat)</a> ";
+echo "</div>";
+
+                    //----------PAGINATION INSERT START
+
+                    $rs = $pager->paginate();
+                    if(!$rs) die(mysql_error());
+                    while($row = mysql_fetch_assoc($rs)) {
+                    
+
+                    //----------PAGINATION INSERT ENDS
+
+                    echo "<tr></td><td><a href=http://172.21.216.117:4004/cosinesim/?word=". $row['Symbol'] ." class='badge badge-default' target='_blank' '>Chilibot</a> | <a href=http://www.geneweaver.org/index.php?action=search&q[]=". $row['Symbol'] ." class='badge badge-info' target='_blank' '>GeneWeaver</a></td><td><a href=http://gn2.genenetwork.org/show_trait?trait_id=". $row['ProbeSet'] ."&dataset=" . $row['ProbeSetFreeze'] ." class='badge badge-primary' target='_blank' '>" . $row['ProbeSet'] ."</a></td><td>" . $row['Species'] . "</td><td>" . $row['Tissue'] . "</td><td>" .$row['InbredSet'] ."</td><td>" .$row['Symbol'] ."</td><td>" . $row['description'] ."</td><td>Chr".$row['Chr'] .": " .$row['Mb'] ."</td><td>".$row['LRS'] ."</td><td>" .$row['Mean'] ."</td></tr>";
+                            
+                            }
+                            echo "</table>";
+
+                        //----------PAGINATION MODULE START
+
+                        /*
+                        * Or you can display the individual links for more
+                        * control over HTML rendering.
+                        *
+                        */
+
+                        //Display the link to first page: First
+                        echo $pager->renderFirst();
+
+                        //Display the link to previous page: <<
+                        echo $pager->renderPrev();
+
+                        /*
+                        * Display page links: 1 2 3
+                        * $prefix = Will be prepended to the page link (optional)
+                        * $suffix = Will be appended to the page link (optional)
+                        *
+                        */
+                        echo $pager->renderNav('<span>', '</span>');
+
+                        //Display the link to next page: >>
+                        echo $pager->renderNext();
+
+                        //Display the link to last page: Last
+                        echo $pager->renderLast();
+
+                        //----------PAGINATION MODULE ENDS
+                       // }
+                        }
+                        else
+                        {
+                        echo "Record not found";
+                        }
+
+
+                        mysql_close($conn);
+                        }
+                        
+                        ?>
+            </section>
+
+        </div>
+    </div>
+</div>
+    <!--&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&-->
+
+</div>
+<!--Jumbotron-->
+<!--///////////////////////////////////////////////-->
+
+
+<!-- Footer -->
+<footer class="page-footer font-small unique-color">
+
+    <!-- Footer Links -->
+    <div class="container-fluid text-center text-md-left">
+
+      <!-- Grid row -->
+      <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-md-6 mt-md-0 mt-3">
+
+          <!-- Content -->
+          <h5 class="text-uppercase">Footer Content</h5>
+          <p>Here you can use rows and columns here to organize your footer content.</p>
+
+        </div>
+        <!-- Grid column -->
+
+        <hr class="clearfix w-100 d-md-none pb-3">
+
+        <!-- Grid column -->
+        <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5 class="text-uppercase">Links</h5>
+
+            <ul class="list-unstyled">
+              <li>
+                <a href="#!">Link 1</a>
+              </li>
+              <li>
+                <a href="#!">Link 2</a>
+              </li>
+              <li>
+                <a href="#!">Link 3</a>
+              </li>
+              <li>
+                <a href="#!">Link 4</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5 class="text-uppercase">Links</h5>
+
+            <ul class="list-unstyled">
+              <li>
+                <a href="#!">Link 1</a>
+              </li>
+              <li>
+                <a href="#!">Link 2</a>
+              </li>
+              <li>
+                <a href="#!">Link 3</a>
+              </li>
+              <li>
+                <a href="#!">Link 4</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+
+    </div>
+    <!-- Footer Links -->
+
+    <!-- Copyright -->
+  <div class="footer-copyright text-center py-3 special-color">OPAR University of Tennessee Health Science Center
+  <p class="pull-right"><a href="#">Back to top  </a></p></div>
+      
+    
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
+
+
+<!-- Footer -->
+<!--<footer class="page-footer font-small blue">-->
+
+  <!-- Copyright -->
+  <!--<div class="footer-copyright text-center py-3">OPAR University of Tennessee Health Science Center
+  <p class="pull-right"><a href="#">Back to top</a></p>
+  </div>-->
+  <!-- Copyright -->
+
+<!--</footer>-->
+<!-- Footer -->
+
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <script type="text/javascript" src="js/pagination.js"></script>
+ <!--</div>-->
+</body>
+</html>
