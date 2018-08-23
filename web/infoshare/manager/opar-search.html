@@ -1,0 +1,286 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <title>OPAR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link REL="stylesheet" TYPE="text/css" href="../css/gn2css/bootstrap.min.css" />
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <?php
+      require_once('auth.html');
+    ?>
+
+</head>
+
+<body>
+<?php
+	//require_once("../includes/header.html");
+?>
+<div class="container">
+
+    <div class="row">
+
+        <?php
+	//require_once("../includes/leftMenu.html");
+?>
+
+        <div class="span9">
+            <section id="quick-search">
+                <div class="page-header">
+                    <h1>Gene Search</h1>
+    <?php
+
+    	//Include the PS_Pagination class
+	include('ps_pagination.html');
+
+	    //Connect to mysql db
+    require "../includes/db.inc";
+
+?>
+
+                    <!--SEARCH ORGANIZATION-->
+                    <form action=" " method="get">
+                        <div class="input-append">
+                            <input class="input-xlarge"
+                                   id="quick" name="gene"
+                                   type="text" maxlength="1000" placeholder="Search for Gene">
+
+                            <input id="btsearch" type="submit"
+                                   class="btn btn-primary" value="Search">
+                        </div>
+
+                        <div>
+                            <label class="radio-inline">
+                                <input type="radio" name="choose_species" id="1" value="1" > Mouse
+                                <input type="radio" name="choose_species" id="2" value="2" > Rat
+                                <input type="radio" name="choose_species" id="4" value="4" > Human
+                                <input type="radio" name="choose_species" id="Species.Id" value="Species.Id" checked> ANY
+                            </label>
+                        </div>
+
+
+
+                    </form>
+
+
+
+
+
+
+                    <?php
+
+                    //Records found starts here
+
+                     if(!$num = mysql_num_rows($result)):
+                      endif;
+                      //echo($num . " Entries found for Gene: <strong>" .$row['Symbol']. "</strong><p>");
+
+                    //Records found ends here
+
+                    if( isset( $_GET['gene'] ) && strlen( trim( $_GET['gene'] ) ) > 0  )
+                    {
+                    $Symbol = $_GET['gene'];
+                    $choose_species = $_GET['choose_species'];
+                    //$laopo = ${'gene='.$Symbol'&choose_species=Species.Id'};
+                    $laopo = "gene=$Symbol&choose_species=$choose_species";
+                    //$question = ${'question'.$var}[0];
+                    //$my_variables = 'gene=shh&choose_species=Species.Id'
+
+                    //require "../includes/db.inc"; //fine using $conn
+
+                    //$sql = "select * from Organizations where OrganizationName like '%$OrganizationName%'";
+
+                    $sql = "SELECT
+                    Species.SpeciesName AS Species,
+                    InbredSet.Name AS InbredSet,
+                    Tissue.Name AS Tissue,
+                    ProbeSetFreeze.Name AS ProbeSetFreeze,
+                    ProbeSet.Name AS ProbeSet,
+                    ProbeSet.Symbol,
+                    ProbeSet.description,
+                    ProbeSet.Chr,
+                    ProbeSet.Mb,
+                    ProbeSetXRef.Mean,
+                    ProbeSetXRef.LRS,
+                    ProbeSetXRef.Locus,
+                    ProbeSetXRef.pValue,
+                    ProbeSetXRef.additive
+                    FROM Species, InbredSet, ProbeSetXRef, ProbeSet, ProbeFreeze, ProbeSetFreeze, Tissue
+                    WHERE InbredSet.SpeciesId=Species.Id
+                    AND Species.Id=$choose_species
+                    AND ProbeFreeze.InbredSetId=InbredSet.Id
+                    AND ProbeFreeze.TissueId=Tissue.Id
+                    AND ProbeSetFreeze.ProbeFreezeId=ProbeFreeze.Id
+                    AND ( MATCH (ProbeSet.Name,ProbeSet.description,ProbeSet.symbol,alias,GenbankId, UniGeneId, Probe_Target_Description) AGAINST ('%$Symbol%' IN BOOLEAN MODE) )
+                    AND ProbeSet.Id = ProbeSetXRef.ProbeSetId
+                    AND ProbeSetXRef.ProbeSetFreezeId=ProbeSetFreeze.Id
+                    AND ProbeSetFreeze.confidentiality < 1
+                    AND ProbeSetFreeze.public > 0
+                    ORDER BY Species.SpeciesName, InbredSet.Name, Tissue.Name, ProbeSetFreeze.Name, ProbeSet.Name
+                    ";
+                    //LIMIT 50";
+
+                    //------------PAGINATION MODULE START
+
+                    /*
+                    * Create a PS_Pagination object
+                    *
+                    * $conn = MySQL connection object
+                    * $sql = SQl Query to paginate
+                    * 10 = Number of rows per page
+                    * 5 = Number of links
+                    * "param1=valu1&param2=value2" = You can append your own parameters to paginations links
+                    */
+                    //$pager = new PS_Pagination($conn, $sql, 30, 5, "param1=valu1&param2=value2");
+                    //$pager = new PS_Pagination($conn, $sql, 10, 5, "param1=valu1&param2=value2", $result);
+                    //$pager = new PS_Pagination($conn, $sql, 10, 5, $result);
+                    $pager = new PS_Pagination($conn, $sql, 50, 10, $laopo);
+
+                    /*
+                    * Enable debugging if you want o view query errors
+                    */
+                    $pager->setDebug(true);
+
+                    /*
+                    * The paginate() function returns a mysql result set
+                    * or false if no rows are returned by the query
+                    */
+                    $rs = $pager->paginate();
+
+
+                    //Display the full navigation in one go
+                    echo $pager->renderFullNav();
+                    echo "<p>\n";
+                    echo "<div align='left'>";
+
+                    //------------PAGINATION MODULE ENDS
+
+                    $result = mysql_query($sql, $conn) or die(mysql_error());
+                    //$rs = mysql_query($sql, $conn) or die(mysql_error());
+
+                    $num = mysql_num_rows($result);
+                    //$num = mysql_num_rows($rs);
+
+                    if ( mysql_num_rows($result) >0)
+                    //if ( mysql_num_rows($rs) >0)
+                    {
+                    //echo "<table class='table table-striped'>";
+                    echo "<table class='table table-condensed'>";
+                    echo "<tr>";
+                    echo "<td valign='top'><p align='left'><b>ProbeSet</b></td>";
+                    echo "<td valign='top'><p align='left'><b>Species</b></td>";
+                    echo "<td valign='top'><p align='left'><b>Tissue</b></td>";
+                    echo "<td valign='top'><p align='left'><b>InbredSet</b></td>";
+                    echo "<td valign='top'><p align='left'><b>Symbol</b></td>";
+                    echo "<td valign='top'><p align='left'><b>Description</b></td>";
+                    echo "<td valign='top'><p align='left'><b>Location</b></td>";
+                    echo "<td valign='top'><p align='left'><b>LRS</b></td>";
+                    echo "<td valign='top'><p align='left'><b>Mean</b></td>";
+                    echo "<td valign='top'><p align='left'><b>Top Related Gene</b></td>";
+                    echo "</tr>";
+                    //echo "<table>";
+                    echo($num . " Entries found for Gene: <strong>" .$Symbol. "</strong><p>");
+
+                    //----------PAGINATION INSERT START
+
+                    $rs = $pager->paginate();
+                    if(!$rs) die(mysql_error());
+                    while($row = mysql_fetch_assoc($rs)) {
+                    
+
+                    //----------PAGINATION INSERT ENDS
+
+                    //while ($row = mysql_fetch_array($result, MYSQL_ASSOC))
+                    
+                    //---while($row = mysql_fetch_assoc($result)) {
+                    
+                    //while($row = mysql_fetch_assoc($rs))
+                    //while($row = mysql_fetch_assoc($rs))
+                    
+                    //$Symbol  = $newArray['Symbol'];
+                    //$Species = $newArray['Species'];
+                    //$Tissue = $newArray['Tissue'];
+                    //$InbredSet = $newArray['InbredSet'];
+                    //$ProbeSetFreeze = $newArray['ProbeSetFreeze'];
+                    //$ProbeSet = $newArray['ProbeSet'];
+                    //$Chr = $newArray['Chr'];
+                    //$description = $newArray['description'];
+                    //$Mb = $newArray['Mb'];
+                    //$LRS = $newArray['LRS'];
+                    //$Locus = $newArray['Locus'];
+                    //$pValue = $newArray['pValue'];
+                    //$row = mysql_fetch_row($result);
+
+                    //echo "<div align='left'>";
+                    //echo "<table class='table table-condensed'>";
+
+                        //echo "<table border='1' CELLPADDING='4' CELLSPACING='3' class='sortable'>";
+                            //echo "<TR><TH COLSPAN='4'>My Studies [Click on title to sort table]</TH></TR>";
+                            // echo "<tr>";
+
+
+
+                                //echo "<tr><td><strong>". $Symbol ."</strong><td><a href=http://gn2.genenetwork.org/show_trait?trait_id=". $ProbeSet . "&dataset=". $ProbeSetFreeze ." target='_blank' '>". $ProbeSet ."</a></td><td>" . $Species ."</td><td>" . $Tissue ."</td><td>" . $InbredSet ."</td><td>" . $ProbeSetFreeze ."</td><td>" . $Chr ."</td><td>" . $description ."</td><td>" . $Mb ."</td><td>" . $LRS ."</td><td>" . $Locus ."</td><td>" . $pValue ."</td></tr>" ;
+                            //http://gn2.genenetwork.org/show_trait?trait_id=207586_at&dataset=GSE5281_F_RMA0709
+
+                            //echo "<tr><td><strong>" .$row['Symbol']."</strong></td><td><a href=http://gn2.genenetwork.org/show_trait?trait_id=". $row['ProbeSet'] ."&dataset=" . $row['ProbeSetFreeze'] ." target='_blank' '>" . $row['ProbeSet'] ."</a></td><td>" . $row['Species'] . "</td><td>" . $row['Tissue'] . "</td><td>" .$row['InbredSet'] ."</td><td>" . $row['ProbeSetFreeze'] . "</td></tr>";
+                            echo "<tr><td><a href=http://gn2.genenetwork.org/show_trait?trait_id=". $row['ProbeSet'] ."&dataset=" . $row['ProbeSetFreeze'] ." target='_blank' '>" . $row['ProbeSet'] ."</a></td><td>" . $row['Species'] . "</td><td>" . $row['Tissue'] . "</td><td>" .$row['InbredSet'] ."</td><td>" .$row['Symbol'] ."</td><td>" . $row['description'] ."</td><td>Chr".$row['Chr'] .": " .$row['Mb'] ."</td><td>".$row['LRS'] ."</td><td>" .$row['Mean'] ."</td><td><a href=http://172.21.216.117:4004/cosinesim/?word=". $row['Symbol'] ." target='_blank' '>Chilibot</a> | <a href=http://www.geneweaver.org/index.php?action=search&q[]=". $row['Symbol'] ." target='_blank' '>GeneWeaver</a></td></tr>";
+                            }
+                            echo "</table>";
+
+                        //----------PAGINATION MODULE START
+
+                        /*
+                        * Or you can display the individual links for more
+                        * control over HTML rendering.
+                        *
+                        */
+
+                        //Display the link to first page: First
+                        echo $pager->renderFirst();
+
+                        //Display the link to previous page: <<
+                        echo $pager->renderPrev();
+
+                        /*
+                        * Display page links: 1 2 3
+                        * $prefix = Will be prepended to the page link (optional)
+                        * $suffix = Will be appended to the page link (optional)
+                        *
+                        */
+                        echo $pager->renderNav('<span>', '</span>');
+
+                        //Display the link to next page: >>
+                        echo $pager->renderNext();
+
+                        //Display the link to last page: Last
+                        echo $pager->renderLast();
+
+                        //----------PAGINATION MODULE ENDS
+                       // }
+                        }
+                        else
+                        {
+                        echo "Record not found";
+                        }
+
+
+                        mysql_close($conn);
+                        }
+                        ?>
+            </section>
+
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+
+    </div>
+</footer>
+</body>
+</html>

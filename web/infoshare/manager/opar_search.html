@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <title>GeneNetwork GeneNetwork</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link REL="stylesheet" TYPE="text/css" href="../css/gn2css/bootstrap.min.css" />
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <?php
+      require_once('auth.html');
+    ?>
+
+</head>
+
+<body>
+<?php
+	require_once("../includes/header.html");
+?>
+
+<div class="container">
+	<div class="row">
+
+<?php
+	require_once("../includes/leftMenu.html");
+?>
+
+<div class="span9">
+	<section id="quick-search">
+		<div class="page-header">
+			<h1>Quick Search</h1>
+<?php
+require "../includes/db.inc";
+?>
+
+<!--SEARCH ORGANIZATION-->
+ <form action=" " method="post">
+	<div class="input-append">
+         <input class="input-xlarge"
+                id="quick" name="gene"
+                type="text" maxlength="500" placeholder="Search for Gene">
+
+         <input id="btsearch" type="submit"
+                class="btn btn-primary" value="Search">
+    </div>
+
+
+</form>
+
+
+<?php
+
+if( isset( $_POST['gene'] ) && strlen( trim( $_POST['gene'] ) ) > 0  )
+{
+        $Symbol = $_POST['gene'];
+
+        //require "../includes/db.inc"; //fine using $conn
+
+        //$sql = "select * from Organizations where OrganizationName like '%$OrganizationName%'";
+
+        $sql = "SELECT
+Species.Name AS Species,
+InbredSet.Name AS InbredSet,
+Tissue.Name AS Tissue,
+ProbeSetFreeze.Name AS ProbeSetFreeze,
+ProbeSet.Name AS ProbeSet,
+ProbeSet.Symbol,
+ProbeSet.description,
+ProbeSet.Chr,
+ProbeSet.Mb,
+ProbeSetXRef.Mean,
+ProbeSetXRef.LRS,
+ProbeSetXRef.Locus,
+ProbeSetXRef.pValue,
+ProbeSetXRef.additive
+FROM Species, InbredSet, ProbeSetXRef, ProbeSet, ProbeFreeze, ProbeSetFreeze, Tissue
+WHERE InbredSet.SpeciesId=Species.Id
+AND ProbeFreeze.InbredSetId=InbredSet.Id
+AND ProbeFreeze.TissueId=Tissue.Id
+AND ProbeSetFreeze.ProbeFreezeId=ProbeFreeze.Id
+AND ( MATCH (ProbeSet.Name,ProbeSet.description,ProbeSet.symbol,alias,GenbankId, UniGeneId, Probe_Target_Description) AGAINST ('%$Symbol%' IN BOOLEAN MODE) )
+AND ProbeSet.Id = ProbeSetXRef.ProbeSetId
+AND ProbeSetXRef.ProbeSetFreezeId=ProbeSetFreeze.Id
+AND ProbeSetFreeze.confidentiality < 1
+AND ProbeSetFreeze.public > 0
+ORDER BY Species.Name, InbredSet.Name, Tissue.Name, ProbeSetFreeze.Name, ProbeSet.Name
+LIMIT 20";
+
+        $result = mysql_query($sql, $conn) or die(mysql_error());
+
+        if ( mysql_num_rows($result) >0)
+        {
+            while ($newArray = mysql_fetch_array($result))
+            {
+                $Symbol  = $newArray['Symbol'];
+                $Species = $newArray['Species'];
+                $Tissue = $newArray['Tissue'];
+                $InbredSet = $newArray['InbredSet'];
+                $ProbeSetFreeze = $newArray['ProbeSetFreeze'];
+                $ProbeSet = $newArray['ProbeSet'];
+                $Chr = $newArray['Chr'];
+                $description = $newArray['description'];
+                $Mb = $newArray['Mb'];
+                $LRS = $newArray['LRS'];
+                $Locus = $newArray['Locus'];
+                $pValue = $newArray['pValue'];
+
+                echo $Symbol . ", " . $Species .", " . $Tissue .", " . $InbredSet .", " . $ProbeSetFreeze .", " . $ProbeSet .", " . $Chr .", " . $description .", " . $Mb .", " . $LRS .", " . $Locus ." " . $pValue ."<br />" ;
+                
+            }
+        }
+        else
+        {
+            echo "Record not found";
+        }
+
+
+        mysql_close($conn);
+}
+?>
+ </section>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+          <div class="container">
+            <p class="pull-right"><a href="#">Back to top</a></p>
+
+          </div>
+            </footer>
+    </body>
+    </html>

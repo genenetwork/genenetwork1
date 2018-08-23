@@ -51,33 +51,51 @@
 <body>
 <?php
 	require_once("../includes/header.html");
-?> 
+?>
 
 <div class="container">
 	<div class="row">
-        
+
 <?php
 	require_once("../includes/leftMenu.html");
-?> 
+?>
 <div>
    <section>
-   <H3>Datasets table</H3> 
-   </section>  
+   <H3>Datasets table</H3>
+   </section>
 </div>
-     
+
 <div class="span9">
+<script src="sorttable.js"></script>
+<?php
+	require_once('auth.html');
+?>
 
 <?php
 	//Include the PS_Pagination class
 	include('ps_pagination.html');
-	
+
 	//Connect to mysql db
 	require "../includes/db.inc"; //fine using $conn
-	$sql = 'SELECT * FROM Datasets';
-	
+	 // w $InvestigatorId = $_SESSION['SESS_MEMBER_ID'];
+	//$sql = 'SELECT * FROM Investigators ORDER BY LastName';
+	//$result = mysql_query("SELECT * from Investigators where InvestigatorId = '".$_SESSION['SESS_MEMBER_ID']."'");
+	//$sql = "SELECT * from Investigators where InvestigatorId ='".($_SESSION['SESS_MEMBER_ID'])"'";
+	// w $sql = "SELECT * from Investigators where InvestigatorId ='$InvestigatorId'";
+
+	//$sql = ('SELECT * FROM Datasets WHERE InvestigatorId = "'. mysql_real_escape_string($_SESSION['SESS_MEMBER_ID']) . '"')
+	//$sql = ('select Datasets.DatasetName, Datasets.DatasetId, DatasetMapInvestigator.InvestigatorId, Datasets.DatasetStatusId FROM Datasets JOIN DatasetMapInvestigator on Datasets.DatasetId = DatasetMapInvestigator.DatasetId WHERE DatasetMapInvestigator.InvestigatorId = "'. mysql_real_escape_string($_SESSION['SESS_MEMBER_ID']) . '"')
+
+	//$sql = ('select Datasets.DatasetName, Datasets.DatasetId, Datasets.InvestigatorId, Datasets.DatasetStatusId FROM Datasets JOIN DatasetMapInvestigator on Datasets.DatasetId = DatasetMapInvestigator.DatasetId WHERE DatasetMapInvestigator.InvestigatorId = "'. mysql_real_escape_string($_SESSION['SESS_MEMBER_ID']) . '"')
+	//$sql = ('select Investigators.LastName, Datasets.DatasetName, Datasets.DatasetId, Datasets.InvestigatorId, Datasets.DatasetStatusId FROM Datasets JOIN DatasetMapInvestigator on Datasets.DatasetId = DatasetMapInvestigator.DatasetId LEFT JOIN Investigators on Datasets.InvestigatorId = Investigators.InvestigatorId WHERE DatasetMapInvestigator.InvestigatorId = "'. mysql_real_escape_string($_SESSION['SESS_MEMBER_ID']) . '"')
+	//$sql = ('select DatasetStatus.DatasetStatusName, Investigators.LastName, Investigators.FirstName, Datasets.DatasetName, Datasets.DatasetId, Datasets.InvestigatorId, Datasets.DatasetStatusId FROM Datasets JOIN DatasetMapInvestigator on Datasets.DatasetId = DatasetMapInvestigator.DatasetId LEFT JOIN Investigators on Datasets.InvestigatorId = Investigators.InvestigatorId LEFT JOIN DatasetStatus on Datasets.DatasetStatusId = DatasetStatus.DatasetStatusId WHERE DatasetMapInvestigator.InvestigatorId = "'. mysql_real_escape_string($_SESSION['SESS_MEMBER_ID']) . '"')
+  $sql = ('select DatasetStatus.DatasetStatusName, Investigators.LastName, Investigators.FirstName, Datasets.DatasetName, Datasets.DatasetId, Datasets.InvestigatorId, Datasets.DatasetStatusId FROM Datasets JOIN DatasetMapInvestigator on Datasets.DatasetId = DatasetMapInvestigator.DatasetId LEFT JOIN Investigators on Datasets.InvestigatorId = Investigators.InvestigatorId LEFT JOIN DatasetStatus on Datasets.DatasetStatusId = DatasetStatus.DatasetStatusId WHERE DatasetMapInvestigator.InvestigatorId = "'. mysql_real_escape_string($_SESSION['SESS_MEMBER_ID']) . '" ORDER BY Datasets.DatasetId ASC')
+
+	or trigger_error(mysql_error());
+
 	/*
 	 * Create a PS_Pagination object
-	 * 
+	 *
 	 * $conn = MySQL connection object
 	 * $sql = SQl Query to paginate
 	 * 10 = Number of rows per page
@@ -85,63 +103,69 @@
 	 * "param1=valu1&param2=value2" = You can append your own parameters to paginations links
 	 */
 	$pager = new PS_Pagination($conn, $sql, 30, 5, "param1=valu1&param2=value2");
-	
+	//$pager = new PS_Pagination($conn, $result, 30, 5, "param1=valu1&param2=value2");
+
 	/*
 	 * Enable debugging if you want o view query errors
 	*/
 	$pager->setDebug(true);
-	
+
 	/*
 	 * The paginate() function returns a mysql result set
 	 * or false if no rows are returned by the query
 	*/
 	$rs = $pager->paginate();
-	
-	
+
+
 	//Display the full navigation in one go
 	echo $pager->renderFullNav();
-	echo "<br />\n";
+	echo "<p>\n";
 					echo "<div align='left'>";
-    echo "<table border='1'>";
+    echo "<table border='1' CELLPADDING='4' CELLSPACING='3' class='sortable'>";
+    //echo "<TR><TH COLSPAN='4'>My Studies [Click on title to sort table]</TH></TR>";
     echo "<tr>";
-echo "<td><p align='center'>DatasetId</td>";
-echo "<td><p align='center'>DatasetName</td>";
-echo "<td><p align='center'>InvestigatorId</td>";
-echo "<td><p align='center'>DatasetStatusId</td>";
+echo "<td valign='top'><p align='left'><b>Study Id</b></td>";
+echo "<td valign='top'><p align='left'><b>Study Name</b></td>";
+echo "<td valign='top'><p align='left'><b>Principal Investigator</b></td>";
+echo "<td valign='top'><p align='left'><b>Dataset Status</b></td>";
+//echo "<td valign='top'><p align='left'><b>Datasets Related</b></td>";
 echo "<tr>";
 
 	$rs = $pager->paginate();
 	if(!$rs) die(mysql_error());
 	while($row = mysql_fetch_assoc($rs)) {
 		//echo $row['DatasetId'],"<br />\n";
+		//Both Links:  echo "<tr><td><a href=member-studies-edit.html?DatasetId=". $row['DatasetId'] ." target='_blank' '>" . $row['DatasetId'] ."</a></td><td><a href=member-studies-edit.html?DatasetId=". $row['DatasetId'] ." target='_blank' '>" . $row['DatasetName'] . "</td><td>" . $row['LastName'] . "</td><td>" . $row['DatasetStatusName'] . "</td></tr>";
 
-		echo "<tr><td><a href=edit.html?DatasetId=". $row['DatasetId'] ." target='_blank' '>" . $row['DatasetId'] ."</a></td><td>" . $row['DatasetName'] . "</td><td>" . $row['InvestigatorId'] . "</td><td>" . $row['DatasetStatusId'] . "</td></tr>";
+		//echo "<tr><td><a href=member-studies-edit.html?DatasetId=". $row['DatasetId'] ." target='_blank' '>" . $row['DatasetId'] ."</a></td><td>" . $row['DatasetName'] . "</td><td>" . $row['LastName'] . "</td><td>" . $row['DatasetStatusName'] . "</td></tr>";
+		echo "<tr><td><a href=member-studies-edit.html?DatasetId=". $row['DatasetId'] ." target='_blank' '>" . $row['DatasetId'] ."</a></td><td>" . $row['DatasetName'] . "</td><td>" . $row['FirstName'] . "&nbsp;" .$row['LastName'] ."</td><td>" . $row['DatasetStatusName'] . "</td></tr>";
+		//echo "<tr><td><a href=member-studies-edit.html?DatasetId=". $row['DatasetId'] ." target='_blank' '>" . $row['DatasetId'] ."</a></td><td>" . $row['DatasetName'] . "</td><td>" . $row['FirstName'] . "&nbsp;" .$row['LastName'] ."</td><td>" . $row['DatasetStatusName'] . "</td><td>" . $row['GN_AccesionId'] ."</td></tr>";
 
 			}
 		echo "</table>"; //Close the table in HTML
 	/*
 	 * Or you can display the individual links for more
 	 * control over HTML rendering.
-	 * 
+	 *
 	*/
-	
+
 	//Display the link to first page: First
 	echo $pager->renderFirst();
-	
+
 	//Display the link to previous page: <<
 	echo $pager->renderPrev();
-	
+
 	/*
 	 * Display page links: 1 2 3
 	 * $prefix = Will be prepended to the page link (optional)
 	 * $suffix = Will be appended to the page link (optional)
-	 * 
+	 *
 	*/
 	echo $pager->renderNav('<span>', '</span>');
-	
+
 	//Display the link to next page: >>
 	echo $pager->renderNext();
-	
+
 	//Display the link to last page: Last
 	echo $pager->renderLast();
 
@@ -151,106 +175,10 @@ echo "<tr>";
             </div>
         </div>
     </div>
-
-<footer class="footer">
-      <div class="container">
-        <p class="pull-right"><a href="#">Back to top</a></p>
-
-        <p>Launched in 1994 as
-        <A HREF="http://www.ncbi.nlm.nih.gov/pubmed?term=8043953">
-            The Portable Dictionary of the Mouse Genome</A> and in 2001 as WebQTL.
-        </p>
-        <p>Operated by
-            <A HREF="mailto:rwilliams@uthsc.edu">Rob Williams</A>,
-            <A HREF="mailto:lyan6@uthsc.edu">Lei Yan</A>,
-            <A HREF="mailto:zachary.a.sloan@gmail.com">Zachary Sloan</A>, and
-            <A HREF="mailto:acenteno@uthsc.edu" target="_blank">Arthur Centeno</A>.
-        </p>
-        <p>
-            Designed and coded by <a href="http://penguinpython.com">Sam Ockman</a>, Xiaodong Zhou,
-            Christian Fernandez,
-            Ning Liu, Rudi Alberts, Elissa Chesler, Jintao Wang, Kenneth Manly, Robert W. Williams,
-            and <A HREF="/credit.html">colleagues</A>.
-        </p>
-
-        <p>Built with <a href="http://twitter.github.com/bootstrap/">bootstrap</a>,
-            <a href="http://coffeescript.org/">coffeescript</a>,
-            <a href="http://flask.pocoo.org/">flask</a>,
-            <a href="http://en.wikipedia.org/wiki/Linux">linux</a>,
-            <a href="http://www.python.org/">python</a> and good intentions.
-        </p>
-        <p>Special thanks to CYP1A2 and AHR.</p>
-        <br />
-        <p>GeneNetwork is supported by:</p>
-        <UL>
-            <LI>
-                <a target="_blank" href="http://citg.uthsc.edu">
-                    The UT Center for Integrative and Translational Genomics
-                </A>
-            </li>
-            <LI><a target="_blank" href="http://www.iniastress.org">NIAAA</A>
-                Integrative Neuroscience Initiative on Alcoholism
-                (U01 AA016662, U01 AA013499, U24 AA013513, U01 AA014425)
-            </li>
-            <LI>
-                <a target="_blank"
-                   href="http://www.drugabuse.gov/about/organization/Genetics/geneexpression/index.html">NIDA</A>, <a class="smallsize" target="_blank" href="http://www.nimh.nih.gov/">NIMH</A>
-                   , and <a class="smallsize" target="_blank" href="http://www.niaaa.nih.gov/">
-                   NIAAA</A> (P20-DA 21131)
-            </li>
-            <LI>NCI <a target="_blank" href="http://emice.nci.nih.gov/">MMHCC</A> (U01CA105417) and
-                <a target="_blank" href="http://www.ncrr.nih.gov/">NCRR</A>
-                <a target="_blank" href="http://www.nbirn.net/TestBeds/Mouse/index.htm">BIRN</A>
-                (U24 RR021760)
-            </li>
-        </UL>
-        <!--</p>-->
-
-        <ul class="footer-links">
-          <li><a href="http://atlas.uthsc.edu/mailman/listinfo/genenetwork" target="_blank">Join the mailing list</a></li>
-          <!--<li><a href="#">Friend us on facebook</a></li>-->
-          <!--<li><a href="#">Follow us on twitter</a></li>-->
-        </ul>
-      </div>
-    </footer>
-
-    <!--http://stackoverflow.com/questions/14045515/how-can-i-reuse-one-bootstrap-modal-div-->
-    <!-- Modal -->
-    <div id="utility" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <!--<div class="modal-header">-->
-      <!--  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
-      <!--  <h3 id="myModalLabel">Register</h3>-->
-      <!--</div>-->
-      <div class="modal-body">
-        <p>.</p>
-      </div>
-      <!--<div class="modal-footer">-->
-      <!--  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>-->
-      <!--  <button class="btn btn-primary">Save changes</button>-->
-      <!--</div>-->
-    </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="/static/packages/bootstrap/js/bootstrap.min.js"></script>
-    <script>
-            //http://stackoverflow.com/questions/11521763/bootstrap-scrollspy-not-working
-            var $window = $(window)
-            $('.bs-docs-sidenav').affix({
-              offset: {
-                top: function () { return $window.width() <= 980 ? 290 : 210 }
-              , bottom: 270
-              }
-            })
-    </script>
-    <script src="/static/new/js_external/jquery.cookie.js"></script>
-    <script type="text/javascript" src="/static/new/js_external/json2.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js" type="text/javascript"></script>
-
-    <script language="javascript" type="text/javascript" src="/static/packages/colorbox/jquery.colorbox.js"></script>
-    <script type="text/javascript" src="/static/new/javascript/login.js"></script>
-    
-    <script src="/static/new/javascript/dataset_select_menu.js"></script>
-
-</body>
-</html>
-	
+<!-- ===== End of content ===== -->
+		</TD>
+		</TR>
+		</TABLE>
+		</TD>
+	</TR>
+	<!-- End of body -->
