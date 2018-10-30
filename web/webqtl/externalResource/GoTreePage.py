@@ -53,35 +53,50 @@ class GoTreePage(templatePage):
 		#XZ, 8/24/2009: the name of arraylist is misleading. It holds the name of traits.
 		arraylist, geneIdList = self.genGeneIdList(fd)
 		
-		target_url = "http://bioinfo.vanderbilt.edu/webgestalt/webgestalt.php"
+		#target_url = "http://bioinfo.vanderbilt.edu/webgestalt/webgestalt.php"
+		target_url = "http://www.webgestalt.org/2019/process.php"
 		
 		formWebGestalt = HT.Form(cgi=target_url, enctype='multipart/form-data', name='WebGestalt', submit = HT.Input(type='hidden'))
 
-		id_type = chipName
+		#id_type = chipName
+		id_type = "entrezgene"
 
-		hddnWebGestalt = {'id_list':string.join(arraylist, ","),
+		#hddnWebGestalt = {'id_list':string.join(arraylist, ","),
+		hddnWebGestalt = {'gene_list': string.join(geneIdList, "\n"),
 				  'id_type':id_type}
 		
-		hddnWebGestalt['ref_type'] = hddnWebGestalt['id_type']
-		hddnWebGestalt['analysis_type'] = 'GO'
-		hddnWebGestalt['significancelevel'] = '.05'
-		hddnWebGestalt['stat'] = 'Hypergeometric'
-		hddnWebGestalt['mtc'] = 'BH'
-		hddnWebGestalt['min'] = '2'
-		hddnWebGestalt['id_value'] = fd.formdata.getvalue('correlation') 
+		#hddnWebGestalt['ref_type'] = hddnWebGestalt['id_type']
+		hddnWebGestalt['ref_set'] = 'genome' # or other options like genome_protein-coding
+		#hddnWebGestalt['analysis_type'] = 'GO'
+		hddnWebGestalt['enriched_database_category'] = "geneontology"
+		hddnWebGestalt['enriched_database_name'] = "Molecular_Function"
+		#hddnWebGestalt['significancelevel'] = '.05'
+		hddnWebGestalt['sig_method'] = 'fdr'
+		hddnWebGestalt['sig_value'] = '0.05'
+		#hddnWebGestalt['stat'] = 'Hypergeometric'
+		hddnWebGestalt['enrich_method'] = 'ORA'
+		#hddnWebGestalt['mtc'] = 'BH'
+		hddnWebGestalt['fdr_method'] = 'BH'
+		#hddnWebGestalt['min'] = '2'
+		hddnWebGestalt['min_num'] = '2'
+		#hddnWebGestalt['id_value'] = fd.formdata.getvalue('correlation')
 			
                 species = webqtlDatabaseFunction.retrieveSpecies(cursor=self.cursor, RISet=fd.RISet)
 
                 if species == 'rat':
-                    hddnWebGestalt['org'] = 'Rattus norvegicus'
+                    #hddnWebGestalt['org'] = 'Rattus norvegicus'
+					hddnWebGestalt['organism'] = 'rnorvegicus'
                 elif species == 'human':
-                    hddnWebGestalt['org'] = 'Homo sapiens'
+                    #hddnWebGestalt['org'] = 'Homo sapiens'
+					hddnWebGestalt['organism'] = 'hsapiens'
                 elif species == 'mouse':
-                    hddnWebGestalt['org'] = 'Mus musculus'
+                    #hddnWebGestalt['org'] = 'Mus musculus'
+					hddnWebGestalt['organism'] = 'mmusculus'
                 else:
-                    hddnWebGestalt['org'] = ''
+                    #hddnWebGestalt['org'] = ''
+					hddnWebGestalt['organism'] = 'others'
 
-		hddnWebGestalt['org'] = hddnWebGestalt['org'].replace(' ','_')
+		#hddnWebGestalt['org'] = hddnWebGestalt['org'].replace(' ','_')
 		
 		for key in hddnWebGestalt.keys():
 				formWebGestalt.append(HT.Input(name=key, value=hddnWebGestalt[key], type='hidden'))

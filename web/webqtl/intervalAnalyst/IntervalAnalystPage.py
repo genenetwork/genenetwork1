@@ -24,7 +24,8 @@
 #
 # Last updated by GeneNetwork Core Team 2010/10/20
 
-from mod_python import apache, util, Cookie
+#from mod_python import apache, util, Cookie
+from mod_python import apache, util
 import os
 import time
 import pyXLWriter as xl
@@ -75,7 +76,7 @@ class IntervalAnalystPage(templatePage):
 			}
 
 	###Species Freeze
-	speciesFreeze = {'mouse':'mm9', 'rat':'rn3', 'human':'hg19'}
+	speciesFreeze = {'mouse':'mm10', 'rat':'rn3', 'human':'hg19'}
 	for key in speciesFreeze.keys():
 		speciesFreeze[speciesFreeze[key]] = key
 	
@@ -105,8 +106,8 @@ class IntervalAnalystPage(templatePage):
 			self.diffColDefault = self.diffCol = [s1, s2]
 		except:
 			self.diffColDefault = self.diffCol = []
-			if self.species !=  'mouse':
-				self.diffColDefault = [2, 3]#default is B6 and D2 for other species
+			#if self.species !=  'mouse': #ZS: This caused the SNPs column to display all 0s when the Interval Analyst wasn't accessed from mapping results
+			self.diffColDefault = [2, 3]#default is B6 and D2 for other species
 			
 		controlFrm, dispFields = self.genControlForm(fd)
 		geneTable, filename = self.genGeneTable(fd, dispFields)
