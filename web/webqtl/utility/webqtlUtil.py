@@ -443,7 +443,7 @@ def calCorrelationRank(xVals,yVals,N):
 	j = 0
 	
 	for i in range(len(xVals)):
-		if xVals[i]!= None and yVals[i]!= None:
+		if (xVals[i]!= None or xVals[i] == 0) and (yVals[i]!= None or yVals[i] == 0):
 			XX.append((j,xVals[i]))
 			YY.append((j,yVals[i]))
 			j = j+1
@@ -535,7 +535,7 @@ def calCorrelationRankText(dbdata,userdata,N): ### dcrowell = David Crowell, Jul
         YY = []
         j = 0
         for i in range(N):
-                if (dbdata[i]!= None and userdata[i]!=None) and (dbdata[i]!= 'None' and userdata[i]!='None'):
+                if ((dbdata[i]!= None or dbdata[i] == 0) and (userdata[i]!=None or userdata[i] == 0)) and (dbdata[i]!= 'None' and userdata[i]!='None'):
                         XX.append((j,float(dbdata[i])))
                         YY.append((j,float(userdata[i])))
                         j += 1
@@ -623,7 +623,7 @@ def calCorrelation(dbdata,userdata,N):
 	X = []
 	Y = []
 	for i in range(N):
-		if dbdata[i]!= None and userdata[i]!= None:
+		if (dbdata[i]!= None or dbdata[i] == 0) and (userdata[i]!= None or userdata[i] == 0):
 			X.append(dbdata[i])
 			Y.append(userdata[i])
 	NN = len(X)
@@ -655,7 +655,7 @@ def calCorrelationText(dbdata,userdata,N): ### dcrowell July 2008
                 #if (dbdata[i]!= None and userdata[i]!= None) and (dbdata[i]!= 'None' and userdata[i]!= 'None'):
                 #               X.append(float(dbdata[i]))
                 #               Y.append(float(userdata[i]))
-                if dbdata[i] == None or dbdata[i] == 'None' or userdata[i] == None or userdata[i] == 'None':
+                if (dbdata[i] == None and dbdata[i] != 0) or dbdata[i] == 'None' or (userdata[i] == None and dbdata[i] != 0) or userdata[i] == 'None':
                         continue
                 else:
                         X.append(float(dbdata[i]))

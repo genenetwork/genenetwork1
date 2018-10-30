@@ -160,7 +160,7 @@ if speciesResultsTotalNum >0:
 					if cross=='MDP':
 						datasetTxt = "Mouse Phenome Database"
 					else: 
-						datasetTxt = "%s Published Phenotypes" % cross
+						datasetTxt = "%s Phenotypes" % cross
 					datasetVal = "%sPublish" % cross
 					outputDatabaseStr += '{txt:\'%s\',val:\'%s\'},\n'% (datasetTxt,datasetVal)
 					datasetTotalResults.append(('%s'% datasetVal,'%s' % datasetTxt)) 
