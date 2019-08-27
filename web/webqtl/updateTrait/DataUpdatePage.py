@@ -199,7 +199,7 @@ class DataUpdatePage(templatePage):
 				else:
 					traitVar = 'x'
 				if traitNP != None:	
-					traitNP = "%d" % traitNP
+					traitNP = "%s" % traitNP
 				else:
 					traitNP = 'x'
 						
@@ -354,7 +354,7 @@ class DataUpdatePage(templatePage):
 				else:
 					traitVar = 'x'
 				if traitNP != None:	
-					traitNP = "%d" % traitNP
+					traitNP = "%s" % traitNP
 				else:
 					traitNP = 'x'
 					
@@ -367,7 +367,7 @@ class DataUpdatePage(templatePage):
 				except:
 					modifiedVar = 'x'
 				try:	
-					modifiedNp = "%d" % fd.allTraitData[strainName].N
+					modifiedNp = "%s" % fd.allTraitData[strainName].N
 				except:
 					modifiedNp = 'x'
 				
@@ -728,7 +728,11 @@ class DataUpdatePage(templatePage):
 					if _var != None:
 						self.cursor.execute('insert into PublishSE values(%d, %d, %s)' % (dataID, sId, _var))
 					if _N != None:
-						self.cursor.execute('insert into NStrain values(%d, %d, %s)' % (dataID, sId, _N))
+						try:
+							n_as_float = float(_N) #ZS:Checking if N is expressed as an integer or float, since it should never have letters
+							self.cursor.execute('insert into NStrain values(%d, %d, %s)' % (dataID, sId, _N))
+						except:
+							pass
 				else:
 					pass
 			#end for

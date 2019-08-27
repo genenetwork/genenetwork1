@@ -375,6 +375,8 @@ class CorrelationMatrixPage(templatePage):
                 # import numarray.linear_algebra as la
                 #spearmanEigen = eigenvectors(array(spearmanArray))
                 pearsonEigen = la.eigenvectors(numarray.array(pearsonArray))
+		TD_LR.append(HT.Paragraph(pearsonArray))
+		TD_LR.append(HT.Paragraph(pearsonEigen))
                 #spearmanEigenValue,spearmanEigenVectors = self.sortEigenVectors(spearmanEigen)
                 pearsonEigenValue,pearsonEigenVectors = self.sortEigenVectors(pearsonEigen)
 		
@@ -396,7 +398,7 @@ class CorrelationMatrixPage(templatePage):
 		   pass
 		else:
             	   traitHeading = HT.Paragraph('PCA Traits',align='left', Class="title")  
-                   
+
         	   tbl2 = self.calcPCATraits(traitDataList=traitDataList, nnCorr=nnCorr, NNN=NNN, pearsonEigenValue=pearsonEigenValue, 
                                          pearsonEigenVectors=pearsonEigenVectors, form=form, fd=fd)
                    #Buttons on search page

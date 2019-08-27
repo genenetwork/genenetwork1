@@ -38,9 +38,9 @@ def basicStatsTable(vals, trait_type=None, cellid=None, heritability=None, trait
 	tbl.append(HT.TR(HT.TD("Standard Deviation (SD)", align="left", Class="fs13 b1 cbw c222",nowrap="yes"),
 			HT.TD("%2.3f" % traitstdev,nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
 	tbl.append(HT.TR(HT.TD("Minimum", align="left", Class="fs13 b1 cbw c222",nowrap="yes"),
-			HT.TD("%s" % dataXZ[0][1],nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
+			HT.TD("%.3f" % dataXZ[0][1],nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
 	tbl.append(HT.TR(HT.TD("Maximum", align="left", Class="fs13 b1 cbw c222",nowrap="yes"),
-			HT.TD("%s" % dataXZ[-1][1],nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
+			HT.TD("%.3f" % dataXZ[-1][1],nowrap="yes", Class="fs13 b1 cbw c222"), align="right"))
 	if (trait_type != None and trait_type == 'ProbeSet'):
 		if trait != None and trait.db.datascale == "linear":
 			try:

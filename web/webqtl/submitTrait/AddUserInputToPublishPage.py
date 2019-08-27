@@ -237,9 +237,9 @@ class AddUserInputToPublishPage(templatePage):
 					#print 'insert into SE values(%d, %d, %s)' % (DataId, StrainIds[i], traitVar), "<BR>"
 					#XZ, 03/13/2009: Xiaodong changed SE to PublishSE
 					self.cursor.execute('insert into PublishSE values(%d, %d, %s)' % (DataId, StrainIds[i], traitVar))
-				if traitNP != None:
+				if traitNP != None and traitNP != "x":
 					#print 'insert into NStrain values(%d, %d, %s)' % (DataId, StrainIds[i], traitNP), "<BR>"
-					self.cursor.execute('insert into NStrain values(%d, %d, %d)' % (DataId, StrainIds[i], traitNP))
+					self.cursor.execute('insert into NStrain values(%d, %d, %s)' % (DataId, StrainIds[i], traitNP))
 
 
 			self.cursor.execute('SelecT max(Sequence) from PublishXRef where InbredSetId = %d and PhenotypeId = %d and PublicationId = %d' % (InbredSetId,PhenotypeId,PublicationId))
@@ -338,7 +338,7 @@ class AddUserInputToPublishPage(templatePage):
 			else:
 				traitVar = 'x'
 			if traitNP != None:	
-				traitNP = "%d" % traitNP
+				traitNP = "%s" % traitNP
 			else:
 				traitNP = 'x'
 					
@@ -479,7 +479,7 @@ class AddUserInputToPublishPage(templatePage):
 			else:
 				traitVar = 'x'
 			if traitNP != None:	
-				traitNP = "%d" % traitNP
+				traitNP = "%s" % traitNP
 			else:
 				traitNP = 'x'
 

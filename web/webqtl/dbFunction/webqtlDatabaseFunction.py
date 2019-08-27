@@ -38,7 +38,7 @@ from base import webqtlConfig
 ###########################################################################
 def getCursor():
     try:
-        con = MySQLdb.Connect(db=webqtlConfig.DB_NAME, host=webqtlConfig.MYSQL_SERVER, user=webqtlConfig.DB_USER, passwd=webqtlConfig.DB_PASSWD)
+        con = MySQLdb.Connect(db=webqtlConfig.DB_NAME, host=webqtlConfig.MYSQL_SERVER, port=3306, user=webqtlConfig.DB_USER, passwd=webqtlConfig.DB_PASSWD)
         cursor = con.cursor()
         return cursor
     except:

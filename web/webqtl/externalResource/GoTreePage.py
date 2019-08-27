@@ -54,8 +54,8 @@ class GoTreePage(templatePage):
 		arraylist, geneIdList = self.genGeneIdList(fd)
 		
 		#target_url = "http://bioinfo.vanderbilt.edu/webgestalt/webgestalt.php"
-		target_url = "http://www.webgestalt.org/2019/process.php"
-		
+		#target_url = "http://www.webgestalt.org/2019/process.php"
+		target_url = "http://www.webgestalt.org/option.php"
 		formWebGestalt = HT.Form(cgi=target_url, enctype='multipart/form-data', name='WebGestalt', submit = HT.Input(type='hidden'))
 
 		#id_type = chipName
@@ -69,7 +69,8 @@ class GoTreePage(templatePage):
 		hddnWebGestalt['ref_set'] = 'genome' # or other options like genome_protein-coding
 		#hddnWebGestalt['analysis_type'] = 'GO'
 		hddnWebGestalt['enriched_database_category'] = "geneontology"
-		hddnWebGestalt['enriched_database_name'] = "Molecular_Function"
+		#hddnWebGestalt['enriched_database_name'] = "Molecular_Function"
+		hddnWebGestalt['enriched_database_name'] = "Biological_Process"
 		#hddnWebGestalt['significancelevel'] = '.05'
 		hddnWebGestalt['sig_method'] = 'fdr'
 		hddnWebGestalt['sig_value'] = '0.05'

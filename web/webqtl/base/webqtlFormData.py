@@ -278,7 +278,7 @@ class webqtlFormData:
 	
 	def FormNAsFloat(self, key):
 		try:
-			return int(self.formdata.getfirst('N' + key))
+			return self.formdata.getfirst('N' + key)
 		except:
 			return None
 		

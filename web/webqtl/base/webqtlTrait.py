@@ -163,7 +163,7 @@ class webqtlTrait:
 	__str__ = getName
 	__repr__ = __str__
 
-	def exportData(self, strainlist, type="val"):
+	def exportData(self, strainlist, type="val", var_exists=False, n_exists=False):
 		"""
 			export data according to strainlist
 			mostly used in calculating correlation
@@ -177,10 +177,37 @@ class webqtlTrait:
 					result.append(self.data[strain].var)
 				elif type=='N':
 					result.append(self.data[strain].N)
+				elif type=='all':
+					sample_data = []
+					if self.data[strain].val:
+						sample_data.append(self.data[strain].val)
+						if var_exists:
+							if self.data[strain].var:
+								sample_data.append(self.data[strain].var)
+							else:
+								sample_data.append(None)
+						if n_exists:
+							if self.data[strain].N:
+								sample_data.append(self.data[strain].N)
+							else:
+								sample_data.append(None)
+					else:
+						if var_exists and n_exists:
+							sample_data += [None, None, None]
+						elif var_exists or n_exists:
+							sample_data += [None, None]
+						else:
+							sample_data.append(None)
+					result += sample_data
 				else:
 					raise KeyError, `type`+' type is incorrect.'
 			else:
-				result.append(None)
+				if var_exists and n_exists:
+					result += [None, None, None]
+				elif var_exists or n_exists:
+					result += [None, None]
+				else:
+					result.append(None)
 		return result
 		
 	def exportInformative(self, incVar=0):

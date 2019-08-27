@@ -45,7 +45,7 @@ class webqtlCaseData:
 		if self.var != None:
 			str += " variance=%2.3f" % self.var
 		if self.N != None:
-			str += " ndata=%d" % self.N
+			str += " ndata=%s" % self.N
 		return str
 	
 	__repr__ = __str__
