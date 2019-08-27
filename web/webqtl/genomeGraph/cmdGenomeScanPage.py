@@ -74,15 +74,15 @@ class cmdGenomeScanPage(templatePage):
 			##################################################
 			#  exon data is too huge for GenoGraph, skip it  #
 			##################################################
-			self.cursor.execute('select count(*) from ProbeSetXRef where ProbeSetFreezeId=%d' % db.id)
-			amount = self.cursor.fetchall()
-			if amount:
-				amount = amount[0][0]
-				if amount>100000:
-					heading = "Whole Transcriptome Mapping"
-					detail = ["Whole Transcriptome Mapping is not available for this data set."]
-					self.error(heading=heading,detail=detail)
-					return
+			#self.cursor.execute('select count(*) from ProbeSetXRef where ProbeSetFreezeId=%d' % db.id)
+			#amount = self.cursor.fetchall()
+			#if amount:
+			#	amount = amount[0][0]
+			#	if amount>100000:
+			#		heading = "Whole Transcriptome Mapping"
+			#		detail = ["Whole Transcriptome Mapping is not available for this data set."]
+			#		self.error(heading=heading,detail=detail)
+			#		return
 
 			self.cursor.execute("""
 				Select 

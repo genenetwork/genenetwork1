@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Omics Portal For Addiction Research</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.min.css" rel="stylesheet">
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+
+</head>
+
+<body>
+  <!-- Content here -->
+
+<nav class="navbar navbar-expand-lg navbar-dark unique-color">
+    <a class="navbar-brand" href="#">OPAR beta</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Tools</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="http://nervenet.org/opar-beta/search.html" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                Dropdown link
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="http://opar.io/">OPAR</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<?php
+	//require_once("../includes/header.html");
+?>
+
+<!--///////////////////////////////////////////////-->
+<!--Jumbotron-->
+<div>
+<div>
+<?php
+	echo ("running");
+	//shell_exec("/Users/acenteno/OPARprivate/gene_report/pubmed_gene_addiction_counts.sh shh 2>&1 | tee -a /tmp/mylog 2>/dev/null >/dev/null &");
+	//shell_exec("sudo -S /Users/acenteno/OPARprivate/gene_report/pubmed_gene_addiction_counts.sh shh 2>&1 | tee -a /tmp/mylog 2>/dev/null >/dev/null &");
+	//echo exec('ls -l');
+	//echo exec('whoami');
+	//shell_exec ('whoami');
+?>
+</div>
+
+<div id="geo" style="width:600px;height:350px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+<script src="js/data.js"></script>
+<!--<script>
+var data = [{
+  x: ['alcohol', 'cannabinoid', 'cocaine', '(meth)amphetamine', 'nicotine', 'opioids'],
+  y: [86, 2, 2, 14, 18, 4],
+  type: 'bar'
+}];
+
+Plotly.newPlot('geo', data);
+</script>-->
+
+</div>
+
+<div>
+
+<div id="geneCounts" style="width:600px;height:350px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+<script src="js/data2.js"></script>
+</div>
+
+<!--Jumbotron-->
+<!--///////////////////////////////////////////////-->
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <script type="text/javascript" src="js/pagination.js"></script>
+ <!--</div>-->
+</body>
+
+<!-- Footer -->
+<footer class="page-footer font-small unique-color">
+
+    <!-- Footer Links -->
+    <div class="container-fluid text-center text-md-left">
+
+      <!-- Grid row -->
+      <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-md-6 mt-md-0 mt-3">
+
+          <!-- Content -->
+          <h5 class="text-uppercase">Footer Content</h5>
+          <p>Here you can use rows and columns here to organize your footer content.</p>
+
+        </div>
+        <!-- Grid column -->
+
+        <hr class="clearfix w-100 d-md-none pb-3">
+
+        <!-- Grid column -->
+        <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5 class="text-uppercase">Links</h5>
+
+            <ul class="list-unstyled">
+              <li>
+                <a href="#!">Link 1</a>
+              </li>
+              <li>
+                <a href="#!">Link 2</a>
+              </li>
+              <li>
+                <a href="#!">Link 3</a>
+              </li>
+              <li>
+                <a href="#!">Link 4</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5 class="text-uppercase">Links</h5>
+
+            <ul class="list-unstyled">
+              <li>
+                <a href="#!">Link 1</a>
+              </li>
+              <li>
+                <a href="#!">Link 2</a>
+              </li>
+              <li>
+                <a href="#!">Link 3</a>
+              </li>
+              <li>
+                <a href="#!">Link 4</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+
+    </div>
+    <!-- Footer Links -->
+
+    <!-- Copyright -->
+  <div class="footer-copyright text-center py-3 special-color">OPAR University of Tennessee Health Science Center
+  <p class="pull-right"><a href="#">Back to top  </a></p></div>
+      
+    
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
+
+
+<!-- Footer -->
+<!--<footer class="page-footer font-small blue">-->
+
+  <!-- Copyright -->
+  <!--<div class="footer-copyright text-center py-3">OPAR University of Tennessee Health Science Center
+  <p class="pull-right"><a href="#">Back to top</a></p>
+  </div>-->
+  <!-- Copyright -->
+
+<!--</footer>-->
+<!-- Footer -->
+
+    <!-- /Start your project here-->
+
+
+</html>

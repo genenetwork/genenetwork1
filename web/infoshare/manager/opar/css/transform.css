@@ -1,0 +1,28 @@
+
+table, tr, td, th {
+  border: 0px solid #000;
+  position: relative;
+  padding: 10px;
+}
+
+th span {
+  transform-origin: 0 50%;
+  transform: rotate(-90deg); 
+  //transform: rotate(-45deg); 
+  white-space: nowrap; 
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+}
+
+#select-div select {
+    display:none;
+}
+
+#select-div.tech #techy {
+    display:block;
+}
+
+#select-div.non-tech #non-techy {
+    display:block;

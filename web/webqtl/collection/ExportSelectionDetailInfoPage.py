@@ -79,8 +79,9 @@ class ExportSelectionDetailInfoPage(templatePage):
 		if type("1") == type(self.searchResult):
 			self.searchResult = string.split(self.searchResult,'\t')
 		strainlist = fd.f1list + fd.strainlist
-		fields = ["ID", "Species", "Cross", "Database", "ProbeSetID / RecordID", "Symbol", "Description", "ProbeTarget", "PubMed_ID", "Phenotype", "Chr", "Mb", "Alias", "Gene_ID", "HomoloGene_ID", "UniGene_ID", "Strand_Probe ", "Strand_Gene ", "Probe_set_specificity", "Probe_set_BLAT_score", "Probe_set_BLAT_Mb_start", "Probe_set_BLAT_Mb_end ", "QTL_Chr", "QTL_Mb", "Locus_at_Peak", "Max_LRS", "P_value_of_MAX", "Mean_Expression"] + strainlist
 		
+		debug_file = open("/gnshare/gn/web/debug_file.txt", "w")
+
 		if self.searchResult:
 			traitList = []
 			for item in self.searchResult:
@@ -89,7 +90,24 @@ class ExportSelectionDetailInfoPage(templatePage):
 				thisTrait.retrieveData(strainlist=strainlist)
 				traitList.append(thisTrait)
 
+			var_exists = check_for_var(traitList, strainlist)
+			n_exists = check_for_n(traitList, strainlist)
+
+			strain_headers = []
+			for strain in strainlist:
+				if var_exists and n_exists:
+					strain_headers += [strain, strain + "_SE", strain + "_N"]
+				elif var_exists:
+					strain_headers += [strain, strain + "_SE"]
+				elif n_exists:
+					strain_headers += [strain, strain + "_N"]
+				else:
+					strain_headers.append(strain)
+
+			fields = ["ID", "Species", "Cross", "Database", "ProbeSetID / RecordID", "Symbol", "Description", "ProbeTarget", "PubMed_ID", "Phenotype", "Chr", "Mb", "Alias", "Gene_ID", "HomoloGene_ID", "UniGene_ID", "Strand_Probe ", "Strand_Gene ", "Probe_set_specificity", "Probe_set_BLAT_score", "Probe_set_BLAT_Mb_start", "Probe_set_BLAT_Mb_end ", "QTL_Chr", "QTL_Mb", "Locus_at_Peak", "Max_LRS", "P_value_of_MAX", "Mean_Expression"] + strain_headers
+
 			text = [fields]
+
 			for i, thisTrait in enumerate(traitList):
 				if thisTrait.db.type == 'ProbeSet':
 					if not thisTrait.cellid: #ProbeSet
@@ -115,7 +133,7 @@ class ExportSelectionDetailInfoPage(templatePage):
 				else:
 					continue
 				
-				testval = thisTrait.exportData(strainlist)
+				testval = thisTrait.exportData(strainlist, type='all', var_exists=var_exists, n_exists=n_exists)
 				try:
 					mean = reaper.anova(testval)[0]
 				except:
@@ -196,5 +214,28 @@ class ExportSelectionDetailInfoPage(templatePage):
 			heading = 'Export Collection'
 			detail = [HT.Font('Error : ',color='red'),HT.Font('Error occurs while retrieving data from database.',color='black')]
 			self.error(heading=heading,detail=detail)
-			
+
+def check_for_var(trait_list, strainlist):
+	for this_trait in trait_list:
+		sample_vars = this_trait.exportData(strainlist, type="var")
+		for variance in sample_vars:
+			try:
+				var_as_float = float(variance)
+				return True
+			except:
+				continue
+	
+	return False
+
+def check_for_n(trait_list, strainlist):
+	for this_trait in trait_list:
+		sample_ns = this_trait.exportData(strainlist, type="N")
+		for the_n in sample_ns:
+			try:
+				n_as_float = float(the_n)
+				return True
+			except:
+				continue
+	
+	return False
 			

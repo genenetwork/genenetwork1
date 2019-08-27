@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Omics Portal For Addiction Research</title>
+    <!-- Font Awesome -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.min.css" rel="stylesheet">
+        <!-- Custom CSS -->
+    <link href="css/modern-business.css" rel="stylesheet">
+    <link href="css/default-nav.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/transform.css">
+
+    <!-- Custom Fonts -->
+    <!--<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">-->
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script type="text/javascript">
+$(function() {
+    var header_height = 0;
+    $('table th span').each(function() {
+        if ($(this).outerWidth() > header_height) header_height = $(this).outerWidth();
+    });
+
+    $('table th').height(header_height);
+});
+</script>
+<!--Used by multiselect form-->
+<!--<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">-->
+<!--<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css">-->
+      <!--<link rel="stylesheet" href="docs/css/bootstrap-3.3.2.min.css" type="text/css">-->
+        <!--<link rel="stylesheet" href="docs/css/bootstrap-example.min.css" type="text/css">-->
+        <link rel="stylesheet" href="docs/css/prettify.min.css" type="text/css">
+
+        <script type="text/javascript" src="docs/js/jquery-2.1.3.min.js"></script>
+        <script type="text/javascript" src="docs/js/bootstrap-3.3.2.min.js"></script>
+        <script type="text/javascript" src="docs/js/prettify.min.js"></script>
+
+        <link rel="stylesheet" href="dist/css/bootstrap-multiselect.css" type="text/css">
+        <script type="text/javascript" src="dist/js/bootstrap-multiselect.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                window.prettyPrint() && prettyPrint();
+            });
+        </script>
+<!--Used by multiselect form ends -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+<!-- NAVIGATION BAR FROM MDB STARTS HERE -->
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark unique-color" style="background-color: #4c7297;">
+<!--<nav class="navbar navbar-expand-lg navbar-dark unique-color">-->
+    <a class="navbar-brand" href="index.html">OPAR beta</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    
+    <ul class="navbar-nav">
+		<li <?php if($activePage == 'index') {echo 'class="nav-item active"';} ?>><a class="nav-link" href="index.html">Home</a></li>
+		<li <?php if($activePage == 'search'){echo 'class="nav-item active"';} ?>><a class="nav-link" href="search.html">Search </a></li>
+		<li <?php if($activePage == 'snpbrowser'){echo 'class="nav-item active"';} ?>><a class="nav-link" href="snpbrowser.html">SNP Browser </a></li>
+		<li <?php if($activePage == 'about') {echo 'class="nav-item active"';} ?>><a class="nav-link" href="about.html">About Us </a></li>
+	</ul>
+        <!--<ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="search.html">Search</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">SNP Browser <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="about.html">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Tools</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="http://www.opar.io/search.html" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="true">
+                More
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="http://opar.io/">OPAR</a>
+                    <a class="dropdown-item" href="#">Another link</a>
+                    <a class="dropdown-item" href="#">Another link</a>
+                </div>
+            </li>
+        </ul>-->
+    </div>
+</nav>
+
+<!-- NAVIGATION BAR FROM MDB ENDS HERE -->

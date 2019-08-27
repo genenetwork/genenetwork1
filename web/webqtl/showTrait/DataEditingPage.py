@@ -797,8 +797,8 @@ class DataEditingPage(templatePage):
 					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('mouse', 'mm10', thisTrait.sequence)
 					UTHSC_BLAT_URL = webqtlConfig.UTHSC_BLAT % ('mouse', 'mm10', thisTrait.sequence)
 				elif _Species == "human":
-					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('human', 'hg19', blatsequence)
-					UTHSC_BLAT_URL = webqtlConfig.UTHSC_BLAT % ('human', 'hg19', thisTrait.sequence)
+					UCSC_BLAT_URL = webqtlConfig.UTHSC_BLAT2 % ('human', 'hg38', blatsequence)
+					UTHSC_BLAT_URL = webqtlConfig.UTHSC_BLAT % ('human', 'hg38', thisTrait.sequence)
 				else:
 					UCSC_BLAT_URL = ""
 					UTHSC_BLAT_URL = ""
@@ -1637,7 +1637,7 @@ class DataEditingPage(templatePage):
 	##########################################
 	def dispTraitValues(self, fd , title5Body, varianceDataPage, nCols, mainForm, thisTrait):
 		traitTableOptions = HT.Div(style="border: 3px solid #EEEEEE; -moz-border-radius: 10px; -webkit-border-radius: 10px; width: 625px; padding: 5px 5px 10px 8px; font-size: 12px; background: #DDDDDD;")
-		resetButton = HT.Input(type='button',name='resetButton',value=' Reset ',Class="button")
+		resetButton = HT.Input(type='button',name='resetButton',value=' Reset2 ',Class="button")
 		blockSamplesField = HT.Input(type="text",style="background-color:white;border: 1px solid black;font-size: 14px;", name="removeField")
 		blockSamplesButton = HT.Input(type='button',value=' Block ', name='blockSamples', Class="button")
 		showHideNoValue = HT.Input(type='button', name='showHideNoValue', value=' Hide No Value ',Class='button')
@@ -1651,27 +1651,28 @@ class DataEditingPage(templatePage):
 
 		attribute_ids = []
 		attribute_names = []
-		try:
-			#ZS: Id values for this trait's extra attributes; used to create "Exclude" dropdown and query for attribute values and create
-			self.cursor.execute("""SELECT CaseAttribute.Id, CaseAttribute.Name
-                                			FROM CaseAttribute, CaseAttributeXRef
-                                          	WHERE CaseAttributeXRef.ProbeSetFreezeId = '%s' AND
-                                          		CaseAttribute.Id = CaseAttributeXRef.CaseAttributeId
-                                                 	group by CaseAttributeXRef.CaseAttributeId""" % (str(thisTrait.db.id)))
+		#try:
+		#ZS: Id values for this trait's extra attributes; used to create "Exclude" dropdown and query for attribute values and create
+		self.cursor.execute("""SELECT CaseAttribute.Id, CaseAttribute.Name
+                                			FROM CaseAttribute, CaseAttributeXRefNew, InbredSet
+                                          	WHERE CaseAttributeXRefNew.InbredSetId = InbredSet.Id AND
+                                                        InbredSet.Name = '%s' AND
+                                          		CaseAttribute.Id = CaseAttributeXRefNew.CaseAttributeId
+                                                 	group by CaseAttributeXRefNew.CaseAttributeId""" % (str(fd.RISet)))
 
-			exclude_menu = HT.Select(name="exclude_menu")
-			dropdown_menus = [] #ZS: list of dropdown menus with the distinct values of each attribute (contained in DIVs so the style parameter can be edited and they can be hidden) 
+		exclude_menu = HT.Select(name="exclude_menu")
+		dropdown_menus = [] #ZS: list of dropdown menus with the distinct values of each attribute (contained in DIVs so the style parameter can be edited and they can be hidden) 
 
-			for attribute in self.cursor.fetchall():
-				attribute_ids.append(attribute[0])
-				attribute_names.append(attribute[1])
-			for this_attr_name in attribute_names:
-				exclude_menu.append((this_attr_name.capitalize(), this_attr_name))
-				self.cursor.execute("""SELECT DISTINCT CaseAttributeXRef.Value
-								FROM CaseAttribute, CaseAttributeXRef
-								WHERE CaseAttribute.Name = '%s' AND
-									CaseAttributeXRef.CaseAttributeId = CaseAttribute.Id""" % (this_attr_name))
-				try:
+		for attribute in self.cursor.fetchall():
+			attribute_ids.append(attribute[0])
+			attribute_names.append(attribute[1])
+		for this_attr_name in attribute_names:
+			exclude_menu.append((this_attr_name.capitalize(), this_attr_name))
+			self.cursor.execute("""SELECT DISTINCT CaseAttributeXRefNew.Value
+							FROM CaseAttribute, CaseAttributeXRefNew
+							WHERE CaseAttribute.Name = '%s' AND
+								CaseAttributeXRefNew.CaseAttributeId = CaseAttribute.Id""" % (this_attr_name))
+			try:
 					distinct_values = self.cursor.fetchall()
 					attr_value_menu_div = HT.Div(style="display:none;", Class="attribute_values") #container used to show/hide dropdown menus
 					attr_value_menu = HT.Select(name=this_attr_name)
@@ -1680,10 +1681,10 @@ class DataEditingPage(templatePage):
 						attr_value_menu.append((str(value[0]), value[0]))
 					attr_value_menu_div.append(attr_value_menu)
 					dropdown_menus.append(attr_value_menu_div)
-				except:
+			except:
 					pass
-		except:
-			pass
+		#except:
+		#	pass
 
 		other_strains = []
 		for strain in thisTrait.data.keys():
@@ -1847,13 +1848,13 @@ class DataEditingPage(templatePage):
 				if thisNP:
 					mainForm.append(HT.Input(name='N'+strainName, value=thisNP, type='hidden'))
 				else:
-					pass
+					thisNP = 'x'
 			except:
 				thisval = thisvar = thisNP = 'x'
 			
 			try:
 				traitVal = thisval
-				dispVal = "%2.3f" % thisval
+				dispVal = "%.3f" % thisval
 			except:
 				traitVal = ''
 				dispVal = 'x'
@@ -1883,7 +1884,7 @@ class DataEditingPage(templatePage):
 					traitVar = ''
 					dispVar = 'x'
 				try:
-					dispN = "%d" % thisNP
+					dispN = "%s" % thisNP
 				except:
 					dispN = 'x'
 			
@@ -1976,12 +1977,17 @@ class DataEditingPage(templatePage):
 						#ZS: Add extra case attribute values (if any)
 						self.cursor.execute("""
 							SELECT Value
-       						FROM CaseAttributeXRef
-							WHERE ProbeSetFreezeId = '%s' AND
+       						FROM CaseAttributeXRefNew
+							WHERE InbredSetId = '%s' AND
 							StrainId = '%s' AND
 							CaseAttributeId = '%s'
-							group by CaseAttributeXRef.CaseAttributeId""" % (thisTrait.db.id, strain_id, str(attribute_id)))
-						attributeValue = list(self.cursor.fetchone())[0] #Trait-specific attributes, if any
+							group by CaseAttributeXRefNew.CaseAttributeId""" % (thisTrait.db.risetid, strain_id, str(attribute_id)))
+
+						results = list(self.cursor.fetchone())
+						if len(results) > 0:
+							attributeValue = results[0] #Trait-specific attributes, if any
+						else:
+							continue
 
 						#ZS: If it's an int, turn it into one for sorting (for example, 101 would be lower than 80 if they're strings instead of ints)
 						try:

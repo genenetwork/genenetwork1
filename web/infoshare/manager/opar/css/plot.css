@@ -1,0 +1,11 @@
+body {
+  margin: 20px auto;
+  font-family: 'Lato';
+  font-weight: 300;
+  text-align: center;
+}
+
+#line-chart {
+  margin: 0 auto;
+  height: 450px;
+}

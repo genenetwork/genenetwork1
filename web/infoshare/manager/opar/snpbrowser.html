@@ -1,0 +1,945 @@
+
+<!-- NAVIGATION BAR FROM MDB STARTS HERE -->
+
+<?php 
+$activePage = basename($_SERVER['PHP_SELF'], ".html");
+//echo $activePage;
+include 'header.html';
+
+?>
+
+<!-- NAVIGATION BAR FROM MDB ENDS HERE -->
+
+<!--OPAR NAVIGATION STARTS HERE
+<nav class="navbar fixed-top navbar-light" style="background-color: #4c7297;">
+    <a class="navbar-brand" href="http://opar.io">OPAR beta</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+ OPAR NAVIGATION ENDS HERE -->
+<!--///////////////////////////////////////////////-->
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!TESTING TABS STARTS HERE -->
+
+ 
+
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!TESTING TABS ENDS HERE -->
+<form name="inputLGEx" action=" " method="get" class="text-center border border-light p-5">
+<p class="h4 mb-4">Omics Portal For Addiction Research</p>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm"><P>
+    <label>Type:</label>
+    <select class="form-control" name="gene" id="gene">
+<option value="snp">SNP</option>
+<option value="indel">InDel</option>
+</select>
+<P><label">Gene:</label><input type="text" name="gene" value="" id="inputLGEx" class="form-control form-control-lg"><p>
+    <HR>
+    <P><label>Chr:</label>
+    <select class="form-control" name="gene" value="<?php echo $_GET['gene']; ?>" id="inputLGEx">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="X">X</option>
+</select>
+
+<script type="text/javascript">
+document.getElementById('gene').value = "<?php echo $_GET['gene'];?>";
+</script>
+      <P><label">Mb start:</label><input type="text" name="mbstart" value="<?php echo $_GET['mbstart']; ?>" id="inputLGEx" class="form-control form-control-lg">
+      <P><label">Mb end:</label><input type="text" name="mbend" value="<?php echo $_GET['mbend']; ?>" id="inputLGEx" class="form-control form-control-lg"></P>
+    </div>
+
+<!--multiple-->
+<div class="col-sm">
+<p>
+<label">Strains:</label>
+<p>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!--STRAINS DYNAMIC SELECTION STARTS HERE-->
+<?php
+	//Connect to mysql db
+  require "includes/db.inc";
+   // Perform database query
+   if (empty($_GET)) {
+    // no data passed by get
+    $query = "SELECT * from Strain where SpeciesId= 1 AND Alias='P' order BY Name ASC";
+}
+else
+{
+   $query = "SELECT * from Strain where SpeciesId= '$_GET[choose_species]' AND Alias='P' order BY Name ASC";
+   }
+   $strain_result = mysql_query($query) or die('Query failed: ' . mysql_error());
+?>
+
+<SELECT id="s1" NAME="possible" width="200" style="width: 200px" SIZE="10" MULTIPLE>
+      <!--<option value="0">Please select</option>-->
+      <?php
+        while ($row = mysql_fetch_assoc($strain_result)) {
+            echo '<option value="' . $row['Id'] . '">' . $row['Name'] . '</option>';
+        }
+      ?>
+    </select>
+    
+<!--STRAINS STATIC SELECTION STARTS HERE
+<SELECT id="s1" NAME="possible" SIZE"10" MULTIPLE>
+<option value="129P2/OlaHsd" selected="">129P2/OlaHsd</option>
+<option value="129S1/SvImJ">129S1/SvImJ</option>
+<option value="129S5/SvEvBrd">129S5/SvEvBrd</option>
+<option value="AKR/J">AKR/J</option>
+<option value="A/J">A/J</option>
+<option value="BALB/cJ">BALB/cJ</option>
+<option value="C3H/HeJ">C3H/HeJ</option>
+<option value="C57BL/6J">C57BL/6J</option>
+<option value="CAST/EiJ">CAST/EiJ</option>
+<option value="CBA/J">CBA/J</option>
+<option value="DBA/2J">DBA/2J</option>
+<option value="LP/J">LP/J</option>
+<option value="NOD/ShiLtJ">NOD/ShiLtJ</option>
+<option value="NZO/HlLtJ">NZO/HlLtJ</option>
+<option value="PWK/PhJ">PWK/PhJ</option>
+<option value="SPRET/EiJ">SPRET/EiJ</option>
+<option value="WSB/EiJ">WSB/EiJ</option>
+<option value="PWD/PhJ">PWD/PhJ</option>
+<option value="SJL/J">SJL/J</option>
+<option value="NZL/LtJ">NZL/LtJ</option>
+<option value="CZECHII/EiJ">CZECHII/EiJ</option>
+<option value="CALB/RkJ">CALB/RkJ</option>
+<option value="ST/bJ">ST/bJ</option>
+<option value="ISS/IbgTejJ">ISS/IbgTejJ</option>
+<option value="C57L/J">C57L/J</option>
+<option value="Qsi5">Qsi5</option>
+<option value="B6A6_Esline_Regeneron">B6A6_Esline_Regeneron</option>
+<option value="129T2/SvEmsJ">129T2/SvEmsJ</option>
+<option value="BALB/cByJ">BALB/cByJ</option>
+<option value="NZB/BlNJ">NZB/BlNJ</option>
+<option value="P/J">P/J</option>
+<option value="I/LnJ">I/LnJ</option>
+<option value="PERC/EiJ">PERC/EiJ</option>
+<option value="TALLYHO/JngJ">TALLYHO/JngJ</option>
+<option value="CE/J">CE/J</option>
+<option value="MRL/MpJ">MRL/MpJ</option>
+<option value="PERA/EiJ">PERA/EiJ</option>
+<option value="IS/CamRkJ">IS/CamRkJ</option>
+<option value="ZALENDE/EiJ">ZALENDE/EiJ</option>
+<option value="Fline">Fline</option>
+<option value="BTBRT<+>tf/J">BTBRT&lt;+&gt;tf/J</option>
+<option value="O20">O20</option>
+<option value="C58/J">C58/J</option>
+<option value="BPH/2J">BPH/2J</option>
+<option value="DDK/Pas">DDK/Pas</option>
+<option value="C57BL/6NHsd">C57BL/6NHsd</option>
+<option value="C57BL/6NTac">C57BL/6NTac</option>
+<option value="129S4/SvJae">129S4/SvJae</option>
+<option value="BPL/1J">BPL/1J</option>
+<option value="BPN/3J">BPN/3J</option>
+<option value="PL/J">PL/J</option>
+<option value="DBA/1J">DBA/1J</option>
+<option value="MSM/Ms">MSM/Ms</option>
+<option value="MA/MyJ">MA/MyJ</option>
+<option value="NZW/LacJ">NZW/LacJ</option>
+<option value="C57BL/10J">C57BL/10J</option>
+<option value="C57BL/6ByJ">C57BL/6ByJ</option>
+<option value="RF/J">RF/J</option>
+<option value="C57BR/cdJ">C57BR/cdJ</option>
+<option value="129S6/SvEv">129S6/SvEv</option>
+<option value="MAI/Pas">MAI/Pas</option>
+<option value="RIIIS/J">RIIIS/J</option>
+<option value="C57BL/6NNIH">C57BL/6NNIH</option>
+<option value="FVB/NJ">FVB/NJ</option>
+<option value="SEG/Pas">SEG/Pas</option>
+<option value="MOLF/EiJ">MOLF/EiJ</option>
+<option value="C3HeB/FeJ">C3HeB/FeJ</option>
+<option value="Lline">Lline</option>
+<option value="SKIVE/EiJ">SKIVE/EiJ</option>
+<option value="C57BL/6NCrl">C57BL/6NCrl</option>
+<option value="KK/HlJ">KK/HlJ</option>
+<option value="LG/J">LG/J</option>
+<option value="C57BLKS/J">C57BLKS/J</option>
+<option value="SM/J">SM/J</option>
+<option value="NOR/LtJ">NOR/LtJ</option>
+<option value="ILS/IbgTejJ">ILS/IbgTejJ</option>
+<option value="C57BL/6JOlaHsd">C57BL/6JOlaHsd</option>
+<option value="SWR/J">SWR/J</option>
+<option value="C57BL/6JBomTac">C57BL/6JBomTac</option>
+<option value="SOD1/EiJ">SOD1/EiJ</option>
+<option value="NON/LtJ">NON/LtJ</option>
+<option value="JF1/Ms">JF1/Ms</option>
+<option value="129X1/SvJ">129X1/SvJ</option>
+<option value="C2T1_Esline_Nagy">C2T1_Esline_Nagy</option>
+<option value="C57BL/6NJ">C57BL/6NJ</option>
+<option value="LEWES/EiJ">LEWES/EiJ</option>
+<option value="RBA/DnJ">RBA/DnJ</option>
+<option value="DDY/JclSidSeyFrkJ">DDY/JclSidSeyFrkJ</option>
+<option value="SEA/GnJ">SEA/GnJ</option>
+<option value="C57BL/6JCrl">C57BL/6JCrl</option>
+<option value="EL/SuzSeyFrkJ">EL/SuzSeyFrkJ</option>
+<option value="HTG/GoSfSnJ">HTG/GoSfSnJ</option>
+<option value="129S2/SvHsd">129S2/SvHsd</option>
+<option value="MOLG/DnJ">MOLG/DnJ</option>
+<option value="BUB/BnJ">BUB/BnJ</option>
+  </SELECT>-->
+ <p>
+<INPUT TYPE="BUTTON" id="b1" VALUE="Add"
+       ONCLICK="MyMoveItem(possible,wishlist);">
+<p>
+<label">Limit to:</label>
+<p>
+  <SELECT id="s2" NAME="wishlist" width="200" style="width: 200px" SIZE="10" MULTIPLE>
+<!--<option value="C57BL/6J">C57BL/6J</option>
+<option value="DBA/2J">DBA/2J</option>
+<option value="A/J">A/J</option>
+<option value="129S1/SvImJ">129S1/SvImJ</option>
+<option value="NOD/ShiLtJ">NOD/ShiLtJ</option>
+<option value="NZO/HlLtJ">NZO/HlLtJ</option>
+<option value="WSB/EiJ">WSB/EiJ</option>
+<option value="PWD/PhJ">PWD/PhJ</option>
+<option value="CAST/EiJ">CAST/EiJ</option>--></SELECT>
+<p>
+<INPUT TYPE="BUTTON" id="b2" VALUE="Remove" 
+       ONCLICK="MyMoveItem(wishlist,possible);">
+             <P>
+<script type="text/javascript">
+$("#b1").click(function(){
+$("#s2").append( $("#s1 option:selected"))
+})
+
+$("#b2").click(function(){
+$("#s1").append( $("#s2 option:selected"))
+})
+</script>
+     
+	</P>
+       </div>
+<!--multiple ends -->
+    <div class="col-sm">
+<p><label">Domain:</label><p>
+<select name="domain" size="4">
+<option value="All" selected="">All</option>
+<option value="Exon">Exon</option>
+<option value="5' UTR">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5' UTR</option>
+<option value="Coding">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Coding Region</option>
+<option value="3' UTR">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3' UTR</option>
+<option value="Intron">Intron</option>
+<option value="Splice Site">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Splice Site</option>
+<option value="Nonsplice Site">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nonsplice Site</option>
+<option value="Upstream">Upstream</option>
+<option value="Downstream">Downstream</option>
+<option value="Intergenic">Intergenic</option>
+</select><p>
+<label>Function:</label><p>
+<select name="function" size="3">
+<option value="All" selected="">All</option>
+<option value="Nonsynonymous">Nonsynonymous</option>
+<option value="Synonymous">Synonymous</option>
+<option value="Start Gained">Start Gained</option>
+<option value="Start Lost">Start Lost</option>
+<option value="Stop Gained">Stop Gained</option>
+<option value="Stop Lost">Stop Lost</option>
+</select>
+<p><label>Source:</label><p>
+<select class="form-control" name="source" id="gene">
+<option value="All" selected="">All</option>
+<option value="None">None</option>
+<option value="dbSNP">dbSNP</option>
+<option value="dbSNP (release 149)">dbSNP (release 149)</option>
+<option value="Sanger/UCLA">Sanger/UCLA</option>
+<option value="UTHSC_CITG">UTHSC_CITG</option>
+</select></p>
+    </div>
+
+  </div>
+</div>
+
+   <!--STRAIN FORM START HERE. ADD WHEN IS NEEDED
+    <div class="col col-example">
+    <label>Choose Strains:</label>
+    <select id="example-getting-started" size=4 multiple>
+			<option value="C57BL/6J">C57BL/6J</option>
+			<option value="DBA/2J">DBA/2J</option>
+			<option value="A/J">A/J</option>
+			<option value="129S1/SvImJ">129S1/SvImJ</option>
+			<option value="NOD/ShiLtJ">NOD/ShiLtJ</option>
+			<option value="WSB/EiJ">WSB/EiJ</option>
+	</select>
+	<script type="text/javascript">
+			$("#example-getting-started").change(function() {
+   			$("textArea[name=content]").val($(this).val());
+			});
+	</script>
+	</div>
+							     
+    <div class="w-100"></div>
+    
+    <div class="col col-example"><label">Mb start:</label><input type="text" name="mbstart" value="<?php echo $_GET['mbstart']; ?>" id="inputLGEx" class="form-control form-control-lg"><label">Mb end:</label><input type="text" name="mbend" value="<?php echo $_GET['mbend']; ?>" id="inputLGEx" class="form-control form-control-lg"></div>
+    
+    <div class="col col-example"><textarea id="textArea" rows="7" name="content"></textarea></div>
+  </div>
+</div> STRAIN FORM START HERE-->
+
+
+<!-- Search form starts here with 3 equal columns: -->
+<!--
+<div class="form-group row">
+<label for="gene" class="col-sm-2 col-form-label">Chr:</label>
+<div class="col-sm-2">
+<select class="form-control" name="gene" id="gene">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="X">X</option>
+</select>
+
+<script type="text/javascript">
+document.getElementById('gene').value = "<?php echo $_GET['gene'];?>";
+</script>
+</div>
+</div>
+
+<div class="form-group row">
+<label for="inputLGEx" class="col-sm-2 col-form-label">Mb start:</label>
+<div class="col-sm-2">
+<input type="text" name="mbstart" value="<?php echo $_GET['mbstart']; ?>" id="inputLGEx" class="form-control form-control-lg">
+</div>
+</div>
+
+<div class="form-group row">
+<label for="inputLGEx" class="col-sm-2 col-form-label">Mb end:</label>
+<div class="col-sm-2"><input type="text" name="mbend" value="<?php echo $_GET['mbend']; ?>" id="inputLGEx" class="form-control form-control-lg">
+</div>
+</div>
+</div>
+-->
+<!-- Search form ends here with 3 equal columns: -->
+
+                    
+            <!--<div class="input-group md-form form-sm form-2 pl-0">
+              <input class="form-control my-0 py-1 grey-border" type="text" name="gene" placeholder="Search for Gene" aria-label="Search">
+    		<div class="input-group-append">
+        	  <span class="input-group-text grey lighten-3" id="basic-text1"><i class="fa fa-search text-grey" aria-hidden="true"></i></span>
+        	</div>-->
+        	
+</div>
+	        <!--<p>Examples: <a href="http://www.opar.io/search.html?gene=PECR&choose_species=Species.Id">PECR</a>, 
+	        <a href="http://www.opar.io/search.html?gene=CDH22&choose_species=Species.Id">CDH22</a>, 
+	        <a href="http://www.opar.io/search.html?gene=THY1&choose_species=Species.Id">THY1</a></p>-->
+<div>
+               <!--
+               <label class="radio-inline">
+               <input type="radio" name="choose_species" id="Species.Id" value="Species.Id" checked> ANY
+               <input type="radio" name="choose_species" id="4" value="4" > Human
+               <input type="radio" name="choose_species" id="1" value="1" > Mouse
+               <input type="radio" name="choose_species" id="2" value="2" > Rat
+ 			   </label>
+ 			   -->
+ 			   <label class="radio-inline">
+ 			   <form id="formName" action="<?php echo $_SERVER['PHP_SELF'];?>" method="get">
+               <input type="radio" name="choose_species" id="Species.Id" value="Species.Id" checked> ANY
+               <input type="radio" name="choose_species" id="4" value="4" > Human
+               <input type="radio" name="choose_species" id="1" value="1" onchange="document.getElementById('formName').submit()"> Mouse
+               <input type="radio" name="choose_species" id="2" value="2" onchange="document.getElementById('formName').submit()"> Rat
+ 			   </label>
+
+             </div>
+             <!-- Loading -->
+             <div id="success"></div>
+                    <!-- For success/fail messages -->
+                    <!--<button type="submit" class="btn btn-primary" onclick="delaySubmit(); return false; " />Submit Registration</button>-->
+                   <button type="submit" class="btn btn-primary">Search</button>
+                    <!--<button type="submit" class="btn btn-primary" disabled>Search</button>-->
+                    <div id="content"></div>
+             <!-- Loading ENDS HERE -->
+                         </form>
+    </div>
+    <!--<hr class="my-4"> -->
+
+    <!--<button type="button" class="btn btn-blue waves-effect">Buy now <span class="fa fa-diamond ml-1"></span></button>
+    <button type="button" class="btn btn-outline-primary waves-effect">Download <i class="fa fa-download ml-1"></i></button>-->
+    
+
+    
+    <!-&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&-->
+    <div class="container">
+
+    <!-- Use This: <div class="row">-->
+
+        <?php
+	//require_once("../includes/leftMenu.html");
+
+    	//Include the PS_Pagination class
+	//include('includes/ps_pagination.html');
+
+	    //Connect to mysql db
+    require "includes/db.inc";
+
+?>
+ <?php
+					error_reporting(E_ERROR);
+                    //Records found starts here
+
+                     if(!$num = mysql_num_rows($result)):
+                      endif;
+                      //echo($num . " Entries found for Gene: <strong>" .$row['Symbol']. "</strong><p>");
+
+                    //Records found ends here
+
+                    if( isset( $_GET['gene'] ) && strlen( trim( $_GET['gene'] ) ) > 0  )
+                    {
+                    $mbstart = $_GET['mbstart'];
+                    $mbend = $_GET['mbend'];
+                    $Symbol = $_GET['gene'];
+                    
+                    $choose_species = $_GET['choose_species'];
+                    //$laopo = "gene=$Symbol&choose_species=$choose_species";
+                    $laopo = "gene=$Symbol&choose_species=$choose_species&mbstart=$mbstart&mbend=$mbend";
+                    //$status_colors = array("G" => "#fb0404", "T" => "#65cb60", "A" => "#61e3f6", "C" => "#f2fb04");
+                    $status_colors = array("G" => "#e51629", "g" => "#fb0404", "T" => "#61be5c", "t" => "#44da3d", "A" => "#56cee0", "a" => "#61e3f6", "C" => "#edf010", "c" => "#fafd04");
+                    
+                    //$question = ${'question'.$var}[0];
+                    //$my_variables = 'gene=shh&choose_species=Species.Id'
+
+                    //require "../includes/db.inc"; //fine using $conn
+
+                    //$sql = "select * from Organizations where OrganizationName like '%$OrganizationName%'";
+                    // ORIGINAL MYSQL command STARTS HERE
+				/*
+                    $sql = "SELECT
+                    Species.SpeciesName AS Species,
+                    InbredSet.Name AS InbredSet,
+                    Tissue.Name AS Tissue,
+                    ProbeSetFreeze.Name AS ProbeSetFreeze,
+                    ProbeSet.Name AS ProbeSet,
+                    ProbeSet.Symbol,
+                    ProbeSet.description,
+                    ProbeSet.Chr,
+                    ProbeSet.Mb,
+                    ProbeSet.Probe_set_Blat_Mb_end AS Probe_set_Blat_Mb_end,
+                    ProbeSetXRef.Mean AS Mean,
+                    FORMAT(Mean,2),
+                    ProbeSetXRef.LRS AS LRS,
+                    FORMAT(LRS,2),
+                    ProbeSetXRef.Locus,
+                    ProbeSetXRef.pValue,
+                    ProbeSetXRef.additive
+                    FROM Species, InbredSet, ProbeSetXRef, ProbeSet, ProbeFreeze, ProbeSetFreeze, Tissue
+                    WHERE InbredSet.SpeciesId=Species.Id
+                    AND Species.Id=$choose_species
+                    AND ProbeFreeze.InbredSetId=InbredSet.Id
+                    AND ProbeFreeze.TissueId=Tissue.Id
+                    AND ProbeSetFreeze.ProbeFreezeId=ProbeFreeze.Id
+                    AND ( MATCH (ProbeSet.Name,ProbeSet.description,ProbeSet.symbol,alias,GenbankId, UniGeneId, Probe_Target_Description) AGAINST ('%$Symbol%' IN BOOLEAN MODE) )
+                    AND ProbeSet.Id = ProbeSetXRef.ProbeSetId
+                    AND ProbeSetXRef.ProbeSetFreezeId=ProbeSetFreeze.Id
+                    AND ProbeSetFreeze.confidentiality < 1
+                    AND ProbeSetFreeze.public > 0
+                    ORDER BY Species.SpeciesName, InbredSet.Name, Tissue.Name, ProbeSetFreeze.Name, ProbeSet.Name
+                    ";
+                 */
+                    //LIMIT 50";
+                    
+                    //string $mean = number_format ($mean, 2);
+                    // ORIGINAL MYSQL command ENDS HERE
+                    
+                    //NEW MYSQL COMMAND STARTS Here
+                    //$sql = "SELECT CASE WHEN SpeciesId = 1 THEN 'Mus_musculus' WHEN SpeciesId = 2 THEN 'Rattus_norvegicus' ELSE 'Donno' END AS SpeciesId_text, SNPName, Chromosome, Position, Alleles, Source, ConservationScore  from SnpAll a, SnpPattern b where a.SpeciesId= '$_GET[choose_species]' AND a.Chromosome = '$_GET[gene]' AND a.Position >= 55.990000 and a.Position < 56.000000 AND a.Id = b.SnpId OR a.SpeciesId= '$_GET[choose_species]' AND a.Chromosome = '$_GET[gene]' AND a.Position >= 55.990000 and a.Position < 56.000000 AND a.Id = b.SnpId order by a.Position ASC";
+			if ( $choose_species == 1)
+						
+					{
+					
+					$sql = "SELECT CASE WHEN SpeciesId = 1 THEN 'Mus_musculus' ELSE 'Donno' END AS SpeciesId_text, SNPName, Chromosome, Position, Alleles, Source, ConservationScore, b.*  from SnpAll a, SnpPattern b where a.SpeciesId= '$_GET[choose_species]' AND a.Chromosome = '$_GET[gene]' AND a.Position >= '$_GET[mbstart]' and a.Position < '$_GET[mbend]' AND a.Id = b.SnpId OR a.SpeciesId= '$_GET[choose_species]' AND a.Chromosome = '$_GET[gene]' AND a.Position >= '$_GET[mbstart]' and a.Position < '$_GET[mbend]' AND a.Id = b.SnpId order by a.Position ASC";
+					}
+					else
+					{
+					$sql = "SELECT CASE WHEN SpeciesId = 2 THEN 'Rattus_norvegicus' ELSE 'Donno' END AS SpeciesId_text, SNPName, Chromosome, Position, Alleles, Source, ConservationScore, b.*  from SnpAll a, RatSnpPattern b where a.SpeciesId= '$_GET[choose_species]' AND a.Chromosome = '$_GET[gene]' AND a.Position >= '$_GET[mbstart]' and a.Position < '$_GET[mbend]' AND a.Id = b.SnpId OR a.SpeciesId= '$_GET[choose_species]' AND a.Chromosome = '$_GET[gene]' AND a.Position >= '$_GET[mbstart]' and a.Position < '$_GET[mbend]' AND a.Id = b.SnpId order by a.Position ASC";
+					}
+
+                    //NEW MYSQL COMMAND ENDS HERE
+
+
+
+                    $result = mysql_query($sql, $conn);
+                    //$result = mysql_query($sql, $conn) or die(mysql_error());
+                    //$rs = mysql_query($sql, $conn) or die(mysql_error());
+
+                    $num = mysql_num_rows($result);
+                    //$num = mysql_num_rows($rs);
+
+                    //"Works" if ( mysql_num_rows($result) >0)
+                    
+                    //******Species Condition ********
+                    
+                    //!!!!!! ################ MOUSE SELECTION STARTS HERE (FUNCTION MUST BE CREATED..) ##################### !!!!!!
+                    
+                    if ( mysql_num_rows($result) >0 && $choose_species == 1)
+                    //if ( mysql_num_rows($rs) >0)
+                    {
+
+    echo "<div class='row'>";
+     
+                         
+                    echo "<p>";
+                    //echo($num . " SNP(s) on Chromosome " .$Symbol. ": " .$mbstart. " - " .$mbend. "");
+                    echo("<strong>" .$num . " SNP(s) on Chromosome " .$Symbol. ": " .$mbstart. " - " .$mbend. "</strong>");
+                    echo "</p>";
+     
+    
+    echo "</div>";
+?>
+
+<!--Maybe here? <div class="row">-->
+<div class="row">
+
+<?php
+                    //inserted here
+                    echo "<table id='dtBasicExample' class='table table-striped table-bordered table-sm' cellspacing='0' width='100%'>";
+                    echo "<thead>";
+                    echo "<tr>";
+                    //echo "<th class='th-sm'>Top Related Gene<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>SNP ID<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Species<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Chr<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Mb<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Alleles<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Source<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>ConScore<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th><span>C57BL/6J</span></th>";
+                    echo "<th><span>DBA/2J</span></th>";
+                    echo "<th><span>A/J</span></th>";
+                    echo "<th><span>129S1/SvImJ</span></th>";
+                    echo "<th><span>NOD/ShiLtJ</span></th>";
+                    echo "<th><span>NZO/HlLtJ</span></th>";
+                    echo "<th><span>WSB/EiJ</span></th>";
+                    echo "<th><span>PWD/PhJ</span></th>";
+                    echo "<th><span>CAST/EiJ</span></th>";
+                    echo "</tr>";
+                    echo "</thead>";
+                    echo "</div>";
+                    echo "<div>";
+                    
+    	//Include the PS_Pagination class
+    	
+					include('includes/ps_pagination.html');
+
+                    //------------PAGINATION MODULE START
+
+                    /*
+                    * Create a PS_Pagination object
+                    *
+                    * $conn = MySQL connection object
+                    * $sql = SQl Query to paginate
+                    * 10 = Number of rows per page
+                    * 5 = Number of links
+                    * "param1=valu1&param2=value2" = You can append your own parameters to paginations links
+                    */
+                    //$pager = new PS_Pagination($conn, $sql, 30, 5, "param1=valu1&param2=value2");
+                    //$pager = new PS_Pagination($conn, $sql, 10, 5, "param1=valu1&param2=value2", $result);
+                    //$pager = new PS_Pagination($conn, $sql, 10, 5, $result);
+                    $pager = new PS_Pagination($conn, $sql, 250, 10, $laopo);
+
+                    /*
+                    * Enable debugging if you want o view query errors
+                    */
+                    $pager->setDebug(true);
+
+                    /*
+                    * The paginate() function returns a mysql result set
+                    * or false if no rows are returned by the query
+                    */
+                    $rs = $pager->paginate();
+
+
+                    //Display the full navigation in one go
+                    echo $pager->renderFullNav();
+                    echo "<p>\n";
+                    echo "<div>";
+                    //---echo "<div align='left'>";
+
+                    //------------PAGINATION MODULE ENDS
+
+
+                    //----------PAGINATION INSERT START
+
+                    $rs = $pager->paginate();
+                    if(!$rs);
+                    //if(!$rs) die(mysql_error());
+                    while($row = mysql_fetch_assoc($rs)) {
+                     //----------PAGINATION INSERT ENDS
+					$f1= $row['C57BL/6J'];
+					$f2= $row['DBA/2J'];
+					$f3= $row['A/J'];
+					$f4= $row['129S1/SvImJ'];
+					$f5= $row['NOD/ShiLtJ'];
+					$f6= $row['NZO/HlLtJ'];
+					$f7= $row['WSB/EiJ'];
+					$f8= $row['PWD/PhJ'];
+					$f9= $row['CAST/EiJ'];
+                    //echo "<tr></td><td><a href=http://172.21.216.117:4004/cosinesim/?word=". $row['Symbol'] ." class='badge badge-default' target='_blank' '>Chilibot</a> | <a href=http://www.geneweaver.org/index.php?action=search&q[]=". $row['Symbol'] ." class='badge badge-info' target='_blank' '>GeneWeaver</a></td><td><a href=http://gn2.genenetwork.org/show_trait?trait_id=". $row['ProbeSet'] ."&dataset=" . $row['ProbeSetFreeze'] ." class='badge badge-primary' target='_blank' '>" . $row['ProbeSet'] ."</a></td><td>" . $row['Species'] . "</td><td>" . $row['Tissue'] . "</td><td>" .$row['InbredSet'] ."</td><td>" .$row['Symbol'] ."</td><td>" . $row['description'] ."</td><td>Chr".$row['Chr'] .": " .$row['Mb'] ."</td><td>".$row['LRS'] ."</td><td>" .$row['Mean'] ."</td></tr>";
+                    //echo "<tr></td><td><a href=http://172.21.216.117:4004/cosinesim/?word=". $row['Symbol'] ." class='badge badge-default' target='_blank' '>Chilibot</a> | <a href=http://www.geneweaver.org/index.php?action=search&q[]=". $row['Symbol'] ." class='badge badge-info' target='_blank' '>GeneWeaver</a></td><td><a href=http://gn2.genenetwork.org/show_trait?trait_id=". $row['ProbeSet'] ."&dataset=" . $row['ProbeSetFreeze'] ." class='badge badge-primary' target='_blank' '>" . $row['ProbeSet'] ."</a></td><td>" . $row['Species'] . "</td><td>" . $row['Tissue'] . "</td><td>" .$row['InbredSet'] ."</td><td>" .$row['Symbol'] ."</td><td>" . $row['description'] ."</td><td>Chr".$row['Chr'] .":" .$row['Mb'] * 1000000 ."-". $row['Probe_set_Blat_Mb_end'] * 1000000 ."</td><td>".$row['FORMAT(LRS,2)'] ."</td><td>" .$row['FORMAT(Mean,2)'] ."</td></tr>";
+                    // GOOD: echo "<tr><td><a href=http://gn2.genenetwork.org/show_trait?trait_id=". $row['ProbeSet'] ."&dataset=" . $row['ProbeSetFreeze'] ." class='badge badge-primary' target='_blank' '>" . $row['ProbeSet'] ."</a></td><td>" . $row['Species'] . "</td><td>" . $row['Tissue'] . "</td><td>" .$row['InbredSet'] ."</td><td>" .$row['Symbol'] ."</td><td>" . $row['description'] ."</td><td>Chr".$row['Chr'] .":" .$row['Mb'] * 1000000 ."-". $row['Probe_set_Blat_Mb_end'] * 1000000 ."</td><td>".$row['FORMAT(LRS,2)'] ."</td><td>" .$row['FORMAT(Mean,2)'] ."</td></tr>";
+ 					echo "<tr><td><strong>". $row['SNPName'] ."</strong><br><a href=https://useast.ensembl.org/" . $row['SpeciesId_text']. "/Variation/Explore?db=core;v=". $row['SNPName'] ." class='badge badge-primary' target='_blank' '>ensembl</a>
+ 					&nbsp;<a href=https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?rs=". $row['SNPName'] ." class='badge badge-primary' target='_blank' '>dbSNP</a>
+ 					
+ 					
+ 					</td><td>" . $row['SpeciesId_text'] . "</td><td>" . $row['Chromosome'] . "</td><td>" .$row['Position'] ."</td><td>"  .$row['Alleles'] ."</td><td>" 
+ 					. $row['Source'] ."</td><td>".$row['ConservationScore'] ."</td><td style='background-color: ". $status_colors[$f1] ."'>".$row['C57BL/6J'] ."</td><td style='background-color: ". $status_colors[$f2] ."'>".$row['DBA/2J'] ."</td><td style='background-color: ". $status_colors[$f3] ."'>".$row['A/J'] ."</td><td style='background-color: ". $status_colors[$f4] ."'>".$row['129S1/SvImJ'] ."</td><td style='background-color: ". $status_colors[$f5] ."'>"
+ 					. $row['NOD/ShiLtJ'] ."</td><td style='background-color: ". $status_colors[$f6] ."'>".$row['NZO/HlLtJ'] ."</td><td style='background-color: ". $status_colors[$f7] ."'>".$row['WSB/EiJ'] ."</td><td style='background-color: ". $status_colors[$f8] ."'>".$row['PWD/PhJ'] ."</td><td style='background-color: ". $status_colors[$f9] ."'>".$row['CAST/EiJ'] ."</td></tr>";
+ 					
+ 								
+                            
+                            }
+                            echo "</table>";
+                            
+                            echo "<div>";
+
+                        //----------PAGINATION MODULE START
+
+                        /*
+                        * Or you can display the individual links for more
+                        * control over HTML rendering.
+                        *
+                        */
+
+                        //Display the link to first page: First
+                        echo $pager->renderFirst();
+
+                        //Display the link to previous page: <<
+                        echo $pager->renderPrev();
+
+                        /*
+                        * Display page links: 1 2 3
+                        * $prefix = Will be prepended to the page link (optional)
+                        * $suffix = Will be appended to the page link (optional)
+                        *
+                        */
+                        echo $pager->renderNav('<span>', '</span>');
+
+                        //Display the link to next page: >>
+                        echo $pager->renderNext();
+
+                        //Display the link to last page: Last
+                        echo $pager->renderLast();
+
+                        //----------PAGINATION MODULE ENDS
+                       // }
+                        }
+                        elseif ( mysql_num_rows($result) >0 && $choose_species == 2)
+                        {
+                        //echo "You select rat as species";
+                         //!!!!!! ################ RAT SELECTION STARTS HERE (FUNCTION MUST BE CREATED..) ##################### !!!!!!
+                         
+ echo "<div class='row'>";
+                         
+                    echo "<p>";
+                    //echo($num . " SNP(s) on Chromosome " .$Symbol. ": " .$mbstart. " - " .$mbend. "");
+                    echo("<strong>" .$num . " SNP(s) on Chromosome " .$Symbol. ": " .$mbstart. " - " .$mbend. "</strong>");
+                    echo "</p>";
+     
+    
+    echo "</div>";
+
+?>
+
+<div class="row">
+
+<?php
+                    echo "<table id='dtBasicExample' class='table table-striped table-bordered table-sm' cellspacing='0' width='100%'>";
+                    echo "<thead>";
+                    echo "<tr>";
+                    //echo "<th class='th-sm'>Top Related Gene<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>SNP ID<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Species<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Chr<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Mb<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Alleles<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>Source<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th class='th-sm'>ConScore<i class='fa fa-sort float-right' aria-hidden='true'></i></th>";
+                    echo "<th><span>BN</span></th>";
+                    echo "<th><span>F344</span></th>";
+                    echo "<th><span>ACI</span></th>";
+                    echo "<th><span>BBDP</span></th>";
+                    echo "<th><span>FHH</span></th>";
+                    echo "<th><span>FHL</span></th>";
+                    echo "<th><span>GK</span></th>";
+                    echo "<th><span>LE</span></th>";
+                    echo "<th><span>LEW</span></th>";
+                    echo "<th><span>LH</span></th>";
+                    echo "<th><span>LL</span></th>";
+                    echo "<th><span>LN</span></th>";
+                    echo "<th><span>MHS</span></th>";
+                    echo "<th><span>MNS</span></th>";
+                    echo "<th><span>SBH</span></th>";
+                    echo "<th><span>SBN</span></th>";
+                    echo "<th><span>SHR</span></th>";
+                    echo "<th><span>SHRSP</span></th>";
+                    echo "<th><span>SR</span></th>";
+                    echo "<th><span>SS</span></th>";
+                    echo "<th><span>WAG</span></th>";
+                    echo "<th><span>WKY</span></th>";
+                    echo "</tr>";
+                    echo "</thead>";
+                    echo "</div>";
+                    echo "<div>";
+    	
+					include('includes/ps_pagination.html');
+                    $pager = new PS_Pagination($conn, $sql, 250, 10, $laopo);
+                    $pager->setDebug(true);
+                    $rs = $pager->paginate();
+                    echo $pager->renderFullNav();
+                    echo "<p>\n";
+                    echo "<div>";
+                    $rs = $pager->paginate();
+                    if(!$rs);
+                    while($row = mysql_fetch_assoc($rs)) {
+                    $f1= $row['BN'];
+					$f2= $row['F344'];
+					$f3= $row['ACI'];
+					$f4= $row['BBDP'];
+					$f5= $row['FHH'];
+					$f6= $row['FHL'];
+					$f7= $row['GK'];
+					$f8= $row['LE'];
+					$f9= $row['LEW'];
+					$f10= $row['LH'];
+					$f11= $row['LL'];
+					$f12= $row['LN'];
+					$f13= $row['MHS'];
+					$f14= $row['MNS'];
+					$f15= $row['SBH'];
+					$f16= $row['SBN'];
+					$f17= $row['SHR'];
+					$f18= $row['SHRSP'];
+					$f19= $row['SR'];
+					$f20= $row['SS'];
+					$f21= $row['WAG'];
+					$f22= $row['WKY'];
+ 					echo "<tr><td><strong>". $row['SNPName'] ."</strong><br><a href=https://useast.ensembl.org/" . $row['SpeciesId_text']. "/Variation/Explore?db=core;v=". $row['SNPName'] ." class='badge badge-primary' target='_blank' '>ensembl</a>
+ 					&nbsp;<a href=https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?rs=". $row['SNPName'] ." class='badge badge-primary' target='_blank' '>dbSNP</a></td>
+ 					<td>".$row['SpeciesId_text'] . "</td>
+ 					<td>".$row['Chromosome'] . "</td>
+ 					<td>".$row['Position'] ."</td>
+ 					<td>".$row['Alleles'] ."</td>
+ 					<td>".$row['Source'] ."</td>
+ 					<td>".$row['ConservationScore'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f1] ."'>".$row['BN'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f2] ."'>".$row['F344'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f3] ."'>".$row['ACI'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f4] ."'>".$row['BBDP'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f5] ."'>".$row['FHH'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f6] ."'>".$row['FHL'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f7] ."'>".$row['GK'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f8] ."'>".$row['LE'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f9] ."'>".$row['LEW'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f10] ."'>".$row['LH'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f11] ."'>".$row['LL'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f12] ."'>".$row['LN'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f13] ."'>".$row['MHS'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f14] ."'>".$row['MNS'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f15] ."'>".$row['SBH'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f16] ."'>".$row['SBN'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f17] ."'>".$row['SHR'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f18] ."'>".$row['SHRSP'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f19] ."'>".$row['SR'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f20] ."'>".$row['SS'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f21] ."'>".$row['WAG'] ."</td>
+ 					<td style='background-color: ". $status_colors[$f22] ."'>".$row['WKY'] ."</td></tr>";
+ 					
+                            }
+                            echo "</table>";
+                            
+                            echo "<div>";
+                        echo $pager->renderFirst();
+                        echo $pager->renderPrev();
+                        echo $pager->renderNav('<span>', '</span>');
+                        echo $pager->renderNext();
+                        echo $pager->renderLast();
+    //Rat SELECTION ENDS HERE
+                        }
+                        else
+                        {
+                        echo "Record not found";
+                        }
+
+
+                        mysql_close($conn);
+                        }
+                        
+                        ?>
+            </section>
+
+        </div>
+    </div>
+</div>
+    <!--&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&-->
+
+</div>
+<!--Jumbotron-->
+<!--///////////////////////////////////////////////-->
+
+
+<!-- Footer -->
+<footer class="page-footer font-small unique-color">
+
+    <!-- Footer Links -->
+    <div class="container-fluid text-center text-md-left">
+
+      <!-- Grid row -->
+      <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-md-6 mt-md-0 mt-3">
+
+          <!-- Content -->
+          <h5 class="text-uppercase">Footer Content</h5>
+          <p>Here you can use rows and columns here to organize your footer content.</p>
+
+        </div>
+        <!-- Grid column -->
+
+        <hr class="clearfix w-100 d-md-none pb-3">
+
+        <!-- Grid column -->
+        <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5 class="text-uppercase">Links</h5>
+
+            <ul class="list-unstyled">
+              <li>
+                <a href="#!">Link 1</a>
+              </li>
+              <li>
+                <a href="#!">Link 2</a>
+              </li>
+              <li>
+                <a href="#!">Link 3</a>
+              </li>
+              <li>
+                <a href="#!">Link 4</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5 class="text-uppercase">Links</h5>
+
+            <ul class="list-unstyled">
+              <li>
+                <a href="#!">Link 1</a>
+              </li>
+              <li>
+                <a href="#!">Link 2</a>
+              </li>
+              <li>
+                <a href="#!">Link 3</a>
+              </li>
+              <li>
+                <a href="#!">Link 4</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+
+    </div>
+    <!-- Footer Links -->
+
+    <!-- Copyright -->
+  <div class="footer-copyright text-center py-3 special-color">OPAR University of Tennessee Health Science Center
+  <p class="pull-right"><a href="#">Back to top  </a></p></div>
+      
+    
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
+
+
+<!-- Footer -->
+<!--<footer class="page-footer font-small blue">-->
+
+  <!-- Copyright -->
+  <!--<div class="footer-copyright text-center py-3">OPAR University of Tennessee Health Science Center
+  <p class="pull-right"><a href="#">Back to top</a></p>
+  </div>-->
+  <!-- Copyright -->
+
+<!--</footer>-->
+<!-- Footer -->
+
+    <!-- /Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <!--<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>-->
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!--<script type="text/javascript" src="js/bootstrap.min.js"></script>-->
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <script type="text/javascript" src="js/pagination.js"></script>
+ <!--</div>-->
+</body>
+</html>

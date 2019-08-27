@@ -203,7 +203,21 @@ Epistasis means that combined effects of two or more different loci or polymorph
 
 &nbsp;&nbsp;&nbsp;&nbsp;<A NAME="EffectSize">Effect Size of a QTL:</A>
 <Blockquote>
-QTLs can be ranked by the amount of variance that they explain--their so-called "effect size"--when they are included in a statistical model. The concept of a genetic model may seem odd to some users of GeneNetwork. A model is just an explicit hypothesis of how QTLs and other factors cause variation in a trait. QTL mapping involves comparisons of the explanatory power of different models. Effect size can be measured in different units including the percentage of variance that is explained by adding the QTL into the model, by the mean shift in Z score, or by the additive effect size expressed in the original measurement scale. Because effects of single QTLs are often dependent on genetic background (i.e., other QTLs) and environmental conditions, a QTL's functional or molecular importance can not be predicted by the size of its effect on the trait in one environment or at one stage of development. Estimates of the effect size of QTLs are usually both noisy and upwardly biased (overestimated), and both of these problems are particulary acute when sample sizes are small (<500 cases or strains). [Williams RW, Dec 23, 2004]
+QTLs can be ranked by the amount of variance that they explain--their so-called "effect size"--when they are included in a statistical model. The concept of a genetic model may seem odd to some users of GeneNetwork. A model is just an explicit hypothesis of how QTLs and other factors cause variation in a trait. QTL mapping involves comparisons of the explanatory power of different models. Effect sizes can be measured in different units including the percentage of either (1) the total or the genetic variance that is explained by adding the QTL into the model, (2) by the mean shift in Z score, or (3) by the additive effect size expressed in the original measurement scale. Effects of single QTLs are often dependent on genetic background (i.e., other QTLs), the very much dependent on the sample of cases used in a study. For example, the variance explained wio be influenced strongly by whether the sample are from a family cohort, a case-control cohort, a group of fully inbred strains such as recombinant inbred lines, an outcross or backcross population. The functional or molecular importance of a locus, QTL, or GWAS hit can not be predicted by the size of its effect on the trait in one environment, at one stage of development, and in one population. Estimates of the effect size of QTLs are usually both noisy and upwardly biased (overestimated), and both of these problems are particularly acute when sample sizes are small (<500 cases or strains). 
+<P> 
+In the case of estimating effect size (or the "explained variance of a locus) when studying a cohort of isogenic or inbred lines, such as the BXD recombinant inbred lines, keep the following two factors in mind.
+<OL>
+<LI><B>Replication Rate</B>: The variance explained is increased by sampling multiple cases that have identical genomes and then using the mean (or median) phenotype for most genetic analyses. Increasing the numbers of cases studied per genometype from 1 to 4 can easily double the apparent heritability of a trait and therefore the effect size of a locus. The reason is simple—resampling decrease the standard error of mean, effectively boosting heritability (see Glossary entry on <I>Heritability</I> and focus on figure 1 from the Belknap <A HREF="/images/upload/Belknap_Heritability_1998.pdf" target="empty" class="fs14">1998</A> paper reproduced below). Compare the  genetically explained variance (labeled <I>h2RI </I> in this figure) with a single case on the x-axis with the function at a replication rate of 4 on the y-axis. If the explained variance is 0.1 (10% of all variance explained) then the value is boosted to 0.3 (30% of strain mean variance explained).
+<LI><B>Homozygosity</B>: The second factor has to do with the intrinsic genetic variance of populations. Recombinant inbred lines are homozygous at nearly all loci. This effectively doubles the genetic variance in a family of recombinant inbred lines compared to a matched number of F2s cases. As a result 40 BXDs sampled just one per genometype will average 2X the genetic variance and 2X the heritability of 40 BDF2 cases. Note that isogenic F1 hybrids made by crossing BXD strains are no longer homozygous at all loci, and while they do expose important new sources of variance associated with dominance, they do not benefit from the 2X gain in genetic variance relative to an F2 intercross.
+</OL>
+
+<P>
+<DIR><IMG src="/images/upload/Belknap_Fig1_1998.png" height="615" width="449">
+</DIR>
+
+<P>For the reasons listed above a QTL effect size of 0.4 detected a panel of BXD lines replicated four times each (160 cases total), corresponds approximately to an effect size of 0.18 in BXDs without replication (40 cases total), and to an effect size of 0.09 in an F2 of 40 cases total.
+
+[Williams RW, Dec 23, 2004; updated by RWW July 9, 2019]
 </Blockquote>
 
 &nbsp;&nbsp;&nbsp;&nbsp;<A NAME="eQTL">eQTL, cis eQTL, trans eQTL</A>
@@ -276,7 +290,7 @@ All of these sets of lines are GRPs since each line is genetically defined and b
 
 <P>A Diversity Panel such as that used by the Mouse Phenome Project is not a standard GRPs, although its also shares the ability to accumulate and study networks of phenotypes. The main difference is that a Diversity Panel cannot be used for conventional linkage analysis. A sufficiently large Diversity Panel could in principle be used for the equivalent of an assocation study. However, these are definitely NOT <I>in silico</I> studies, because hundreds of individuals need to be phenotyped for every trait. Surveys of many diverse isogenic lines (inbred or F1 hybrids) is statistically the equivalent of a human association study (the main difference is the ability to replicate measurements and study sets of traits) and therefore, like human association studies, does require very high sample size to map polygenic traits. Like human association studies there is also a high risk of false positive results due to population stratification and non-syntenic marker association. 
 
-<P>A good use of a Diversity Panel is as a fine-mapping resource with which to dissect chromosomal intervals already mapped using a conventional cross or GRP. GeneNetwork now includes Mouse Diversity Panel (MDP) data for several data sets. We now typically include all 16 sequenced strains of mice, and add PWK/PhJ, NZO/HiLtJ (two of the eight members of the Collaborative Cross), and several F1 hybrids. The MDP data is often appended at the bottom of the GRP data set with which is was acquired (e.g., BXD hippocampua and BXD eye data sets). 
+<P>A good use of a Diversity Panel is as a fine-mapping resource with which to dissect chromosomal intervals already mapped using a conventional cross or GRP. GeneNetwork now includes Mouse Diversity Panel (MDP) data for several data sets. We now typically include all 16 sequenced strains of mice, and add PWK/PhJ, NZO/HiLtJ (two of the eight members of the Collaborative Cross), and several F1 hybrids. The MDP data is often appended at the bottom of the GRP data set with which is was acquired (e.g., BXD hippocampal and BXD eye data sets). 
 
 <SMALL>[Williams RW, June 19, 2005; Dec 4, 2005]</SMALL>
 </Blockquote>
@@ -345,7 +359,15 @@ where V<SUB>a</SUB> is the genetic variability (variability between strains), V<
 <DIR><IMG src="/images/upload/Belknap_Fig1_1998.png" height="615" width="449">
 </DIR>
 
- [Chesler EJ, Dec 20, 2004; RWW updated March 7, 2018; Ashbrook DG, updated Feb 16, 2018]
+An analysis of statistical power is useful to estimate numbers of replicates and strains needed to detect and resolve major sources of trait variance and covariance. A versatile method has been developed by Sen and colleagues (Sen et al., 2007) and implemented in the R program. qtlDesign. David Ashbrook implemented a version of this within Shiny that can help you estimate power for different heritability values QTL effect sizes, cohort sizes, and replication rates:
+<P>
+<A HREF="https://dashbrook1.shinyapps.io/bxd_power_calculator_app/" TARGET= "_empty" class="fs14"><B>Power Calculator </B> (D. Ashbrook)</A> 
+
+<P>
+We can see that in all situations power is increased more by increasing the number of lines than by increasing the number of biological replicates. Dependent upon the heritability of the trait, there is little gain in power when going above 4-6 biological replicates. [DGA, Feb 1, 2019]
+
+
+ [Chesler EJ, Dec 20, 2004; RWW updated March 7, 2018; Ashbrook DG, updated Feb 1, 2019]
 </Blockquote>
 
 <P>
@@ -596,7 +618,11 @@ d-separation</A>) and constructing causal models see Richard Scheines' site.
 
 
 <Blockquote>An analysis of statistical power is useful to estimate numbers of replicates and strains needed to detect and resolve major sources of trait variance and covariance. A versatile method has been developed by Sen and colleagues (Sen et al., 2007) and implemented in the R program. qtlDesign. 
-We have implemented a version of this within Shiney, specifically for the BXD population (https://dashbrook1.shinyapps.io/update_shiny_app/). We can see that in all situations power is increased more by increasing the number of lines than by increasing the number of biological replicates. Dependent upon the heritability of the trait, there is little gain in power when going above 4-6 biological replicates. [DGA, Mar 3, 2018]
+David Ashbrook implemented a version of this within Shiny that can help you estimate power for different QTL effect sizes, cohort sizes, and replication rates:
+<P>
+<A HREF="https://dashbrook1.shinyapps.io/bxd_power_calculator_app/" TARGET= "_empty" class="fs14"><B>Power Calculator </B> (D. Ashbrook)</A> 
+
+<P>We can see that in all situations power is increased more by increasing the number of lines than by increasing the number of biological replicates. Dependent upon the heritability of the trait, there is little gain in power when going above 4-6 biological replicates. [DGA, Mar 3, 2018]
 
 
 
