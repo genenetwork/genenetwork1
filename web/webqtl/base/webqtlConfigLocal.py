@@ -2,17 +2,18 @@
 #      Environment Variables - private
 #########################################
 
-SERVERNAME = 'lily.uthsc.edu'
+SERVERNAME = 'tux02.uthsc.edu'
 
-MYSQL_SERVER = 'localhost'
+MYSQL_SERVER = 'tux02.uthsc.edu'
+# MYSQL_SERVER = 'localhost'
 DB_NAME = 'db_webqtl'
-DB_USER = 'webqtl'
-DB_PASSWD = 'webqtl'
+DB_USER = 'webqtlout'
+DB_PASSWD = 'webqtlout'
 
-MYSQL_UPDSERVER = 'localhost'
+MYSQL_UPDSERVER = 'tux02.uthsc.edu'
 DB_UPDNAME = 'db_webqtl'
-DB_UPDUSER = 'webqtl'
-DB_UPDPASSWD = 'webqtl'
+DB_UPDUSER = 'webqtlout'
+DB_UPDPASSWD = 'webqtlout'
 
 GNROOT = '/gnshare/gn/'
 PythonPath = '/usr/bin/python'
