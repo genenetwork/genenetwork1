@@ -2,16 +2,16 @@
 #      Environment Variables - private
 #########################################
 
-SERVERNAME = 'gn2.genenetwork.org'
+# sql_host = 'tux02.uthsc.edu'
+sql_host = 'tux01.uthsc.edu'
+SERVERNAME = sql_host
 
-MYSQL_SERVER = 'gn2.genenetwork.org'
-# MYSQL_SERVER = 'tux02.uthsc.edu'
-# MYSQL_SERVER = 'localhost'
+MYSQL_SERVER = sql_host
 DB_NAME = 'db_webqtl'
 DB_USER = 'webqtlout'
 DB_PASSWD = 'webqtlout'
 
-MYSQL_UPDSERVER = 'gn2.genenetwork.org'
+MYSQL_UPDSERVER = sql_host
 DB_UPDNAME = 'db_webqtl'
 DB_UPDUSER = 'webqtlout'
 DB_UPDPASSWD = 'webqtlout'

@@ -170,14 +170,17 @@ class webqtlFormData:
 			self.genofile = None
 			self.genofiletitle = None
 
-	def readData(self, strainlst=[], incf1=[]):
+	def readData(self, strainlst=[], incf1=[], incpar=False):
 		'read user input data or from trait data and analysis form'
 
 		if not self.genotype:
 			self.readGenotype()
 		if not strainlst:
 			if incf1:
-				strainlst = self.f1list + self.strainlist
+				if incpar:
+					strainlst = self.parlist + self.f1list + self.strainlist
+				else:
+					strainlst = self.f1list + self.strainlist
 			else:
 				strainlst = self.strainlist	
 	
@@ -187,7 +190,6 @@ class webqtlFormData:
 		variancefiledata = self.formdata.getfirst('variancefile')
 		variancepastedata = self.formdata.getfirst('variancepaste')
 		Nfiledata = self.formdata.getfirst('Nfile')
-
 	
 		if traitfiledata:
 			tt = string.split(traitfiledata)
@@ -204,8 +206,8 @@ class webqtlFormData:
 				vals = vals[:len(strainlst)]
 		else:
 			pass
-		
-	
+
+
 		if variancefiledata:
 			tt = string.split(variancefiledata)
 			vars = map(webqtlUtil.StringAsFloat, tt)

@@ -59,7 +59,7 @@ ParInfo ={
 'AXB':['ABF1', 'BAF1', 'C57BL/6J', 'A/J'],
 'BXA':['BAF1', 'ABF1', 'C57BL/6J', 'A/J'],
 'LXS':['LSF1', 'SLF1', 'ISS', 'ILS'],
-'HXBBXH':['HSRBNF1', 'BNHSRF1', 'BN', 'HSR'],
+'HXBBXH':['SHR_BNF1', 'BN_SHRF1', 'BN-Lx/Cub', 'SHR/OlaIpcv'],
 'BayXSha':['BayXShaF1', 'ShaXBayF1', 'Bay-0','Shahdara'],
 'ColXBur':['ColXBurF1', 'BurXColF1', 'Col-0','Bur-0'],
 'ColXCvi':['ColXCviF1', 'CviXColF1', 'Col-0','Cvi'],

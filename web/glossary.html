@@ -318,7 +318,7 @@ All of these sets of lines are GRPs since each line is genetically defined and b
 
 &nbsp;&nbsp;&nbsp;&nbsp;<A NAME="Heritability">Heritability, <I>h<sup>2</sup></I>:</A>
 <Blockquote>
-Heritability is a rough measure of the ability to use genetic information to predict the level of variation in phenotypes among progeny. Values range from 0 to 1 (or 0 to 100%). A value of 1 or 100% means that a trait is entirely predictable based on paternal/materinal and genetic data (in other words, a Mendelian trait), whereas a value of 0 means that a trait is not at all predictable from information on gene variants. Estimates of heritability are critically dependent on the environment, stage, and age. 
+Heritability is a rough measure of the ability to use genetic information to predict the level of variation in phenotypes among progeny. Values range from 0 to 1 (or 0 to 100%). A value of 1 or 100% means that a trait is entirely predictable based on paternal/materinal and genetic data (in other words, a Mendelian trait), whereas a value of 0 means that a trait is not at all predictable from information on gene variants. Estimates of heritability are highly dependent on the environment, stage, and age. 
 
 <P>Important traits that affect fitness often have low heritabilities because stabilizing selection reduces the frequency of DNA variants that produce suboptimal phenotypes. Conversely, less critical traits for which substantial phenotypic variation is well tolerated, may have high heritability. The environment of laboratory rodents is unnatural, and this allows the accumulation of somewhat deleterious mutations (for example, mutations that lead to albinism). This leads to an upward trend in heritability of unselected traits in laboratory populations--a desirable feature from the point of view of the biomedical analysis of the genetic basis of trait variance. Heritability is a useful parameter to measure at an early stage of a genetic analysis, because it provides a rough gauge of the likelihood of successfully understanding the allelic sources of variation. Highly heritable traits are more amenable to mapping studies. There are numerous ways to estimate heritability, a few of which are described below. [Williams RW, Dec 23, 2004]
 </Blockquote>
@@ -488,15 +488,27 @@ The literature correlation is a unique feature in GeneNetwork that quantifies th
 &nbsp;&nbsp;&nbsp;&nbsp;<A NAME="LOD">LOD:</A>
 <Blockquote> 
 
-The log of the odds (LOD) ratio provides a measure of the association between variation in a phenotype and genetic differences (alleles) at a particular chromosomal locus. It also provides a measure of the strength of linkage between two markers and can be used to evaluate whether two or more markers to each other on the same chromosome.
+The <U>l</U>ogarithm of the <U>od</U>ds (LOD) provides a measure of the association between variation in a phenotype and genetic differences (alleles) at a particular chromosomal locus (see Nyholt  <A HREF="http://www.sciencedirect.com/science/article/pii/S0002929707626391" TARGET= "_empty" class="fs14">2000</A> for a lovely review of LOD scores).
 
-<P>A LOD score is defined as the logarithm of the ratio of two likelihoods: (1) the likelihood for the alternative hypothesis (that there is a QTL) and (2) the likelihood of the null hypothesis (that there is no QTL).  Likelihoods are probabilities, but they are not Pr(hypothesis | data) but rather Pr(data | hypothesis). That's why they are called likelihoods rather than probabilities. (The "|" symbol translates to "given the"). 
+
+<P>A LOD score is defined as the logarithm of the ratio of two likelihoods: (1) in the numerator the likelihood for the alternative hypothesis, namely that there is linkage at the chromosomal marker, and (2) the likelihood of the null hypothesis that there is no linkage. Likelihoods are probabilities, but they are not Pr(hypothesis | data) but rather Pr(data | two alternative hypotheses). That's why they are called likelihoods rather than probabilities. (The "|" symbol above translates to "given the"). Since LOD and LRS scores are associated with two particular hypotheses or models, they are also associated with the degrees of freedom of those two alternative models. When the model only has one degree of freedom this conversion between LOD to p value will work:
+
+<DIR>
+lodToPval <-<BR>
+  function(x)<BR>
+{<BR>
+  pchisq(x*(2*log(10)),df=1,lower.tail=FALSE)/2<BR>
+}<BR>
+
+(from https://www.biostars.org/p/88495/ )
+
+</DIR>
 
 <P>In the two likelihoods, one has maximized over the various nuisance parameters (the mean phenotypes for each genotype group, or overall for the null hypothesis, and the residual variance). Or one can say, one has plugged in the maximum likelihood estimates for these nuisance parameters.
 
 <P>With complete data at a marker, the log likelihood for the normal model reduces to the (-n/2) times the log of the residual sum of squares. 
 
-<P>LOD values can be converted to LRS scores (likelihood ratio statistics) by multiplying by 4.61. The LOD is also roughly equivalent to the -log(P), where P is the probability of linkage (P = 0.001 => 3). The LOD itself is not a precise measurement of the probability of linkage, but in general for F2 crosses and RI strains, values above 3.3 will usually be worth attention for simple interval maps. [Williams RW, June 15, 2005, updated with text from Karl Broman, Oct 28, 2010]</Blockquote>
+<P>LOD values can be converted to LRS scores (likelihood ratio statistics) by multiplying by 4.61. The LOD is also roughly equivalent to the -log(P), where P is the probability of linkage (P = 0.001 => 3). The LOD itself is not a precise measurement of the probability of linkage, but in general for F2 crosses and RI strains, values above 3.3 will usually be worth attention for simple interval maps. [Williams RW, June 15, 2005, updated with text from Karl Broman, Oct 28, 2010, updated Apr 21, 2020 with Nyholt reference].</Blockquote>
 
 &nbsp;&nbsp;&nbsp;&nbsp;<A NAME="LRS">LRS:</A>
 <Blockquote>

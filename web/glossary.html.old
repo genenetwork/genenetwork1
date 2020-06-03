@@ -203,12 +203,17 @@ Epistasis means that combined effects of two or more different loci or polymorph
 
 &nbsp;&nbsp;&nbsp;&nbsp;<A NAME="EffectSize">Effect Size of a QTL:</A>
 <Blockquote>
-QTLs can be ranked by the amount of variance that they explain--their so-called "effect size"--when they are included in a statistical model. The concept of a genetic model may seem odd to some users of GeneNetwork. A model is just an explicit hypothesis of how QTLs and other factors cause variation in a trait. QTL mapping involves comparisons of the explanatory power of different models. Effect sizes can be measured in different units including the percentage of either (1) the total or the genetic variance that is explained by adding the QTL into the model, (2) by the mean shift in Z score, or (3) by the additive effect size expressed in the original measurement scale. Effects of single QTLs are often dependent on genetic background (i.e., other QTLs), the very much dependent on the sample of cases used in a study. For example, the variance explained wio be influenced strongly by whether the sample are from a family cohort, a case-control cohort, a group of fully inbred strains such as recombinant inbred lines, an outcross or backcross population. The functional or molecular importance of a locus, QTL, or GWAS hit can not be predicted by the size of its effect on the trait in one environment, at one stage of development, and in one population. Estimates of the effect size of QTLs are usually both noisy and upwardly biased (overestimated), and both of these problems are particularly acute when sample sizes are small (<500 cases or strains). 
+QTLs can be ranked by the amount of variance that they explain--their so-called "effect size"--when they are included in a statistical model. The concept of a genetic model may seem odd to some users of GeneNetwork. A model is just an explicit hypothesis of how QTLs and other factors cause variation in a trait. QTL mapping involves comparisons of the explanatory power of different models. Effect sizes can be measured in different units including  (1) the percentage of total or genetic variance that is explained by adding the QTL into the model, (2) the mean shift in Z score, or (3) the additive effect size expressed in the original measurement scale. Effects of single QTLs are often dependent on genetic background (i.e., other QTLs and their interactions) and on the numbers and types of cases used in a study. For example, the variance explained is influenced strongly by whether the sample are from a family cohort, a case-control cohort, a group of fully inbred strains such as recombinant inbred lines, an outcross or backcross population. 
+
+<P>Please note that the functional importance of a locus, QTL, or GWAS hit can not be predicted by the size of its effect on the trait in one environment, at one stage of development, and in one population. Estimates of the effect size of QTLs are usually both noisy and upwardly biased (overestimated), and both of these problems are particularly acute when sample sizes are small. 
 <P> 
-In the case of estimating effect size (or the "explained variance of a locus) when studying a cohort of isogenic or inbred lines, such as the BXD recombinant inbred lines, keep the following two factors in mind.
+Estimates of effect size for families of inbred lines, such as the BXD, HXB, CC, and hybrid diversity panels (e.g. the hybrid mouse diversity panel and the hybrid rat diversity panel) are typically (and correctly) much higher than those measured in otherwise similar analysis of intercrosses, heterogeneous stock (HS), or diversity outbred stock. Two factors contribute to the much higher level of explained variance of QTLs when using inbred strain panels.
 <OL>
-<LI><B>Replication Rate</B>: The variance explained is increased by sampling multiple cases that have identical genomes and then using the mean (or median) phenotype for most genetic analyses. Increasing the numbers of cases studied per genometype from 1 to 4 can easily double the apparent heritability of a trait and therefore the effect size of a locus. The reason is simple—resampling decrease the standard error of mean, effectively boosting heritability (see Glossary entry on <I>Heritability</I> and focus on figure 1 from the Belknap <A HREF="/images/upload/Belknap_Heritability_1998.pdf" target="empty" class="fs14">1998</A> paper reproduced below). Compare the  genetically explained variance (labeled <I>h2RI </I> in this figure) with a single case on the x-axis with the function at a replication rate of 4 on the y-axis. If the explained variance is 0.1 (10% of all variance explained) then the value is boosted to 0.3 (30% of strain mean variance explained).
-<LI><B>Homozygosity</B>: The second factor has to do with the intrinsic genetic variance of populations. Recombinant inbred lines are homozygous at nearly all loci. This effectively doubles the genetic variance in a family of recombinant inbred lines compared to a matched number of F2s cases. As a result 40 BXDs sampled just one per genometype will average 2X the genetic variance and 2X the heritability of 40 BDF2 cases. Note that isogenic F1 hybrids made by crossing BXD strains are no longer homozygous at all loci, and while they do expose important new sources of variance associated with dominance, they do not benefit from the 2X gain in genetic variance relative to an F2 intercross.
+<LI><B>Replication Rate</B>: The variance that can be explained by a locus is increased by sampling multiple cases that have identical genomes and by using the strain mean for genetic analysis. Increasing replication rates from 1 to 6 can easily double the apparent heritability of a trait and therefore the effect size of a locus. The reason is simple—resampling decrease the standard error of mean, boosting the effective heritability (see Glossary entry on <I>Heritability</I> and focus on figure 1 from the Belknap <A HREF="/images/upload/Belknap_Heritability_1998.pdf" target="empty" class="fs14">1998</A> paper reproduced below). 
+
+<P>Compare the  genetically explained variance (labeled <I>h2RI </I> in this figure) of a single case (no replication) on the x-axis with the function at a replication rate of 4 on the y-axis. If the explained variance is 0.1 (10% of all variance explained) then the value is boosted to 0.3 (30% of strain mean variance explained) with n = 4.
+
+<LI><B>Homozygosity</B>: The second factor has to do with the inherent genetic variance of populations. Recombinant inbred lines are homozygous at nearly all loci. This doubles the genetic variance in a family of recombinant inbred lines compared to a matched number of F2s. This also quadruples the variance compared to a matched number of backcross cases. As a result 40 BXDs sampled just one per genometype will average 2X the genetic variance and 2X the heritability of 40 BDF2 cases. Note that panels made up of isogenic F1 hybrids (so-called diallel crosses, DX) made by crossing recombinant inbred strains (BXD, CC, or HXB) are no longer homozygous at all loci, and while they do expose important new sources of variance associated with dominance, they do not benefit from the 2X gain in genetic variance relative to an F2 intercross. 
 </OL>
 
 <P>
@@ -217,7 +222,7 @@ In the case of estimating effect size (or the "explained variance of a locus) wh
 
 <P>For the reasons listed above a QTL effect size of 0.4 detected a panel of BXD lines replicated four times each (160 cases total), corresponds approximately to an effect size of 0.18 in BXDs without replication (40 cases total), and to an effect size of 0.09 in an F2 of 40 cases total.
 
-[Williams RW, Dec 23, 2004; updated by RWW July 9, 2019]
+[Williams RW, Dec 23, 2004; updated by RWW July 13, 2019]
 </Blockquote>
 
 &nbsp;&nbsp;&nbsp;&nbsp;<A NAME="eQTL">eQTL, cis eQTL, trans eQTL</A>
@@ -313,7 +318,7 @@ All of these sets of lines are GRPs since each line is genetically defined and b
 
 &nbsp;&nbsp;&nbsp;&nbsp;<A NAME="Heritability">Heritability, <I>h<sup>2</sup></I>:</A>
 <Blockquote>
-Heritability is a rough measure of the ability to use genetic information to predict the level of variation in phenotypes among progeny. Values range from 0 to 1 (or 0 to 100%). A value of 1 or 100% means that a trait is entirely predictable based on paternal/materinal and genetic data (in other words, a Mendelian trait), whereas a value of 0 means that a trait is not at all predictable from information on gene variants. Estimates of heritability are critically dependent on the environment, stage, and age. 
+Heritability is a rough measure of the ability to use genetic information to predict the level of variation in phenotypes among progeny. Values range from 0 to 1 (or 0 to 100%). A value of 1 or 100% means that a trait is entirely predictable based on paternal/materinal and genetic data (in other words, a Mendelian trait), whereas a value of 0 means that a trait is not at all predictable from information on gene variants. Estimates of heritability are highly dependent on the environment, stage, and age. 
 
 <P>Important traits that affect fitness often have low heritabilities because stabilizing selection reduces the frequency of DNA variants that produce suboptimal phenotypes. Conversely, less critical traits for which substantial phenotypic variation is well tolerated, may have high heritability. The environment of laboratory rodents is unnatural, and this allows the accumulation of somewhat deleterious mutations (for example, mutations that lead to albinism). This leads to an upward trend in heritability of unselected traits in laboratory populations--a desirable feature from the point of view of the biomedical analysis of the genetic basis of trait variance. Heritability is a useful parameter to measure at an early stage of a genetic analysis, because it provides a rough gauge of the likelihood of successfully understanding the allelic sources of variation. Highly heritable traits are more amenable to mapping studies. There are numerous ways to estimate heritability, a few of which are described below. [Williams RW, Dec 23, 2004]
 </Blockquote>
@@ -483,15 +488,27 @@ The literature correlation is a unique feature in GeneNetwork that quantifies th
 &nbsp;&nbsp;&nbsp;&nbsp;<A NAME="LOD">LOD:</A>
 <Blockquote> 
 
-The log of the odds (LOD) ratio provides a measure of the association between variation in a phenotype and genetic differences (alleles) at a particular chromosomal locus. It also provides a measure of the strength of linkage between two markers and can be used to evaluate whether two or more markers to each other on the same chromosome.
+The <U>l</U>ogarithm of the <U>od</U>ds (LOD) provides a measure of the association between variation in a phenotype and genetic differences (alleles) at a particular chromosomal locus <A HREF="http://www.sciencedirect.com/science/article/pii/S0002929707626391" TARGET= "_empty" class="fs14"> (see Nyholt 2000 for a lovely review of LOD scores)</A>.
 
-<P>A LOD score is defined as the logarithm of the ratio of two likelihoods: (1) the likelihood for the alternative hypothesis (that there is a QTL) and (2) the likelihood of the null hypothesis (that there is no QTL).  Likelihoods are probabilities, but they are not Pr(hypothesis | data) but rather Pr(data | hypothesis). That's why they are called likelihoods rather than probabilities. (The "|" symbol translates to "given the"). 
+
+<P>A LOD score is defined as the logarithm of the ratio of two likelihoods: (1) in the numerator the likelihood for the alternative hypothesis, namely that there is linkage at the chromosomal marker, and (2) the likelihood of the null hypothesis that there is no linkage. Likelihoods are probabilities, but they are not Pr(hypothesis | data) but rather Pr(data | two alternative hypotheses). That's why they are called likelihoods rather than probabilities. (The "|" symbol above translates to "given the"). Since LOD and LRS scores are associated with two particular hypotheses or models, they are also associated with the degrees of freedom of those two alternative models. When the model only has one degree of freedom this conversion between LOD to p value will work:
+
+<DIR>
+lodToPval <-
+  function(x)
+{
+  pchisq(x*(2*log(10)),df=1,lower.tail=FALSE)/2
+}
+
+(from https://www.biostars.org/p/88495/ )
+
+</DIR>
 
 <P>In the two likelihoods, one has maximized over the various nuisance parameters (the mean phenotypes for each genotype group, or overall for the null hypothesis, and the residual variance). Or one can say, one has plugged in the maximum likelihood estimates for these nuisance parameters.
 
 <P>With complete data at a marker, the log likelihood for the normal model reduces to the (-n/2) times the log of the residual sum of squares. 
 
-<P>LOD values can be converted to LRS scores (likelihood ratio statistics) by multiplying by 4.61. The LOD is also roughly equivalent to the -log(P), where P is the probability of linkage (P = 0.001 => 3). The LOD itself is not a precise measurement of the probability of linkage, but in general for F2 crosses and RI strains, values above 3.3 will usually be worth attention for simple interval maps. [Williams RW, June 15, 2005, updated with text from Karl Broman, Oct 28, 2010]</Blockquote>
+<P>LOD values can be converted to LRS scores (likelihood ratio statistics) by multiplying by 4.61. The LOD is also roughly equivalent to the -log(P), where P is the probability of linkage (P = 0.001 => 3). The LOD itself is not a precise measurement of the probability of linkage, but in general for F2 crosses and RI strains, values above 3.3 will usually be worth attention for simple interval maps. [Williams RW, June 15, 2005, updated with text from Karl Broman, Oct 28, 2010, updated Apr 21, 2020 with Nyholt reference].</Blockquote>
 
 &nbsp;&nbsp;&nbsp;&nbsp;<A NAME="LRS">LRS:</A>
 <Blockquote>

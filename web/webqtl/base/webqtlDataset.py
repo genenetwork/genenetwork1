@@ -76,7 +76,7 @@ class webqtlDataset:
 			self.disfield = ['name','symbol','description','probe_target_description',
 				'chr','mb','alias','geneid','genbankid', 'unigeneid', 'omim',
 				'refseq_transcriptid','blatseq','targetseq','chipid', 'comments',
-				'strand_probe','strand_gene','probe_set_target_region', 
+				'strand_probe','strand_gene','probe_set_target_region', 'proteinid',
 				'probe_set_specificity', 'probe_set_blat_score','probe_set_blat_mb_start',
 				'probe_set_blat_mb_end', 'probe_set_strand', 
 				'probe_set_note_by_rw', 'flag']

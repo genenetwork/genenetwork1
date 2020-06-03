@@ -66,7 +66,7 @@ class DataUpdatePage(templatePage):
 			fd.readGenotype()
 			fd.strainlist = fd.f1list + fd.strainlist
 		
-		fd.readData()
+		fd.readData(incpar=True)
 		
 		self.formdata = fd.formdata
 		self.dict['title'] = 'Data Updating'
@@ -211,11 +211,11 @@ class DataUpdatePage(templatePage):
 					recordDataTable.append(tempTR)
 					tempTR = HT.TR(align="Center")
 			
-			if (i+1) % 2:
-				tempTR.append(HT.TD(''))
-				tempTR.append(HT.TD(''))
-				tempTR.append(HT.TD(''))
-				recordDataTable.append(tempTR)
+				# if (i+1) % 2:
+				# 	tempTR.append(HT.TD(''))
+				# 	tempTR.append(HT.TD(''))
+				# 	tempTR.append(HT.TD(''))
+				# 	recordDataTable.append(tempTR)
 					
 		updateButton = HT.Input(type='submit',name='submit', value='Submit Change',Class="button")
 		resetButton = HT.Input(type='reset',Class="button")
@@ -255,7 +255,9 @@ class DataUpdatePage(templatePage):
 		for field in thisTrait.db.disfield:
 			#fields to be ignored
 			#XZ: The stupid htmlgen can not set readonly for input and textarea. This is the only way I can prevent displayed items such as 'original_description', 'submitter' being changed.
-			if field in ("chipid", "genbankid", "comments", "original_description", "submitter"):
+			# if field in ("chipid", "genbankid", "comments", "original_description", "submitter"):
+			# 	continue
+			if field in ("chipid", "genbankid", "comments", "submitter"):
 				continue
 			oldValue = getattr(thisTrait, field)
 			if not oldValue:
@@ -331,13 +333,15 @@ class DataUpdatePage(templatePage):
 		recordDataChange = HT.Blockquote('Trait data updating is disabled')
 		recordDataTable = ""
 		
+		debug_file = open("/gnshare/gn/web/debug_file.txt", "w")
+
 		modifiedVals = []
 		modifiedVars = []
 		modifiedNps = []
 		numDataChanges = 0
 		if thisTrait.db.type == 'Publish':
 			thisTrait.retrieveData()
-			recordDataTable = HT.TableLite(border=0, width = "90%",cellspacing=2, cellpadding=2)
+			recordDataTable = HT.TableLite(border=0, width = "90%",cellspacing=2, cellpadding=2, align="left")
 			for i, strainName in enumerate(fd.strainlist):
 				if thisTrait.data.has_key(strainName):
 					tdata = thisTrait.data[strainName]
@@ -370,7 +374,7 @@ class DataUpdatePage(templatePage):
 					modifiedNp = "%s" % fd.allTraitData[strainName].N
 				except:
 					modifiedNp = 'x'
-				
+
 				if modifiedVal != traitVal:
 					recordDataTable.append(HT.TR(HT.TD(HT.Paragraph(strainName + " Value")),
 						HT.TD(HT.Paragraph(traitVal, Class="cr")), 
@@ -420,17 +424,23 @@ class DataUpdatePage(templatePage):
 		#############################
 		TD_LR = HT.TD(valign="top",colspan=2,bgcolor="#eeeeee", height=200)
 		
+		containerTable = HT.TableLite(border=0, width = "90%",cellspacing=0, cellpadding=0)
+		
 		mainTitle = HT.Paragraph("Update Info and Data", Class="title")
 		
-		title1 = HT.Paragraph("Trait Information:", Class="subtitle")
+		title1 = HT.Paragraph("Trait Information: ", Class="subtitle")
 
 		title2 = HT.Paragraph("Trait Data:", Class="subtitle")
-		
+
 		if numDataChanges or infoChanges:
 			recordChange = HT.Blockquote('The table below lists all the changes made. The texts in red are the original information stored on the server, the texts to the right are the modified version. ')
 			updateButton = HT.Input(type='submit',name='submit', value='Update Data',Class="button")
 			resetButton = HT.Input(type='reset',Class="button")
-			form.append(title1, HT.Center(updateButton,resetButton), recordInfoChange, recordInfoTable,title2, recordDataChange, HT.Center(recordDataTable,HT.P(),updateButton,resetButton),HT.P())
+			containerTable.append(HT.TR(HT.TD(title1)), HT.TR(HT.TD(HT.BR(),updateButton,resetButton,HT.BR(),HT.BR())), 
+					 			  HT.TR(HT.TD(recordInfoTable)), HT.TR(HT.TD(title2)), HT.TR(HT.TD(HT.BR(),recordDataTable, HT.BR(), HT.BR())),
+					 			  HT.TR(HT.TD(updateButton,resetButton)))
+			form.append(containerTable)
+			#form.append(HT.Center(updateButton,resetButton), title1, recordInfoChange, recordInfoTable,title2, recordDataChange, HT.Center(recordDataTable,HT.P(),updateButton,resetButton),HT.P())
 			TD_LR.append(mainTitle, recordChange, HT.Blockquote(form))
 		else:
 			recordInfoChange = HT.Blockquote("No change has been made")

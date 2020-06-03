@@ -411,7 +411,7 @@ class webqtlTrait:
 					Publication.Month, Publication.Year, PublishXRef.Sequence, 
 					Phenotype.Units, PublishXRef.comments 
 				FROM 
-					PublishXRef, Publication, Phenotype, PublishFreeze 
+					PublishXRef, Publication, Phenotype, PublishFreeze
 				WHERE 
 					PublishXRef.Id = %s AND 
 					Phenotype.Id = PublishXRef.PhenotypeId AND 

@@ -625,9 +625,11 @@ $(window).load(function () {
         if (parseInt($('input[name=num_perm2]').val()) > 100000) {
             $('input[name=num_perm2]').val("100000");
         }
+        /*
         else if (parseInt($('input[name=num_perm2]').val()) < 1000) {
             $('input[name=num_perm2]').val("1000");
-        }        
+        }
+        */     
     });    
 
     $('#sectionbody4').find('input[name=marker]').click(function () {
