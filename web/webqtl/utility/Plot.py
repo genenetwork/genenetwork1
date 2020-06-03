@@ -1151,7 +1151,7 @@ def detScaleOld(min,max):
 		return [low,high,round((high-low)/c)]
 
 def detScale(min=0,max=0,bufferSpace=3):
-
+	debug_file = open("/gnshare/gn/web/debug_file.txt", "w")
 	if min>max:
 		return None
 	elif min == -1.0 and max == 1.0:
@@ -1189,6 +1189,8 @@ def detScale(min=0,max=0,bufferSpace=3):
 			else:
 				div =2.0
 			low=c*floor(min/c)
+			debug_file.write("MAX: " + str(max) + "\n")
+			debug_file.write("C: " + str(c) + "\n")
 			high=c*ceil(max/c)
 			n = round((high-low)/c)
 

@@ -23,7 +23,7 @@ MAXCORR = 500
 DAILYMAXIMUM = 1000
 
 #maximum LRS value
-MAXLRS = 920.0
+MAXLRS = 460.0 #ZS: Should usually be 460
 
 #temporary data life span
 MAXLIFE = 86400 
@@ -56,6 +56,7 @@ UCSC_RUDI_TRACK_URL = " http://genome.cse.ucsc.edu/cgi-bin/hgTracks?org=%s&db=%s
 GENOMEBROWSER_URL="https://genome.ucsc.edu/cgi-bin/hgTracks?db=mm10&position=%s"
 ENSEMBLETRANSCRIPT_URL="http://useast.ensembl.org/Mus_musculus/Transcript/Idhistory?t=%s"
 WikiPi = "http://severus.dbmi.pitt.edu/wiki-pi/index.php/search?q=%s"
+UNIPROT_URL = "https://www.uniprot.org/uniprot/%s"
 
 SECUREDIR = GNROOT + 'secure/'
 COMMON_LIB = GNROOT + 'support/admin'

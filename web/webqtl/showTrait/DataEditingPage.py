@@ -253,6 +253,7 @@ class DataEditingPage(templatePage):
 		similarButton = ""
 		snpBrowserButton = ""
 		updateButton = ""
+		gn2Button = ""
 
 		addSelectionText = ""
 		verifyText = ""
@@ -262,6 +263,7 @@ class DataEditingPage(templatePage):
 		similarText = ""
 		snpBrowserText = ""
 		updateText = ""
+		gn2Text = ""
 
 		if webqtlConfig.USERDICT[self.privilege] >= webqtlConfig.USERDICT['user']:
 
@@ -297,8 +299,7 @@ class DataEditingPage(templatePage):
 			addSelectionButton.append(addSelectionButton_img)
 			addSelectionText = "Add"				
 		else:
-			pass			
-					
+			pass
 
 		# Microarray database information to display
 		if thisTrait and thisTrait.db and thisTrait.db.type == 'ProbeSet': #before, this line was only reached if thisTrait != 0, but now we need to check
@@ -541,7 +542,7 @@ class DataEditingPage(templatePage):
 					))					
 			
 			#XZ: ID links
-			if thisTrait.genbankid or thisTrait.geneid or thisTrait.unigeneid or thisTrait.omim or thisTrait.homologeneid:
+			if thisTrait.genbankid or thisTrait.geneid or thisTrait.unigeneid or thisTrait.omim or thisTrait.homologeneid or thisTrait.proteinid:
 				idStyle = "background:#dddddd;padding:2"
 				tSpan = HT.Span(Class="fs13")
 				if thisTrait.geneid:
@@ -570,6 +571,10 @@ class DataEditingPage(templatePage):
                                        	hurl = HT.Href(text= 'HomoloGene', target='_blank',\
                                                	url=webqtlConfig.HOMOLOGENE_ID % thisTrait.homologeneid, Class="fs14 fwn", title="Find similar genes in other species")
                                         tSpan.append(HT.Span(hurl, style=idStyle), "&nbsp;"*2)
+				if thisTrait.proteinid: 
+					gurl = HT.Href(text= 'UniProt', target='_blank', url= webqtlConfig.UNIPROT_URL % thisTrait.proteinid,Class="fs14 fwn", title="View in UniProt")
+					tSpan.append(HT.Span(gurl, style=idStyle), "&nbsp;"*2)
+
 
 				tbl.append(
 					HT.TR(HT.TD(colspan=3,height=6)),
@@ -683,8 +688,8 @@ class DataEditingPage(templatePage):
 					HT.TD(tSpan, valign="top")))                                                                     
                                                 
 			menuTable = HT.TableLite(cellpadding=2, Class="collap", width="620", id="target1")
-			menuTable.append(HT.TR(HT.TD(addSelectionButton, align="center"),HT.TD(similarButton, align="center"),HT.TD(verifyButton, align="center"),HT.TD(geneWikiButton, align="center"),HT.TD(snpBrowserButton, align="center"),HT.TD(probeButton, align="center"),HT.TD(updateButton, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))     
-			menuTable.append(HT.TR(HT.TD(addSelectionText, align="center"),HT.TD(similarText, align="center"),HT.TD(verifyText, align="center"),HT.TD(geneWikiText, align="center"),HT.TD(snpBrowserText, align="center"),HT.TD(probeText, align="center"),HT.TD(updateText, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))                         
+			menuTable.append(HT.TR(HT.TD(addSelectionButton, align="center"),HT.TD(similarButton, align="center"),HT.TD(verifyButton, align="center"),HT.TD(geneWikiButton, align="center"),HT.TD(snpBrowserButton, align="center"),HT.TD(probeButton, align="center"),HT.TD(updateButton, align="center"), HT.TD(gn2Button, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))     
+			menuTable.append(HT.TR(HT.TD(addSelectionText, align="center"),HT.TD(similarText, align="center"),HT.TD(verifyText, align="center"),HT.TD(geneWikiText, align="center"),HT.TD(snpBrowserText, align="center"),HT.TD(probeText, align="center"),HT.TD(updateText, align="center"), HT.TD(gn2Text, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))                   
 				
 			
 			#for zhou mi's cliques, need to be removed
@@ -775,9 +780,15 @@ class DataEditingPage(templatePage):
 						style = "background:#cddcff;padding:2"), valign="top", width=740)
 					))
 
+			gn2Url = "http://gn2.genenetwork.org/show_trait?trait_id=%s&dataset=%s" % (thisTrait.name, thisTrait.db.name)
+			gn2Button = HT.Href(url="#redirect", onClick="openNewWin('%s')" % gn2Url)
+			gn2ButtonImg = HT.Image("/images/gn2_link_out.png", name="gn2", alt=" View in GN2 ", title=" View Trait in GN2 ", style="border:none;")
+			gn2Button.append(gn2ButtonImg)
+			gn2Text = 'View in GN2'
+
 			menuTable = HT.TableLite(cellpadding=2, Class="collap", width="150", id="target1")
-			menuTable.append(HT.TR(HT.TD(addSelectionButton, align="center"),HT.TD(updateButton, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))
-			menuTable.append(HT.TR(HT.TD(addSelectionText, align="center"),HT.TD(updateText, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))
+			menuTable.append(HT.TR(HT.TD(addSelectionButton, align="center"),HT.TD(updateButton, align="center"), HT.TD(gn2Button, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))
+			menuTable.append(HT.TR(HT.TD(addSelectionText, align="center"),HT.TD(updateText, align="center"), HT.TD(gn2Text, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))
 
 			title1Body.append(tbl, HT.BR(), menuTable)
 			
@@ -822,13 +833,13 @@ class DataEditingPage(templatePage):
 					HT.TD('SNP Search: ', Class="fs13 fwb", 
 						valign="top", nowrap="on", width=90),
 					HT.TD(width=10, valign="top"),
-					HT.TD(HT.Href("http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=snp&cmd=search&term=%s" % thisTrait.name, 'NCBI',Class="fs13"), 
+					HT.TD(HT.Href("http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=snp&cmd=search&term=%s" % thisTrait.name, 'NCBI',Class="fs13"),
 						valign="top", width=740)
 					))
 			
     			menuTable = HT.TableLite(cellpadding=2, Class="collap", width="275", id="target1")
-    			menuTable.append(HT.TR(HT.TD(addSelectionButton, align="center"),HT.TD(verifyButton, align="center"),HT.TD(updateButton, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))     
-    			menuTable.append(HT.TR(HT.TD(addSelectionText, align="center"),HT.TD(verifyText, align="center"),HT.TD(updateText, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))          					
+    			menuTable.append(HT.TR(HT.TD(addSelectionButton, align="center"),HT.TD(verifyButton, align="center"),HT.TD(updateButton, align="center"), HT.TD(gn2Button, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))     
+    			menuTable.append(HT.TR(HT.TD(addSelectionText, align="center"),HT.TD(verifyText, align="center"),HT.TD(updateText, align="center"), HT.TD(gn2Text, align="center"), colspan=3, height=50, style="vertical-align:bottom;"))          					
 					
 			title1Body.append(tbl, HT.BR(), menuTable)
 			
@@ -1983,11 +1994,13 @@ class DataEditingPage(templatePage):
 							CaseAttributeId = '%s'
 							group by CaseAttributeXRefNew.CaseAttributeId""" % (thisTrait.db.risetid, strain_id, str(attribute_id)))
 
-						results = list(self.cursor.fetchone())
+						try:
+							results = list(self.cursor.fetchone())
+						except:
+							continue
+
 						if len(results) > 0:
 							attributeValue = results[0] #Trait-specific attributes, if any
-						else:
-							continue
 
 						#ZS: If it's an int, turn it into one for sorting (for example, 101 would be lower than 80 if they're strings instead of ints)
 						try:

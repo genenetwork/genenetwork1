@@ -27,7 +27,6 @@
 from cmdClass import cmdClass
 from showTrait.ShowTraitPage import ShowTraitPage
 
-
 ######################################### 
 #      SHOW DATA-EDITING PAGE
 #########################################

@@ -41,7 +41,7 @@ class SharingInfoPage(templatePage):
         GN_AccessionId1 = fd.formdata.getvalue('GN_AccessionId')
         InfoPageName1 = fd.formdata.getvalue('InfoPageName')
         sharingInfoObject = SharingInfo2.SharingInfo2(GN_AccessionId1, InfoPageName1)
-        GN_AccessionId2, InfoPageName2, info = sharingInfoObject.getInfo(create=True)
+        GN_AccessionId2, InfoPageName2, info = sharingInfoObject.getInfo(create=False)
 
         # ZS: This javascript is used to hide empty fields in the infofile page. It is here only because
         # there are no other options due to the poor way in which all of this code is structured.

@@ -321,3 +321,17 @@ function CheckInfoPageName(){
 </table>
 </td>
 """
+
+sharinginfo_body_string_empty = """<td>
+Sorry, no metadata on this data set yet.
+<br>
+<br>
+Please email
+<br>
+<a href="mailto: acenteno@uthsc.edu">Arthur Centeno</a> or
+<br>
+<a href="mailto: rwilliams@uthsc.edu">Rob Williams</a>
+</td>
+"""
+
+
