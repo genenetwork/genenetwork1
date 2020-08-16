@@ -132,6 +132,8 @@ class ShowTraitPage(DataEditingPage):
 			thisTrait.strainInfo = None
 		"""
 
+		fd.incparentsf1 = "on"
+
 		##identification, etc.
 		fd.identification = '%s : %s'%(thisTrait.db.shortname,ProbeSetID)
 		thisTrait.returnURL = webqtlConfig.CGIDIR + webqtlConfig.SCRIPTFILE + '?FormID=showDatabase&database=%s\

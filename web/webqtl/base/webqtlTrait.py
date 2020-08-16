@@ -406,7 +406,7 @@ class webqtlTrait:
 					Phenotype.Pre_publication_description, Phenotype.Post_publication_description, Phenotype.Original_description, 
 					Phenotype.Pre_publication_abbreviation, Phenotype.Post_publication_abbreviation, 
 					Phenotype.Lab_code, Phenotype.Submitter, Phenotype.Owner, Phenotype.Authorized_Users,
-					Publication.Authors, Publication.Title, Publication.Abstract, 
+					CAST(Publication.Authors AS BINARY), Publication.Title, Publication.Abstract, 
 					Publication.Journal, Publication.Volume, Publication.Pages, 
 					Publication.Month, Publication.Year, PublishXRef.Sequence, 
 					Phenotype.Units, PublishXRef.comments 
