@@ -30,13 +30,12 @@ University of Tennessee Center for Integrative and Translational Genomics
 
 #### Running inside a Guix container
 
-Running Genenetwork1 in modern environments can be difficult since
-it's dependencies are no longer actively supported. However, with
-guix, you can reproduce the environment in which it ran. This is
-possible since some of the old (deprecated) packages are either
-maintained in [guix-past](https://gitlab.inria.fr/guix-hpc/guix-past)
-or
-[guix-bioinformatics](http://git.genenetwork.org/guix-bioinformatics/guix-bioinformatics.git/)
+Running Genenetwork1 in modern environments can be difficult since its
+dependencies are no longer actively supported. However, with guix, you
+can reproduce the environment in which it ran. This is possible since
+some of the old (deprecated) packages are either maintained in
+[guix-past](https://gitlab.inria.fr/guix-hpc/guix-past) or
+[guix-bioinformatics](http://git.genenetwork.org/guix-bioinformatics/guix-bioinformatics.git/).
 
 
 To host genenetwork1 in a guix container, simply run:
