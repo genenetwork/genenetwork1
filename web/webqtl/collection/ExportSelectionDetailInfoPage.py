@@ -80,7 +80,7 @@ class ExportSelectionDetailInfoPage(templatePage):
 			self.searchResult = string.split(self.searchResult,'\t')
 		strainlist = fd.f1list + fd.strainlist
 		
-		debug_file = open("/gnshare/gn/web/debug_file.txt", "w")
+		debug_file = open("/gnshare/gn/web/tmp/debug_file.txt", "w")
 
 		if self.searchResult:
 			traitList = []

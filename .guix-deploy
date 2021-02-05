@@ -1,16 +1,24 @@
 # Requires a symlink from /gnshare and /tmp/guix-gn1
+# mkdir /srv/http
 
-mkdir -pv /tmp/guix-gn1   
+mkdir -pv ~/tmp/guix-gn1
+mkdir -pv ~/srv/http   
+echo httpd -f $(~/opt/guix/bin/guix build -L /home/gn1/guix-past/modules/ -L /home/gn1/guix-bioinformatics/ -e '(@ (gn services gn1-httpd-config) GN1-httpd-config)')
 
 ~/opt/guix/bin/guix environment \
     -L ~/guix-past/modules/ \
     -L ~/guix-bioinformatics/ \
-    --pure \
+    -C --network \
     genenetwork1 \
     --ad-hoc \
+    vim procps binutils inetutils \
     --network \
-    --expose=/gnshare/gn/web/genotypes \
-    --expose=/home/gn1/tmp=/tmp \
-    -- httpd -f \
-    $(~/opt/guix/bin/guix build -L /home/gn1/guix-past/modules/ -L /home/gn1/guix-bioinformatics/ \
-      -e '(@ (gn services gn1-httpd-config) GN1-httpd-config)')
+    --expose=/gnu \
+    --expose=/home/gn1/srv=/srv \
+    --expose=/home/gn1/production/gnshare=/gnshare \
+    --share=/home/gn1/production/gnshare/gn/web/tmp=/gnshare/gn/web/tmp \
+    --share=/home/gn1/production/gnshare/gn/web/image=/gnshare/gn/web/image \
+    --share=/home/gn1/tmp=/tmp 
+#    -- httpd -f \
+#    $(~/opt/guix/bin/guix build -L /home/gn1/guix-past/modules/ -L /home/gn1/guix-bioinformatics/ \
+#      -e '(@ (gn services gn1-httpd-config) GN1-httpd-config)')

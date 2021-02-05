@@ -210,7 +210,7 @@ class ProbeSetTrait(Trait):
         Look up the data id for this trait given which
         freeze it came from.
         """
-        debug_file=open("/gnshare/gn/web/debug_file2.txt", "w")
+        debug_file=open("/gnshare/gn/web/tmp/debug_file2.txt", "w")
         cursor.execute('''
         SELECT
           ProbeSetXRef.DataId

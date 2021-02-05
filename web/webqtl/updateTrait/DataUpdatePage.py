@@ -333,7 +333,7 @@ class DataUpdatePage(templatePage):
 		recordDataChange = HT.Blockquote('Trait data updating is disabled')
 		recordDataTable = ""
 		
-		debug_file = open("/gnshare/gn/web/debug_file.txt", "w")
+		debug_file = open("/gnshare/gn/web/tmp/debug_file.txt", "w")
 
 		modifiedVals = []
 		modifiedVars = []

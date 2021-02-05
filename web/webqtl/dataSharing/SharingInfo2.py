@@ -45,7 +45,7 @@ class SharingInfo2:
 				self.InfoPageName = InfoPageName
 
 		def getInfo(self, create=False):
-				debug_file = open("/gnshare/gn/web/debug_file123.txt", "w")
+				debug_file = open("/gnshare/gn/web/tmp/debug_file123.txt", "w")
 				cursor = webqtlDatabaseFunction.getCursor()
 				debug_file.write("AFTER GET CURSOR")
 				if (not cursor):
