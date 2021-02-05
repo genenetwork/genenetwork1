@@ -1,0 +1,16 @@
+# Requires a symlink from /gnshare and /tmp/guix-gn1
+
+mkdir -pv /tmp/guix-gn1   
+
+~/opt/guix/bin/guix environment \
+    -L ~/guix-past/modules/ \
+    -L ~/guix-bioinformatics/ \
+    --pure \
+    genenetwork1 \
+    --ad-hoc \
+    --network \
+    --expose=/gnshare/gn/web/genotypes \
+    --expose=/home/gn1/tmp=/tmp \
+    -- httpd -f \
+    $(~/opt/guix/bin/guix build -L /home/gn1/guix-past/modules/ -L /home/gn1/guix-bioinformatics/ \
+      -e '(@ (gn services gn1-httpd-config) GN1-httpd-config)')
