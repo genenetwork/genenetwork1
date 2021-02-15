@@ -30,88 +30,92 @@ import string
 
 from base.webqtlFormData import webqtlFormData
 
+import sys
+sys.path.append("./web/webqtl")
+print(sys.path)
+
 #import logging
 #logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
 #_log = logging.getLogger("gn\web\webqtl\main.py")
 
 def handler(req):
-	req.content_type = 'text/html'
+  req.content_type = 'text/html'
 
-	formdata = util.FieldStorage(req)
+  formdata = util.FieldStorage(req)
 
-	formID = formdata.getfirst('FormID')
-	sid = formdata.getfirst('sid')
-	cmdID = formdata.getfirst('cmd')
-	page = None
+  formID = formdata.getfirst('FormID')
+  sid = formdata.getfirst('sid')
+  cmdID = formdata.getfirst('cmd')
+  page = None
 
-	#XZ: this statement must be put into handler function
-	mod_python_session = Session.Session(req, timeout=864000, lock=0)
-	mod_python_session.load()			
+  #XZ: this statement must be put into handler function
+  mod_python_session = Session.Session(req, timeout=864000, lock=0)
+  mod_python_session.load()      
 
-	if sid:
-		from cmdLine import procPage
-		reload(procPage)
-		req.content_type = 'text/html'
-		procPage.procPage(sid, req)
-	else:	
-		fd = webqtlFormData(req=req, mod_python_session=mod_python_session, FieldStorage_formdata=formdata)
+  if sid:
+    from cmdLine import procPage
+    reload(procPage)
+    req.content_type = 'text/html'
+    procPage.procPage(sid, req)
+  else:  
+    fd = webqtlFormData(req=req, mod_python_session=mod_python_session, FieldStorage_formdata=formdata)
 
-		if formID:
-			#XZ: Special case. Pay attention to parameters! We can NOT pass 'fd'!
-                        if fd.formID == 'uploadFile':
-				from base import cookieData
-				from misc import uploadFilePage
-				reload(uploadFilePage)
-				reload(cookieData)
-				cookies = cookieData.cookieData(Cookie.get_cookies(req)) #new module
-				req.content_type = 'text/html'
-				page = uploadFilePage.uploadFilePage(fd, formdata, cookies)
+    if formID:
+      #XZ: Special case. Pay attention to parameters! We can NOT pass 'fd'!
+      if fd.formID == 'uploadFile':
+        from base import cookieData
+        from misc import uploadFilePage
+        reload(uploadFilePage)
+        reload(cookieData)
+        cookies = cookieData.cookieData(Cookie.get_cookies(req)) #new module
+        req.content_type = 'text/html'
+        page = uploadFilePage.uploadFilePage(fd, formdata, cookies)
 
-                        #search
-                        elif fd.formID in ('searchResult','asearchResult'):
-                                from search import SearchResultPage
-                                reload(SearchResultPage)
-                                req.content_type = 'text/html'
-                                page = SearchResultPage.SearchResultPage(fd)
+      #search
+      elif fd.formID in ('searchResult','asearchResult'):
+              from search import SearchResultPage
+              reload(SearchResultPage)
+              req.content_type = 'text/html'
+              page = SearchResultPage.SearchResultPage(fd)
 
-                        #showTrait
-                        elif fd.formID == 'showDatabase':
-                                from showTrait import ShowTraitPage
-                                reload(ShowTraitPage)
-                                req.content_type = 'text/html'
-                                page = ShowTraitPage.ShowTraitPage(fd)
-                        elif fd.formID == 'showBest':
-                                from showTrait import ShowBestTrait
-                                reload(ShowBestTrait)
-                                req.content_type = 'text/html'
-                                page = ShowBestTrait.ShowBestTrait(fd)
-                        elif fd.formID == 'showProbeInfo':
-                                from showTrait import ShowProbeInfoPage
-                                reload(ShowProbeInfoPage)
-                                page = ShowProbeInfoPage.ShowProbeInfoPage(fd)
-                                req.content_type = 'text/html'
-			elif fd.formID in ('crossChoice', 'varianceChoice'):
-				if not fd.submitID:
-					req.content_type = 'text/html'
-					req.write('check your page')
-				elif fd.submitID == 'sample':
-					from showTrait import testTraitPage  # new module
-					reload(testTraitPage)
-					page = testTraitPage.testTraitPage()
-					req.content_type = 'text/html'
-				else:
-					from showTrait import DataEditingPage
-					reload(DataEditingPage)
-					req.content_type = 'text/html'
-					page = DataEditingPage.DataEditingPage(fd)
+      #showTrait
+      elif fd.formID == 'showDatabase':
+              from showTrait import ShowTraitPage
+              reload(ShowTraitPage)
+              req.content_type = 'text/html'
+              page = ShowTraitPage.ShowTraitPage(fd)
+      elif fd.formID == 'showBest':
+              from showTrait import ShowBestTrait
+              reload(ShowBestTrait)
+              req.content_type = 'text/html'
+              page = ShowBestTrait.ShowBestTrait(fd)
+      elif fd.formID == 'showProbeInfo':
+              from showTrait import ShowProbeInfoPage
+              reload(ShowProbeInfoPage)
+              page = ShowProbeInfoPage.ShowProbeInfoPage(fd)
+              req.content_type = 'text/html'
+      elif fd.formID in ('crossChoice', 'varianceChoice'):
+        if not fd.submitID:
+          req.content_type = 'text/html'
+          req.write('check your page')
+        elif fd.submitID == 'sample':
+          from showTrait import testTraitPage  # new module
+          reload(testTraitPage)
+          page = testTraitPage.testTraitPage()
+          req.content_type = 'text/html'
+        else:
+          from showTrait import DataEditingPage
+          reload(DataEditingPage)
+          req.content_type = 'text/html'
+          page = DataEditingPage.DataEditingPage(fd)
 
-			#from Trait Data and Analysis form page
-			elif fd.formID == 'dataEditing':
-				if not fd.submitID:
-					req.content_type = 'text/html'
-					req.write('check your page')
-				elif fd.submitID == 'basicStatistics': #Updated Basic Statistics page (pop-up when user hits "update" button in DataEditingPage.py
-					from basicStatistics import updatedBasicStatisticsPage
+      #from Trait Data and Analysis form page
+      elif fd.formID == 'dataEditing':
+        if not fd.submitID:
+          req.content_type = 'text/html'
+          req.write('check your page')
+        elif fd.submitID == 'basicStatistics': #Updated Basic Statistics page (pop-up when user hits "update" button in DataEditingPage.py
+          from basicStatistics import updatedBasicStatisticsPage
                                         reload(updatedBasicStatisticsPage)
                                         req.content_type = 'text/html'
                                         page = updatedBasicStatisticsPage.updatedBasicStatisticsPage(fd)
@@ -138,34 +142,34 @@ def handler(req):
                                         from cmdLine import cmdIntervalMappingPage
                                         reload(cmdIntervalMappingPage)
                                         page = cmdIntervalMappingPage.cmdIntervalMappingPage(fd)
-				elif fd.submitID == 'markerRegression':
-					from cmdLine import cmdMarkerRegressionPage
-					reload(cmdMarkerRegressionPage)
-					req.content_type = 'text/html'
-					page = cmdMarkerRegressionPage.cmdMarkerRegressionPage(fd)
+        elif fd.submitID == 'markerRegression':
+          from cmdLine import cmdMarkerRegressionPage
+          reload(cmdMarkerRegressionPage)
+          req.content_type = 'text/html'
+          page = cmdMarkerRegressionPage.cmdMarkerRegressionPage(fd)
 
-				elif fd.submitID == 'directPlot':
-					from cmdLine import cmdDirectPlotPage
-					reload(cmdDirectPlotPage)
-					req.content_type = 'text/html'
-					page = cmdDirectPlotPage.cmdDirectPlotPage(fd)
-				elif fd.submitID == 'exportData':
-					from showTrait import exportPage
-					reload(exportPage)
-					req.content_type = 'text/html'
-					page = exportPage.ExportPage(fd)
-				elif fd.submitID == 'showAll':
-					from cmdLine import cmdShowAllPage
-					reload(cmdShowAllPage)
-					page = cmdShowAllPage.cmdShowAllPage(fd)
-				elif fd.submitID == 'showAll2':
-					from cmdLine import cmdShowAllPage2
-					reload(cmdShowAllPage2)
-					page=cmdShowAllPage2.cmdShowAllPage2(fd)
-				else:
-					pass
+        elif fd.submitID == 'directPlot':
+          from cmdLine import cmdDirectPlotPage
+          reload(cmdDirectPlotPage)
+          req.content_type = 'text/html'
+          page = cmdDirectPlotPage.cmdDirectPlotPage(fd)
+        elif fd.submitID == 'exportData':
+          from showTrait import exportPage
+          reload(exportPage)
+          req.content_type = 'text/html'
+          page = exportPage.ExportPage(fd)
+        elif fd.submitID == 'showAll':
+          from cmdLine import cmdShowAllPage
+          reload(cmdShowAllPage)
+          page = cmdShowAllPage.cmdShowAllPage(fd)
+        elif fd.submitID == 'showAll2':
+          from cmdLine import cmdShowAllPage2
+          reload(cmdShowAllPage2)
+          page=cmdShowAllPage2.cmdShowAllPage2(fd)
+        else:
+          pass
 
-			#from marker regression result page
+      #from marker regression result page
                         elif fd.formID == 'secondRegression':
                                 if not fd.submitID:
                                         req.content_type = 'text/html'
@@ -182,11 +186,11 @@ def handler(req):
                                 else:
                                         pass
 
-			#cmdLine	
-			elif fd.formID == 'showIntMap':
-				from cmdLine import cmdIntervalMappingPage
-				reload(cmdIntervalMappingPage)
-				page = cmdIntervalMappingPage.cmdIntervalMappingPage(fd)
+      #cmdLine  
+      elif fd.formID == 'showIntMap':
+        from cmdLine import cmdIntervalMappingPage
+        reload(cmdIntervalMappingPage)
+        page = cmdIntervalMappingPage.cmdIntervalMappingPage(fd)
                         elif fd.formID == 'heatmap':
                                 from cmdLine import cmdHeatmapPage
                                 reload(cmdHeatmapPage)
@@ -203,74 +207,74 @@ def handler(req):
                                 from cmdLine import cmdPartialCorrelationPage
                                 reload(cmdPartialCorrelationPage)
                                 page = cmdPartialCorrelationPage.cmdPartialCorrelationPage(fd)
-				
-			#pairScan
-			elif fd.formID == 'showCategoryGraph':
-				from pairScan import CategoryGraphPage
-				reload(CategoryGraphPage)
-				req.content_type = 'text/html'
-				page = CategoryGraphPage.CategoryGraphPage(fd)
-			elif fd.formID == 'pairPlot':
-				from pairScan import PairPlotPage
-				reload(PairPlotPage)
-				req.content_type = 'text/html'
-				page = PairPlotPage.PairPlotPage(fd)
+        
+      #pairScan
+      elif fd.formID == 'showCategoryGraph':
+        from pairScan import CategoryGraphPage
+        reload(CategoryGraphPage)
+        req.content_type = 'text/html'
+        page = CategoryGraphPage.CategoryGraphPage(fd)
+      elif fd.formID == 'pairPlot':
+        from pairScan import PairPlotPage
+        reload(PairPlotPage)
+        req.content_type = 'text/html'
+        page = PairPlotPage.PairPlotPage(fd)
 
-			#compareCorrelates
-			elif fd.formID == 'compCorr':
-				from compareCorrelates import MultipleCorrelationPage
-				reload(MultipleCorrelationPage)
-				page = MultipleCorrelationPage.MultipleCorrelationPage(fd)
+      #compareCorrelates
+      elif fd.formID == 'compCorr':
+        from compareCorrelates import MultipleCorrelationPage
+        reload(MultipleCorrelationPage)
+        page = MultipleCorrelationPage.MultipleCorrelationPage(fd)
 
-			#correlationMatrix
-			elif fd.formID == 'corMatrix':
-				from correlationMatrix import CorrelationMatrixPage
-				reload(CorrelationMatrixPage)
-				req.content_type = 'text/html'
-				page = CorrelationMatrixPage.CorrelationMatrixPage(fd)
+      #correlationMatrix
+      elif fd.formID == 'corMatrix':
+        from correlationMatrix import CorrelationMatrixPage
+        reload(CorrelationMatrixPage)
+        req.content_type = 'text/html'
+        page = CorrelationMatrixPage.CorrelationMatrixPage(fd)
                         elif fd.formID=='tissueCorrelation' or fd.formID=='dispMultiSymbolsResult':
                                 from correlationMatrix import TissueCorrelationPage
                                 reload(TissueCorrelationPage)
                                 page = TissueCorrelationPage.TissueCorrelationPage(fd)
-			elif fd.formID =='dispTissueCorrelationResult':
-				from cmdLine import cmdTissueCorrelationResultPage
-				reload (cmdTissueCorrelationResultPage)
-				page = cmdTissueCorrelationResultPage.cmdTissueCorrelationResultPage(fd)
-			elif fd.formID=='tissueAbbreviation':
-				from correlationMatrix import TissueAbbreviationPage
-				reload(TissueAbbreviationPage)
-				page = TissueAbbreviationPage.TissueAbbreviationPage(fd)
-			
-			#collection
-			elif fd.formID == 'dispSelection':
-				from collection import DisplaySelectionPage
-				reload(DisplaySelectionPage)
-				page = DisplaySelectionPage.DisplaySelectionPage(fd)
-				req.content_type = 'text/html'
-			elif fd.formID == 'addToSelection':
-				from collection import AddToSelectionPage
-				reload(AddToSelectionPage)
-				page = AddToSelectionPage.AddToSelectionPage(fd)
-				req.content_type = 'text/html'
-			elif fd.formID == 'removeSelection':
-				from collection import RemoveSelectionPage
-				reload(RemoveSelectionPage)
-				page = RemoveSelectionPage.RemoveSelectionPage(fd)
-				req.content_type = 'text/html'
-			elif fd.formID == 'exportSelect':
-				from collection import ExportSelectionPage
-				reload(ExportSelectionPage)
-				page = ExportSelectionPage.ExportSelectionPage(fd)
-			elif fd.formID == 'importSelect':
-				from collection import ImportSelectionPage
-				reload(ImportSelectionPage)
-				page = ImportSelectionPage.ImportSelectionPage(fd)
-				req.content_type = 'text/html'
-			elif fd.formID == 'exportSelectionDetailInfo':
-				from collection import ExportSelectionDetailInfoPage
-				reload(ExportSelectionDetailInfoPage)
-				page = ExportSelectionDetailInfoPage.ExportSelectionDetailInfoPage(fd)
-			elif fd.formID == 'BNW':
+      elif fd.formID =='dispTissueCorrelationResult':
+        from cmdLine import cmdTissueCorrelationResultPage
+        reload (cmdTissueCorrelationResultPage)
+        page = cmdTissueCorrelationResultPage.cmdTissueCorrelationResultPage(fd)
+      elif fd.formID=='tissueAbbreviation':
+        from correlationMatrix import TissueAbbreviationPage
+        reload(TissueAbbreviationPage)
+        page = TissueAbbreviationPage.TissueAbbreviationPage(fd)
+      
+      #collection
+      elif fd.formID == 'dispSelection':
+        from collection import DisplaySelectionPage
+        reload(DisplaySelectionPage)
+        page = DisplaySelectionPage.DisplaySelectionPage(fd)
+        req.content_type = 'text/html'
+      elif fd.formID == 'addToSelection':
+        from collection import AddToSelectionPage
+        reload(AddToSelectionPage)
+        page = AddToSelectionPage.AddToSelectionPage(fd)
+        req.content_type = 'text/html'
+      elif fd.formID == 'removeSelection':
+        from collection import RemoveSelectionPage
+        reload(RemoveSelectionPage)
+        page = RemoveSelectionPage.RemoveSelectionPage(fd)
+        req.content_type = 'text/html'
+      elif fd.formID == 'exportSelect':
+        from collection import ExportSelectionPage
+        reload(ExportSelectionPage)
+        page = ExportSelectionPage.ExportSelectionPage(fd)
+      elif fd.formID == 'importSelect':
+        from collection import ImportSelectionPage
+        reload(ImportSelectionPage)
+        page = ImportSelectionPage.ImportSelectionPage(fd)
+        req.content_type = 'text/html'
+      elif fd.formID == 'exportSelectionDetailInfo':
+        from collection import ExportSelectionDetailInfoPage
+        reload(ExportSelectionDetailInfoPage)
+        page = ExportSelectionDetailInfoPage.ExportSelectionDetailInfoPage(fd)
+      elif fd.formID == 'BNW':
                                 from collection import BNWPage
                                 reload(BNWPage)
                                 page = BNWPage.BNWPage(fd)
@@ -280,72 +284,72 @@ def handler(req):
                                 page = BatchSubmitSelectionPage.BatchSubmitSelectionPage(fd)
                                 req.content_type = 'text/html'
 
-			#user
-			elif fd.formID == 'userLogin':
-				from user import userLogin
-				reload(userLogin)
-				page = userLogin.userLogin(fd)
-				req.content_type = 'text/html'
-			elif fd.formID == 'userLogoff':
-				from user import userLogoff
-				reload(userLogoff)
-				page = userLogoff.userLogoff(fd)
-				req.content_type = 'text/html'
-			elif fd.formID == 'userPasswd':
-				from user import userPasswd
-				reload(userPasswd)
-				page = userPasswd.userPasswd(fd)
-				req.content_type = 'text/html'
+      #user
+      elif fd.formID == 'userLogin':
+        from user import userLogin
+        reload(userLogin)
+        page = userLogin.userLogin(fd)
+        req.content_type = 'text/html'
+      elif fd.formID == 'userLogoff':
+        from user import userLogoff
+        reload(userLogoff)
+        page = userLogoff.userLogoff(fd)
+        req.content_type = 'text/html'
+      elif fd.formID == 'userPasswd':
+        from user import userPasswd
+        reload(userPasswd)
+        page = userPasswd.userPasswd(fd)
+        req.content_type = 'text/html'
 
-			#submitTrait
+      #submitTrait
                         elif fd.formID == 'pre_dataEditing':
                                 from submitTrait import VarianceChoicePage
                                 reload(VarianceChoicePage)
                                 page = VarianceChoicePage.VarianceChoicePage(fd)
                                 req.content_type = 'text/html'
-			elif fd.formID == 'batSubmit':
-				from submitTrait import BatchSubmitPage
-				reload(BatchSubmitPage)
-				req.content_type = 'text/html'
-				page = BatchSubmitPage.BatchSubmitPage(fd)
+      elif fd.formID == 'batSubmit':
+        from submitTrait import BatchSubmitPage
+        reload(BatchSubmitPage)
+        req.content_type = 'text/html'
+        page = BatchSubmitPage.BatchSubmitPage(fd)
 
 
-			#misc
+      #misc
                         elif fd.formID == 'editHtml':
                                 from misc import editHtmlPage
                                 reload(editHtmlPage)
                                 req.content_type = 'text/html'
                                 page = editHtmlPage.editHtmlPage(fd)
 
-			#genomeGraph
-			elif fd.formID == 'transciptMapping':
-				from genomeGraph import cmdGenomeScanPage
-				reload(cmdGenomeScanPage)
-				req.content_type = 'text/html'
-				page = cmdGenomeScanPage.cmdGenomeScanPage(fd)
-			elif fd.formID == 'genAllDbResult':
-				from genomeGraph import genAllDbResultPage
-				reload(genAllDbResultPage)
-				page = genAllDbResultPage.genAllDbResultPage(fd)	
+      #genomeGraph
+      elif fd.formID == 'transciptMapping':
+        from genomeGraph import cmdGenomeScanPage
+        reload(cmdGenomeScanPage)
+        req.content_type = 'text/html'
+        page = cmdGenomeScanPage.cmdGenomeScanPage(fd)
+      elif fd.formID == 'genAllDbResult':
+        from genomeGraph import genAllDbResultPage
+        reload(genAllDbResultPage)
+        page = genAllDbResultPage.genAllDbResultPage(fd)  
 
-			#geneWiki
-			elif fd.formID == 'geneWiki':
-				from geneWiki import AddGeneRIFPage
-				reload(AddGeneRIFPage)
-				page = AddGeneRIFPage.AddGeneRIFPage(fd)
+      #geneWiki
+      elif fd.formID == 'geneWiki':
+        from geneWiki import AddGeneRIFPage
+        reload(AddGeneRIFPage)
+        page = AddGeneRIFPage.AddGeneRIFPage(fd)
 
-			#externalResource
-			elif fd.formID == 'GOTree':
-				from externalResource import GoTreePage
-				reload(GoTreePage)
-				req.content_type = 'text/html'
-				page = GoTreePage.GoTreePage(fd)
-			elif fd.formID == 'ODE':
+      #externalResource
+      elif fd.formID == 'GOTree':
+        from externalResource import GoTreePage
+        reload(GoTreePage)
+        req.content_type = 'text/html'
+        page = GoTreePage.GoTreePage(fd)
+      elif fd.formID == 'ODE':
                                 from externalResource import ODEPage
                                 reload(ODEPage)
                                 req.content_type = 'text/html'
                                 page = ODEPage.ODEPage(fd)
-			elif fd.formID == 'ODEIM':
+      elif fd.formID == 'ODEIM':
                                 from externalResource import ODEPageIM
                                 reload(ODEPageIM)
                                 req.content_type = 'text/html'
@@ -356,7 +360,7 @@ def handler(req):
                                 req.content_type = 'text/html'
                                 page = GCATPage.GCATPage(fd)
 
-			#management
+      #management
                         elif fd.formID == 'managerMain':
                                 from management import managerMainPage
                                 reload(managerMainPage)
@@ -376,7 +380,7 @@ def handler(req):
                                 from management import deletePhenotypeTraitPage
                                 reload(deletePhenotypeTraitPage)
                                 req.content_type = 'text/html'
-                                page = deletePhenotypeTraitPage.deletePhenotypeTraitPage(fd)	
+                                page = deletePhenotypeTraitPage.deletePhenotypeTraitPage(fd)  
                         elif fd.formID == 'exportPhenotypeDataset':
                                 from management import exportPhenotypeDatasetPage
                                 reload(exportPhenotypeDatasetPage)
@@ -387,13 +391,13 @@ def handler(req):
                                 reload(editHeaderFooter)
                                 req.content_type = 'text/html'
                                 page = editHeaderFooter.editHeaderFooter(fd)
-			elif fd.formID == 'updGeno':
+      elif fd.formID == 'updGeno':
                                 from management import GenoUpdate
                                 reload(GenoUpdate)
                                 req.content_type = 'text/html'
                                 page = GenoUpdate.GenoUpdate(fd)
 
-			#correlation
+      #correlation
                         elif fd.formID == 'showCorrelationPlot':
                                 from correlation import PlotCorrelationPage
                                 reload(PlotCorrelationPage)
@@ -415,135 +419,135 @@ def handler(req):
                                 req.content_type = 'text/html'
                                 page = PartialCorrTraitPage.PartialCorrTraitPage(fd)
 
-			#elif fd.formID == 'BNInput':
-			#	from BN import BNInputPage
-			#	reload(BNInputPage)
-			#	req.content_type = 'text/html'
-			#	page = BNInputPage.BNInputPage(fd)
+      #elif fd.formID == 'BNInput':
+      #  from BN import BNInputPage
+      #  reload(BNInputPage)
+      #  req.content_type = 'text/html'
+      #  page = BNInputPage.BNInputPage(fd)
 
                         elif fd.formID == 'updateRecord':
-				from updateTrait import DataUpdatePage
-				reload(DataUpdatePage)
-				req.content_type = 'text/html'
-				page=DataUpdatePage.DataUpdatePage(fd)
+        from updateTrait import DataUpdatePage
+        reload(DataUpdatePage)
+        req.content_type = 'text/html'
+        page=DataUpdatePage.DataUpdatePage(fd)
 
-			#schema
-			elif fd.formID == 'schemaShowPage':
-				from schema import ShowSchemaPage
-				reload(ShowSchemaPage)
-				req.content_type = 'text/html'
-				page = ShowSchemaPage.ShowSchemaPage(fd)
-			elif fd.formID == 'schemaShowComment':
-				from schema import ShowCommentPage
-				reload(ShowCommentPage)
-				req.content_type = 'text/html'
-				page = ShowCommentPage.ShowCommentPage(fd)
-			elif fd.formID == 'schemaUpdateComment':
-				from schema import UpdateCommentPage
-				reload(UpdateCommentPage)
-				req.content_type = 'text/html'
-				page = UpdateCommentPage.UpdateCommentPage(fd)
+      #schema
+      elif fd.formID == 'schemaShowPage':
+        from schema import ShowSchemaPage
+        reload(ShowSchemaPage)
+        req.content_type = 'text/html'
+        page = ShowSchemaPage.ShowSchemaPage(fd)
+      elif fd.formID == 'schemaShowComment':
+        from schema import ShowCommentPage
+        reload(ShowCommentPage)
+        req.content_type = 'text/html'
+        page = ShowCommentPage.ShowCommentPage(fd)
+      elif fd.formID == 'schemaUpdateComment':
+        from schema import UpdateCommentPage
+        reload(UpdateCommentPage)
+        req.content_type = 'text/html'
+        page = UpdateCommentPage.UpdateCommentPage(fd)
 
-			#snpBrowser
-			elif fd.formID == 'snpBrowser':
-				req.content_type = 'text/html'
-				snpId = fd.formdata.getfirst('snpId')
-				if snpId:
-					from snpBrowser import snpDetails
-					reload(snpDetails)
-					page = snpDetails.snpDetails(fd, snpId)
-				else:
-					from snpBrowser import snpBrowserPage
-					reload(snpBrowserPage)
-					page = snpBrowserPage.snpBrowserPage(fd)
-			elif fd.formID =='SnpBrowserResultPage':
-				from cmdLine import cmdSnpBrowserResultPage
-				reload (cmdSnpBrowserResultPage)
-				page = cmdSnpBrowserResultPage.cmdSnpBrowserResultPage(fd)
+      #snpBrowser
+      elif fd.formID == 'snpBrowser':
+        req.content_type = 'text/html'
+        snpId = fd.formdata.getfirst('snpId')
+        if snpId:
+          from snpBrowser import snpDetails
+          reload(snpDetails)
+          page = snpDetails.snpDetails(fd, snpId)
+        else:
+          from snpBrowser import snpBrowserPage
+          reload(snpBrowserPage)
+          page = snpBrowserPage.snpBrowserPage(fd)
+      elif fd.formID =='SnpBrowserResultPage':
+        from cmdLine import cmdSnpBrowserResultPage
+        reload (cmdSnpBrowserResultPage)
+        page = cmdSnpBrowserResultPage.cmdSnpBrowserResultPage(fd)
 
-			#intervalAnalyst
-			elif fd.formID == 'intervalAnalyst':
-				from intervalAnalyst import IntervalAnalystPage
-				reload(IntervalAnalystPage)
-				req.content_type = 'text/html'
-				page = IntervalAnalystPage.IntervalAnalystPage(fd)			
+      #intervalAnalyst
+      elif fd.formID == 'intervalAnalyst':
+        from intervalAnalyst import IntervalAnalystPage
+        reload(IntervalAnalystPage)
+        req.content_type = 'text/html'
+        page = IntervalAnalystPage.IntervalAnalystPage(fd)      
 
-			#AJAX_table
-			elif fd.formID == 'AJAX_table':
-				from utility import AJAX_table
-				reload(AJAX_table)
-				req.content_type = 'text/html'
-				req.write(AJAX_table.AJAX_table(fd).write())
+      #AJAX_table
+      elif fd.formID == 'AJAX_table':
+        from utility import AJAX_table
+        reload(AJAX_table)
+        req.content_type = 'text/html'
+        req.write(AJAX_table.AJAX_table(fd).write())
 
-                      	elif fd.formID == 'submitSingleTrait':
-				from submitTrait import CrossChoicePage
-				reload(CrossChoicePage)
-				page = CrossChoicePage.CrossChoicePage(fd)
-				req.content_type = 'text/html'
+                        elif fd.formID == 'submitSingleTrait':
+        from submitTrait import CrossChoicePage
+        reload(CrossChoicePage)
+        page = CrossChoicePage.CrossChoicePage(fd)
+        req.content_type = 'text/html'
 
-			elif fd.formID == 'sharing':
-				from dataSharing import SharingPage
-				reload(SharingPage)
-				page = SharingPage.SharingPage(fd)
-				req.content_type = 'text/html'
+      elif fd.formID == 'sharing':
+        from dataSharing import SharingPage
+        reload(SharingPage)
+        page = SharingPage.SharingPage(fd)
+        req.content_type = 'text/html'
 
-			elif fd.formID == 'sharinginfo':
-				from dataSharing import SharingInfoPage
-				reload(SharingInfoPage)
-				page = SharingInfoPage.SharingInfoPage(fd)
-				req.content_type = 'text/html'
-			
-			elif fd.formID == 'sharinginfoedit':
-				from dataSharing import SharingInfoEditPage
-				reload(SharingInfoEditPage)
-				page = SharingInfoEditPage.SharingInfoEditPage(fd)
-				req.content_type = 'text/html'
-				
-			elif fd.formID == 'sharinginfodelete':
-				from dataSharing import SharingInfoDeletePage
-				reload(SharingInfoDeletePage)
-				page = SharingInfoDeletePage.SharingInfoDeletePage(fd)
-				req.content_type = 'text/html'
+      elif fd.formID == 'sharinginfo':
+        from dataSharing import SharingInfoPage
+        reload(SharingInfoPage)
+        page = SharingInfoPage.SharingInfoPage(fd)
+        req.content_type = 'text/html'
+      
+      elif fd.formID == 'sharinginfoedit':
+        from dataSharing import SharingInfoEditPage
+        reload(SharingInfoEditPage)
+        page = SharingInfoEditPage.SharingInfoEditPage(fd)
+        req.content_type = 'text/html'
+        
+      elif fd.formID == 'sharinginfodelete':
+        from dataSharing import SharingInfoDeletePage
+        reload(SharingInfoDeletePage)
+        page = SharingInfoDeletePage.SharingInfoDeletePage(fd)
+        req.content_type = 'text/html'
 
-			elif fd.formID == 'sharinginfoupdate':
-				from dataSharing import SharingInfoUpdatePage
-				reload(SharingInfoUpdatePage)
-				page = SharingInfoUpdatePage.SharingInfoUpdatePage(fd)
-				req.content_type = 'text/html'
+      elif fd.formID == 'sharinginfoupdate':
+        from dataSharing import SharingInfoUpdatePage
+        reload(SharingInfoUpdatePage)
+        page = SharingInfoUpdatePage.SharingInfoUpdatePage(fd)
+        req.content_type = 'text/html'
 
-			elif fd.formID == 'sharingListDataset':
-				from dataSharing import SharingListDataSetPage
-				reload(SharingListDataSetPage)
-				page = SharingListDataSetPage.SharingListDataSetPage(fd)
-				req.content_type = 'text/html'
+      elif fd.formID == 'sharingListDataset':
+        from dataSharing import SharingListDataSetPage
+        reload(SharingListDataSetPage)
+        page = SharingListDataSetPage.SharingListDataSetPage(fd)
+        req.content_type = 'text/html'
 
-			elif fd.formID == 'sharinginfoadd':
-				from dataSharing import SharingInfoAddPage
-				reload(SharingInfoAddPage)
-				page = SharingInfoAddPage.SharingInfoAddPage(fd)
-				req.content_type = 'text/html'
+      elif fd.formID == 'sharinginfoadd':
+        from dataSharing import SharingInfoAddPage
+        reload(SharingInfoAddPage)
+        page = SharingInfoAddPage.SharingInfoAddPage(fd)
+        req.content_type = 'text/html'
 
-			elif fd.formID == 'annotation':
-				from annotation import AnnotationPage
-				reload(AnnotationPage)
-				page = AnnotationPage.AnnotationPage(fd)
-				req.content_type = 'text/html'
+      elif fd.formID == 'annotation':
+        from annotation import AnnotationPage
+        reload(AnnotationPage)
+        page = AnnotationPage.AnnotationPage(fd)
+        req.content_type = 'text/html'
 
-			elif fd.formID == 'qtlminer':
-				from qtlminer import QTLminer
+      elif fd.formID == 'qtlminer':
+        from qtlminer import QTLminer
                                 reload(QTLminer)
                                 req.content_type = 'text/html'
                                 page = QTLminer.QTLminer(fd)
-			elif fd.formID == 'qtlminerresult':
-				from cmdLine import cmdQTLminerPage
+      elif fd.formID == 'qtlminerresult':
+        from cmdLine import cmdQTLminerPage
                                 reload (cmdQTLminerPage)
                                 page = cmdQTLminerPage.cmdQTLminerPage(fd)
 
-			else:
-				from search import IndexPage
-				reload(IndexPage)
-				page = IndexPage.IndexPage(fd)
-				req.content_type = 'text/html'
+      else:
+        from search import IndexPage
+        reload(IndexPage)
+        page = IndexPage.IndexPage(fd)
+        req.content_type = 'text/html'
 
                         #elif fd.formID == 'updGeno':
                         #       import GenoUpdate
@@ -580,69 +584,69 @@ def handler(req):
                         #       req.content_type = 'text/html'
                         #       page = adminPage.adminModifyPage(fd)
 
-		elif cmdID: 
-			#need to rewrite
-			cmdID = string.lower(cmdID)
-			if cmdID in ('get','trait','tra'):
-	                        from textUI import cmdGet
-				reload(cmdGet)
-				req.content_type = 'text/plain'
-				req.write(cmdGet.cmdGet(fd).write())
-			elif cmdID in ('help', 'hlp'):
-				from textUI import cmdHelp
-				reload(cmdHelp)
-				req.content_type = 'text/plain'
-				req.write(cmdHelp.cmdHelp(fd).write())
-			elif cmdID in ('correlation','cor','pea','pearson'):
-				from textUI import cmdCorrelation
-				reload(cmdCorrelation)	   
-				req.content_type = 'text/plain'
-				req.write(cmdCorrelation.cmdCorrelation(fd).write())
-			elif cmdID in ('map','marker'):
-				from textUI import cmdMap
-				reload(cmdMap)
-				req.content_type = 'text/plain'
-				req.write(cmdMap.cmdMap(fd).write())
-			elif cmdID in ('geno','gen','genotype'):
-				from textUI import cmdGeno
-				reload(cmdGeno)
-				req.content_type = 'text/plain'
-				req.write(cmdGeno.cmdGeno(fd).write())
-			elif cmdID in ('interval','int'):
-				from textUI import cmdInterval
-				reload(cmdInterval)
-				req.content_type = 'text/plain'
-				req.write(cmdInterval.cmdInterval(fd).write())
-			elif cmdID in ('show','shw'):
-				from textUI import cmdShowEditing
-				reload(cmdShowEditing)
-				req.content_type = 'text/html'
-				result = cmdShowEditing.cmdShowEditing(fd)
-				page = result.page
-			elif cmdID in ('search','sch'):
-				req.content_type = 'text/plain'
-				from textUI import cmdSearchGene
-				reload(cmdSearchGene)
-				result = cmdSearchGene.cmdSearchGene(fd)
-				page = result.page
-				req.write(result.text)
+    elif cmdID: 
+      #need to rewrite
+      cmdID = string.lower(cmdID)
+      if cmdID in ('get','trait','tra'):
+                          from textUI import cmdGet
+        reload(cmdGet)
+        req.content_type = 'text/plain'
+        req.write(cmdGet.cmdGet(fd).write())
+      elif cmdID in ('help', 'hlp'):
+        from textUI import cmdHelp
+        reload(cmdHelp)
+        req.content_type = 'text/plain'
+        req.write(cmdHelp.cmdHelp(fd).write())
+      elif cmdID in ('correlation','cor','pea','pearson'):
+        from textUI import cmdCorrelation
+        reload(cmdCorrelation)     
+        req.content_type = 'text/plain'
+        req.write(cmdCorrelation.cmdCorrelation(fd).write())
+      elif cmdID in ('map','marker'):
+        from textUI import cmdMap
+        reload(cmdMap)
+        req.content_type = 'text/plain'
+        req.write(cmdMap.cmdMap(fd).write())
+      elif cmdID in ('geno','gen','genotype'):
+        from textUI import cmdGeno
+        reload(cmdGeno)
+        req.content_type = 'text/plain'
+        req.write(cmdGeno.cmdGeno(fd).write())
+      elif cmdID in ('interval','int'):
+        from textUI import cmdInterval
+        reload(cmdInterval)
+        req.content_type = 'text/plain'
+        req.write(cmdInterval.cmdInterval(fd).write())
+      elif cmdID in ('show','shw'):
+        from textUI import cmdShowEditing
+        reload(cmdShowEditing)
+        req.content_type = 'text/html'
+        result = cmdShowEditing.cmdShowEditing(fd)
+        page = result.page
+      elif cmdID in ('search','sch'):
+        req.content_type = 'text/plain'
+        from textUI import cmdSearchGene
+        reload(cmdSearchGene)
+        result = cmdSearchGene.cmdSearchGene(fd)
+        page = result.page
+        req.write(result.text)
 
-			#elif cmdID in ('tst','Test'):
-			#	req.write('Content-type: application/x-download')
-			#	req.write('Content-disposition: attachment; filename=my.txt\n')
-			#	genotype_file = GENODIR + 'AKXD.geno'
-			#	fp = open(genotype_file)
-			#	line = fp.read()
-			#	fp.close()
-			#	req.write(line)
-			#XZ, 03/03/2009: This fuction must be initiated from URL
-			#XZ: http://www.genenetwork.org/webqtl/WebQTL.py?cmd=birn&species=mouse&tissue=Hippocampus&ProbeId=1436869_at&Strain=BXD1
-			#elif cmdID[0:4]=="birn":
-			#	req.content_type = 'text/plain'
-			#	import BIRN
-			#	reload(BIRN)
-			#	result = BIRN.birnSwitch(fd)
-			#	req.write(result.text)
+      #elif cmdID in ('tst','Test'):
+      #  req.write('Content-type: application/x-download')
+      #  req.write('Content-disposition: attachment; filename=my.txt\n')
+      #  genotype_file = GENODIR + 'AKXD.geno'
+      #  fp = open(genotype_file)
+      #  line = fp.read()
+      #  fp.close()
+      #  req.write(line)
+      #XZ, 03/03/2009: This fuction must be initiated from URL
+      #XZ: http://www.genenetwork.org/webqtl/WebQTL.py?cmd=birn&species=mouse&tissue=Hippocampus&ProbeId=1436869_at&Strain=BXD1
+      #elif cmdID[0:4]=="birn":
+      #  req.content_type = 'text/plain'
+      #  import BIRN
+      #  reload(BIRN)
+      #  result = BIRN.birnSwitch(fd)
+      #  req.write(result.text)
                         #elif cmdID in ('spear','spearman','spe'):
                         #       import cmdSpearman  # new modules
                         #       reload(cmdSpearman)
@@ -654,52 +658,52 @@ def handler(req):
                         #       req.content_type = 'text/plain'
                         #       req.write(cmdSnpTrack.cmdSnpTrack(fd).write())
 
-			else:
-				req.content_type = 'text/html'
-				req.write("###Wrong Command")
+      else:
+        req.content_type = 'text/html'
+        req.write("###Wrong Command")
 
                 ######## Create first page when called with no formID ########
 
-		else:
-			from search import IndexPage
+    else:
+      from search import IndexPage
                         reload(IndexPage)
                         page = IndexPage.IndexPage(fd)
                         req.content_type = 'text/html'
-	
-	if page:
-		#send Cookie first
-		if page.cookie:
-			for item in page.cookie:
-				if (item):
-					modcookie = Cookie.Cookie(item.name, item.value)
-					modcookie.path = item.path
-					if item.expire != None:
-						modcookie.expires = time.time() + item.expire
-					Cookie.add_cookie(req, modcookie)
+  
+  if page:
+    #send Cookie first
+    if page.cookie:
+      for item in page.cookie:
+        if (item):
+          modcookie = Cookie.Cookie(item.name, item.value)
+          modcookie.path = item.path
+          if item.expire != None:
+            modcookie.expires = time.time() + item.expire
+          Cookie.add_cookie(req, modcookie)
 
-		#save session
-		if page.session_data_changed:
-			for one_key in page.session_data_changed.keys():
-				mod_python_session[one_key] = page.session_data_changed[one_key]
-			mod_python_session.save()
+    #save session
+    if page.session_data_changed:
+      for one_key in page.session_data_changed.keys():
+        mod_python_session[one_key] = page.session_data_changed[one_key]
+      mod_python_session.save()
 
 
-		req.content_type= page.content_type
+    req.content_type= page.content_type
 
-		#send attachment
-		if page.redirection:
-			util.redirect(req, page.redirection)
-		elif page.content_disposition:
-			req.headers_out["Content-Disposition"] = page.content_disposition
-			req.write(page.attachment)
-		elif page.debug: # for debug
-			req.write(page.debug)
-		#send regular content
-		else:
-			req.write(page.write())
-	else:
-		pass
-		
-	return apache.OK
-	
+    #send attachment
+    if page.redirection:
+      util.redirect(req, page.redirection)
+    elif page.content_disposition:
+      req.headers_out["Content-Disposition"] = page.content_disposition
+      req.write(page.attachment)
+    elif page.debug: # for debug
+      req.write(page.debug)
+    #send regular content
+    else:
+      req.write(page.write())
+  else:
+    pass
+    
+  return apache.OK
+  
 

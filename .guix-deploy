@@ -3,13 +3,13 @@
 
 cwd=$(/bin/pwd)
 gnshare=$(dirname $cwd)
-mkdir -pv ~/tmp/guix-gn1
-mkdir -pv ~/srv/http   
-echo httpd -f $(/home/gn1/opt/guix/bin/guix build -L /home/gn1/guix-past/modules/ -L /home/gn1/guix-bioinformatics/ -e '(@ (gn services gn1-httpd-config) GN1-httpd-config)')
-
+mkdir -pv $HOME/tmp/guix-gn1
+mkdir -pv $HOME/srv/http
+echo httpd -f $(/home/gn1/opt/guix/bin/guix build -L $HOME/guix-past/modules/ -L $HOME/guix-bioinformatics/ -e '(@ (gn services gn1-httpd-config) GN1-httpd-config)')
+echo httpd -f $(pwd)/etc/httpd.conf
 /home/gn1/opt/guix/bin/guix environment \
-    -L /home/gn1/guix-past/modules/ \
-    -L /home/gn1/guix-bioinformatics/ \
+    -L $HOME/guix-past/modules/ \
+    -L $HOME/guix-bioinformatics/ \
     -C --network \
     genenetwork1 \
     --ad-hoc \
