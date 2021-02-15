@@ -25,10 +25,14 @@
 # Last updated by GeneNetwork Core Team 2010/10/20
 
 from mod_python import apache, util, Session, Cookie
+import os
+import sys
 import time
 import string
 
 from base.webqtlFormData import webqtlFormData
+
+sys.stderr.write('This goes to the apache error log spam')
 
 #import logging
 #logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
@@ -282,17 +286,17 @@ def handler(req):
 
             #user
             elif fd.formID == 'userLogin':
-                from user import userLogin
+                from authenticate import userLogin
                 reload(userLogin)
                 page = userLogin.userLogin(fd)
                 req.content_type = 'text/html'
             elif fd.formID == 'userLogoff':
-                from user import userLogoff
+                from authenticate import userLogoff
                 reload(userLogoff)
                 page = userLogoff.userLogoff(fd)
                 req.content_type = 'text/html'
             elif fd.formID == 'userPasswd':
-                from user import userPasswd
+                from authenticate import userPasswd
                 reload(userPasswd)
                 page = userPasswd.userPasswd(fd)
                 req.content_type = 'text/html'
