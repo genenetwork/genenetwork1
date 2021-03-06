@@ -13,6 +13,13 @@ For background see: http://en.wikipedia.org/wiki/Genenetwork
 
 ===========
 
+## Database
+
+## Genotypes
+
+A number of directories contain data that are not checked into
+git. See [this](./.gitignore).
+
 ## Production
 
 For production
