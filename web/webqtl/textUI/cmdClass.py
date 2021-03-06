@@ -136,7 +136,7 @@ class cmdClass:
 		if prefix == None or dbId == None:
 			return None, None
 		if probe and prefix=='ProbeSet':
-			#XZ, 03/05/2009: test http://www.genenetwork.org/webqtl/WebQTL.py?cmd=get&probeset=98332_at&db=bra08-03MAS5&probe=pm&format=col
+			#XZ, 03/05/2009: test http://gn1.genenetwork.org/webqtl/WebQTL.py?cmd=get&probeset=98332_at&db=bra08-03MAS5&probe=pm&format=col
 			if string.lower(probe) in ("all","mm","pm"):
 				query = "SELECT Probe.Name from Probe, ProbeSet WHERE Probe.ProbeSetId = ProbeSet.Id and ProbeSet.Name = '%s' order by Probe.Name" % probeset
 				self.cursor.execute(query)
@@ -187,7 +187,7 @@ class cmdClass:
 						traitdata2[i][posdict[item[-1]]+1] = item[1]
 					
 					traitdata = traitdata2
-			#XZ, 03/05/2009: test http://www.genenetwork.org/webqtl/WebQTL.py?cmd=get&probeset=98332_at&db=bra08-03MAS5&probe=119637&format=col
+			#XZ, 03/05/2009: test http://gn1.genenetwork.org/webqtl/WebQTL.py?cmd=get&probeset=98332_at&db=bra08-03MAS5&probe=119637&format=col
 			else:
 				heads = [('ProbeSetId', probeset), ('ProbeId',probe)]
 				#XZ, 03/05/2009: Xiaodong changed Data to ProbeData
@@ -195,20 +195,20 @@ class cmdClass:
 				#print 'Content-type: text/html\n'
 				self.cursor.execute(query)
 				traitdata = self.cursor.fetchall()
-		#XZ, 03/05/2009: test http://www.genenetwork.org/webqtl/WebQTL.py?cmd=get&probeset=98332_at&db=bra08-03MAS5&format=col
+		#XZ, 03/05/2009: test http://gn1.genenetwork.org/webqtl/WebQTL.py?cmd=get&probeset=98332_at&db=bra08-03MAS5&format=col
 		elif prefix=='ProbeSet': #XZ: probeset data
 			heads = [(headerDict[prefix], probeset)]
 			query = "SELECT Strain.Name, %sData.value from %sData, Strain, %s, %sXRef WHERE %s.Name = '%s' and %sXRef.%sId = %s.Id and %sXRef.%sFreezeId = %d and  %sXRef.DataId = %sData.Id and %sData.StrainId = Strain.Id order by Strain.Id" % (prefix, prefix, prefix, prefix, prefix, probeset,prefix, prefix, prefix, prefix, prefix, dbId, prefix, prefix, prefix)
 			self.cursor.execute(query)
 			traitdata = self.cursor.fetchall()
-		#XZ, 03/05/2009: test http://www.genenetwork.org/webqtl/WebQTL.py?cmd=get&probeset=10834&db=BXDPublish&format=col
+		#XZ, 03/05/2009: test http://gn1.genenetwork.org/webqtl/WebQTL.py?cmd=get&probeset=10834&db=BXDPublish&format=col
 		elif prefix=='Publish':
 			heads = [(headerDict[prefix], probeset)]
 			#XZ, 03/05/2009: Xiaodong changed Data to PublishData
 			query = "SELECT Strain.Name, PublishData.value from PublishData, Strain, PublishXRef, PublishFreeze WHERE PublishXRef.InbredSetId = PublishFreeze.InbredSetId and PublishData.Id = PublishXRef.DataId and PublishXRef.Id = %s and PublishFreeze.Id = %d and PublishData.StrainId = Strain.Id" % (probeset, dbId)
 			self.cursor.execute(query)
 			traitdata = self.cursor.fetchall()
-		#XZ, 03/05/2009: test http://www.genenetwork.org/webqtl/WebQTL.py?cmd=get&probeset=rs13475701&db=BXDGeno&format=col
+		#XZ, 03/05/2009: test http://gn1.genenetwork.org/webqtl/WebQTL.py?cmd=get&probeset=rs13475701&db=BXDGeno&format=col
 		else: #XZ: genotype data
 			heads = [(headerDict[prefix], probeset)]
 			RISet = self.getRISet(prefix, dbId)

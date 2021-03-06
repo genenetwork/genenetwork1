@@ -55,7 +55,7 @@
 <SMALL>
 <DIR>You are welcome to cite or reproduce these glossary definitions. Please cite or link:
 <BR>Author AA.  &quot;Insert Glossary Term Here.&quot;  
-From <I>The WebQTL Glossary</i>--A GeneNetwork Resource.  <a href="http://www.genenetwork.org/glossary.html" class="fs14" target="_new">www.genenetwork.org/glossary.html</a>
+From <I>The WebQTL Glossary</i>--A GeneNetwork Resource.  <a href="http://gn1.genenetwork.org/glossary.html" class="fs14" target="_new">gn1.genenetwork.org/glossary.html</a>
 </SMALL>
 </DIR>
 </Blockquote>
@@ -129,7 +129,7 @@ The Collaborative Cross is a randomized cross of eight inbred mouse strains desi
 
 <P>The Collaborative Cross was first proposed at the Edinburgh Meeting of the IMGC in October of 2001. The idea was refined further at the first Annual Meeting of the Complex Trait Consortium in Memphis, TN, May 15-17, 2002. A workgroup hosted by Karl Broman and Roger Reeves met at Johns Hopkins University in 2002 to refine the design of such a resource. The first workshop report from this meeting was published was by Williams and colleagues in mid 2002.  Strain selection was discussed at the CTC satellite meeting of the IMGC in San Antonio Texas on November 17, 2002. The first summary was published in Mammalian Genome (Threadgill, Hunter and Williams, 2002).The Collaborative Cross was presented at the NIH on March 17th, 2004 by Gary A. Churchill and Robert W. Williams.
 
-<P>Enthusiasm for the cross was developing, and ideal strategies for breeding, randomization and implementation were discussed. Meanwhile, powerful demonstrations of the utility of a systems genetics approach such as www.genenetwork.org were being developed. Simulations of the power and precision of genetic analysis and for the structure of the population were also performed to estimate the optimal number of strains for breeding. Initial proposals for implementing the collaborative cross called for a grass-roots distributed breeding effort, but the advantages of phenotyping mice from a single location and the consistency of a population that would be bred under a single selection environment became clear. The cross needed a large facility capable of consistent, randomized matings.
+<P>Enthusiasm for the cross was developing, and ideal strategies for breeding, randomization and implementation were discussed. Meanwhile, powerful demonstrations of the utility of a systems genetics approach such as gn1.genenetwork.org were being developed. Simulations of the power and precision of genetic analysis and for the structure of the population were also performed to estimate the optimal number of strains for breeding. Initial proposals for implementing the collaborative cross called for a grass-roots distributed breeding effort, but the advantages of phenotyping mice from a single location and the consistency of a population that would be bred under a single selection environment became clear. The cross needed a large facility capable of consistent, randomized matings.
 
 <P>In May 2005 the Collaborative Cross was established at the William and Liane Russell Functional Genomics Laboratory. All F1 breeders needed to establish the Collaborative Cross were shipped from the Jackson Laboratory to ORNL as a gift from Robert W. Williams and Gary Churchill, with funds provided by the UTHSC William and Dorothy Dunavant Endowment. At ORNL all lines were bred and maintained simultaneously and consistently by the Mammalian  Genetics Group then headed by Dabney Johnson. Day-to-day operations were handled by Darla Miller and staff. The Department of Energy provided support in the form of subsidized husbandry for the cross, and several hundred funnels were initiated. The Ellison Medical Foundation provided major external support for this project (PIs, D. Johnson and David Threadgill). Computational support for the complex breeding of the Collaborative Cross was provided by Dr. Ken Manly, then at UTHSC. With the retirement of Dabney Johnson, Dr. Elissa Chesler became head of the Systems Genetics Group at ORNL and she quickly began the first wave of scientific studies exploiting the Collaborative Cross.
 
@@ -261,7 +261,7 @@ A <A HREF="http://en.wikipedia.org/wiki/False_discovery_rate" target="empty" cla
 <Blockquote>
 GeneNetwork provides summary information on most of the genes and their transcripts. Genes and their alternative splice variants are often are poorly annotated and may not have proper names or symbols. However, almost all entries have a valid GenBank accession identifier. This is a unique code associated with a single sequence deposited in GenBank (Entrez Nucleotide). A single gene may have hundreds of GenBank entries. GenBank entries that share a genomic location and possibly a single gene are generally combined into a single UniGene entry. For mouse, these always begin with "Mm" (Mus musculus) and are followed by a period and then a number. More than half of all mouse UniGene identifiers are associated with a reputable gene, and these genes will have gene identifiers (GeneID). GeneIDs are identical to LocusLink identifiers (LocusID). Even a 10 megabase locus such as human Myopia 4 (MYP4) that is not yet associated with a specific gene is assigned a GeneID--a minor misnomer and one reason to prefer the term LocusID. 
 
-<P>See the related <A HREF="http://www.genenetwork.org/faq.html#Q-6" target="empty" class="normal">FAQ</A> on "How many genes and transcripts are in your databases and what fraction of the genome is being surveyed?" 
+<P>See the related <A HREF="http://gn1.genenetwork.org/faq.html#Q-6" target="empty" class="normal">FAQ</A> on "How many genes and transcripts are in your databases and what fraction of the genome is being surveyed?" 
 <SMALL>[Williams RW, Dec 23, 2004, updated Jan 2, 2005]</SMALL>
 </Blockquote>
 
@@ -848,7 +848,7 @@ David Ashbrook implemented a version of this within Shiny that can help you esti
 <SMALL>
 <DIR>You are welcome to cite or reproduce these glossary definitions. Please cite or link:
 <BR>Author AA.  &quot;Insert Glossary Term Here.&quot;  
-From <I>The WebQTL Glossary</i>--A GeneNetwork Resource.  <a href="http://www.genenetwork.org/glossary.html" class="fs14" target="_new">www.genenetwork.org/glossary.html</a>
+From <I>The WebQTL Glossary</i>--A GeneNetwork Resource.  <a href="http://gn1.genenetwork.org/glossary.html" class="fs14" target="_new">gn1.genenetwork.org/glossary.html</a>
 </SMALL>
 </DIR>
 </Blockquote>

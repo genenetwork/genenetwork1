@@ -180,7 +180,7 @@ class webqtlFormData:
 				if incpar:
 					strainlst = self.parlist + self.f1list + self.strainlist
 				else:
-					strainlst = self.f1list + self.strainlist
+					strainlst = self.strainlist
 			else:
 				strainlst = self.strainlist	
 	
@@ -197,6 +197,7 @@ class webqtlFormData:
 		elif traitpastedata:
 			tt = string.split(traitpastedata)
 			vals = map(webqtlUtil.StringAsFloat, tt)
+			strainlst = self.parlist + self.f1list + self.strainlist
 		else:
 			vals = map(self.FormDataAsFloat, strainlst)
 
@@ -231,10 +232,13 @@ class webqtlFormData:
 				nstrains += [None]*(len(strainlst) - len(nstrains))
 		else:
 			nstrains = map(self.FormNAsFloat, strainlst)
-		
+
+		debug_file = open("/gnshare/gn/web/debug_file_strains.txt", "w")
+
 		##vals, vars, nstrains is obsolete
 		self.allTraitData = {}
 		for i, _strain in enumerate(strainlst):
+			debug_file.write("STRAIN: " + _strain + "\t" + str(vals[i]) + "\n")
 			if vals[i] != None:
 				self.allTraitData[_strain] = webqtlCaseData(vals[i], vars[i], nstrains[i])
 

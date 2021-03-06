@@ -58,7 +58,7 @@ class cmdGeno(cmdClass):
 				raise ValueError
 		except:
 			self.error = 1
-			self.contents.append('###Example : http://www.genenetwork.org%s%s?cmd=%s&riset=BXD&chr=1' % (webqtlConfig.CGIDIR, webqtlConfig.SCRIPTFILE, self.cmdID))
+			self.contents.append('###Example : http://gn1.genenetwork.org%s%s?cmd=%s&riset=BXD&chr=1' % (webqtlConfig.CGIDIR, webqtlConfig.SCRIPTFILE, self.cmdID))
 			return
 		try:
 			self.format = self.data.getvalue('format')[:3]
