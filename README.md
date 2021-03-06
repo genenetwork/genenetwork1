@@ -13,7 +13,25 @@ For background see: http://en.wikipedia.org/wiki/Genenetwork
 
 ===========
 
-#### Running inside a Guix container
+## Production
+
+For production
+
+    gn1@tux01:~/production/gnshare/gn$ . .guix-deploy
+
+Note the extra dot. Copy and paste the URL in the container:
+
+    httpd -f /gnu/store/2g36jjrkn39d0npfrrl1rd7z0s8dp52s-httpd.conf
+
+## Zach
+
+    zas1024@tux01:~/gn1-zach/gnshare/gn$ . .guix-deploy
+
+and paste
+
+    httpd -f /export/local/home/zas1024/gn1-zach/gnshare/gn/etc/httpd-zas1024.conf
+
+## Other
 
 Running Genenetwork1 in modern environments can be difficult since its
 dependencies are no longer actively supported. With guix, however, we
