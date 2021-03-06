@@ -181,7 +181,7 @@ index_body_string = """
 <P STYLE="font-size:13px;font-family:verdana;color:black"><B>&nbsp;
 
 Quick HELP Examples and </B>
-<A HREF="http://www.genenetwork.org/index4.html" target="_blank"  class="fs14"><B>
+<A HREF="http://gn1.genenetwork.org/index4.html" target="_blank"  class="fs14"><B>
  User's Guide</B></A></P>
 
 </CENTER style="font-size:12px;font-family:verdana;color:black">
@@ -191,20 +191,20 @@ Quick HELP Examples and </B>
 
 <LI><B><I>POSITION=(chr1 25 30)</I></B> finds genes, markers, or transcripts on chromosome 1 between 25 and 30 Mb.
 
-<LI><B><I>MEAN=(15 16) LRS=(23 46)</I></B> in the <B>Combined</B> field finds highly expressed genes (15 to 16 log2 units) AND with peak <A HREF="http://www.genenetwork.org/glossary.html#L" target="_blank"  class="fs14"><small>LRS</small></A> linkage between 23 and 46.
+<LI><B><I>MEAN=(15 16) LRS=(23 46)</I></B> in the <B>Combined</B> field finds highly expressed genes (15 to 16 log2 units) AND with peak <A HREF="http://gn1.genenetwork.org/glossary.html#L" target="_blank"  class="fs14"><small>LRS</small></A> linkage between 23 and 46.
 
 
 <LI><B><I>RIF=mitochondrial</I></B> searches RNA databases for <A HREF="https://www.ncbi.nlm.nih.gov/gene/generif-stats" target="_blank" class="fs14"><small>GeneRIF</small></A> links.
 
-<LI><B><I>WIKI=nicotine</I></B> searches <A HREF="http://www.genenetwork.org/webqtl/main.py?FormID=geneWiki" target="_blank"  class="fs14"><small>GeneWiki</small></A> for genes that you or other users have annotated with the word <I>nicotine</I>.
+<LI><B><I>WIKI=nicotine</I></B> searches <A HREF="http://gn1.genenetwork.org/webqtl/main.py?FormID=geneWiki" target="_blank"  class="fs14"><small>GeneWiki</small></A> for genes that you or other users have annotated with the word <I>nicotine</I>.
 
 <LI><B><I>GO:0045202</I></B> searches for synapse-associated genes listed in the <A HREF="http://amigo.geneontology.org/amigo" target="_blank" class="fs14"><small>Gene Ontology</small></A>.
 
 <LI><B><I>NAME=(watson jd)</I></B> searches for all genes associated in PubMed with the author J D Watson.</LI>
 
-<LI><B><I>GO:0045202 LRS=(9 99 Chr4 122 155) cisLRS=(9 999 10)</I> </B><BR> in <B>Combined</B> finds synapse-associated genes with <A HREF="http://www.genenetwork.org/glossary.html#E" target="_blank"  class="fs14"><small>cis eQTL</small></A> on Chr 4 from 122 and 155 Mb with LRS scores between 9 and 999.
+<LI><B><I>GO:0045202 LRS=(9 99 Chr4 122 155) cisLRS=(9 999 10)</I> </B><BR> in <B>Combined</B> finds synapse-associated genes with <A HREF="http://gn1.genenetwork.org/glossary.html#E" target="_blank"  class="fs14"><small>cis eQTL</small></A> on Chr 4 from 122 and 155 Mb with LRS scores between 9 and 999.
 
-<LI><B><I>RIF=diabetes LRS=(9 999 Chr2 100 105) transLRS=(9 999 10)</I> </B><BR> in <B>Combined</B> finds diabetes-associated transcripts with peak <A HREF="http://www.genenetwork.org/glossary.html#E" target="_blank"  class="fs14"><small>trans eQTLs</small></A> on Chr 2 between 100 and 105 Mb with LRS scores between 9 and 999.
+<LI><B><I>RIF=diabetes LRS=(9 999 Chr2 100 105) transLRS=(9 999 10)</I> </B><BR> in <B>Combined</B> finds diabetes-associated transcripts with peak <A HREF="http://gn1.genenetwork.org/glossary.html#E" target="_blank"  class="fs14"><small>trans eQTLs</small></A> on Chr 2 between 100 and 105 Mb with LRS scores between 9 and 999.
 
 
 </UL> 
@@ -255,10 +255,10 @@ Quick HELP Examples and </B>
 <p style="font-size:14px;font-family:verdana;color:black"><B>How to Use GeneNetwork</B>
 
 							<BLOCKQUOTE>
-								<p style="font-size:12px;font-family:verdana;color:black">Take a 20-40 minute GeneNetwork <A HREF="http://www.genenetwork.org/tutorial/WebQTLTour/" target="_blank" class="fs14"><small>Tour</small></A> that includes screen shots and typical steps in the analysis.</P>
+								<p style="font-size:12px;font-family:verdana;color:black">Take a 20-40 minute GeneNetwork <A HREF="http://gn1.genenetwork.org/tutorial/WebQTLTour/" target="_blank" class="fs14"><small>Tour</small></A> that includes screen shots and typical steps in the analysis.</P>
 							</BLOCKQUOTE>							
 							<BLOCKQUOTE>
-								<p style="font-size:12px;font-family:verdana;color:black">For information about resources and methods, select the <img src="http://www.genenetwork.org/images/upload/Info.png" alt="INFO" border= 0 valign="middle"> buttons.</P>
+								<p style="font-size:12px;font-family:verdana;color:black">For information about resources and methods, select the <img src="http://gn1.genenetwork.org/images/upload/Info.png" alt="INFO" border= 0 valign="middle"> buttons.</P>
 
 													
 														

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML><HEAD><TITLE>How to Search</TITLE>
 <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-<base href="http://www.genenetwork.org/">
+<base href="http://gn1.genenetwork.org/">
 <LINK REL="stylesheet" TYPE="text/css" HREF='/css/general.css'>
 <LINK REL="stylesheet" TYPE="text/css" HREF='/css/menu.css'>
 <SCRIPT SRC="/javascript/webqtl.js"></SCRIPT>
@@ -47,7 +47,7 @@ Advanced Searching and General Advice
 
 <P><B>Set To Default</B>: Please use the option labeled <B>Set To Default</B>. This allows you to change the initial database displayed when you begin a search. For this option to work, permission for cookies needs to be enabled on your browser. A cookie is a small text file stored on your computer used by our server to keep track of preferred settings. (If you are logged in for special projects, the cookie also keeps your user name and password.) To test that the Default option works properly, change the settings and reload the search page. If this does not work as expected, check the preference settings of your browser.
 
-<P>In some cases you may need more data than is available from a standard GeneNetwork output page. Please review the <A HREF="http://www.genenetwork.org/faq.html" target="_blank" class="fs14">FAQ</A> page and get familiar with the <A HREF="http://www.genenetwork.org/faq.html#Q-7"  target="_blank" class="fs14">Simple Query Interface</A> (note that this complex page may load slowly in some browsers). 
+<P>In some cases you may need more data than is available from a standard GeneNetwork output page. Please review the <A HREF="http://gn1.genenetwork.org/faq.html" target="_blank" class="fs14">FAQ</A> page and get familiar with the <A HREF="http://gn1.genenetwork.org/faq.html#Q-7"  target="_blank" class="fs14">Simple Query Interface</A> (note that this complex page may load slowly in some browsers). 
 
 </Blockquote>
 
@@ -86,7 +86,7 @@ More complex searches of some databases are possible using controlled syntax. Ge
 
 <P>In the examples above, the search terms are not case sensitive. 
 
-<P> Many of the GeneNetwork databases have been exhaustively analyzed using <A HREF="http://www.genenetwork.org/qtlreaper.html" target="_blank" class="fs14">QTL Reaper</A>, a high throughput mapping program designed to handle large array data sets. It is possible to search most array databases to find those transcripts that have <A HREF="http://www.genenetwork.org/glossary.html#Q" target="_blank" class="fs14">QTLs</A> with peak <A HREF="http://www.genenetwork.org/glossary.html#L" target="_blank" class="fs14">LRS</A> or <A HREF="http://www.genenetwork.org/glossary.html#L" target="_blank" class="fs14">LOD</A> scores within a particular range of values. Genome-wide P values are computed using a <A HREF="http://www.genenetwork.org/glossary.html#P" target="_blank" class="fs14">permutation test</A>. 
+<P> Many of the GeneNetwork databases have been exhaustively analyzed using <A HREF="http://gn1.genenetwork.org/qtlreaper.html" target="_blank" class="fs14">QTL Reaper</A>, a high throughput mapping program designed to handle large array data sets. It is possible to search most array databases to find those transcripts that have <A HREF="http://gn1.genenetwork.org/glossary.html#Q" target="_blank" class="fs14">QTLs</A> with peak <A HREF="http://gn1.genenetwork.org/glossary.html#L" target="_blank" class="fs14">LRS</A> or <A HREF="http://gn1.genenetwork.org/glossary.html#L" target="_blank" class="fs14">LOD</A> scores within a particular range of values. Genome-wide P values are computed using a <A HREF="http://gn1.genenetwork.org/glossary.html#P" target="_blank" class="fs14">permutation test</A>. 
 
 
 <P><A NAME="cistrans_query">&nbsp;</A>
@@ -113,7 +113,7 @@ For example, you might type this string into the ALL field to find CisQTLs that 
 
 </UL>
 
-<P>The search strings above require a database of values that we precompute using <A HREF="http://www.genenetwork.org/qtlreaper.html" target="_blank" class="fs14">QTL Reaper</A>. If QTL Reaper has not yet been used, then these searches will not return records. 
+<P>The search strings above require a database of values that we precompute using <A HREF="http://gn1.genenetwork.org/qtlreaper.html" target="_blank" class="fs14">QTL Reaper</A>. If QTL Reaper has not yet been used, then these searches will not return records. 
 
 <P>These search strings can be combined to generate more complex queries. For example, enter these search phrases into the ALL (intersection of) field:
 
@@ -155,23 +155,23 @@ Multiple Database Searches, GET commands, and Scriptable Interface Queries
 
 <UL>
 
-<LI><B>http://www.genenetwork.org/webqtl/main.py?cmd=sch&species=(rat or mouse)&tissue=(cerebellum or striatum or brain or hsc or fat or kidney)&gene=****&alias=1 </B> 
+<LI><B>http://gn1.genenetwork.org/webqtl/main.py?cmd=sch&species=(rat or mouse)&tissue=(cerebellum or striatum or brain or hsc or fat or kidney)&gene=****&alias=1 </B> 
 
 </UL>
 
 
 <P><B>Other GET commands</B>
-<P>A GET command is a simple data request that takes the form of an odd looking URL address. For more details on the many allowed GET commands used by the GeneNetwork please see the <A HREF="http://www.genenetwork.org/CGIDoc.html" target="_blank" class="fs14">Scriptable Interface</A> overview. The Scriptable Interface is designed primarily to handle queries from other databases and web services, but you can also use this method as a quick way to generate more comprehensive output files. For example, if you need to review the complete list of correlations of Huntingtin (probe set 1425969_a_at_A) with all 45137 expression traits in the <I>INIA Brain mRNA M430 (Apr05) PDNN</I> database then you would paste this particular GET command in the URL box of your browser:
+<P>A GET command is a simple data request that takes the form of an odd looking URL address. For more details on the many allowed GET commands used by the GeneNetwork please see the <A HREF="http://gn1.genenetwork.org/CGIDoc.html" target="_blank" class="fs14">Scriptable Interface</A> overview. The Scriptable Interface is designed primarily to handle queries from other databases and web services, but you can also use this method as a quick way to generate more comprehensive output files. For example, if you need to review the complete list of correlations of Huntingtin (probe set 1425969_a_at_A) with all 45137 expression traits in the <I>INIA Brain mRNA M430 (Apr05) PDNN</I> database then you would paste this particular GET command in the URL box of your browser:
 
 <UL>
-<LI><B>http://www.genenetwork.org/cgi-bin/beta/main.py?
+<LI><B>http://gn1.genenetwork.org/cgi-bin/beta/main.py?
 cmd=cor&probeset=1425969_a_at_A&db=Bra04-05PDNN&searchdb=Bra04-05PDNN&return=45137
 &sort=pvalue</B>    (Please note that this type of query may take several minutes and will not accompanied with a progress bar.)
 </UL>
 
-<P>To obtain a complete list of the database abbreviations, including databases listed on the BETA site links to http://www.genenetwork.org/cgi-bin/beta/main.py?cmd=help.
+<P>To obtain a complete list of the database abbreviations, including databases listed on the BETA site links to http://gn1.genenetwork.org/cgi-bin/beta/main.py?cmd=help.
 
-<P>To completely avoid learning the structure of GET commands, the GeneNetwork also has a <A HREF="http://www.genenetwork.org/GUI.html" target="_empty"class="fs14">Simple Query Interface</A> mentioned already once above (look under the <B>Search</B> menu). This interface assembles the GET command for you. All you need to do is select parameters. 
+<P>To completely avoid learning the structure of GET commands, the GeneNetwork also has a <A HREF="http://gn1.genenetwork.org/GUI.html" target="_empty"class="fs14">Simple Query Interface</A> mentioned already once above (look under the <B>Search</B> menu). This interface assembles the GET command for you. All you need to do is select parameters. 
 
 <P>The size of a GeneNetwork database can be determined by entering a single * in either search field.
 

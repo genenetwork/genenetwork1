@@ -413,7 +413,7 @@ class TextSearchPage(templatePage):
 						results_tr.append(TDCell(HT.TD(tissueGrp.capitalize(), Class=className), tissueGrp, tissueGrp))
 
 						#ZS: Group column
-						risetUrl = HT.Href(text=thisTrait.riset, url="http://www.genenetwork.org/%sCross.html#%s" % (species, thisTrait.riset), target="_blank", Class=className)
+						risetUrl = HT.Href(text=thisTrait.riset, url="http://gn1.genenetwork.org/%sCross.html#%s" % (species, thisTrait.riset), target="_blank", Class=className)
 						results_tr.append(TDCell(HT.TD(risetUrl, Class=className), thisTrait.riset, thisTrait.riset))
 
 						#ZS: Dataset column

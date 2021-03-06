@@ -284,7 +284,7 @@ class cmdCorrelation(cmdClass):
                         StrainIdstep = StrainIds[step*25:min(len(StrainIds), (step+1)*25)]
                         for item in StrainIdstep:
                                 temp.append('T%s.value' % item)
-                        #XZ, 03/05/2009: test http://www.genenetwork.org/webqtl/WebQTL.py?cmd=cor&probeset=100001_at&probe=136415&db=bra08-03MAS5&searchdb=BXDPublish&return=500&sort=pvalue
+                        #XZ, 03/05/2009: test http://gn1.genenetwork.org/webqtl/WebQTL.py?cmd=cor&probeset=100001_at&probe=136415&db=bra08-03MAS5&searchdb=BXDPublish&return=500&sort=pvalue
                         if prefix2 == "Publish":
                                 query = "SELECT PublishXRef.Id, "
                                 dataStartPos = 1
@@ -294,8 +294,8 @@ class cmdCorrelation(cmdClass):
                                 for item in StrainIdstep:
                                         query += 'left join PublishData as T%s on T%s.Id = PublishXRef.DataId and T%s.StrainId=%s\n' %(item,item,item,item)
                                 query += "WHERE PublishXRef.InbredSetId = PublishFreeze.InbredSetId and PublishFreeze.Id = %d" % (dbId2, )
-                        #XZ, 03/05/2009: test http://www.genenetwork.org/webqtl/WebQTL.py?cmd=cor&probeset=100001_at&probe=136415&db=bra08-03MAS5&searchdb=HC_M2_1005_M&return=500&sort=pvalue
-                        #XZ, 03/05/2009: test http://www.genenetwork.org/webqtl/WebQTL.py?cmd=cor&probeset=100001_at&probe=136415&db=bra08-03MAS5&searchdb=BXDGeno&return=500&sort=pvalue
+                        #XZ, 03/05/2009: test http://gn1.genenetwork.org/webqtl/WebQTL.py?cmd=cor&probeset=100001_at&probe=136415&db=bra08-03MAS5&searchdb=HC_M2_1005_M&return=500&sort=pvalue
+                        #XZ, 03/05/2009: test http://gn1.genenetwork.org/webqtl/WebQTL.py?cmd=cor&probeset=100001_at&probe=136415&db=bra08-03MAS5&searchdb=BXDGeno&return=500&sort=pvalue
                         else:
                                 query = "SELECT %s.Name," %  prefix2
                                 query += string.join(temp,', ')
