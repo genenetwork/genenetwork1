@@ -1,22 +1,18 @@
-genenetwork on github  (May 7, 2012 by Lei Yan and Rob Williams)
-
-www.genenetwork.org 
-
-Released under Affero General Public License 3 (AGPLv3)
+# GeneNetwork version 1
 
 For background see: http://en.wikipedia.org/wiki/Genenetwork
 
 Please link to https://github.com/genenetwork/genenetwork2 for the most recent developments on GeneNetwork 2 on GitHub.
 
-WWW service initiated January, 1994 as The Portable Dictionary of the Mouse Genome and 
-June 15, 2001 as WebQTL. 
+WWW service initiated January, 1994 as The Portable Dictionary of the Mouse Genome and
+June 15, 2001 as WebQTL.
 
-This code and the main web service is currently operated by Lei Yan, Zachary Sloan, 
-Arthur Centeno. Design and code by Xiaodong Zhou, Christian Fernandez, Sam Ockman, Ning Liu, Rudi Alberts, 
+This code and the main web service is currently operated by Lei Yan, Zachary Sloan,
+Arthur Centeno. Design and code by Xiaodong Zhou, Christian Fernandez, Sam Ockman, Ning Liu, Rudi Alberts,
 Elissa Chesler, Jintao Wang, Kenneth Manly, Robert W. Williams, and colleagues.
 
 Code and primary web service managed by Dr. Robert W. Williams and the University of Tennessee Health Science Center,
-Memphis TN, USA. 
+Memphis TN, USA.
 
 Email labwilliams@gmail.com or rwilliams@uthsc.edu
 
@@ -92,3 +88,8 @@ kill $(lsof -i :8042 | cut -d' ' -f2| sed -n 2p)
 ```
 
 Logs are in: "/tmp/guix-gn1/httpd-genenetwork1-error-log".
+
+
+# LICENSE
+
+Released under Affero General Public License 3 (AGPLv3)
