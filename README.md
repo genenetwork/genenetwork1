@@ -1,44 +1,46 @@
-genenetwork on github  (May 7, 2012 by Lei Yan and Rob Williams)
+# GeneNetwork version 1
 
-www.genenetwork.org 
+Please see https://github.com/genenetwork for the most recent
+developments on GeneNetwork on GitHub.
 
-Released under Affero General Public License 3 (AGPLv3)
+Service initiated January, 1994 as The Portable Dictionary of the
+Mouse Genome and June 15, 2001 as WebQTL.
+
+Funded by the National Institutes of Health and University of
+Tennessee Center for Integrative and Translational Genomics
 
 For background see: http://en.wikipedia.org/wiki/Genenetwork
 
-Please link to https://github.com/genenetwork/genenetwork2 for the most recent developments on GeneNetwork 2 on GitHub.
-
-WWW service initiated January, 1994 as The Portable Dictionary of the Mouse Genome and 
-June 15, 2001 as WebQTL. 
-
-This code and the main web service is currently operated by Lei Yan, Zachary Sloan, 
-Arthur Centeno. Design and code by Xiaodong Zhou, Christian Fernandez, Sam Ockman, Ning Liu, Rudi Alberts, 
-Elissa Chesler, Jintao Wang, Kenneth Manly, Robert W. Williams, and colleagues.
-
-Code and primary web service managed by Dr. Robert W. Williams and the University of Tennessee Health Science Center,
-Memphis TN, USA. 
-
-Email labwilliams@gmail.com or rwilliams@uthsc.edu
-
-Older version available on SourceForge  http://sourceforge.net/projects/genenetwork/
-
-Funded by the National Institutes of Health and
-University of Tennessee Center for Integrative and Translational Genomics
-
-
 ===========
 
-#### Running inside a Guix container
+## Production
+
+For production
+
+    gn1@tux01:~/production/gnshare/gn$ . .guix-deploy
+
+Note the extra dot. Copy and paste the URL in the container:
+
+    httpd -f /gnu/store/2g36jjrkn39d0npfrrl1rd7z0s8dp52s-httpd.conf
+
+## Zach
+
+    zas1024@tux01:~/gn1-zach/gnshare/gn$ . .guix-deploy
+
+and paste
+
+    httpd -f /export/local/home/zas1024/gn1-zach/gnshare/gn/etc/httpd-zas1024.conf
+
+## Other
 
 Running Genenetwork1 in modern environments can be difficult since its
-dependencies are no longer actively supported. However, with guix, you
+dependencies are no longer actively supported. With guix, however, we
 can reproduce the environment in which it ran. This is possible since
-some of the old (deprecated) packages are either maintained in
-[guix-past](https://gitlab.inria.fr/guix-hpc/guix-past) or
+some of the old (deprecated) packages are maintained in
+[guix-past](https://gitlab.inria.fr/guix-hpc/guix-past) and
 [guix-bioinformatics](http://git.genenetwork.org/guix-bioinformatics/guix-bioinformatics.git/).
 
-
-To host genenetwork1 in a guix container, simply run:
+To host genenetwork1 in a guix container, run something like
 
 ```sh
 #!/bin/sh
@@ -83,12 +85,6 @@ default params you can modify are:
 Ensure the above files exist and your user can write to those
 directories(i.e. /tmp/guix-gn1).
 
-To kill the service on port 8042, get the id of the running httpd
-process: `lsof -i :<portNumber>`, and then simply kill it. A one liner
-looks like:
+# LICENSE
 
-```sh
-kill $(lsof -i :8042 | cut -d' ' -f2| sed -n 2p)
-```
-
-Logs are in: "/tmp/guix-gn1/httpd-genenetwork1-error-log".
+Released under Affero General Public License 3 (AGPLv3)
