@@ -233,7 +233,7 @@ class webqtlFormData:
 		else:
 			nstrains = map(self.FormNAsFloat, strainlst)
 
-		debug_file = open("/gnshare/gn/web/debug_file_strains.txt", "w")
+		debug_file = open("/gnshare/gn/web/tmp/debug_file_strains.txt", "w")
 
 		##vals, vars, nstrains is obsolete
 		self.allTraitData = {}
