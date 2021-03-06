@@ -121,7 +121,7 @@ var MENU_ITEMS = [
 		['Annotations', '/webqtl/main.py?FormID=annotation'],
 	],
 	['menu_grp3', null, null,
-		['Movies','http://www.genenetwork.org/tutorial/movies'],
+		['Movies','http://gn1.genenetwork.org/tutorial/movies'],
 		['Tutorials', null, null, 
                 ['GN Barley Tutorial','/tutorial/pdf/GN_Barley_Tutorial.pdf'],
                 ['GN Powerpoint', '/tutorial/ppt/index.html']],

@@ -53,13 +53,11 @@ class SharingInfo2:
 				sql = "SELECT InfoPageName , GN_AccesionId, Species.MenuName, Species.TaxonomyId, Tissue.Name, InbredSet.Name, GeneChip.GeneChipName, GeneChip.GeoPlatform, AvgMethod.Name, Datasets.DatasetName, Datasets.GeoSeries, Datasets.PublicationTitle, DatasetStatus.DatasetStatusName, Datasets.Summary, Datasets.AboutCases, Datasets.AboutTissue, Datasets.AboutDataProcessing, Datasets.Acknowledgment, Datasets.ExperimentDesign, Datasets.Contributors, Datasets.Citation, Datasets.Notes, Investigators.FirstName, Investigators.LastName, Investigators.Address, Investigators.City, Investigators.State, Investigators.ZipCode, Investigators.Country, Investigators.Phone, Investigators.Email, Investigators.Url, Investigators.Url, Organizations.OrganizationName, InvestigatorId, DatasetId, DatasetStatusId, Datasets.AboutPlatform, InfoFileTitle, Specifics FROM InfoFiles LEFT JOIN Species USING (SpeciesId) LEFT JOIN Tissue USING (TissueId) LEFT JOIN InbredSet USING (InbredSetId) LEFT JOIN GeneChip USING (GeneChipId) LEFT JOIN AvgMethod USING (AvgMethodId) LEFT JOIN Datasets USING (DatasetId) LEFT JOIN Investigators USING (InvestigatorId) LEFT JOIN Organizations USING (OrganizationId) LEFT JOIN DatasetStatus USING (DatasetStatusId) WHERE "
 				if(self.GN_AccessionId):
 						final_sql = sql + "GN_AccesionId=%s"
-						debug_file.write("BEFORE QUERY1\n")
 						cursor.execute(final_sql, self.GN_AccessionId)
 						results = cursor.fetchone()
 						if (self.InfoPageName) and not results:
 								final_sql = sql + "InfoPageName=%s"
 								cursor.execute(final_sql, self.InfoPageName)
-								debug_file.write("BEFORE QUERY1.2\n")
 								self.info = cursor.fetchone()
 						else:
 								self.info = results
@@ -108,10 +106,10 @@ class SharingInfo2:
 						for i, match in enumerate(matches):
 							if i == 0:
 								continue
-							cells = re.findall(r"<td>.+?</td>", match, re.DOTALL)
+							cells = re.findall(r"<td.+?>.+?</td>", match, re.DOTALL)
 							full_filename = re.search(r"<a href=\"(.+?)\"", cells[1], re.DOTALL).group(1).strip()
 							filename = full_filename.split("/")[-1]
-							filesize = re.search(r">(.+?)<", cells[2]).group(1).strip()
+							filesize = re.search(r">(.+?)<", cells[3]).group(1).strip()
 							#filedate = re.search(r">(.+?)<", datesize[0]).group(1).strip()
 							filedate = "N/A" #ZS: Since we can't get it for now
 

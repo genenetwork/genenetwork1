@@ -316,7 +316,7 @@ function openPage(evt) {
 	var element = evt.target;
 	var windowName = 'formTarget' + (new Date().getTime());
 	//var openWinString = "openNewWin('"+openURL+element.getAttribute("ps")+"')";
-	//var aURL = "http://www.genenetwork.org"+openURL+element.getAttribute("ps");
+	//var aURL = "http://gn1.genenetwork.org"+openURL+element.getAttribute("ps");
 	var aURL = openURL+element.getAttribute("ps");
 	var newWin = window.open(aURL);
 	newWin.focus();

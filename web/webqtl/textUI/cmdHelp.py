@@ -67,7 +67,7 @@ class cmdHelp(cmdClass):
 				pass
 		else:
 			self.contents = ["#Use database code table below to access data", "#For machine parse friendly output please use",
-					     "#http://www.genenetwork.org%s%s?cmd=help&parse=machine" % (webqtlConfig.CGIDIR, webqtlConfig.SCRIPTFILE)]
+					     "#http://gn1.genenetwork.org%s%s?cmd=help&parse=machine" % (webqtlConfig.CGIDIR, webqtlConfig.SCRIPTFILE)]
 			self.cursor.execute("""(SELECT DBType.Name, DBList.FreezeId, DBList.Code, ProbeSetFreeze.CreateTime as Time
 						from ProbeSetFreeze, DBType, DBList WHERE DBType.Id = DBList.DBTypeId and 
 						DBType.Name = 'ProbeSet' and DBList.FreezeId = ProbeSetFreeze.Id  and 

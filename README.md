@@ -38,14 +38,39 @@ some of the old (deprecated) packages are either maintained in
 [guix-bioinformatics](http://git.genenetwork.org/guix-bioinformatics/guix-bioinformatics.git/).
 
 
-To host genenetwork1 in a guix container using [.guix-deploy](./.guix-deploy), run:
+To host genenetwork1 in a guix container, simply run:
 
-```
-source .guix-deploy
-httpd -f httpd.conf 
-```
+```sh
+#!/bin/sh
 
-where the last command needs to be pasted.
+# Modify paths accordingly; or if you have your channels configured
+# appropriately, you don't need to include the "-L" flags
+
+/path/to/pre-inst-env guix environment \
+    -L /path/to/guix-past/modules/ \
+    -L /path/to/guix-bioinformatics/ \
+    --pure \
+    genenetwork1 \
+    --ad-hoc \
+    httpd-with-mod-python \
+    python2@2.4 \
+    python24-htmlgen-GN1 \
+    python24-json-GN1 \
+    python24-mysqlclient \
+    python24-numarray \
+    python24-piddle \
+    python24-pp-GN1 \
+    python24-pyx \
+    python24-pyxlwriter \
+    python24-qtlreaper \
+    python24-rpy2 \
+    python24-svg-GN1 \
+    -- \
+    httpd \
+    -f \
+    $(/path/to/pre-inst-env guix build -L /path/to/guix-past/modules/ -L /path/to/guix-bioinformatics/ -e '(@ (gn services gn1-httpd-config) GN1-httpd-config)') \
+    -T
+```
 
 This runs genenetwork1 on port 8042. To change the default port,
 modify: GN1-httpd-config in

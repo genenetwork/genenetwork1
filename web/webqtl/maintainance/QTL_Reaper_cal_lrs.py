@@ -38,7 +38,7 @@ db='db_webqtl'
 genotypeDir='/gnshare/gn/web/genotypes/'
 
 #con = MySQLdb.Connect(db=db,user='webqtl',passwd='webqtl', host="localhost")
-con = MySQLdb.Connect(db=db,user='webqtlout',passwd='webqtlout', host="128.169.5.59")
+con = MySQLdb.Connect(db=db,user='webqtlout',passwd='webqtlout', host="tux.uthsc.edu")
 cursor = con.cursor()
 genotype_1 = reaper.Dataset()
 #####get all of the genotypes

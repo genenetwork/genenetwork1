@@ -1,4 +1,4 @@
-// search tips for 'Get Any' and 'Combined' in the main search page http://www.genenetwork.org/
+// search tips for 'Get Any' and 'Combined' in the main search page http://gn1.genenetwork.org/
 function searchtip(){
 
 	var tfor     = document.getElementById("tfor");

@@ -3,7 +3,7 @@
 #########################################
 
 # sql_host = 'tux02.uthsc.edu'
-sql_host = '127.0.0.1'
+sql_host = '128.169.4.67'
 SERVERNAME = sql_host
 
 MYSQL_SERVER = sql_host
