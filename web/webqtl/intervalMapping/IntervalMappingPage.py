@@ -166,16 +166,15 @@ class IntervalMappingPage(templatePage):
             return
 
         #RISet and Species
-        if not fd.genotype:
-            intervalmappingtype = fd.formdata.getfirst('IntervalMappingType')
-            if intervalmappingtype == "interval":
-                genofileid = fd.formdata.getfirst('genofileid_int')
-            elif intervalmappingtype == "composite":
-                genofileid = fd.formdata.getfirst('genofileid_com')
-            else:
-                genofileid = None
-            fd.fetch_genofile(cursor=self.cursor, genofileid=genofileid)
-            fd.readGenotype()
+        intervalmappingtype = fd.formdata.getfirst('IntervalMappingType')
+        if intervalmappingtype == "interval":
+            genofileid = fd.formdata.getfirst('genofileid_int')
+        elif intervalmappingtype == "composite":
+            genofileid = fd.formdata.getfirst('genofileid_com')
+        else:
+            genofileid = None
+        fd.fetch_genofile(cursor=self.cursor, genofileid=genofileid)
+        fd.readGenotype(use_reaper=True)
 
         fd.parentsf14regression = fd.formdata.getvalue('parentsf14regression')
 
