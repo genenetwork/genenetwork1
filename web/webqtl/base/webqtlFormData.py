@@ -35,7 +35,7 @@ import cookieData
 import sessionData
 from cgiData import cgiData
 from webqtlCaseData import webqtlCaseData
-from utility import webqtlUtil
+from utility import webqtlUtil, gen_geno_ob
 
 #import logging
 #logging.basicConfig(filename="/tmp/gn.log", level=logging.INFO)
@@ -117,7 +117,7 @@ class webqtlFormData:
 		return rstr
 
 		
-	def readGenotype(self):
+	def readGenotype(self, use_reaper=False):
 		'read genotype from .geno file'
 		if self.RISet == 'BXD300':
 			self.RISet = 'BXD'
@@ -126,12 +126,18 @@ class webqtlFormData:
 		assert  self.RISet
 		#genotype_1 is Dataset Object without parents and f1
 		#genotype_2 is Dataset Object with parents and f1 (not for intercross)
-		self.genotype_1 = reaper.Dataset()
+
 		if self.genofile and 0 < len(self.genofile):
 			genofilelocation = self.genofile
 		else:
 			genofilelocation = os.path.join(webqtlConfig.GENODIR, self.RISet + '.geno')
-		self.genotype_1.read(genofilelocation)
+
+		if use_reaper:
+			self.genotype_1 = reaper.Dataset()
+			self.genotype_1.read(genofilelocation)
+		else:
+			self.genotype_1 = gen_geno_ob.genotype(genofilelocation)
+
 		try:
 			# NL, 07/27/2010. ParInfo has been moved from webqtlForm.py to webqtlUtil.py; 
 			_f1, _f12, _mat, _pat = webqtlUtil.ParInfo[self.RISet]
@@ -140,7 +146,10 @@ class webqtlFormData:
 		
 		self.genotype_2 = self.genotype_1
 		if self.genotype_1.type == "riset" and _mat and _pat:
-			self.genotype_2 = self.genotype_1.add(Mat=_mat, Pat=_pat)	#, F1=_f1)
+			if use_reaper:
+				self.genotype_2 = self.genotype_1.add(Mat=_mat, Pat=_pat)	#, F1=_f1)
+			else:
+				self.genotype_2 = gen_geno_ob.genotype(genofilelocation, parlist=[_mat, _pat])
 			
 		#determine default genotype object
 		if self.incparentsf1 and self.genotype_1.type != "intercross":
@@ -233,12 +242,9 @@ class webqtlFormData:
 		else:
 			nstrains = map(self.FormNAsFloat, strainlst)
 
-		debug_file = open("/gnshare/gn/web/debug_file_strains.txt", "w")
-
 		##vals, vars, nstrains is obsolete
 		self.allTraitData = {}
 		for i, _strain in enumerate(strainlst):
-			debug_file.write("STRAIN: " + _strain + "\t" + str(vals[i]) + "\n")
 			if vals[i] != None:
 				self.allTraitData[_strain] = webqtlCaseData(vals[i], vars[i], nstrains[i])
 
