@@ -1,4 +1,4 @@
-debug*.txt
+*debug*.txt
 *.pyc
 web/ProbeSetFreeze_DataMatrix/
 web/bxd/
