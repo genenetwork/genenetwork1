@@ -218,18 +218,15 @@ Quick HELP Examples and </B>
 							<p style="font-size:15px;font-family:verdana;color:black"><B>Websites Affiliated with GeneNetwork</B></p>
 		<p style="font-size:12px;font-family:verdana;color:black">
 			<ul>
-				<li>GeneNetwork <A HREF="http://artemis.uthsc.edu" target="_blank" class="fs14">Time Machine</A>: Full versions from 2009 to 2016 (mm9)
 				<li>UTHSC Genome Browser
 					<a target="_blank" href="http://ucscbrowser.genenetwork.org/">Classic</a>
 					and
 					<a target="_blank" href="http://ucscbrowserbeta.genenetwork.org/">Newest</a>
 				</li>
-				<li>UTHSC <a target="_blank" href="http://galaxy.genenetwork.org/">Galaxy</a> Service</li>
 				<li>UTHSC <a target="_blank" href="http://bnw.genenetwork.org/">Bayesian Network Web Server</a></li>
-				<li>GeneNetwork Classic on <a target="_blank" href="http://ec2.genenetwork.org/">Amazon Cloud</a></li>
-				<li>GeneNetwork Classic Code on <a target="_blank" href="https://github.com/genenetwork/genenetwork">GitHub</a></li>
+				<li>GeneNetwork Classic Code on <a target="_blank" href="https://github.com/genenetwork/genenetwork1">GitHub</a></li>
 				<li>GeneNetwork 2.0 Development Code on <a target="_blank" href="https://github.com/genenetwork/genenetwork2">GitHub</a></li>
-				<li><a target="_blank" href="http://gn2.genenetwork.org/">GeneNetwork 2.0</a> Development</li>
+				<li><a target="_blank" href="https://genenetwork.org/">GeneNetwork 2.0</a> Development</li>
 			</ul>
 		</p>
 							<P>____________________________
