@@ -471,10 +471,10 @@ def runNeato(filename, extension, format, gType):
     # and then wait for it to terminate
     
         if format in ('gif', 'cmapx', 'ps'):
-            neatoExit = os.spawnlp(os.P_WAIT, "/usr/local/bin/neato", "/usr/local/bin/neato", "-s", "-T", format, webqtlConfig.IMGDIR + filename, "-o", webqtlConfig.IMGDIR + imageFilename)
+            neatoExit = os.spawnlp(os.P_WAIT, "neato", "neato", "-s", "-T", format, webqtlConfig.IMGDIR + filename, "-o", webqtlConfig.IMGDIR + imageFilename)
     
         else:
-            neatoExit = os.spawnlp(os.P_WAIT, "/usr/local/bin/neato", "/usr/local/bin/neato", webqtlConfig.IMGDIR + filename, "-T", format, "-o", webqtlConfig.IMGDIR + imageFilename)
+            neatoExit = os.spawnlp(os.P_WAIT, "neato", "neato", webqtlConfig.IMGDIR + filename, "-T", format, "-o", webqtlConfig.IMGDIR + imageFilename)
 
         if neatoExit == 0:
             return imageFilename
@@ -486,10 +486,10 @@ def runNeato(filename, extension, format, gType):
     # to keep the output of neato from going to stdout, we open a pipe
     # and then wait for it to terminate
         if format in ('gif', 'cmapx', 'ps'):
-            neatoExit = os.spawnlp(os.P_WAIT, "/usr/local/bin/neato", "/usr/local/bin/neato", "-s", "-T", format, webqtlConfig.IMGDIR + filename, "-o", webqtlConfig.IMGDIR + imageFilename)
+            neatoExit = os.spawnlp(os.P_WAIT, "neato", "neato", "-s", "-T", format, webqtlConfig.IMGDIR + filename, "-o", webqtlConfig.IMGDIR + imageFilename)
     
         else:
-            neatoExit = os.spawnlp(os.P_WAIT, "/usr/local/bin/neato", "/usr/local/bin/neato", webqtlConfig.IMGDIR + filename, "-T", format, "-o", webqtlConfig.IMGDIR + imageFilename)
+            neatoExit = os.spawnlp(os.P_WAIT, "neato", "neato", webqtlConfig.IMGDIR + filename, "-T", format, "-o", webqtlConfig.IMGDIR + imageFilename)
 
         if neatoExit == 0:
             return imageFilename
@@ -499,10 +499,10 @@ def runNeato(filename, extension, format, gType):
     elif gType == "circular":
 	
         if format in ('gif', 'cmapx', 'ps'):
-            neatoExit = os.spawnlp(os.P_WAIT, "/usr/local/bin/circo", "/usr/local/bin/circo", "-s", "-T", format, webqtlConfig.IMGDIR + filename, "-o", webqtlConfig.IMGDIR + imageFilename)
+            neatoExit = os.spawnlp(os.P_WAIT, "circo", "circo", "-s", "-T", format, webqtlConfig.IMGDIR + filename, "-o", webqtlConfig.IMGDIR + imageFilename)
         
         else:
-            neatoExit = os.spawnlp(os.P_WAIT, "/usr/local/bin/circo", "/usr/local/bin/circo", webqtlConfig.IMGDIR + filename, "-T", format, "-o", webqtlConfig.IMGDIR + imageFilename)
+            neatoExit = os.spawnlp(os.P_WAIT, "circo", "circo", webqtlConfig.IMGDIR + filename, "-T", format, "-o", webqtlConfig.IMGDIR + imageFilename)
 
         if neatoExit == 0:
             return imageFilename
@@ -512,10 +512,10 @@ def runNeato(filename, extension, format, gType):
     elif gType == "radial":
 	
         if format in ('gif', 'cmapx', 'ps'):
-            neatoExit = os.spawnlp(os.P_WAIT, "/usr/local/bin/twopi", "/usr/local/bin/twopi", "-s", "-T", format, webqtlConfig.IMGDIR + filename, "-o", webqtlConfig.IMGDIR + imageFilename)
+            neatoExit = os.spawnlp(os.P_WAIT, "twopi", "twopi", "-s", "-T", format, webqtlConfig.IMGDIR + filename, "-o", webqtlConfig.IMGDIR + imageFilename)
         
         else:
-            neatoExit = os.spawnlp(os.P_WAIT, "/usr/local/bin/twopi", "/usr/local/bin/twopi", webqtlConfig.IMGDIR + filename, "-T", format, "-o", webqtlConfig.IMGDIR + imageFilename)
+            neatoExit = os.spawnlp(os.P_WAIT, "twopi", "twopi", webqtlConfig.IMGDIR + filename, "-T", format, "-o", webqtlConfig.IMGDIR + imageFilename)
 
         if neatoExit == 0:
             return imageFilename
@@ -525,10 +525,10 @@ def runNeato(filename, extension, format, gType):
     elif gType == "fdp":
 
         if format in ('gif', 'cmapx', 'ps'):
-            neatoExit = os.spawnlp(os.P_WAIT, "/usr/local/bin/fdp", "/usr/local/bin/fdp", "-s", "-T", format, webqtlConfig.IMGDIR + filename, "-o", webqtlConfig.IMGDIR + imageFilename)
+            neatoExit = os.spawnlp(os.P_WAIT, "fdp", "fdp", "-s", "-T", format, webqtlConfig.IMGDIR + filename, "-o", webqtlConfig.IMGDIR + imageFilename)
         
         else:
-            neatoExit = os.spawnlp(os.P_WAIT, "/usr/local/bin/fdp", "/usr/local/bin/fdp", webqtlConfig.IMGDIR + filename, "-T", format, "-o", webqtlConfig.IMGDIR + imageFilename)
+            neatoExit = os.spawnlp(os.P_WAIT, "fdp", "fdp", webqtlConfig.IMGDIR + filename, "-T", format, "-o", webqtlConfig.IMGDIR + imageFilename)
 
         if neatoExit == 0:
             return imageFilename
