@@ -24,7 +24,6 @@
 #
 # Last updated by GeneNetwork Core Team 2010/10/20
 
-#!/usr/bin/env python
 ##Copyright (c) 2002, Fedor Baart & Hans de Wit (Stichting Farmaceutische Kengetallen)
 ##All rights reserved.
 ##

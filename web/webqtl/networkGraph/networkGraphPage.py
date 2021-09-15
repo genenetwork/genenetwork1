@@ -24,7 +24,6 @@
 #
 # Last updated by NL 2010/02/11
 
-#!/usr/bin/python
 # networkGraph.py
 # Author: Stephen Pitts
 # 6/2/2004

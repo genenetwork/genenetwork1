@@ -469,7 +469,6 @@ def runNeato(filename, extension, format, gType):
     if gType == "none":
     # to keep the output of neato from going to stdout, we open a pipe
     # and then wait for it to terminate
-    
         if format in ('gif', 'cmapx', 'ps'):
             neatoExit = os.spawnlp(os.P_WAIT, "neato", "neato", "-s", "-T", format, webqtlConfig.IMGDIR + filename, "-o", webqtlConfig.IMGDIR + imageFilename)
     
@@ -485,6 +484,7 @@ def runNeato(filename, extension, format, gType):
     elif gType == "neato":
     # to keep the output of neato from going to stdout, we open a pipe
     # and then wait for it to terminate
+        
         if format in ('gif', 'cmapx', 'ps'):
             neatoExit = os.spawnlp(os.P_WAIT, "neato", "neato", "-s", "-T", format, webqtlConfig.IMGDIR + filename, "-o", webqtlConfig.IMGDIR + imageFilename)
     
@@ -510,7 +510,6 @@ def runNeato(filename, extension, format, gType):
         return imageFilename
 
     elif gType == "radial":
-	
         if format in ('gif', 'cmapx', 'ps'):
             neatoExit = os.spawnlp(os.P_WAIT, "twopi", "twopi", "-s", "-T", format, webqtlConfig.IMGDIR + filename, "-o", webqtlConfig.IMGDIR + imageFilename)
         
