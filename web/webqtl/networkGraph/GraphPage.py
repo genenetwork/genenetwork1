@@ -28,18 +28,18 @@ class GraphPage:
 
     def __init__(self, imagefile, mapfile):
         # open and read the image map file
-        #try:
-        #    mapData = open(mapfile).read()
-        #except:
-        #    mapData =  "<p><b>Unable to load image map with trait links</b></p>"
+        try:
+            mapData = open(mapfile).read()
+        except:
+            mapData =  "<p><b>Unable to load image map with trait links</b></p>"
 
-        self.content = '''
+        # self.content = '''
+        # <img border="0" alt="the graph" src="%s" usemap="#webqtlGraph" />
+        # ''' % (imagefile)
+
+        self.content = '''%s
         <img border="0" alt="the graph" src="%s" usemap="#webqtlGraph" />
-        ''' % (imagefile)
-
-        #self.content = '''%s
-        #<img border="0" alt="the graph" src="%s" usemap="#webqtlGraph" />
-        #''' % (mapData, imagefile)
+        ''' % (mapData, imagefile)
 
     def writeToFile(self, filename):
         """
