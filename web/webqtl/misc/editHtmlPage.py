@@ -27,6 +27,7 @@
 import string
 import os
 import urlparse
+from shutil import copyfile
 
 from htmlgen import HTMLgen2 as HT
 
@@ -75,7 +76,8 @@ class editHtmlPage(templatePage):
 			#edit result
 			fileName = self.htmlPath + path
 			newfileName = fileName +'.old'
-			os.system("/bin/cp -f %s %s" % (fileName, newfileName))
+			# @ os.system("cp -f %s %s" % (fileName, newfileName)
+			copyfile(fileName, newfileName)
 			fp = open(fileName, 'wb')
 			fp.write(newHtmlCode)
 			fp.close()
