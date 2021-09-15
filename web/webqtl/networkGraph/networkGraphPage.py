@@ -270,8 +270,8 @@ class networkGraphPage(templatePage):
             inputFilename = webqtlConfig.IMGDIR + inputFilename.split("/")[2]
             
 
-            debug_file = open("/home/gn1/production/gnshare/gn/web/network_debug.txt", "w")
-            debug_file.write(inputFilename)
+            # debug_file = open("/home/gn1/production/gnshare/gn/web/network_debug.txt", "w")
+            # debug_file.write(inputFilename)
 
             #writes out 4 graph files for exporting
             graphFile = "/image/" + networkGraphUtils.writeGraphFile(matrix, _traits, inputFilename, params)
