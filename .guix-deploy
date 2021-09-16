@@ -5,9 +5,9 @@ cwd=$(/bin/pwd)
 gnshare=$(dirname $cwd)
 mkdir -pv $HOME/tmp/guix-gn1-$USER
 mkdir -pv $HOME/srv/http
-echo httpd -f $(/home/gn1/opt/guix/bin/guix build -L /home/gn1/guix-past/modules/ -L /home/gn1/guix-bioinformatics/ -e '(@ (gn services gn1-httpd-config) GN1-httpd-config)')
+echo httpd -f $(/home/gn1/opt/guix-latest/bin/guix build -L /home/gn1/guix-past/modules/ -L /home/gn1/guix-bioinformatics/ -e '(@ (gn services gn1-httpd-config) GN1-httpd-config)')
 echo httpd -f $(realpath $(pwd))/etc/httpd-$USER.conf
-/home/gn1/opt/guix/bin/guix environment \
+/home/gn1/opt/guix-latest/bin/guix environment -c 16 -M 4 \
     -L /home/gn1/guix-past/modules/ \
     -L /home/gn1/guix-bioinformatics/ \
     -C --network \
