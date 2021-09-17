@@ -50,6 +50,7 @@ class Heatmap:
                 targetDescriptionChecked = fd.formdata.getvalue('targetDescriptionCheck', '')
                 clusterChecked = fd.formdata.getvalue('clusterCheck', '')
                 sessionfile = fd.formdata.getvalue("session")
+                fd.readGenotype(use_reaper=True)
                 genotype = fd.genotype
                 strainlist = [strain for strain in fd.strainlist if strain not in fd.parlist]
                 ppolar = fd.ppolar
