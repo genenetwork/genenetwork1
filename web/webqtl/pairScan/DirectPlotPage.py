@@ -135,9 +135,6 @@ class DirectPlotPage(templatePage):
 					prtmuTblIntro1 = HT.Paragraph("The following table gives threshold values for Suggestive (P=0.63) and Significant associations (P=0.05) defined by Lander & Kruglyak and for the slightly more stringent P=0.01 level. (The Highly Significant level of Lander & Kruglyak corresponds to P=0.001 and cannot be estimated with 500 permutations.)")
 					prtmuTblIntro2 = HT.Paragraph("If the full model exceeds the permutation-based Significant threshold, then different models for those locations can be tested by conventional chi-square tests at P<0.01. Interaction is significant if LRS Interact exceeds 6.64 for RI strains or 13.28 for an F2. If interaction is not significant, the two-QTL model is better than a one-QTL model if LRS Additive exceeds LRS 1 or LRS 2 by 6.64 for RI strains or 9.21 for an F2.")
 
-					debug_file = open("/gnshare/gn/web/tmp/debug_file.txt", "w")
-					debug_file.write(genofile)
-
 					ResultFull, ResultInteract, ResultAdd = direct.permu(webqtlConfig.GENODIR, _vals, _strains, genofile + ".geno", 500) #XZ, 08/14/2008: add module name webqtlConfig
 					ResultFull.sort()
 					ResultInteract.sort()
