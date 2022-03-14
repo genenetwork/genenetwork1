@@ -40,7 +40,6 @@ import string
 import time
 import datetime
 
-from base import template
 from base import webqtlConfig
 
 #################################################################################
