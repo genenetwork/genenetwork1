@@ -163,7 +163,8 @@ class MarkerRegressionPage(templatePage):
 			if not fd.genotype:
 				genofileid = fd.formdata.getfirst('genofileid_mar')
 				fd.fetch_genofile(cursor=self.cursor, genofileid=genofileid)
-				fd.readData()			
+				fd.readData()
+                                fd.readGenotype(use_reaper=True)
 		
 			fd.parentsf14regression = fd.formdata.getvalue('parentsf14regression')
 			weightedRegression = fd.formdata.getvalue('applyVarianceSE')

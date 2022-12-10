@@ -1,27 +1,30 @@
 # Requires a symlink from /gnshare and /tmp/guix-gn1
 # mkdir /srv/http
 
+GUIX=~/opt/guix-gn1
+
 cwd=$(/bin/pwd)
 gnshare=$(dirname $cwd)
 mkdir -pv $HOME/tmp/guix-gn1-$USER
 mkdir -pv $HOME/srv/http
-echo httpd -f $(/home/gn1/opt/guix-latest/bin/guix build -L /home/gn1/guix-past/modules/ -L /home/gn1/guix-bioinformatics/ -e '(@ (gn services gn1-httpd-config) GN1-httpd-config)')
+echo httpd -f $($GUIX/bin/guix build -L /home/gn1/guix-past/modules/ -L /home/gn1/guix-bioinformatics/ -e '(@ (gn services gn1-httpd-config) GN1-httpd-config)')
 echo httpd -f $(realpath $(pwd))/etc/httpd-$USER.conf
-/home/gn1/opt/guix-latest/bin/guix environment -c 16 -M 4 \
+$GUIX/bin/guix environment -c 16 -M 4 \
     -L /home/gn1/guix-past/modules/ \
     -L /home/gn1/guix-bioinformatics/ \
     -C --network \
     genenetwork1 \
     --ad-hoc \
-    vim procps binutils inetutils \
+    vim procps binutils inetutils mariadb \
     --network \
     --expose=/gnu \
     --expose=$HOME/srv=/srv \
     --expose=$gnshare=/gnshare \
+    --share=/run/mysqld \
     --share=$cwd/web/tmp=/gnshare/gn/web/tmp \
     --share=$cwd/web/image=/gnshare/gn/web/image \
     --share=$cwd/web/ProbeSetFreeze_DataMatrix=/gnshare/gn/web/ProbeSetFreeze_DataMatrix \
-    --share=$HOME/tmp=/tmp 
+    --share=$HOME/tmp=/tmp \
 
 #     -- httpd -f \
 #     $(/home/gn1/opt/guix/bin/guix build -L /home/gn1/guix-past/modules/ -L /home/gn1/guix-bioinformatics/ \
