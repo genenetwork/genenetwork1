@@ -1,0 +1,380 @@
+web/index.php:<?php
+web/mysql_heart_beat.html:<?php
+web/test/index.php:<?php
+web/test/index.php:<?php
+web/test.php:<?php
+web/infoshare/manager/institutions.html:  <?php
+web/infoshare/manager/institutions.html:<?php
+web/infoshare/manager/institutions.html:<?php
+web/infoshare/manager/institutions.html:<?php
+web/infoshare/manager/add_inv.html:             <?php
+web/infoshare/manager/add_inv.html:      <?php
+web/infoshare/manager/login-exec.html:<?php
+web/infoshare/manager/member-profile.html:<?php
+web/infoshare/manager/member-profile.html:<?php 
+web/infoshare/manager/infofiles.html:  <?php
+web/infoshare/manager/infofiles.html:<?php
+web/infoshare/manager/infofiles.html:<?php
+web/infoshare/manager/infofiles.html:<?php
+web/infoshare/manager/welcome.html:<?php
+web/infoshare/manager/welcome.html:<?php
+web/infoshare/manager/welcome.html:<?php
+web/infoshare/manager/member-studies.html:<?php
+web/infoshare/manager/member-studies.html:<?php 
+web/infoshare/manager/member-studies.html:<?php
+web/infoshare/manager/member-studies.html:<?php 
+web/infoshare/manager/login-failed.html:<?php 
+web/infoshare/manager/login-failed.html:<?php 
+web/infoshare/manager/start.html:             <?php
+web/infoshare/manager/start.html:   <?php
+web/infoshare/manager/start.html:           <?php
+web/infoshare/manager/start.html:            <?php
+web/infoshare/manager/start.html:            <?php
+web/infoshare/manager/start.html:            <?php
+web/infoshare/manager/search_datasets.html:<?php
+web/infoshare/manager/search_datasets.html:<?php 
+web/infoshare/manager/search_datasets.html:<?php
+web/infoshare/manager/search_datasets.html:<?php
+web/infoshare/manager/search_datasets.html:<?php 
+web/infoshare/manager/connect.html:<?php
+web/infoshare/manager/registered.html:<?php
+web/infoshare/manager/registered.html:    <?php
+web/infoshare/manager/confirm.html:<?php
+web/infoshare/manager/confirm.html:        <form action = "<?php $_SERVER['PHP_SELF'];?>" method = "POST">
+web/infoshare/manager/edit_data_if.html:<?php
+web/infoshare/manager/edit_data_if.html:<?php
+web/infoshare/manager/edit_data_if.html:<?php
+web/infoshare/manager/member-studies-edit.html:<?php
+web/infoshare/manager/member-studies-edit.html:<?php 
+web/infoshare/manager/member-studies-edit.html:<?php
+web/infoshare/manager/member-studies-edit.html:<!--<form method="post" action="<?php $_PHP_SELF ?>">   -->     
+web/infoshare/manager/member-studies-edit.html:        <TEXTAREA id="editor1" NAME="editor1" cols="45" rows="5"><?php echo($row[Summary]);?></textarea>
+web/infoshare/manager/member-studies-edit.html:        <TEXTAREA id="editor1" NAME="editor2" cols="45" rows="5"><?php echo($row[ExperimentDesign]);?></textarea>
+web/infoshare/manager/member-studies-edit.html:        <TEXTAREA id="editor1" NAME="editor3" cols="45" rows="5"><?php echo($row[AboutCases]);?></textarea>
+web/infoshare/manager/member-studies-edit.html:        <TEXTAREA id="editor1" NAME="editor4" cols="45" rows="5"><?php echo($row[AboutTissue]);?></textarea>
+web/infoshare/manager/member-studies-edit.html:        <TEXTAREA id="editor1" NAME="editor5" cols="45" rows="5"><?php echo($row[AboutPlatform]);?></textarea>
+web/infoshare/manager/member-studies-edit.html:        <TEXTAREA id="editor1" NAME="editor6" cols="45" rows="5"><?php echo($row[AboutDataProcessing]);?></textarea>
+web/infoshare/manager/member-studies-edit.html:        <TEXTAREA id="editor1" NAME="editor7" cols="45" rows="5"><?php echo($row[Contributors]);?></textarea>
+web/infoshare/manager/member-studies-edit.html:        <TEXTAREA id="editor1" NAME="editor8" cols="45" rows="5"><?php echo($row[Citation]);?></textarea>
+web/infoshare/manager/member-studies-edit.html:        <TEXTAREA id="editor1" NAME="editor9" cols="45" rows="5"><?php echo($row[Acknowledgment]);?></textarea>
+web/infoshare/manager/member-studies-edit.html:        <TEXTAREA id="editor1" NAME="editor10" cols="45" rows="5"><?php echo($row[Notes]);?></textarea>
+web/infoshare/manager/member-studies-edit.html:<?php 
+web/infoshare/manager/dataset.html:  <?php
+web/infoshare/manager/dataset.html:<?php
+web/infoshare/manager/dataset.html:<?php
+web/infoshare/manager/dataset.html:<?php
+web/infoshare/manager/dataset.html:        <TEXTAREA id="editor1" NAME="editor1" cols="45" rows="5"><?php echo($row[Summary]);?></textarea>
+web/infoshare/manager/dataset.html:        <TEXTAREA id="editor1" NAME="editor2" cols="45" rows="5"><?php echo($row[ExperimentDesign]);?></textarea>
+web/infoshare/manager/dataset.html:        <TEXTAREA id="editor1" NAME="editor3" cols="45" rows="5"><?php echo($row[AboutCases]);?></textarea>
+web/infoshare/manager/dataset.html:        <TEXTAREA id="editor1" NAME="editor4" cols="45" rows="5"><?php echo($row[AboutTissue]);?></textarea>
+web/infoshare/manager/dataset.html:        <TEXTAREA id="editor1" NAME="editor5" cols="45" rows="5"><?php echo($row[AboutPlatform]);?></textarea>
+web/infoshare/manager/dataset.html:        <TEXTAREA id="editor1" NAME="editor6" cols="45" rows="5"><?php echo($row[AboutDataProcessing]);?></textarea>
+web/infoshare/manager/dataset.html:        <TEXTAREA id="editor1" NAME="editor7" cols="45" rows="5"><?php echo($row[Contributors]);?></textarea>
+web/infoshare/manager/dataset.html:        <TEXTAREA id="editor1" NAME="editor8" cols="45" rows="5"><?php echo($row[Citation]);?></textarea>
+web/infoshare/manager/dataset.html:        <TEXTAREA id="editor1" NAME="editor9" cols="45" rows="5"><?php echo($row[Acknowledgment]);?></textarea>
+web/infoshare/manager/dataset.html:        <TEXTAREA id="editor1" NAME="editor10" cols="45" rows="5"><?php echo($row[Notes]);?></textarea>
+web/infoshare/manager/dataset.html:<?php
+web/infoshare/manager/dataset.html:<?php
+web/infoshare/manager/signup.html:<?php
+web/infoshare/manager/signup.html:<?php
+web/infoshare/manager/signup.html: 	 <?php
+web/infoshare/manager/signup.html:<?php 
+web/infoshare/manager/investigators.html:<?php
+web/infoshare/manager/investigators.html:<?php
+web/infoshare/manager/investigators.html:<?php
+web/infoshare/manager/investigators.html:<?php
+web/infoshare/manager/member-infofile-confirm.html:<?php
+web/infoshare/manager/member-infofile-confirm.html:<?php 
+web/infoshare/manager/auth.html:<?php
+web/infoshare/manager/member-infofile-edit.html:<?php
+web/infoshare/manager/member-infofile-edit.html:<?php 
+web/infoshare/manager/member-infofile-edit.html:<?php
+web/infoshare/manager/member-infofile-edit.html:<!--<form method="post" action="<?php $_PHP_SELF ?>">   -->     
+web/infoshare/manager/member-infofile-edit.html:        <TEXTAREA id="editor1" NAME="editor11" cols="45" rows="5"><?php echo($row[Specifics]);?></textarea>
+web/infoshare/manager/member-infofile-edit.html:<?php 
+web/infoshare/manager/investigator.html:    <?php
+web/infoshare/manager/investigator.html:<?php
+web/infoshare/manager/investigator.html:<?php
+web/infoshare/manager/investigator.html:<?php
+web/infoshare/manager/investigator.html: 	 <?php
+web/infoshare/manager/OPAR-beta/search.html:<?php
+web/infoshare/manager/OPAR-beta/search.html:        <?php
+web/infoshare/manager/OPAR-beta/search.html: <?php
+web/infoshare/manager/OPAR-beta/index.html:<?php
+web/infoshare/manager/OPAR-beta/index.html:        <?php
+web/infoshare/manager/OPAR-beta/index.html: <?php
+web/infoshare/manager/update.html:           <?php
+web/infoshare/manager/update.html:             <?php
+web/infoshare/manager/update.html:      <?php
+web/infoshare/manager/update.html:		      <H1><?php echo $row[InfoPageTitle]; ?></H1>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'> InfoFiletest.GN_AccesionId Hidden:</h3></td><td><input type='hidden' name='GN_AccesionId' size='90' value='" . $row[GN_AccesionId] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFile.GN_AccesionId Read Only:</h3></td><td><input type='text' readonly name='GN_AccesionId' size='5' value='" . $row[GN_AccesionId] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.InfoFileId:</h3></td><td><input type='text' name='InfoFileId' size='5' value='" . $row[InfoFileId] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.DatasetId:</h3></td><td><input type='text' name='DatasetId' size='5' value='" . $row[DatasetId] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.TissueId:</h3></td><td><input type='text' name='TissueId' size='5' value='" . $row[TissueId] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.SpeciesId:</h3></td><td><input type='text' name='SpeciesId' size='5' value='" . $row[SpeciesId] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.InbredSetId:</h3></td><td><input type='text' name='InbredSetId' size='5' value='" . $row[InbredSetId] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.GeneChipId:</h3></td><td><input type='text' name='GeneChipId' size='5' value='" . $row[GeneChipId] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.AvgMethodId:</h3></td><td><input type='text' name='AvgMethodId' size='5' value='" . $row[AvgMethodId] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>InfoFiles.InfoPageName:</h3></td><td><input type='text' name='InfoPageName' size='90' value='" . $row[InfoPageName] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Tissue.TissueName:</td><td><input type='text' name='TissueName' size='90' value='" . $row[TissueName] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>GeneChip.GeneChipName:</td><td><input type='text' name='GeneChipName' size='90' value='" . $row[GeneChipName] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>GeneChip.GeoPlatform:</td><td><input type='text' name='GeoPlatform' size='90' value='" . $row[GeoPlatform] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>AvgMethod.Normalization:</td><td><input type='text' name='Normalization' size='5' value='" . $row[Normalization] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Species.SpeciesName:</td><td><input type='text' name='SpeciesName' size='90' value='" . $row[SpeciesName] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Species.TaxonomyId:</td><td><input type='text' name='TaxonomyId' size='90' value='" . $row[TaxonomyId] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>InbredSet.InbredSetName:</td><td><input type='text' name='InbredSetName' size='90' value='" . $row[InbredSetName] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>AuthorizedUsers:</td><td><input type='text' name='AuthorizedUsers' size='90' value='" . $row[AuthorizedUsers] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top><h3 class='demo-panel-title demo-headings'>Investigators.InvestigatorId:</h3></td><td><input type='text' placeholder='Investigator' class='login-field' id='InvestigatorId' size='90' value='" . $row[InvestigatorId] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Investigators.FirstName:</td><td><input type='text' name='FirstName' size='90' value='" . $row[FirstName] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Investigators.LastName:</td><td><input type='text' name='LastName' size='90' value='" . $row[LastName] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Investigators.Address:</td><td><input type='text' name='Address' size='90' value='" . $row[Address] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Investigators.City:</td><td><input type='text' name='City' size='90' value='" . $row[City] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Investigators.State:</td><td><input type='text' name='State' size='90' value='" . $row[State] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Investigators.ZipCode:</td><td><input type='text' name='ZipCode' size='90' value='" . $row[ZipCode] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Investigators.Country:</td><td><input type='text' name='Country' size='90' value='" . $row[Country] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Investigators.Phone:</td><td><input type='text' name='Phone' size='90' value='" . $row[Phone] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Investigators.Email:</td><td><input type='text' name='Email' size='90' value='" . $row[Email] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Investigators.Url:</td><td><input type='text' name='Url' size='90' value='" . $row[Url] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Organizations.OrganizationName:</td><td><input type='text' name='OrganizationName' size='90' value='" . $row[OrganizationName] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Datasets.DatasetName:</td><td><input type='text' name='DatasetName' size='90' value='" . $row[DatasetName] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Datasets.GeoSeries:</td><td><input type='text' name='GeoSeries' size='90' value='" . $row[GeoSeries] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>Datasets.PublicationTitle:</td><td><input type='text' name='PublicationTitle' size='90' value='" . $row[PublicationTitle] . "'>");?>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>DatasetStatus.DatasetStatusName:</td><td><input type='text' name='DatasetStatusName' size='90' value='" . $row[DatasetStatusName] . "'>");?>
+web/infoshare/manager/update.html:  <tr><td valign=top>Datasets.Summary:</td><td><textarea NAME="Summary" cols="45" rows="5"><?php echo htmlspecialchars($row[Summary]);?></textarea></td></tr>
+web/infoshare/manager/update.html:  <tr><td valign=top>Datasets.ExperimentDesign:</td><td><TEXTAREA NAME="ExperimentDesign" cols="45" rows="5"><?php echo htmlspecialchars($row[ExperimentDesign]);?></textarea></td></tr>
+web/infoshare/manager/update.html:  <tr><td valign=top>Datasets.AboutCases:</td><td><TEXTAREA NAME="AboutCases" cols="45" rows="5"><?php echo htmlspecialchars($row[AboutCases]);?></textarea></td></tr>
+web/infoshare/manager/update.html:  <tr><td valign=top>Datasets.AboutTissue:</td><td><TEXTAREA NAME="AboutTissue" cols="45" rows="5"><?php echo htmlspecialchars($row[AboutTissue]);?></textarea></td></tr>
+web/infoshare/manager/update.html:  <tr><td valign=top>Datasets.AboutDataProcessing:</td><td><TEXTAREA NAME="AboutDataProcessing" cols="45" rows="5"><?php echo htmlspecialchars($row[AboutDataProcessing]);?></textarea></td></tr>
+web/infoshare/manager/update.html:  <tr><td valign=top>Datasets.Acknowledgment:</td><td><TEXTAREA NAME="Acknowledgment" cols="45" rows="5"><?php echo htmlspecialchars($row[Acknowledgment]);?></textarea></td></tr>
+web/infoshare/manager/update.html:  <tr><td valign=top>Datasets.Contributors:</td><td><TEXTAREA NAME="Contributors" cols="45" rows="5"><?php echo htmlspecialchars($row[Contributors]);?></textarea></td></tr>
+web/infoshare/manager/update.html:  <tr><td valign=top>Datasets.Citation:</td><td><TEXTAREA NAME="Citation" cols="45" rows="5"><?php echo htmlspecialchars($row[Citation]);?></textarea></td></tr>
+web/infoshare/manager/update.html:  <?php echo("<tr><td valign=top>DatasetStatus.DatasetStatusName:</td><td><input type='text' name='DatasetStatusName' size='90' value='" . $row[DatasetStatusName] . "'>");?>
+web/infoshare/manager/insert.html:<?php
+web/infoshare/manager/insert.html:<?php
+web/infoshare/manager/demo.html:<?php
+web/infoshare/manager/demo.html:    <?php echo $script; ?>
+web/infoshare/manager/demo.html:            <?php
+web/infoshare/manager/demo.html:                    <?php
+web/infoshare/manager/demo.html:                    <?php
+web/infoshare/manager/demo.html:            <?php
+web/infoshare/manager/demo.html:            <?php
+web/infoshare/manager/demo.html:	        <li>Hello <?php echo $_SESSION['usr'] ? $_SESSION['usr'] : 'Guest';?>!</li>
+web/infoshare/manager/demo.html:				<a id="open" class="open" href="#"><?php echo $_SESSION['id']?'Open Panel':'Log In | Register';?></a>
+web/infoshare/manager/login-form.html:<?php 
+web/infoshare/manager/login-form.html:<?php 
+web/infoshare/manager/mkdsetconfirm.html:<?php
+web/infoshare/manager/mkdsetconfirm.html:<?php
+web/infoshare/manager/mkdsetconfirm.html:<?php
+web/infoshare/manager/access-denied.html:<?php 
+web/infoshare/manager/access-denied.html:<?php 
+web/infoshare/manager/member-profile-update.html:<?php
+web/infoshare/manager/member-profile-update.html:<?php
+web/infoshare/manager/member-profile-update.html:<!--<form method="post" action="<?php $_PHP_SELF ?>">   -->     
+web/infoshare/manager/member-profile-update.html:<?php 
+web/infoshare/manager/ajax_check_username.html:<?php
+web/infoshare/manager/logincheck.html:<?php
+web/infoshare/manager/infofile.html:  <?php
+web/infoshare/manager/infofile.html:<?php
+web/infoshare/manager/infofile.html:<?php
+web/infoshare/manager/infofile.html:<?php
+web/infoshare/manager/infofile.html:<?php
+web/infoshare/manager/infofile.html:<?php
+web/infoshare/manager/infofile.html:<?php
+web/infoshare/manager/infofile.html:<?php
+web/infoshare/manager/infofile.html:<?php
+web/infoshare/manager/infofile.html:<?php
+web/infoshare/manager/opar_search.html:    <?php
+web/infoshare/manager/opar_search.html:<?php
+web/infoshare/manager/opar_search.html:<?php
+web/infoshare/manager/opar_search.html:<?php
+web/infoshare/manager/opar_search.html:<?php
+web/infoshare/manager/functions.html:<?php
+web/infoshare/manager/institution.html:    <?php
+web/infoshare/manager/institution.html:<?php
+web/infoshare/manager/institution.html:<?php
+web/infoshare/manager/institution.html:<?php
+web/infoshare/manager/ps_pagination.html:<?php
+web/infoshare/manager/insert_if.html:<?php
+web/infoshare/manager/insert_if.html:<?php
+web/infoshare/manager/insert_if.html:<?php
+web/infoshare/manager/learn.html:<?php 
+web/infoshare/manager/quick-search.html:    <?php
+web/infoshare/manager/quick-search.html:<?php
+web/infoshare/manager/quick-search.html:<?php
+web/infoshare/manager/quick-search.html:<?php
+web/infoshare/manager/quick-search.html:<?php
+web/infoshare/manager/edit_if.html:<?php
+web/infoshare/manager/edit_if.html:<?php
+web/infoshare/manager/edit_if.html:<?php
+web/infoshare/manager/edit_if.html:<?php
+web/infoshare/manager/edit_if.html:<!--<form method="post" action="<?php $_PHP_SELF ?>">   -->     
+web/infoshare/manager/edit_if.html:<?php
+web/infoshare/manager/edit_if.html:        <tr><td valign=top><b>Summary:</b></td><td><TEXTAREA NAME="Summary" cols="45" rows="5"><?php echo($row[Summary]);?></textarea></td></tr>
+web/infoshare/manager/edit_if.html:        <tr><td valign=top><b>ExperimentDesign:</b></td><td><TEXTAREA NAME="ExperimentDesign" cols="45" rows="5"><?php echo($row[ExperimentDesign]);?></textarea></td></tr>
+web/infoshare/manager/edit_if.html:        <tr><td valign=top><b>AboutCases:</b></td><td><TEXTAREA NAME="AboutCases" cols="45" rows="5"><?php echo($row[AboutCases]);?></textarea></td></tr>
+web/infoshare/manager/edit_if.html:        <tr><td valign=top><b>AboutTissue:</b></td><td><TEXTAREA NAME="AboutTissue" cols="45" rows="5"><?php echo($row[AboutTissue]);?></textarea></td></tr>
+web/infoshare/manager/edit_if.html:        <tr><td valign=top><b>AboutPlatform:</b></td><td><TEXTAREA NAME="AboutPlatform" cols="45" rows="5"><?php echo($row[AboutPlatform]);?></textarea></td></tr>
+web/infoshare/manager/edit_if.html:        <tr><td valign=top><b>AboutDataProcessing:</b></td><td><TEXTAREA NAME="AboutDataProcessing" cols="45" rows="5"><?php echo($row[AboutDataProcessing]);?></textarea></td></tr>
+web/infoshare/manager/edit_if.html:        <tr><td valign=top><b>Contributors:</b></td><td><TEXTAREA NAME="Contributors" cols="45" rows="5"><?php echo($row[Contributors]);?></textarea></td></tr>
+web/infoshare/manager/edit_if.html:        <tr><td valign=top><b>Citation:</b></td><td><TEXTAREA NAME="Citation" cols="45" rows="5"><?php echo($row[Citation]);?></textarea></td></tr>
+web/infoshare/manager/edit_if.html:        <tr><td valign=top><b>Acknowledgment:</b></td><td><TEXTAREA NAME="Acknowledgment" cols="45" rows="5"><?php echo($row[Acknowledgment]);?></textarea></td></tr>
+web/infoshare/manager/edit_if.html:        <tr><td valign=top><b>Notes:</b></td><td><TEXTAREA NAME="Notes" cols="45" rows="5"><?php echo($row[Notes]);?></textarea></td></tr>
+web/infoshare/manager/edit_data.html:<?php
+web/infoshare/manager/edit_data.html:<?php
+web/infoshare/manager/edit_data.html:<?php
+web/infoshare/manager/opar/about.html:<?php 
+web/infoshare/manager/opar/search.html:<?php 
+web/infoshare/manager/opar/search.html:        <?php
+web/infoshare/manager/opar/search.html: <?php
+web/infoshare/manager/opar/search.html:<?php
+web/infoshare/manager/opar/jquery_progress_bar_server.html:<?php // demo/jquery_progress_bar_server.php
+web/infoshare/manager/opar/header.html:		<li <?php if($activePage == 'index') {echo 'class="nav-item active"';} ?>><a class="nav-link" href="index.html">Home</a></li>
+web/infoshare/manager/opar/header.html:		<li <?php if($activePage == 'search'){echo 'class="nav-item active"';} ?>><a class="nav-link" href="search.html">Search </a></li>
+web/infoshare/manager/opar/header.html:		<li <?php if($activePage == 'snpbrowser'){echo 'class="nav-item active"';} ?>><a class="nav-link" href="snpbrowser.html">SNP Browser </a></li>
+web/infoshare/manager/opar/header.html:		<li <?php if($activePage == 'about') {echo 'class="nav-item active"';} ?>><a class="nav-link" href="about.html">About Us </a></li>
+web/infoshare/manager/opar/plot.html:<?php
+web/infoshare/manager/opar/plot.html:<?php
+web/infoshare/manager/opar/includes/db.inc:<?php
+web/infoshare/manager/opar/includes/ps_pagination.html:<?php
+web/infoshare/manager/opar/snpbrowser_v13_NO_MD.html:<?php
+web/infoshare/manager/opar/snpbrowser_v13_NO_MD.html:document.getElementById('gene').value = "<?php echo $_GET['gene'];?>";
+web/infoshare/manager/opar/snpbrowser_v13_NO_MD.html:<input type="text" name="mbstart" value="<?php echo $_GET['mbstart']; ?>" id="inputLGEx" class="form-control form-control-lg">
+web/infoshare/manager/opar/snpbrowser_v13_NO_MD.html:<div class="col-sm-2"><input type="text" name="mbend" value="<?php echo $_GET['mbend']; ?>" id="inputLGEx" class="form-control form-control-lg">
+web/infoshare/manager/opar/snpbrowser_v13_NO_MD.html:        <?php
+web/infoshare/manager/opar/snpbrowser_v13_NO_MD.html: <?php
+web/infoshare/manager/opar/snpbrowser_v13_NO_MD.html:<?php
+web/infoshare/manager/opar/snpbrowser_v13_NO_MD.html:<?php
+web/infoshare/manager/opar/snpbrowser.html:<?php 
+web/infoshare/manager/opar/snpbrowser.html:    <select class="form-control" name="gene" value="<?php echo $_GET['gene']; ?>" id="inputLGEx">
+web/infoshare/manager/opar/snpbrowser.html:document.getElementById('gene').value = "<?php echo $_GET['gene'];?>";
+web/infoshare/manager/opar/snpbrowser.html:      <P><label">Mb start:</label><input type="text" name="mbstart" value="<?php echo $_GET['mbstart']; ?>" id="inputLGEx" class="form-control form-control-lg">
+web/infoshare/manager/opar/snpbrowser.html:      <P><label">Mb end:</label><input type="text" name="mbend" value="<?php echo $_GET['mbend']; ?>" id="inputLGEx" class="form-control form-control-lg"></P>
+web/infoshare/manager/opar/snpbrowser.html:<?php
+web/infoshare/manager/opar/snpbrowser.html:      <?php
+web/infoshare/manager/opar/snpbrowser.html:    <div class="col col-example"><label">Mb start:</label><input type="text" name="mbstart" value="<?php echo $_GET['mbstart']; ?>" id="inputLGEx" class="form-control form-control-lg"><label">Mb end:</label><input type="text" name="mbend" value="<?php echo $_GET['mbend']; ?>" id="inputLGEx" class="form-control form-control-lg"></div>
+web/infoshare/manager/opar/snpbrowser.html:document.getElementById('gene').value = "<?php echo $_GET['gene'];?>";
+web/infoshare/manager/opar/snpbrowser.html:<input type="text" name="mbstart" value="<?php echo $_GET['mbstart']; ?>" id="inputLGEx" class="form-control form-control-lg">
+web/infoshare/manager/opar/snpbrowser.html:<div class="col-sm-2"><input type="text" name="mbend" value="<?php echo $_GET['mbend']; ?>" id="inputLGEx" class="form-control form-control-lg">
+web/infoshare/manager/opar/snpbrowser.html: 			   <form id="formName" action="<?php echo $_SERVER['PHP_SELF'];?>" method="get">
+web/infoshare/manager/opar/snpbrowser.html:        <?php
+web/infoshare/manager/opar/snpbrowser.html: <?php
+web/infoshare/manager/opar/snpbrowser.html:<?php
+web/infoshare/manager/opar/snpbrowser.html:<?php
+web/infoshare/manager/opar/index.html:<?php 
+web/infoshare/manager/opar/index.html:        <?php
+web/infoshare/manager/opar/index.html: <?php
+web/infoshare/manager/logout.html:<?php
+web/infoshare/manager/logout.html:<?php 
+web/infoshare/manager/logout.html:<?php 
+web/infoshare/manager/member-index.html:<?php
+web/infoshare/manager/member-index.html:<?php 
+web/infoshare/manager/member-index.html:<?php 
+web/infoshare/manager/member-study-confirm.html:<?php
+web/infoshare/manager/member-study-confirm.html:<?php 
+web/infoshare/manager/datasets.html:<?php
+web/infoshare/manager/datasets.html:<?php
+web/infoshare/manager/datasets.html:<?php
+web/infoshare/manager/datasets.html:<?php
+web/infoshare/manager/opar-search.html:    <?php
+web/infoshare/manager/opar-search.html:<?php
+web/infoshare/manager/opar-search.html:        <?php
+web/infoshare/manager/opar-search.html:    <?php
+web/infoshare/manager/opar-search.html:                    <?php
+web/infoshare/manager/edit.html:<?php
+web/infoshare/manager/edit.html:<?php
+web/infoshare/manager/edit.html:<?php
+web/infoshare/manager/edit.html:<?php
+web/infoshare/manager/edit.html:<!--<form method="post" action="<?php $_PHP_SELF ?>">   -->     
+web/infoshare/manager/edit.html:        <TEXTAREA id="editor1" NAME="editor1" cols="45" rows="5"><?php echo($row[Summary]);?></textarea>
+web/infoshare/manager/edit.html:        <TEXTAREA id="editor1" NAME="editor2" cols="45" rows="5"><?php echo($row[ExperimentDesign]);?></textarea>
+web/infoshare/manager/edit.html:        <TEXTAREA id="editor1" NAME="editor3" cols="45" rows="5"><?php echo($row[AboutCases]);?></textarea>
+web/infoshare/manager/edit.html:        <TEXTAREA id="editor1" NAME="editor4" cols="45" rows="5"><?php echo($row[AboutTissue]);?></textarea>
+web/infoshare/manager/edit.html:        <TEXTAREA id="editor1" NAME="editor5" cols="45" rows="5"><?php echo($row[AboutPlatform]);?></textarea>
+web/infoshare/manager/edit.html:        <TEXTAREA id="editor1" NAME="editor6" cols="45" rows="5"><?php echo($row[AboutDataProcessing]);?></textarea>
+web/infoshare/manager/edit.html:        <TEXTAREA id="editor1" NAME="editor7" cols="45" rows="5"><?php echo($row[Contributors]);?></textarea>
+web/infoshare/manager/edit.html:        <TEXTAREA id="editor1" NAME="editor8" cols="45" rows="5"><?php echo($row[Citation]);?></textarea>
+web/infoshare/manager/edit.html:        <TEXTAREA id="editor1" NAME="editor9" cols="45" rows="5"><?php echo($row[Acknowledgment]);?></textarea>
+web/infoshare/manager/edit.html:        <TEXTAREA id="editor1" NAME="editor10" cols="45" rows="5"><?php echo($row[Notes]);?></textarea>
+web/infoshare/manager/edit.html:<?php
+web/infoshare/manager/edit.html:<?php
+web/infoshare/manager/edit.html:        <tr><td valign=top><b>Summary:</b></td><td><TEXTAREA NAME="Summary" cols="45" rows="5"><?php echo($row[Summary]);?></textarea></td></tr>
+web/infoshare/manager/edit.html:        <tr><td valign=top><b>ExperimentDesign:</b></td><td><TEXTAREA NAME="ExperimentDesign" cols="45" rows="5"><?php echo($row[ExperimentDesign]);?></textarea></td></tr>
+web/infoshare/manager/edit.html:        <tr><td valign=top><b>AboutCases:</b></td><td><TEXTAREA NAME="AboutCases" cols="45" rows="5"><?php echo($row[AboutCases]);?></textarea></td></tr>
+web/infoshare/manager/edit.html:        <tr><td valign=top><b>AboutTissue:</b></td><td><TEXTAREA NAME="AboutTissue" cols="45" rows="5"><?php echo($row[AboutTissue]);?></textarea></td></tr>
+web/infoshare/manager/edit.html:        <tr><td valign=top><b>AboutPlatform:</b></td><td><TEXTAREA NAME="AboutPlatform" cols="45" rows="5"><?php echo($row[AboutPlatform]);?></textarea></td></tr>
+web/infoshare/manager/edit.html:        <tr><td valign=top><b>AboutDataProcessing:</b></td><td><TEXTAREA NAME="AboutDataProcessing" cols="45" rows="5"><?php echo($row[AboutDataProcessing]);?></textarea></td></tr>
+web/infoshare/manager/edit.html:        <tr><td valign=top><b>Contributors:</b></td><td><TEXTAREA NAME="Contributors" cols="45" rows="5"><?php echo($row[Contributors]);?></textarea></td></tr>
+web/infoshare/manager/edit.html:        <tr><td valign=top><b>Citation:</b></td><td><TEXTAREA NAME="Citation" cols="45" rows="5"><?php echo($row[Citation]);?></textarea></td></tr>
+web/infoshare/manager/edit.html:        <tr><td valign=top><b>Acknowledgment:</b></td><td><TEXTAREA NAME="Acknowledgment" cols="45" rows="5"><?php echo($row[Acknowledgment]);?></textarea></td></tr>
+web/infoshare/manager/edit.html:        <tr><td valign=top><b>Notes:</b></td><td><TEXTAREA NAME="Notes" cols="45" rows="5"><?php echo($row[Notes]);?></textarea></td></tr>
+web/infoshare/manager/edit_inv_conf.html:<?php
+web/infoshare/manager/edit_inv_conf.html:<?php
+web/infoshare/manager/edit_inv_conf.html:<?php
+web/infoshare/manager/edit_inv.html:<?php
+web/infoshare/manager/edit_inv.html:<?php
+web/infoshare/manager/edit_inv.html:<?php
+web/infoshare/manager/edit_inv.html:<?php
+web/infoshare/manager/edit_inv.html:<!--<form method="post" action="<?php $_PHP_SELF ?>">   -->     
+web/infoshare/manager/MDB-Free/opar-search.html:<?php
+web/infoshare/manager/MDB-Free/opar-search.html:        <?php
+web/infoshare/manager/MDB-Free/opar-search.html: <?php
+web/infoshare/manager/index.html:<?php 
+web/infoshare/manager/index.html:<?php 
+web/infoshare/manager/member-profile-confirm.html:<?php
+web/infoshare/manager/member-profile-confirm.html:<?php 
+web/infoshare/manager/member-profile-confirm.html:<?php
+web/infoshare/manager/member-profile-confirm.html:<?php 
+web/infoshare/form/check_login_status.html:<?php
+web/infoshare/form/randStrGen.html:<?php
+web/infoshare/form/username.html:<?php
+web/infoshare/form/signup.html:<?php
+web/infoshare/form/signup.html:?><?php
+web/infoshare/form/signup.html:?><?php
+web/infoshare/form/signup.html:<?php include_once("template_pageTop.php"); ?>
+web/infoshare/form/signup.html:      <?php include_once("template_country_list.php"); ?>
+web/infoshare/form/signup.html:<?php include_once("template_pageBottom.php"); ?>
+web/infoshare/form/message.html:<?php
+web/infoshare/form/message.html:<div><?php echo $message; ?></div>
+web/infoshare/form/login.html:<?php
+web/infoshare/form/login.html:?><?php
+web/infoshare/form/login.html:<?php include_once("template_pageTop.html"); ?>
+web/infoshare/form/login.html:<?php include_once("template_pageBottom.html"); ?>
+web/infoshare/form/activation.html:<?php
+web/infoshare/form/db_conx.inc:<?php
+web/infoshare/form/logout.html:<?php
+web/infoshare/form/user.html:<?php
+web/infoshare/form/user.html:<title><?php echo $u; ?></title>
+web/infoshare/form/user.html:<?php include_once("template_pageTop.html"); ?>
+web/infoshare/form/user.html:  <h3><?php echo $u; ?></h3>
+web/infoshare/form/user.html:  <p>Is the viewer the page owner, logged in and verified? <b><?php echo $isOwner; ?></b></p>
+web/infoshare/form/user.html:  <p>Gender: <?php echo $sex; ?></p>
+web/infoshare/form/user.html:  <p>Country: <?php echo $country; ?></p>
+web/infoshare/form/user.html:  <p>User Level: <?php echo $userlevel; ?></p>
+web/infoshare/form/user.html:  <p>Join Date: <?php echo $joindate; ?></p>
+web/infoshare/form/user.html:  <p>Last Session: <?php echo $lastsession; ?></p>
+web/infoshare/form/user.html:<?php include_once("template_pageBottom.html"); ?>
+web/infoshare/ckeditor_old/samples/assets/posteddata.php:<?php
+web/infoshare/ckeditor_old/samples/assets/posteddata.php:<?php
+web/infoshare/ckeditor_old/samples/assets/posteddata.php:			<th style="vertical-align: top"><?php echo htmlspecialchars( (string)$key ); ?></th>
+web/infoshare/ckeditor_old/samples/assets/posteddata.php:			<td><pre class="samples"><?php echo $value; ?></pre></td>
+web/infoshare/ckeditor_old/samples/assets/posteddata.php:	<?php
+web/infoshare/ckeditor_old/samples/sample_posteddata.php:<?php /* <body><pre>
+web/infoshare/includes/member-header.inc:<H4>Hi, <?php echo $_SESSION['SESS_FIRST_NAME'];?>!   <a href="logout.html">Logout</a></H4>
+web/infoshare/includes/member-header.inc:<?php  /*if(isset($_COOKIE['AboutVisit']))  
+web/infoshare/includes/header-v2.inc:<p>Hi, <?php echo $_SESSION['SESS_FIRST_NAME'];?>! <a href="logout.html">Logout</a></p>
+web/infoshare/includes/config.html:<?php
+web/infoshare/includes/db.inc:<?php
+web/infoshare/includes/authentication.inc:<?php
+web/infoshare/includes/db_conx.inc:<?php
+web/infoshare/development/orderlist_v2.html:<?php
+web/infoshare/development/orderlist_v2.html:    <?php
+web/infoshare/development/orderlist_v2.html:        <li id=<?php echo $row["InfoFileId"]; ?>><?php echo $row["Name"]; ?></li>
+web/infoshare/development/orderlist_v2.html:        <?php
+web/infoshare/development/sortable.php:<?php
+web/infoshare/ckeditor/samples/old/assets/posteddata.php:<?php
+web/infoshare/ckeditor/samples/old/assets/posteddata.php:<?php
+web/infoshare/ckeditor/samples/old/assets/posteddata.php:			<th style="vertical-align: top"><?php echo htmlspecialchars( (string)$key ); ?></th>
+web/infoshare/ckeditor/samples/old/assets/posteddata.php:			<td><pre class="samples"><?php echo $value; ?></pre></td>
+web/infoshare/ckeditor/samples/old/assets/posteddata.php:	<?php
+web/infoshare/ckeditor/samples/old/sample_posteddata.php:<?php /* <body><pre>
