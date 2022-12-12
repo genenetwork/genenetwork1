@@ -1,5 +1,7 @@
 <?php
 
+include_once('fix_mysql.inc.php');
+
 function authenticateUser($connection, $username, $password)
 {
   // Test the username and password parameters

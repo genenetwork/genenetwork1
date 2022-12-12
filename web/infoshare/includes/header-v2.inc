@@ -40,11 +40,10 @@
   			background-repeat: no-repeat;
 			}
 	</style>
-<!--<script src="http://rabbit.uthsc.edu/infoshare/ckeditor/ckeditor.js"></script>-->
-<script src="http://lily.uthsc.edu/infoshare/ckeditor/ckeditor.js"></script>
-<link href="http://lily.uthsc.edu/infoshare/ckeditor/samples/sample.css" rel="stylesheet">
+<script src="/infoshare/ckeditor/ckeditor.js"></script>
+<link href="/infoshare/ckeditor/samples/sample.css" rel="stylesheet">
     <!--<link REL="stylesheet" TYPE="text/css" href="../ckeditor/samples/sample.css" />-->
-<!--<link href="http://rabbit.uthsc.edu/infoshare/ckeditor/samples/sample.css" rel="stylesheet">-->
+<!--<link href="/infoshare/ckeditor/samples/sample.css" rel="stylesheet">-->
 	<style>
 
 		/* Style the CKEditor element to look like a textfield */

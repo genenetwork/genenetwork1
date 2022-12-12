@@ -1,12 +1,15 @@
 <?php
    // This file is the same as example 6-7, but includes mysqlclean() and shellclean() 
 
-       //$mysqli = mysqli_connect("localhost", "acenteno", "kahuna", "db_webqtl");
-       $con = mysqli_connect("tux01.genenetwork.org", "webqtlout", "webqtlout", "db_webqtl");
-       $conn = mysql_connect("tux01.genenetwork.org", "webqtlout", "webqtlout");
-        mysql_select_db("db_webqtl");
+       /* see: https://stackoverflow.com/a/37877644/1069083 */
+       include_once('fix_mysql.inc.php');
+
+       $conn = mysql_connect("localhost", "webqtlout", "webqtlout");
+       mysql_select_db("db_webqtl");
+
+       $con = mysqli_connect("localhost", "webqtlout", "webqtlout", "db_webqtl");
         
-        mysql_connect("tux.uthsc.edu", "webqtlout", "webqtlout") or die("could not connect to the database");
+       //mysql_connect("localhost", "webqtlout", "webqtlout") or die("could not connect to the database");
 
   /* function showerror()
    {
