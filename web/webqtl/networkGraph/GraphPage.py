@@ -28,6 +28,10 @@ class GraphPage:
 
     def __init__(self, imagefile, mapfile):
         # open and read the image map file
+
+        debug_file = open("/gnshare/gn/web/network_debug.txt", "w")
+
+        debug_file.write(str(mapfile))
         try:
             mapData = open(mapfile).read()
         except:

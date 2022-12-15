@@ -1,3 +1,5 @@
+# Edited by Zach 2022-08-23	
+
 #!/usr/bin/python
 
 # To run this program do: python QTL_Reaper_cal_lrs.py
@@ -38,7 +40,7 @@ db='db_webqtl'
 genotypeDir='/gnshare/gn/web/genotypes/'
 
 #con = MySQLdb.Connect(db=db,user='webqtl',passwd='webqtl', host="localhost")
-con = MySQLdb.Connect(db=db,user='webqtlout',passwd='webqtlout', host="tux.uthsc.edu")
+con = MySQLdb.Connect(db=db,user='webqtlout',passwd='webqtlout', host="172.23.18.213")
 cursor = con.cursor()
 genotype_1 = reaper.Dataset()
 #####get all of the genotypes
@@ -95,11 +97,12 @@ for PublishFreezeId in PublishFreezeIds:
 
 	kj=0
 	for aPublishXRef in PublishXRefInfos:
+		print(aPublishXRef)
 		PhenotypeId, Locus, DataId, Phenotype_description = aPublishXRef
 		cursor.execute('select LRS from PublishXRef where PhenotypeId=%s and InbredSetId=%s' % (PhenotypeId, InbredSetId))
-		if not cursor.fetchone()[0] is None:
-			#continue
-			pass
+		#if not cursor.fetchone()[0] is None:
+	#		#continue
+	#		pass
 		prgy = genotype_1.prgy
 
 		cursor.execute("select Strain.Name, PublishData.value from Strain, PublishData where Strain.Id = PublishData.StrainId and PublishData.Id = %d" % DataId)
@@ -116,9 +119,11 @@ for PublishFreezeId in PublishFreezeIds:
 
 		if not _strains or not _values or len(_values) < 8 or len(_strains) < 8:
 			continue
-
 		qtlresults = genotype_1.regression(strains = _strains, trait = _values)
 		_max = max(qtlresults)
+		if _max == 0:
+			print("TRAIT:", PhenotypeId)
+			print("VALUES:", str(_values))
 		_locus = _max.locus.name
 		_additive = _max.additive
 		_max = _max.lrs
@@ -127,6 +132,7 @@ for PublishFreezeId in PublishFreezeIds:
 			_max = 460
 
 		cursor.execute('update PublishXRef set Locus=%s, LRS=%s, additive=%s where PhenotypeId=%s and InbredSetId=%s', (_locus, _max, _additive, PhenotypeId, InbredSetId))
+		con.commit()
 
 		if kj%1000==0:
 			print("[%s]" % kj)
