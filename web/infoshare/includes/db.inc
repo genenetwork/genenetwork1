@@ -2,11 +2,11 @@
    // This file is the same as example 6-7, but includes mysqlclean() and shellclean() 
 
        //$mysqli = mysqli_connect("localhost", "acenteno", "kahuna", "db_webqtl");
-       $con = mysqli_connect("tux.uthsc.edu", "webqtlout", "webqtlout", "db_webqtl");
-       $conn = mysql_connect("tux.uthsc.edu", "webqtlout", "webqtlout");
+       $con = mysqli_connect("172.23.18.213", "webqtlout", "webqtlout", "db_webqtl");
+       $conn = mysql_connect("172.23.18.213", "webqtlout", "webqtlout");
         mysql_select_db("db_webqtl");
         
-        mysql_connect("tux.uthsc.edu", "webqtlout", "webqtlout") or die("could not connect to the database");
+        mysql_connect("172.23.18.213", "webqtlout", "webqtlout") or die("could not connect to the database");
 
   /* function showerror()
    {
