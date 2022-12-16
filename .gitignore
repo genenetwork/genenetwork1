@@ -1,5 +1,7 @@
 debug*.txt
 *.pyc
+web/network_debug*.txt
+BXD.geno
 web/ProbeSetFreeze_DataMatrix/
 web/bxd/
 web/genotypes/
