@@ -1,5 +1,6 @@
 debug*.txt
 *.pyc
+*.swp
 web/network_debug*.txt
 BXD.geno
 web/ProbeSetFreeze_DataMatrix/
