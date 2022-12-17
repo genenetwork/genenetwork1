@@ -8,16 +8,17 @@
 #
 # Next check out the 'gn1' branch of ~/guix-bioinformatics and
 
-GUIX=~/opt/guix-gn1
-CONF=GN1-httpd-config-prod
+export GUIX=~/opt/guix-gn1
+export CONF=GN1-httpd-config-prod 
+export CONF=GN1-httpd-config-test
 
 cwd=$(/bin/pwd)
 gnshare=$(dirname $cwd)
 mkdir -pv $HOME/tmp/guix-gn1-$USER
 mkdir -pv $HOME/srv/http
-echo httpd -f $($GUIX/bin/guix build -L ~/guix-past/modules/ -L ~/guix-bioinformatics/ -e '(@ (gn services gn1-httpd-config) $CONF)')
+echo httpd -f $($GUIX/bin/guix build -L ~/guix-past/modules/ -L ~/guix-bioinformatics/ -e "(@ (gn services gn1-httpd-config) $CONF)")
 echo or httpd -f $(realpath $(pwd))/etc/httpd-$USER.conf
-$GUIX/bin/guix environment -c 16 -M 4 \
+$GUIX/bin/guix environment -P -c 16 -M 4 \
     -L ~/guix-past/modules/ \
     -L ~/guix-bioinformatics/ \
     -C --network \
