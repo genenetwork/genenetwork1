@@ -24,7 +24,7 @@ $GUIX/bin/guix environment -c 16 -M 4 \
     --share=$cwd/web/tmp=/gnshare/gn/web/tmp \
     --share=$cwd/web/image=/gnshare/gn/web/image \
     --share=$cwd/web/ProbeSetFreeze_DataMatrix=/gnshare/gn/web/ProbeSetFreeze_DataMatrix \
-    --share=$HOME/tmp=/tmp \
+    --share=$HOME/tmp=/tmp 
 
 #     -- httpd -f \
 #     $(/home/gn1/opt/guix/bin/guix build -L /home/gn1/guix-past/modules/ -L /home/gn1/guix-bioinformatics/ \
