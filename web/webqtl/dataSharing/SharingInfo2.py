@@ -99,21 +99,27 @@ class SharingInfo2:
 					# except Exception, e:
 					# 	pass
 					try:
-						response = urllib2.urlopen("http://datafiles.genenetwork.org/download/GN%s" % self.GN_AccessionId)
+					        response = urllib2.urlopen("http://files.genenetwork.org/current/GN%s" % self.GN_AccessionId)
 						data = response.read()
 
-						matches = re.findall(r"<tr>.+?</tr>", data, re.DOTALL)
-						for i, match in enumerate(matches):
-							if i == 0:
-								continue
-							cells = re.findall(r"<td.+?>.+?</td>", match, re.DOTALL)
-							full_filename = re.search(r"<a href=\"(.+?)\"", cells[1], re.DOTALL).group(1).strip()
-							filename = full_filename.split("/")[-1]
-							filesize = re.search(r">(.+?)<", cells[3]).group(1).strip()
-							#filedate = re.search(r">(.+?)<", datesize[0]).group(1).strip()
-							filedate = "N/A" #ZS: Since we can't get it for now
+                                                files = re.findall(r"<a href=\"(.+?)\"", data, re.DOTALL)
+                                                for i, full_filename in enumerate(files):
+                                                    filename = full_filename.split("/")[-1]
+                                                    filedate = filesize = "N/A"
+                                                    self.filelist.append([filename, filedate, filesize])
 
-							self.filelist.append([filename, filedate, filesize])
+						#matches = re.findall(r"<tr>.+?</tr>", data, re.DOTALL)
+						#for i, match in enumerate(matches):                                                        
+						#	if i == 0:
+					    	#	    continue
+						#	cells = re.findall(r"<td.+?>.+?</td>", match, re.DOTALL)
+						#	full_filename = re.search(r"<a href=\"(.+?)\"", cells[1], re.DOTALL).group(1).strip()
+						#	filename = full_filename.split("/")[-1]
+						#	filesize = re.search(r">(.+?)<", cells[3]).group(1).strip()
+						#	#filedate = re.search(r">(.+?)<", datesize[0]).group(1).strip()
+						#	filedate = "N/A" #ZS: Since we can't get it for now
+
+						#	self.filelist.append([filename, filedate, filesize])
 					except Exception, e:
 					 	pass
 
@@ -122,7 +128,7 @@ class SharingInfo2:
 				htmlfilelist = '<ul style="line-height:160%;">\n'
 				for file in self.filelist:
 					htmlfilelist += "<li>"
-					htmlfilelist += '<a href="http://datafiles.genenetwork.org/download/GN%s/%s">%s (%s)</a>' % (self.GN_AccessionId, file[0], file[0], file[2])
+					htmlfilelist += '<a href="http://files.genenetwork.org/current/GN%s/%s">%s (%s)</a>' % (self.GN_AccessionId, file[0], file[0], file[2])
 					htmlfilelist += "</li>\n"
 				htmlfilelist += "</ul>"
 				info = self.info

@@ -1,0 +1,16 @@
+[Unit]
+Description=Run GN1
+After=network.target mysql.service nginx.service
+
+[Service]
+ExecStart=/home/gn1/production/gnshare/gn/run_production.sh
+StandardOutput=/home/gn1/production/gnshare/gn/web/tmp/gn2.log
+StandardError=/home/gn1/production/gnshare/gn/web/tmp/gn2.err
+User=gn1
+WorkingDirectory=/home/gn1/production/gnshare/gn
+
+[Install]
+WantedBy=multi-user.target
+
+
+
